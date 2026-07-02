@@ -151,7 +151,7 @@ const Layout: React.FC = React.memo(() => {
   return (
     <div className={accessibilityClasses}>
       <TopBar>
-        <LogoLink to="/">{BRAND_CONFIG.name}</LogoLink>
+        <LogoLink to="/">{BRAND_CONFIG.siteName}</LogoLink>
 
         {location.pathname !== "/wellcome" && (
           <>

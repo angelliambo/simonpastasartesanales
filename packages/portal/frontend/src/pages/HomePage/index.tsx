@@ -348,10 +348,10 @@ const HomePage: React.FC = () => {
           <LogoWrapper>
             <Logo
               src={BRAND_CONFIG.logoUrl || `${process.env.PUBLIC_URL}/assets/images/logo.png`}
-              alt={BRAND_CONFIG.name}
+              alt={BRAND_CONFIG.siteName}
             />
           </LogoWrapper>
-          <HeroTitle>{BRAND_CONFIG.name}</HeroTitle>
+          <HeroTitle>{BRAND_CONFIG.siteName}</HeroTitle>
           <HeroSubtitle>
             {t("pages.home.heroSubtitle") ||
               "Comunicación en su punto máximo. Dictado por voz, texto a voz y herramientas de accesibilidad para la web."}
@@ -775,7 +775,7 @@ const HomePage: React.FC = () => {
           <CtaSubtitle>
             {FEATURES.ENABLE_GOOGLE_AUTH ? (
               loggedInUser
-                ? `Ya sos parte de ${BRAND_CONFIG.name}. Accedé a tu panel de control.`
+                ? `Ya sos parte de ${BRAND_CONFIG.siteName}. Accedé a tu panel de control.`
                 : t("pages.home.ctaSubtitle") || "Registrate ahora para comenzar a utilizar todos nuestros servicios web."
             ) : (
               "Descubre cómo nuestro servicio puede optimizar el rendimiento de tu negocio."
