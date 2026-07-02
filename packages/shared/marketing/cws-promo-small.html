@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CWS Small Promo Tile (440x280)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style-global.css">
+  <style>
+    body {
+      background-color: #0b0b0f;
+    }
+    
+    .canvas.cws-small {
+      width: 100%;
+      max-width: 440px;
+      height: auto;
+      aspect-ratio: 440 / 280;
+      max-height: 280px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      background: #0f0f15;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    .aurora-1 {
+      top: -20%;
+      right: -20%;
+      width: 260px;
+      height: 260px;
+      filter: blur(50px);
+    }
+
+    .aurora-2 {
+      bottom: -25%;
+      left: -25%;
+      width: 280px;
+      height: 280px;
+      filter: blur(60px);
+    }
+
+    .visual-container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    /* Outer glowing rings */
+    .glowing-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+    }
+
+    .ring-1 {
+      width: 180px;
+      height: 180px;
+      animation: spin 30s linear infinite;
+    }
+
+    .ring-2 {
+      width: 240px;
+      height: 240px;
+      animation: spin-reverse 45s linear infinite;
+      border-style: dotted;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes spin-reverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    .logo-glow-wrapper {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(96, 165, 250, 0.2), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .logo-large {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Abstract sound wave graphic at the bottom */
+    .sound-wave {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 20px;
+      margin-top: 10px;
+    }
+
+    .bar {
+      width: 3px;
+      background: var(--gradient-brand);
+      border-radius: 1.5px;
+      animation: sound-bounce 1.2s ease-in-out infinite alternate;
+    }
+
+    .bar-1 { height: 6px; animation-delay: 0.1s; }
+    .bar-2 { height: 14px; animation-delay: 0.3s; }
+    .bar-3 { height: 18px; animation-delay: 0.5s; }
+    .bar-4 { height: 10px; animation-delay: 0.2s; }
+    .bar-5 { height: 16px; animation-delay: 0.4s; }
+    .bar-6 { height: 8px; animation-delay: 0.1s; }
+
+    @keyframes sound-bounce {
+      0% { transform: scaleY(0.4); }
+      100% { transform: scaleY(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="canvas cws-small">
+    <div class="aurora aurora-blue aurora-1"></div>
+    <div class="aurora aurora-purple aurora-2"></div>
+    
+    <div class="visual-container">
+      <div class="glowing-ring ring-1"></div>
+      <div class="glowing-ring ring-2"></div>
+      
+      <div class="logo-glow-wrapper">
+        <img src="logo.png" class="logo-large" alt="ZenithNexus Logo">
+      </div>
+
+      <div class="sound-wave">
+        <div class="bar bar-1"></div>
+        <div class="bar bar-2"></div>
+        <div class="bar bar-3"></div>
+        <div class="bar bar-4"></div>
+        <div class="bar bar-5"></div>
+        <div class="bar bar-6"></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

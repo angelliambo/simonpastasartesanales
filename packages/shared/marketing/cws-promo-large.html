@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <title>CWS Large Promo Tile (920x680)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style-global.css">
+  <style>
+    .glow-top {
+      top: -10%;
+      right: -10%;
+      width: 450px;
+      height: 450px;
+    }
+
+    .glow-bottom {
+      bottom: -10%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+    }
+
+    .canvas.cws-large {
+      padding: 32px 40px;
+    }
+
+    .grid-2x2 {
+      gap: 14px;
+    }
+
+    .card-item {
+      padding: 14px 18px;
+    }
+
+    .store-badge {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fafafa;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .title-block {
+      margin-bottom: 16px;
+    }
+
+    .main-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .main-title span {
+      background: linear-gradient(135deg, #60a5fa 0%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .icon-container {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      font-size: 20px;
+    }
+
+    .card-item:nth-child(1) .icon-container { color: var(--primary); }
+    .card-item:nth-child(2) .icon-container { color: var(--tertiary); }
+    .card-item:nth-child(3) .icon-container { color: var(--secondary); }
+    .card-item:nth-child(4) .icon-container { color: #fb7185; }
+
+    .feature-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .feature-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 16px;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-badge::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: var(--primary);
+      border-radius: 50%;
+    }
+
+    .footer-badge-purple::before {
+      background-color: var(--tertiary);
+    }
+
+    .action-callout {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="canvas cws-large">
+    <div class="aurora aurora-blue glow-top"></div>
+    <div class="aurora aurora-purple glow-bottom"></div>
+    
+    <div class="content">
+      <div class="header">
+        <div class="header-brand">
+          <img src="logo.png" class="logo-img" alt="ZenithNexus">
+          <h1 class="brand-text">Zenith<span>Nexus</span></h1>
+        </div>
+        <span class="store-badge" id="badge-store">Extension for Chrome</span>
+      </div>
+
+      <div class="title-block">
+        <h2 class="main-title" id="main-title">Lector de Voz, Dictado Ilimitado y <span id="main-title-highlight">Subtítulos Cinéticos</span></h2>
+      </div>
+
+      <div class="grid-2x2">
+        <div class="card-item">
+          <div class="icon-container">
+            <span class="ant-icon">
+              <!-- SoundOutlined (speaker icon) -->
+              <svg viewBox="64 64 896 896" focusable="false" data-icon="sound" aria-hidden="true">
+                <path d="M625.9 115c-5.9 0-11.9 1.6-17.4 5.3L362.3 288H208c-17.7 0-32 14.3-32 32v384c0 17.7 14.3 32 32 32h154.3l246.2 167.7c5.5 3.7 11.5 5.3 17.4 5.3 17.7 0 32-14.3 32-32V147c0-17.7-14.3-32-32-32zm-41.9 689.1L417.6 690.4l-15-10.2H244V343.8h158.6l15 10.2 166.4 113.7v336.4zM824 512c0-99.4-56.5-185.6-139-228.2c-3.9-2-8.5-.7-10.8 3.1l-27.8 44.5c-2.4 3.9-1.2 8.9 2.7 11c62 31.9 104.3 96.6 104.3 169.6S710.2 679.1 648.2 711c-3.9 2-5.1 7.1-2.7 11l27.8 44.5c2.3 3.8 6.9 5.1 10.8 3.1C767.5 697.6 824 611.4 824 512z"></path>
+              </svg>
+            </span>
+          </div>
+          <h3 class="feature-title" id="f1-title">Lector de Texto Seleccionado</h3>
+          <p class="feature-desc" id="f1-desc">Escucha cualquier texto seleccionado en tu navegador web con velocidad de voz ajustable.</p>
+        </div>
+
+        <div class="card-item">
+          <div class="icon-container">
+            <span class="ant-icon">
+              <!-- AudioOutlined (mic icon) -->
+              <svg viewBox="64 64 896 896" focusable="false" data-icon="audio" aria-hidden="true">
+                <path d="M842 454c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8 0 140.3-113.7 254-254 254S262 594.3 262 454c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8 0 168.7 125.3 308.8 286 327.6V832h-94c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h316c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8h-94v-50.4c160.7-18.8 286-158.9 286-327.6zM512 640c88.4 0 160-71.6 160-160V224c0-88.4-71.6-160-160-160S352 135.6 352 224v256c0 88.4 71.6 160 160 160zm-88-416c0-48.6 39.4-88 88-88s88 39.4 88 88v256c0 48.6-39.4 88-88 88s-88-39.4-88-88V224z"></path>
+              </svg>
+            </span>
+          </div>
+          <h3 class="feature-title" id="f2-title">Dictado Ilimitado</h3>
+          <p class="feature-desc" id="f2-desc">Escribe textos con tu voz en campos de texto del navegador sin límites de duración.</p>
+        </div>
+
+        <div class="card-item">
+          <div class="icon-container">
+            <span class="ant-icon">
+              <!-- MessageOutlined (message icon) -->
+              <svg viewBox="64 64 896 896" focusable="false" data-icon="message" aria-hidden="true">
+                <path d="M464 512h320V320H464v192zm-80-320H192v384h544V512h80v160c0 17.7-14.3 32-32 32H272v128l-128-128H96c-17.7 0-32-14.3-32-32V192c0-17.7 14.3-32 32-32h320v80zm448-80H464c-17.7 0-32 14.3-32 32v384c0 17.7 14.3 32 32 32h368c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 384H512V192h320v256z"></path>
+              </svg>
+            </span>
+          </div>
+          <h3 class="feature-title" id="f3-title">Subtítulos Cinéticos</h3>
+          <p class="feature-desc" id="f3-desc">Transcribe tus dictados y lecturas visualmente con subtítulos dinámicos y legibles en tiempo real.</p>
+        </div>
+
+        <div class="card-item">
+          <div class="icon-container">
+            <span class="ant-icon">
+              <!-- FileTextOutlined (file-text icon) -->
+              <svg viewBox="64 64 896 896" focusable="false" data-icon="file-text" aria-hidden="true">
+                <path d="M854.6 288.6L657.4 91.4c-5.3-5.3-12.5-8.6-19.7-8.6H192c-17.7 0-32 14.3-32 32v792c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V307.8c0-7.3-2.9-14-8.6-19.2zM320 376c0-4.4 3.6-8 8-8h240c4.4 0 8 3.6 8 8v48c0 4.4-3.6 8-8 8H328c-4.4 0-8-3.6-8-8v-48zm384 432c0 4.4-3.6 8-8 8H328c-4.4 0-8-3.6-8-8v-48c0-4.4 3.6-8 8-8h368c4.4 0 8 3.6 8 8v48zm0-144c0 4.4-3.6 8-8 8H328c-4.4 0-8-3.6-8-8v-48c0-4.4 3.6-8 8-8h368c4.4 0 8 3.6 8 8v48zm-11.4-348l11.4 11.4V336H576V157.4l116.6 116.6z"></path>
+              </svg>
+            </span>
+          </div>
+          <h3 class="feature-title" id="f4-title">Leer en PDF</h3>
+          <p class="feature-desc" id="f4-desc">Abre cualquier documento PDF local y escúchalo usando el visor integrado de la extensión.</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="badge-row">
+          <span class="footer-badge" id="footer-badge1">Optimizado en Español</span>
+          <span class="footer-badge footer-badge-purple" id="footer-badge2">Privacidad Local</span>
+        </div>
+        <div class="action-callout" id="action-callout">
+          Añadir a Chrome — Gratis
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./translations.js"></script>
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const lang = params.get('lang') || 'es';
+      const t = TRANSLATIONS[lang] || TRANSLATIONS.es;
+      
+      document.getElementById('badge-store').innerText = t.promoLarge.badgeStore;
+      
+      // Update Main Title
+      const mainTitleEl = document.getElementById('main-title');
+      mainTitleEl.innerHTML = t.promoLarge.mainTitleNormal + '<span id="main-title-highlight">' + t.promoLarge.mainTitleHighlight + '</span>';
+      
+      // Update features
+      document.getElementById('f1-title').innerText = t.promoLarge.feature1Title;
+      document.getElementById('f1-desc').innerText = t.promoLarge.feature1Desc;
+      document.getElementById('f2-title').innerText = t.promoLarge.feature2Title;
+      document.getElementById('f2-desc').innerText = t.promoLarge.feature2Desc;
+      document.getElementById('f3-title').innerText = t.promoLarge.feature3Title;
+      document.getElementById('f3-desc').innerText = t.promoLarge.feature3Desc;
+      document.getElementById('f4-title').innerText = t.promoLarge.feature4Title;
+      document.getElementById('f4-desc').innerText = t.promoLarge.feature4Desc;
+      
+      // Update footer
+      document.getElementById('footer-badge1').innerText = t.promoLarge.footerBadge1;
+      document.getElementById('footer-badge2').innerText = t.promoLarge.footerBadge2;
+      document.getElementById('action-callout').innerText = t.promoLarge.actionCallout;
+    })();
+  </script>
+</body>
+</html>

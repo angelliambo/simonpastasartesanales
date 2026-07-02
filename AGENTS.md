@@ -1,0 +1,242 @@
+# ZenithNexus — AGENTS.md
+
+Monorepo: `packages/ext` (Chrome Extension), `packages/portal` (MERN), `packages/shared` (config + types + design-sys).
+
+## .env files — DO NOT TOUCH
+
+.env, .env.* files are never to be read, created, or modified by the agent. If a task requires changing an .env file, ask the user to do it.
+
+## Google OAuth (GIS) — auto-login en portal
+
+Para activar el login automático con Google en el portal web:
+
+1. Ir a <https://console.cloud.google.com> → APIs & Services → Credentials
+2. Crear OAuth 2.0 Client ID (tipo "Web application")
+3. Agregar origen: `http://localhost:3000` y `https://<domain>`
+4. Agregar redirect URI: `http://localhost:3000` y `https://<domain>`
+5. Copiar el Client ID
+
+Setear en ambos `.env`:
+
+- `packages/portal/frontend/.env`: `REACT_APP_GOOGLE_CLIENT_ID=<client_id>`
+- `packages/portal/backend/.env`: `GOOGLE_CLIENT_ID=<client_id>`
+
+Sin Client ID, el portal funciona con email+código manual.
+
+## Email service (MailSender)
+
+El servicio de email usa MailSender por defecto. Configurar:
+
+- `packages/portal/backend/.env`: `MAILSENDER_API_KEY=<key>`
+
+En desarrollo usar: `mlsn.4bb633feab403e93829bcd242c3de2e24fe1574d4d002fa4e7306754ad919999`
+
+Los templates de email están en `packages/portal/backend/email-templates/base.html`.
+
+## GOD_MODE (admin only)
+
+Set matching secrets in both `.env` files to unlock all premium features:
+
+- `packages/ext/.env`: `EXT_GOD_MODE_SECRET=<secret>`
+- `packages/portal/backend/.env`: `GOD_MODE_SECRET=<secret>`
+
+The ext sends `X-God-Mode` header → backend validates → returns `plan: god_mode`.
+
+| Env | Secret |
+|-----|--------|
+| Local | `local-god-mode-2022` |
+| Prod | `fly secrets set GOD_MODE_SECRET=<hash>` |
+
+## Build commands
+
+```bash
+yarn build                  # shared → ext → portal (full pipeline)
+yarn shared:build           # tsc -> dist/
+yarn ext:build              # esbuild (not tsc) -> dist/
+yarn ext:type-check         # tsc --noEmit (pre-existing bcryptjs error is noise)
+yarn portal:build           # react-app-rewired (CRA, ForkTsChecker disabled)
+yarn ext:package            # comprime ext para Chrome Web Store
+
+yarn cleanup                # borra dist, build, node_modules en TODOS los packages
+yarn ext:cleanup            # solo ext
+yarn portal:cleanup         # portal + backend + frontend
+yarn shared:cleanup         # solo shared
+
+yarn install                # reinstala todo después de cleanup
+```
+
+## Architecture
+
+| Package | Build | Aliases |
+|---------|-------|---------|
+| `packages/shared` | tsc → `dist/` | — |
+| `packages/ext` | esbuild (IIFE) | `@design-sys` → `@factory/shared/design-sys`<br>`@shared` → `@factory/shared` |
+| `packages/portal/frontend` | CRA + react-app-rewired | `@design-sys` → `@factory/shared/design-sys`<br>`@shared` → `@factory/shared` |
+| `packages/portal/backend` | tsc → `dist/` | Express + Mongoose + JWT |
+
+## Shared package (`packages/shared/`)
+
+```
+packages/shared/src/
+├── design-sys/          # UI theme, atoms, mixins, organisms
+│   ├── theme/           # types.ts, light.ts, dark.ts
+│   ├── atoms/           # Button, Card, Badge, etc.
+│   ├── mixins/          # cards, buttons, text, effects, keyframes
+│   └── organisms/       # PageLayout
+├── config/              # Shared constants
+│   ├── plans.ts         # Plan definitions, pricing, variant IDs
+│   └── urls.ts          # Chrome Store, API, donation URLs
+└── types/               # Shared TypeScript types
+    ├── plan.ts
+    └── license.ts
+```
+
+**No barrel exports** (index.ts re-exporting) anywhere in the project. Import directly from the source file.
+
+In design-sys:
+
+```typescript
+import lightTheme from '@design-sys/theme/light';
+import { Button } from '@design-sys/atoms/Button';
+```
+
+```typescript
+import lightTheme from '@design-sys/theme/light';
+import { Button } from '@design-sys/atoms/Button';
+```
+
+**Shared config/types** import via `@shared`:
+
+```typescript
+import { PLANS, CHROME_STORE_URL } from '@shared/config/plans';
+import type { PlanId } from '@shared/types/plan';
+```
+
+**Theme types** come from `@design-sys/theme/types` (styled-components module augmentation).
+
+## Style system & Code quality
+
+- **No inline styles** (`style={{ }}`). Use `styled-components` with theme tokens or existing `ui/atoms/*` components.
+- **Strict separate files**: For new components (atoms/molecules/organisms), always split into `index.tsx` (structure), `<Component>.styles.ts` (styles), and `<Component>.types.ts` (types/interfaces).
+- **Transient Props**: Always use `$` prefix for styled-components props that shouldn't leak to the DOM.
+- **Antd compatibility**: Keep design-sys APIs compatible with Ant Design properties (e.g. `open`/`visible`, `onOk`/`onCancel`, `confirmLoading`, etc.).
+- **Strict typing (No 'any')**:
+  - Do NOT use `any` in types unless there is absolutely no other choice.
+  - If you encounter a hard-to-type scenario, use `unknown` instead of `any`, which forces type checks (type guards/narrowing) before usage.
+- **No `as unknown as`**, **no `export *`**, **no `var`**.
+- **Never hardcode** colors/spacing — always use `theme.colors.*`, `theme.spacing.*`.
+- **Shared constants** (prices, variant IDs, URLs) go in `packages/shared/src/config/`. Never duplicate.
+- **No barrel exports (index.ts re-exporting)** anywhere in the project. Import directly from the source file.
+- **Never hardcode icons/emojis**: Never hardcode emojis, custom SVG markup, or raw character icons directly inline inside JSX. Always use the shared `<ZnIcon>` component from `@design-sys/atoms/ZnIcon` for rendering icons to ensure consistency and support design-sys tokens.
+
+## Portal-specific quirks
+
+- **MongoDB retry**: `config/db.ts` retries 3× max, then throws. Server won't start without DB.
+- **ESLint in portal frontend**: disables `react-hooks/exhaustive-deps` and `react-hooks/rules-of-hooks`.
+- **Portal frontend ThemeProvider** wraps design-sys's `getCombinedTheme` with Redux integration (`hooks/useAccessibilityRedux`).
+- Portal's `colors.ts` has portal-only functions (`getDynamicGradient`, `getHeroGradient`) not in shared.
+
+## i18n
+
+- Source language: `es`. Add keys in `packages/shared/src/i18n/pages/<domain>/<page>.ts`.
+- **Estructura y Herencia Dialéctica**: Las variantes regionales (`es-MX`, `es-ES`, `en-US`, `en-GB`) heredan automáticamente de las bases de idioma común (`es` y `en`). Sus carpetas locales solo deben almacenar archivos `index.ts` vacíos (`export const pages = {}; export default pages;`) a menos que requieran sobreescrituras (overrides) regionales explícitas.
+- Sync auto-translates to 7 locales. Always add text in `es` first.
+- **Sync & Limit check**:
+  - To sync, run: `node packages/ext/dev-tools/zenithnexus-translation-system/bin/zn.js sync` (parado en `dev-tools/` para cargar la configuración correcta).
+  - Always verify the translation output files in `locales/` after sync. If translations in other languages are a carbon copy of `es` (identical strings), the translation service has run out of credits. Revert the sync and warn the user.
+  - Verify that translated text in languages requiring escaped characters (e.g. French/Italian apostrophes/quotes) are correctly formatted and do not break TypeScript/JS compilation.
+- In React: `{t('pages.page.key') || 'fallback'}`.
+
+### i18n rule: icons never in translations
+
+Icons/emojis (`🎤`, `✍️`, `✅`, `❌`, etc.) → **NO** van en los values de traducción.
+Van en el JSX del componente o se pasan como parámetro `{{icon}}` en casos excepcionales.
+
+**Bien** (icono en JSX, texto puro en traducción):
+
+```tsx
+// options.ts (source)
+demoTTS: 'Prueba de Lectura'
+
+// DemoSection.tsx
+🎤 {t('pages.options.demoTTS')}
+```
+
+**Mal** (icono en traducción + posible duplicación en JSX):
+
+```tsx
+// options.ts (source)
+demoTTS: '🎤 Prueba de Lectura'  // ← NO
+
+// DemoSection.tsx
+🎤 {t('pages.options.demoTTS')}  // ← renderiza 🎤 🎤 Prueba de Lectura
+```
+
+Excepción: keys con sufijo `Icon` (`sectionIdiomasNoteIcon`) cuyo único propósito es proveer el carácter del ícono. Esas sí pueden tener emoji.
+
+### Límite de caracteres en descripciones de extensión
+
+La clave `"extDesc"` en todos los archivos `packages/ext/_locales/<lang>/messages.json` **NUNCA** debe superar los **132 caracteres** de longitud total, ya que es el límite estricto impuesto por la Chrome Web Store para descripciones cortas.
+
+## Versioning
+
+Per-environment SEMVER. Bump by plan phase, not by commit.
+
+| File | Field |
+|------|-------|
+| `packages/ext/manifest.json` | `version` |
+| `packages/portal/package.json` | `version` |
+| `packages/portal/backend/package.json` | `version` |
+| `packages/portal/frontend/package.json` | `version` |
+
+See `PLAN_DE_TRABAJO_UNIFICADO.md` → "Tabla de Versiones por Fase".
+
+### Regla Obligatoria de Control de Versionado por Package
+
+- Ante **cualquier** cambio, corrección o nueva funcionalidad implementada en un package del monorepo, el agente **debe obligatoriamente** incrementar la versión correspondiente en su archivo de configuración (`package.json` o `manifest.json`).
+- **Límite de incrementos**: El incremento del versionado se realiza **una única vez por branch** de desarrollo (es decir, por fase o tarea del plan). No se deben iterar o acumular incrementos de versión en commits sucesivos dentro de la misma rama.
+- **Aplica solo a packages modificados**: Solo se debe incrementar la versión de los packages del monorepo que hayan recibido modificaciones reales en su código o archivos de configuración. Si un package (por ejemplo, `backend`) no sufre cambios en la rama actual, no se debe actualizar su versión.
+- Si los cambios impactan la extensión de Chrome (`packages/ext`), se debe incrementar la versión de `manifest.json`.
+- Si los cambios impactan al portal web (`packages/portal` o sus sub-packages `frontend` / `backend`), se deben incrementar las versiones únicamente en los `package.json` de aquellos packages específicos que hayan percibido modificaciones.
+- Los incrementos deben seguir el versionado semántico (SEMVER), comúnmente aumentando el dígito de "patch" (ej. de `x.y.z` a `x.y.z+1`) para correcciones o mejoras menores dentro de la fase actual.
+
+## Git rules for AI agent
+
+### Branch naming
+
+- Every branch created by the AI **MUST** use prefix `ia/` — e.g. `ia/fix-login`, `ia/feat-storage`.
+- Never modify, merge, delete, or create branches without explicit user authorization.
+- Never switch branches unless the user explicitly requests it.
+
+### Single-branch rule (CRITICAL)
+
+- **ALL** work across ALL phases MUST be done in the SAME branch. Never create a new branch for a different phase.
+- The current branch is the ONE AND ONLY branch for all ongoing work. No exceptions.
+- Before starting any work, verify you are in the correct branch with `git branch`.
+- If you are asked to work on something that would normally warrant a new branch, do it in the current branch.
+
+### Git Restrictions & Commit Authority
+
+- **No Master Commits**: Never commit directly to `master`. All development must be done on the current AI branch.
+- **No PRs or Merges**: Never open Pull Requests or perform merges. The user handles integration.
+- **Explicit Authorization Only**: Commits can only be performed when explicitly requested by the user. Once the commit is completed, the agent no longer has write permission to git until re-authorized.
+- Never use `git clean -fd` — it destroys untracked files irreversibly.
+- If a merge has conflicts, ask the user how to resolve them unless the resolution is trivial.
+
+### Before branching
+
+- Always start from `master` unless the user specifies otherwise.
+- Run `git status` and `git branch` to understand the current state before any git operation.
+- If there are uncommitted changes, ask the user what to do — never stash or reset without asking.
+
+### Verification checklist (Pre-commit / Pre-turn exit)
+
+- Run `yarn build` and `yarn type-check` to verify the monorepo passes all compilations.
+- Run linters to check for code issues (specifically unused variables or import errors):
+  `yarn workspace @factory/portal-frontend lint` (or relevant workspace lint command).
+- Ensure the tree is completely clean and consistent.
+
+## Idioma y Comunicación
+
+- El agente DEBE comunicarse siempre con el usuario en castellano (español).
+- Todos los planes de implementación, bitácoras de tareas, reportes y walkthroughs deben estar redactados en castellano.

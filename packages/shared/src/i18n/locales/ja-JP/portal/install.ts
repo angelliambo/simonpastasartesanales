@@ -1,0 +1,27 @@
+export const install = {
+  titleIos: 'iOSにインストール',
+  titleAndroid: 'Androidにインストール',
+  titleNative: 'アプリをインストール',
+  titleNotAvailable: 'インストール不可',
+  subtitleIos: 'ホーム画面に追加する手順：',
+  subtitleAndroid: 'デバイスにネイティブアプリとしてインストール：',
+  subtitleNative: 'ブラウザから直接インストール：',
+  subtitleNotAvailable: 'お使いのブラウザはPWAインストールに対応していません',
+  nextStep: '次のステップ',
+  gotIt: '了解',
+  stepIos1: '1. 下部の「共有」ボタンをタップ',
+  stepIos2: '2. 下にスクロールして「ホーム画面に追加」を選択',
+  stepIos3: '3. 「追加」をタップして確認',
+  stepIos4: '4. 完了！アプリがホーム画面に表示されます',
+  stepAndroid1: '1. ブラウザの三点メニューをタップ',
+  stepAndroid2: '2. 「アプリをインストール」または「ホーム画面に追加」を選択',
+  stepAndroid3: '3. インストールを確認',
+  stepAndroid4: '4. 完了！アプリがネイティブアプリとしてインストールされます',
+  stepNative1: '1. 「インストール」ボタンをクリック',
+  stepNative2: '2. ブラウザのダイアログでインストールを確認',
+  stepNative3: '3. 完了！アプリがシステムにインストールされます',
+  notAvailableMessage: 'お使いのブラウザはPWAインストールに対応していません',
+  notAvailableSuggestion: 'Chrome、Edge、Safariをお試しください',
+};
+
+export default {};

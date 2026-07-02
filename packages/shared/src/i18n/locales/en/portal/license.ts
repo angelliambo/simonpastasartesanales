@@ -1,0 +1,21 @@
+export const license = {
+  pageTitle: 'My License',
+  unauthenticatedSubtitle: 'Check your plan status',
+  unauthenticatedStatusLabel: 'Restricted Access',
+  unauthenticatedStatusValue: 'Not Logged In',
+  unauthenticatedDescription: 'Please log in with your account to view the status and expiration of your premium plan.',
+  unauthenticatedLoginButton: 'Sign In',
+  unauthenticatedViewPlansButton: 'View Premium Plans',
+  loading: 'Loading license information...',
+  errorFetching: 'Error retrieving license. Please try again later.',
+  statusLabel: 'Current Plan',
+  statusActive: 'Active Premium Plan',
+  statusExpired: 'Expired Premium Plan',
+  statusFree: 'Free Plan',
+  expiresOn: 'Expires on',
+  remainingDays: '{{days}} days remaining',
+  buyscription: 'Get Premium Plan',
+  upgradeOrExtend: 'Upgrade / Extend Plan',
+  backToHome: 'Back to Home',
+};
+export default {};

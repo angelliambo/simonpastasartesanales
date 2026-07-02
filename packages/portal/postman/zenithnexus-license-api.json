@@ -1,0 +1,210 @@
+{
+  "info": {
+    "_postman_id": "893d56b0-9b43-4672-88f1-4df23b23c9ff",
+    "name": "ZenithNexus License API",
+    "description": "Colección de Postman para validar el sistema de licencias de ZenithNexus (BFF + LemonSqueezy Integration). Permite comprobar estados de licencia, generar checkouts seguros, reclamar tokens y simular webhooks de pagos.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            ""
+          ]
+        },
+        "description": "Comprueba el estado del servidor BFF. Debe responder 200 OK con el mensaje de estado activo."
+      },
+      "response": []
+    },
+    {
+      "name": "License Status",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has plan, status and expiresAt properties\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('plan');",
+              "    pm.expect(jsonData).to.have.property('status');",
+              "    pm.expect(jsonData).to.have.property('expiresAt');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/license/status?email={{email}}&claimToken={{claimToken}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "license",
+            "status"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "{{email}}"
+            },
+            {
+              "key": "claimToken",
+              "value": "{{claimToken}}"
+            }
+          ]
+        },
+        "description": "Consulta el estado de la licencia asociada al email. Si coincide el email y el claimToken, devuelve los detalles correspondientes (plan, status, expiresAt)."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Checkout (LemonSqueezy)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 or 201\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              "",
+              "pm.test(\"Response has a checkout URL\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('url');",
+              "    pm.expect(jsonData.url).to.include('checkout.lemonsqueezy.com');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"variantId\": {{variantId_6m}}\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/license/checkout",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "license",
+            "checkout"
+          ]
+        },
+        "description": "Solicita al backend la generación de una URL de pago segura de LemonSqueezy. Incluye el email en los custom_data para auto-rellenado y mapeo seguro de webhook."
+      },
+      "response": []
+    },
+    {
+      "name": "Claim License",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Claim request evaluated\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 400, 404]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"claimToken\": \"{{claimToken}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/license/claim",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "license",
+            "claim"
+          ]
+        },
+        "description": "Asocia y valida un claimToken en un nuevo dispositivo usando el email ingresado manualmente por el usuario. Permite portabilidad multisistema."
+      },
+      "response": []
+    },
+    {
+      "name": "Simulate Webhook (LemonSqueezy)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Signature validated or simulation processed\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 401, 403]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Signature",
+            "value": "test-signature-or-valid-hmac-sha256"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"meta\": {\n    \"event_name\": \"order_created\",\n    \"custom_data\": {\n      \"email\": \"{{email}}\"\n    }\n  },\n  \"data\": {\n    \"id\": \"order-123456\",\n    \"type\": \"orders\",\n    \"attributes\": {\n      \"identifier\": \"LS-ORD-998877\",\n      \"variant_id\": {{variantId_6m}},\n      \"customer_id\": 887766,\n      \"status\": \"paid\",\n      \"created_at\": \"2026-05-18T00:00:00Z\"\n    }\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/webhooks/lemon-squeezy",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "webhooks",
+            "lemon-squeezy"
+          ]
+        },
+        "description": "Simula la recepción de la notificación webhook de LemonSqueezy tras una compra exitosa para actualizar la DB local con el claimToken y habilitar el plan premium."
+      },
+      "response": []
+    }
+  ]
+}

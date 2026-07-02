@@ -1,0 +1,26 @@
+export const theme = {
+  pageTitle: 'Configurações de Tema e Acessibilidade',
+  themeSectionTitle: 'Tema Principal',
+  themeLight: 'Tema Claro',
+  themeDark: 'Tema Escuro',
+  accessibilitySectionTitle: 'Opções de Acessibilidade',
+  accessibilitySectionDescription: 'Selecione uma paleta de cores otimizada para seu tipo de visão',
+  accessibilityDefault: 'Padrão',
+  accessibilityDefaultDesc: 'Cores normais para visão típica',
+  accessibilityProtanopia: 'Protanopia',
+  accessibilityProtanopiaDesc: 'Otimizado para dificuldade com vermelhos',
+  accessibilityDeuteranopia: 'Deuteranopia',
+  accessibilityDeuteranopiaDesc: 'Otimizado para dificuldade com verdes',
+  accessibilityTritanopia: 'Tritanopia',
+  accessibilityTritanopiaDesc: 'Otimizado para dificuldade com azuis',
+  accessibilityHighContrast: 'Alto Contraste',
+  accessibilityHighContrastDesc: 'Máximo contraste para melhor legibilidade',
+  currentConfigTitle: 'Configuração Atual',
+  currentConfigThemeLabel: 'Tema:',
+  currentConfigThemeLight: 'Claro',
+  currentConfigThemeDark: 'Escuro',
+  currentConfigAccessibilityLabel: 'Acessibilidade:',
+  currentConfigAutoSaveNote: 'As alterações são salvas automaticamente e aplicadas imediatamente em toda a aplicação.',
+};
+
+export default {};

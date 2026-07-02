@@ -1,0 +1,27 @@
+{
+  "name": "@factory/portal",
+  "version": "1.0.0",
+  "description": "MERN SaaS Factory Framework - Portal Orchestrator",
+  "private": true,
+  "scripts": {
+    "start:b": "yarn workspace @factory/backend start",
+    "start": "yarn workspace @factory/frontend start",
+    "dev": "yarn workspace @factory/backend dev",
+    "cleanup": "yarn workspace @factory/backend clean && yarn workspace @factory/frontend clean && rm -rf node_modules yarn.lock",
+    "reset-hard": "echo '🧹 INICIANDO RESET HARD COMPLETO...' && echo '⚠️  Esto eliminará TODAS las dependencias y caches' && echo '📦 Limpiando node_modules...' && rm -rf node_modules backend/node_modules frontend/node_modules shared/node_modules && echo '🗑️  Eliminando lock files...' && rm -f yarn.lock backend/yarn.lock frontend/yarn.lock shared/yarn.lock && echo '🧽 Limpiando caches...' && yarn cache clean --all && npm cache clean --force 2>/dev/null || true && echo '🏗️  Eliminando builds...' && rm -rf frontend/build backend/dist && echo '📝 Eliminando archivos temporales...' && rm -rf .yarn/cache .yarn/unplugged .yarn/build-state.yml .yarn/install-state.gz && echo '🗂️  Limpiando archivos de sistema...' && find . -name '.DS_Store' -delete 2>/dev/null || true && find . -name 'Thumbs.db' -delete 2>/dev/null || true && echo '✅ LIMPIEZA COMPLETADA' && echo '📥 REINSTALANDO DEPENDENCIAS...' && yarn install && echo '🎉 RESET HARD COMPLETADO EXITOSAMENTE!'",
+    "build": "yarn workspace @factory/frontend build",
+    "build:all": "echo '🔧 Building all workspaces...' && echo '📦 Build Shared...' && yarn workspace @factory/shared build && echo '✅ Shared build exitoso' && echo '📦 Build Backend...' && yarn workspace @factory/backend build && echo '✅ Backend build exitoso' && echo '🎨 Build Frontend...' && yarn workspace @factory/frontend build && echo '✅ Frontend build exitoso' && echo '🎉 Todos los builds completados exitosamente!'",
+    "fdeploy": "echo '🚀 INICIANDO DEPLOY A PRODUCCIÓN...' && echo '🔧 Verificando builds...' && echo '📦 Build Shared...' && yarn workspace @factory/shared build && echo '✅ Shared build exitoso' && echo '📦 Build Backend...' && yarn workspace @factory/backend build && echo '✅ Backend build exitoso' && echo '🎨 Build Frontend...' && yarn workspace @factory/frontend build && echo '✅ Frontend build exitoso' && echo '🚀 Todos los builds exitosos, iniciando deploy...' && echo '🚀 Haciendo deploy desde raíz del monorepo...' && cd ../../ && flyctl deploy --config packages/portal/fly.toml --dockerfile Dockerfile",
+    "test": "echo \"No tests specified\" && exit 0",
+    "qa:backend": "yarn workspace @factory/backend test && yarn workspace @factory/backend build",
+    "qa:check": "yarn qa:backend && yarn workspace @factory/shared build && yarn workspace @factory/frontend build",
+    "gp": "node ../../scripts/gp.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.7.10",
+    "adm-zip": "^0.5.16"
+  }
+}
