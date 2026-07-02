@@ -151,30 +151,17 @@ const HomePage: React.FC = () => {
   const { t, lang } = useTranslation();
 
   const LANG_FLAGS: Record<string, { flag: string; name: string }> = {
-    "es-MX": { flag: "🇲🇽", name: "Español" },
-    "en-US": { flag: "🇺🇸", name: "English" },
-    "en-GB": { flag: "🇬🇧", name: "English" },
-    "fr-FR": { flag: "🇫🇷", name: "Français" },
-    "de-DE": { flag: "🇩🇪", name: "Deutsch" },
-    "it-IT": { flag: "🇮🇹", name: "Italiano" },
-    "pt-BR": { flag: "🇧🇷", name: "Português" },
-    "ja-JP": { flag: "🇯🇵", name: "日本語" },
+    "es": { flag: "🇪🇸", name: "Español" },
+    "en": { flag: "🇺🇸", name: "English" },
   };
 
   const secondLang: Record<string, { flag: string; name: string }> = {
-    "es-MX": { flag: "🇺🇸", name: "English" },
-    "es-ES": { flag: "🇺🇸", name: "English" },
-    "en-US": { flag: "🇫🇷", name: "Français" },
-    "en-GB": { flag: "🇫🇷", name: "Français" },
-    "fr-FR": { flag: "🇩🇪", name: "Deutsch" },
-    "de-DE": { flag: "🇬🇧", name: "English" },
-    "it-IT": { flag: "🇫🇷", name: "Français" },
-    "pt-BR": { flag: "🇪🇸", name: "Español" },
-    "ja-JP": { flag: "🇺🇸", name: "English" },
+    "es": { flag: "🇺🇸", name: "English" },
+    "en": { flag: "🇪🇸", name: "Español" },
   };
 
-  const currentFlag = LANG_FLAGS[lang] || LANG_FLAGS["en-US"];
-  const secondLangItem = secondLang[lang] || secondLang["en-US"];
+  const currentFlag = LANG_FLAGS[lang] || LANG_FLAGS["es"];
+  const secondLangItem = secondLang[lang] || secondLang["en"];
 
   const handleLogin = useCallback(() => setShowRegister(true), []);
   const handlePricing = useCallback(() => navigate("/pricing"), [navigate]);
