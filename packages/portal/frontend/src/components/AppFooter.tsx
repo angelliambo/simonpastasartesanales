@@ -8,6 +8,7 @@ import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import { TwitterOutlined, InstagramOutlined } from "@ant-design/icons";
 import { CONTACT_EMAIL } from "@shared/config/contact";
 import { PORTAL_URL, SHOW_SOCIAL_LINKS, SOCIAL_X_URL, SOCIAL_INSTAGRAM_URL } from "@shared/config/urls";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import pkg from "../../package.json";
 
 const { Paragraph } = Typography;
@@ -113,7 +114,7 @@ const AppFooter: React.FC = () => {
 
       <Paragraph style={{ margin: "12px 0 0", fontSize: 12, color: "inherit" }}>
         &copy; {new Date().getFullYear()}{" "}
-        <ExternalLink colors={colors} href={PORTAL_URL}>ZenithNexus</ExternalLink>.{" "}
+        <ExternalLink colors={colors} href={PORTAL_URL}>{BRAND_CONFIG.siteName}</ExternalLink>.{" "}
         {t('pages.home.footerRights') || 'Todos los derechos reservados.'}
         {" "}&mdash;{" "}
         {t('pages.home.versionLabel') || 'Versión'} {pkg.version}

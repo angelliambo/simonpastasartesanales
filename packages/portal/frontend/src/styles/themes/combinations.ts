@@ -370,6 +370,19 @@ export function getCombinedTheme(
     }
   }
 
+  // Respetar gradientes declarados explícitamente en el override local
+  if (localThemeOverride.gradients) {
+    finalTheme.gradients = {
+      ...finalTheme.gradients,
+      ...localThemeOverride.gradients
+    };
+  }
+
+  // Respetar efectos declarados explícitamente en el override local (incluyendo glow)
+  if (localThemeOverride.effects) {
+    finalTheme.effects = deepMerge(finalTheme.effects || {}, localThemeOverride.effects);
+  }
+
   return finalTheme;
 } catch (error) {
   console.error("Error en getCombinedTheme:", error);

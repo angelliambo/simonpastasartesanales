@@ -16,7 +16,6 @@ import {
 } from "../../components/ui/organisms/ConfigPageLayout";
 
 import { RootState } from "../../store/store";
-import { AnimatedBackground } from "../../components/AnimatedBackground";
 import AppFooter from "../../components/AppFooter";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
@@ -255,7 +254,6 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      <AnimatedBackground />
       <ScrollNav>
         {SECTIONS.map((s) => (
           <ScrollDotWrapper key={s}>
@@ -272,7 +270,6 @@ const HomePage: React.FC = () => {
 
       <VhSection
         id="hero"
-        $variant="black"
         $visible={preloadedSections.has("hero")}
       >
         <HeroContent>
@@ -440,7 +437,6 @@ const HomePage: React.FC = () => {
 
       <VhSection
         id="stats"
-        $variant="blue"
         $visible={preloadedSections.has("stats")}
       >
         <Container maxWidth="lg" padding="none">
@@ -490,7 +486,7 @@ const HomePage: React.FC = () => {
 
       <VhSection
         id="testimonials"
-        $variant="black"
+        $variant="blue"
         $visible={preloadedSections.has("testimonials")}
       >
         <Container maxWidth="lg">
@@ -601,7 +597,6 @@ const HomePage: React.FC = () => {
 
       <VhSection
         id="cta"
-        $variant="blue"
         $visible={preloadedSections.has("cta")}
       >
         <Container maxWidth="sm">

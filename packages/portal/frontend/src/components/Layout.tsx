@@ -25,10 +25,8 @@ const TopBar = styled.header`
   align-items: center;
   gap: 12px;
   padding: 8px 24px;
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: ${({ theme }) => theme.colors.background.secondary};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border.light};
   position: fixed;
   top: 0;
   left: 0;
@@ -38,8 +36,8 @@ const TopBar = styled.header`
 `;
 
 const AccessBtn = styled(Button)`
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-  color: white;
+  background: ${({ theme }) => theme.gradients?.premium || 'linear-gradient(135deg, #3b82f6, #8b5cf6)'};
+  color: ${({ theme }) => theme.colors.text.inverse || 'white'};
   border: none;
   font-weight: 600;
   
@@ -79,8 +77,8 @@ const LogoutBtn = styled.button`
   transition: color 0.2s, background-color 0.2s;
   
   &:hover {
-    color: #ef4444;
-    background: rgba(255, 255, 255, 0.08);
+    color: ${({ theme }) => theme.colors.error[500] || '#ef4444'};
+    background: ${({ theme }) => `${theme.colors.text.primary}14` || 'rgba(255, 255, 255, 0.08)'};
   }
 `;
 
@@ -93,7 +91,7 @@ const NavLinks = styled.nav`
 const NavLink = styled(Link) <{ $active?: boolean }>`
   font-size: 13px;
   font-weight: 500;
-  color: ${({ $active }) => ($active ? "#60a5fa" : "rgba(255,255,255,0.65)")};
+  color: ${({ $active, theme }) => ($active ? (theme.colors.primary[400] || "#60a5fa") : (theme.colors.text.secondary || "rgba(255,255,255,0.65)"))};
   text-decoration: none;
   padding: 4px 10px;
   border-radius: 6px;
@@ -101,7 +99,10 @@ const NavLink = styled(Link) <{ $active?: boolean }>`
   align-items: center;
   gap: 4px;
   transition: color 0.2s, background 0.2s;
-  &:hover { color: #fff; background: rgba(255,255,255,0.06); }
+  &:hover { 
+    color: ${({ theme }) => theme.colors.text.primary || '#fff'}; 
+    background: ${({ theme }) => `${theme.colors.text.primary}10` || 'rgba(255,255,255,0.06)'}; 
+  }
 `;
 
 const LogoLink = styled(Link)`
@@ -111,7 +112,7 @@ const LogoLink = styled(Link)`
   text-decoration: none;
   margin-right: auto;
   letter-spacing: 0.5px;
-  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+  background: ${({ theme }) => theme.gradients?.brand || 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%)'};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

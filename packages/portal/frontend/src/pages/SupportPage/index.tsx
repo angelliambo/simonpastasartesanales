@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import type { RootState } from "../../store/store";
 import { ContactForm } from "../../components/ContactForm";
-import { AnimatedBackground } from "../../components/AnimatedBackground";
 import { Input } from "../../components/ui/atoms/Input";
 import Button from "../../components/ui/atoms/Button";
 import { useSnackbar } from "../../components/ui/atoms/Snackbar";
@@ -172,7 +171,6 @@ const SupportPage: React.FC = () => {
 
   return (
     <>
-      <AnimatedBackground />
       <PageContainer>
         <Content>
           <Title>Soporte y Contacto</Title>

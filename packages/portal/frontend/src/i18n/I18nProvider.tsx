@@ -16,6 +16,7 @@ interface Language {
 
 const LANGUAGES: Language[] = [
   { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'en', name: 'English', flag: '🇺🇸' },
 ];
 
 const TRANSLATIONS = allLocales as unknown as Record<string, TranslationObject>;
@@ -40,9 +41,18 @@ function loadLang(): string {
       try {
         const params = new URLSearchParams(window.location.search);
         const urlLang = params.get('lang');
-        if (urlLang && LANGUAGES.some((l) => l.code === urlLang)) {
-          localStorage.setItem(STORAGE_KEY, urlLang);
-          return urlLang;
+        if (urlLang) {
+          const exactMatch = LANGUAGES.find((l) => l.code === urlLang);
+          if (exactMatch) {
+            localStorage.setItem(STORAGE_KEY, exactMatch.code);
+            return exactMatch.code;
+          }
+          const baseLang = urlLang.split('-')[0].toLowerCase();
+          const baseMatch = LANGUAGES.find((l) => l.code.split('-')[0].toLowerCase() === baseLang);
+          if (baseMatch) {
+            localStorage.setItem(STORAGE_KEY, baseMatch.code);
+            return baseMatch.code;
+          }
         }
       } catch { }
     }

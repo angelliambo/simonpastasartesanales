@@ -10,7 +10,7 @@ const LoadingContainer = styled.div<{ $isDark: boolean }>`
   justify-content: center;
   align-items: center;
   gap: 16px;
-  background-color: ${({ $isDark }) => ($isDark ? "#000000" : "#ffffff")};
+  background-color: ${({ theme }) => theme.colors.background.primary};
   transition: background-color 0.2s ease;
 `;
 

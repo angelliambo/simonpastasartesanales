@@ -37,9 +37,31 @@ export const home = {
   shortcutsTitle: 'Arquitectura Escalable',
   shortcutsDesc: 'Monorepo limpio y ordenado con separación estricta de responsabilidades entre el frontend, el backend y el config compartido.',
 
+  // Stats Section
+  statsIdiomas: 'Despliegue Global',
+  statsIdiomasOthers: 'Múltiples Locales e i18n listos',
+  statsLocal: 'Base de Datos Segura',
+  statsPrivacidadItem1: 'Persistencia en MongoDB',
+  statsPrivacidadItem2: 'Conexión dinámica modular',
+  statsPrivacidadItem3: 'Validación estricta de esquemas',
+  statsCompatibilidad: 'Compatibilidad Total',
+
   // Social Proof & Trust
   testimonialsTitle: 'Optimizado para acelerar tu desarrollo',
   testimonialsSubtitle: 'Miles de horas de configuración básica de proyectos SaaS solucionadas en un solo template.',
+
+  // Testimonials
+  testimonial1: 'Este boilerplate nos ahorró al menos 3 semanas de configuración de pasarelas de pago y autenticación. El sistema de Feature Flags es súper intuitivo.',
+  testimonialName1: 'Carlos Mendoza',
+  testimonialRole1: 'CTO en Startup X',
+  
+  testimonial2: 'La arquitectura en monorepo de este template es increíblemente limpia. El diseño responde al tema al instante y es facilísimo de personalizar.',
+  testimonialName2: 'Sofia Rossi',
+  testimonialRole2: 'Desarrolladora Fullstack',
+  
+  testimonial3: 'Suscripciones integradas con Lemon Squeezy funcionando el primer día. Excelente soporte y estructura modular impecable.',
+  testimonialName3: 'Javier Domínguez',
+  testimonialRole3: 'Fundador de SaaS Flow',
 };
 
 export default home;

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
-import { AnimatedBackground } from "../../components/AnimatedBackground";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { setCredentials } from "../../store/slices/authSlice";
 import { Input } from "../../components/ui/atoms/Input";
@@ -462,7 +461,6 @@ const AdminPage: React.FC = () => {
 
   return (
     <PageContainer>
-      <AnimatedBackground />
       <Content>
         <Title>{t('pages.admin.title')}</Title>
         <StyledSubtitle>{t('pages.admin.subtitle')}</StyledSubtitle>

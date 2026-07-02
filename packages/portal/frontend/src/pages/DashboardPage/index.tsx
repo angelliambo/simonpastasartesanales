@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useGetProfileQuery, useRequestDeletionMutation, useDeleteAccountMutation } from "../../services/api/userService";
 import { logout } from "../../store/slices/authSlice";
 
-import { AnimatedBackground } from "../../components/AnimatedBackground";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { useSnackbar } from "../../components/ui/atoms/Snackbar";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
@@ -138,7 +137,6 @@ const DashboardPage: React.FC = () => {
 
   return (
     <PageContainer>
-      <AnimatedBackground />
       <Content>
         <Title>{t('pages.dashboard.title', 'Dashboard')}</Title>
         <StyledSubtitle>{t('pages.dashboard.subtitle', 'Resumen de tu cuenta')}</StyledSubtitle>
