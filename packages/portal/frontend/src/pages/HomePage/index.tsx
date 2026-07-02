@@ -17,6 +17,7 @@ import {
 
 import { RootState } from "../../store/store";
 import AppFooter from "../../components/AppFooter";
+import { SUPPORTED_LOCALES } from "../../i18n";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
   AudioOutlined,
@@ -442,7 +443,7 @@ const HomePage: React.FC = () => {
         <Container maxWidth="lg" padding="none">
           <StatsGrid>
             <StatItem>
-              <StatNumber>7</StatNumber>
+              <StatNumber>{SUPPORTED_LOCALES.length}</StatNumber>
               <StatLabel>{t("pages.home.statsIdiomas")}</StatLabel>
               <StatList>
                 <StatListItem>
@@ -475,9 +476,9 @@ const HomePage: React.FC = () => {
               <StatNumber $large>∞</StatNumber>
               <StatLabel>{t("pages.home.statsCompatibilidad")}</StatLabel>
               <StatList>
-                <StatListItem>💻 Windows</StatListItem>
-                <StatListItem>💻 macOS</StatListItem>
-                <StatListItem>💻 Linux</StatListItem>
+                <StatListItem>📱 Móvil</StatListItem>
+                <StatListItem>💻 Escritorio</StatListItem>
+                <StatListItem>🌐 Navegadores</StatListItem>
               </StatList>
             </StatItem>
           </StatsGrid>
@@ -539,54 +540,6 @@ const HomePage: React.FC = () => {
                   </TestimonialName>
                   <TestimonialRole>
                     {t("pages.home.testimonialRole3")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial4")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>D</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName4")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole4")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial5")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>E</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName5")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole5")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial6")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>P</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName6")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole6")}
                   </TestimonialRole>
                 </div>
               </TestimonialAuthor>
