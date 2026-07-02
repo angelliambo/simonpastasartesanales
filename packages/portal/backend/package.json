@@ -1,6 +1,6 @@
 {
   "name": "@factory/backend",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "MERN SaaS Factory Framework — Scalable Express & MongoDB Backend",
   "main": "server.js",
   "scripts": {

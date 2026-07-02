@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import path from "path";
 import { existsSync } from "fs";
+import { FEATURES } from "@factory/shared/config/features";
 
 const loadEnvironment = () => {
   const nodeEnv = process.env.NODE_ENV || "development";
@@ -165,7 +166,15 @@ export const displayConfig = () => {
   console.log(`   Logging Errors: ${config.ENABLE_ERROR_LOGGING ? "✅" : "❌"}`);
   console.log(`   Detailed Errors: ${config.ENABLE_DETAILED_ERRORS ? "✅" : "❌"}`);
   console.log(`   Log Level: ${config.LOG_LEVEL}`);
-  console.log(`   LemonSqueezy: ${config.LEMONSQUEEZY_API_KEY ? "✅ Configurado" : "❌ Sin API key"}`);
+  console.log(
+    `   LemonSqueezy: ${
+      FEATURES.ENABLE_BILLING_LEMON
+        ? config.LEMONSQUEEZY_API_KEY
+          ? "✅ Configurado"
+          : "❌ Sin API key"
+        : "❌ Deshabilitado (FEATURES)"
+    }`
+  );
 };
 
 export { hideCredentials };

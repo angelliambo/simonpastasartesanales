@@ -25,10 +25,10 @@ const authLimiter = rateLimit({
 
 apiRoutes.use("/auth", checkFeature("ENABLE_GOOGLE_AUTH"), authLimiter, authTokenRoutes);
 apiRoutes.use("/auth", checkFeature("ENABLE_GOOGLE_AUTH"), authLimiter, googleAuth);
-apiRoutes.use("/identity", identityRoutes);
+apiRoutes.use("/identity", checkFeature("ENABLE_GOOGLE_AUTH"), identityRoutes);
 apiRoutes.use("/support", checkFeature("ENABLE_TICKETING_SYSTEM"), supportRoutes);
-apiRoutes.use("/user", userRoutes);
-apiRoutes.use("/notification", notificationRoutes);
-apiRoutes.use("/admin", adminRoutes);
+apiRoutes.use("/user", checkFeature("ENABLE_GOOGLE_AUTH"), userRoutes);
+apiRoutes.use("/notification", checkFeature("ENABLE_GOOGLE_AUTH"), notificationRoutes);
+apiRoutes.use("/admin", checkFeature("ENABLE_GOOGLE_AUTH"), adminRoutes);
 
 export default apiRoutes;
