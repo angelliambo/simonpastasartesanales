@@ -1,5 +1,5 @@
-import * as commonsPages from './commons';
-import * as portalPages from './portal';
+import * as commonsPages from '../../pages/commons';
+import * as portalPages from '../../pages/portal';
 
 const pages = { ...commonsPages, ...portalPages };
 

@@ -31,9 +31,9 @@ export const dashboard = {
   confirmDeleteButton: 'Confirmar eliminación',
   wellcomeCardTitle: 'Bienvenido',
   wellcomeCardSubtitle: 'Iniciá sesión para ver tu dashboard.',
-  seoTitle: 'Dashboard - {{nombreSitio}}',
-  seoDescription: 'Panel de control de tu cuenta de {{nombreSitio}}. Administra tus suscripciones, licencias premium y configuraciones de usuario.',
-  seoKeywords: 'dashboard {{nombreSitio}}, cuenta {{nombreSitio}}, licencia {{nombreSitio}}, suscripcion premium',
+  seoTitle: 'Dashboard - {{siteName}}',
+  seoDescription: 'Panel de control de tu cuenta de {{siteName}}. Administra tus suscripciones, licencias premium y configuraciones de usuario.',
+  seoKeywords: 'dashboard {{siteName}}, cuenta {{siteName}}, licencia {{siteName}}, suscripcion premium',
 };
 
 export default {};

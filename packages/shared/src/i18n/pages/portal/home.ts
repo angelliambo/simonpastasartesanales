@@ -1,6 +1,6 @@
 export const home = {
   // SEO Metadata
-  seoTitle: 'Portal Web SaaS Boilerplate | {{nombreSitio}}',
+  seoTitle: 'Portal Web SaaS Boilerplate | {{siteName}}',
   seoDescription: 'Base modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte.',
   seoKeywords: 'portal saas boilerplate, panel de control web, base para startup, desarrollo modular, login google, soporte integrado',
 

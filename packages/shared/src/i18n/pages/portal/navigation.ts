@@ -5,7 +5,7 @@ export const navigation = {
   labelProgress: 'Progreso',
   labelCommunication: 'Comunicación',
   labelSettings: 'Configuración',
-  appTitle: '{{nombreSitio}} Portal',
+  appTitle: '{{siteName}} Portal',
   ariaClose: 'Cerrar navegación',
   ariaOpen: 'Abrir navegación',
 };

@@ -1,7 +1,7 @@
 export const plans = {
-  planFreeDesc: 'Para lectores casuales',
-  planSemestralDesc: 'Productividad al máximo',
-  planAnualDesc: 'Mejor valor absoluto',
+  planFreeDesc: 'Para probar la plataforma',
+  planSemestralDesc: 'Ideal para profesionales',
+  planAnualDesc: 'El mejor valor para empresas',
 
   billingFree: '/ siempre',
   billingSemestral: '/ 6 meses',
@@ -18,14 +18,15 @@ export const plans = {
   emailPlaceholder: 'tu@correo.com',
   footerNote: 'Todos los pagos son procesados de forma 100% segura por LemonSqueezy.',
 
-  featureLector: 'Lector de texto seleccionado',
-  featureSubtitulos: 'Subtítulos cinéticos',
-  featureDictado: 'Dictado ilimitado',
-  featureVozPuntuacion: 'Comandos de voz (puntuación)',
-  featureNarrador: 'Narrador de página completa',
-  featureResaltar: 'Resaltar texto al leer',
-  featurePDF: 'Leer en PDF',
-  featurePip: 'Pantalla flotante (Always-on-Top)',
+  featureLector: 'Acceso ilimitado a funciones básicas',
+  featureSubtitulos: 'Soporte estándar por email',
+  featureDictado: 'Dashboard de analíticas avanzado',
+  featureVozPuntuacion: 'Exportación de reportes a PDF y CSV',
+  featureNarrador: 'Soporte técnico prioritario 24/7',
+  featureResaltar: 'Acceso a nuevas integraciones beta',
+  featurePDF: 'Llamadas ilimitadas a la API del portal',
+  featurePip: 'Almacenamiento de archivos extendido',
 };
 
 export default {};
+

@@ -1,12 +1,12 @@
 export const pricing = {
-  title: 'Planes Premium de {{nombreSitio}}',
+  title: 'Planes Premium de {{siteName}}',
   subtitle: 'Elegí el plan que mejor se adapte a tus necesidades.',
   planFree: 'Free',
   planSemestral: 'Semestral',
   planAnual: 'Anual',
-  planFreeDesc: 'Para lectores casuales',
-  planSemestralDesc: 'Productividad al máximo',
-  planAnualDesc: 'Mejor valor absoluto',
+  planFreeDesc: 'Para probar la plataforma',
+  planSemestralDesc: 'Ideal para profesionales',
+  planAnualDesc: 'El mejor valor para empresas',
   popular: 'Popular',
   currentPlan: 'Tu Plan Actual',
   choose: 'Elegir',
@@ -24,7 +24,8 @@ export const pricing = {
   billingSuccess: '¡Pago Confirmado!',
   billingSuccessSubtitle: 'Tu plan ha sido activado con éxito. Ya eres miembro Premium.',
   billingButton: 'Ir al Panel de Control',
-  seoTitle: 'Planes Premium - {{nombreSitio}}',
-  seoDescription: 'Elegí el plan de {{nombreSitio}} que mejor se adapte a tus necesidades. Desbloquea dictado ilimitado, voces premium avanzadas y lector de PDF extendido.',
-  seoKeywords: 'planes {{nombreSitio}}, precios extension, dictado ilimitado, voces premium, lemon squeezy {{nombreSitio}}',
+  seoTitle: 'Planes Premium - {{siteName}}',
+  seoDescription: 'Elegí el plan de {{siteName}} que mejor se adapte a tus necesidades. Desbloquea todas las funcionalidades avanzadas y soporte prioritario.',
+  seoKeywords: 'planes {{siteName}}, precios plataforma, suscripcion premium, lemon squeezy {{siteName}}',
 };
+
