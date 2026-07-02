@@ -66,16 +66,20 @@
     "audit:i18n": "node scripts/audit_i18n.js"
   },
   "peerDependencies": {
-    "@ant-design/icons": "^5.6.1",
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0",
-    "styled-components": "^5.3.0 || ^6.0.0"
+    "react": ">=18.0.0 || ^19.0.0",
+    "react-dom": ">=18.0.0 || ^19.0.0",
+    "antd": ">=5.0.0",
+    "styled-components": ">=5.3.0 || ^6.0.0",
+    "@ant-design/icons": "^5.0.0"
   },
   "devDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "antd": "^5.26.6",
+    "styled-components": "^6.0.0",
     "@ant-design/icons": "^5.6.1",
     "@types/react": "^19.0.0",
     "@types/styled-components": "^5.1.0",
-    "styled-components": "^6.0.0",
     "typescript": "^5.0.0"
   },
   "license": "MIT"

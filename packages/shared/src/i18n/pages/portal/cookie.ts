@@ -1,6 +1,6 @@
 export const cookie = {
   title: 'Política de Cookies',
-  intro: 'En ZenithNexus utilizamos cookies para mejorar tu experiencia y ofrecerte funcionalidades personalizadas.',
+  intro: 'En {{nombreSitio}} utilizamos cookies para mejorar tu experiencia y ofrecerte funcionalidades personalizadas.',
   whyImportant: '¿Por qué son importantes las cookies?',
   reasonEssential: 'Funcionalidad esencial:',
   reasonEssentialDesc: 'Permiten que el portal funcione correctamente y recuerde tus preferencias.',

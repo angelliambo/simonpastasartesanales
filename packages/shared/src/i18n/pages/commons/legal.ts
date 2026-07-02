@@ -86,9 +86,9 @@ export const legal = {
   seccion13Texto2: 'El Equipo de {{nombreSitio}} no está bloqueando ni impidiendo activamente el funcionamiento de ningún otro sistema o servicio.',
 
   footerCopy: '© 2026 {{nombreSitio}}. Todos los derechos reservados. | Versión de legales: {{versionLegales}}',
-  seoTitle: 'Términos y Condiciones - ZenithNexus',
-  seoDescription: 'Términos y condiciones de uso de la plataforma y extensión ZenithNexus. Conoce los detalles de nuestra licencia de uso y limitación de responsabilidad.',
-  seoKeywords: 'terminos zenithnexus, condiciones de uso, licencia zenithnexus, legal zenithnexus',
+  seoTitle: 'Términos y Condiciones - {{nombreSitio}}',
+  seoDescription: 'Términos y condiciones de uso de la plataforma y extensión {{nombreSitio}}. Conoce los detalles de nuestra licencia de uso y limitación de responsabilidad.',
+  seoKeywords: 'terminos {{nombreSitio}}, condiciones de uso, licencia {{nombreSitio}}, legal {{nombreSitio}}',
 };
 
 export default {};

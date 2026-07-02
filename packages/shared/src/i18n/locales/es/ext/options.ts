@@ -81,7 +81,7 @@ export const options = {
   resaltadoDesactivado: 'Desactivado',
 
   pdfSectionTitulo: 'Lector de PDF',
-  pdfSectionDesc: 'Usa ZenithNexus dentro de archivos PDF para leer en voz alta.',
+  pdfSectionDesc: 'Usa {{nombreSitio}} dentro de archivos PDF para leer en voz alta.',
 
   sectionDemoTitulo: 'Demo y Pruebas',
   sectionDemoDesc: 'Prueba las funcionalidades de {{nombreSitio}} antes de usarlas',
@@ -150,7 +150,7 @@ export const options = {
   footerContacto: 'Contáctenos',
 
   sectionTerminosTitulo: 'Términos y Condiciones',
-  sectionTerminosDesc: 'Para usar ZenithNexus, debes aceptar los términos y condiciones de uso.',
+  sectionTerminosDesc: 'Para usar {{nombreSitio}}, debes aceptar los términos y condiciones de uso.',
   terminosVersion: 'Versión',
   terminosEstadoAceptado: 'Aceptado',
   terminosEstadoPendiente: 'Pendiente de aceptación',

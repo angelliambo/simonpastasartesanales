@@ -31,9 +31,9 @@ export const dashboard = {
   confirmDeleteButton: 'Confirmar eliminación',
   wellcomeCardTitle: 'Bienvenido',
   wellcomeCardSubtitle: 'Iniciá sesión para ver tu dashboard.',
-  seoTitle: 'Dashboard - ZenithNexus',
-  seoDescription: 'Panel de control de tu cuenta de ZenithNexus. Administra tus suscripciones, licencias premium y configuraciones de usuario.',
-  seoKeywords: 'dashboard zenithnexus, cuenta zenithnexus, licencia zenithnexus, suscripcion premium',
+  seoTitle: 'Dashboard - {{nombreSitio}}',
+  seoDescription: 'Panel de control de tu cuenta de {{nombreSitio}}. Administra tus suscripciones, licencias premium y configuraciones de usuario.',
+  seoKeywords: 'dashboard {{nombreSitio}}, cuenta {{nombreSitio}}, licencia {{nombreSitio}}, suscripcion premium',
 };
 
 export default {};

@@ -5,7 +5,7 @@
 export const content = {
   // Popup de idioma detectado
   idioma: {
-    titulo: 'PDF Reader - ZenithNexus',
+    titulo: 'PDF Reader - {{nombreSitio}}',
     mensaje: 'This page is in {{idioma}}. Do you want {{nombreSitio}} to read in that language?',
     btnUnaVez: 'Just this once',
     btnSiempre: 'Yes, always for any site',
@@ -16,7 +16,7 @@ export const content = {
   // Popup de idioma incompatible (advertencia)
   idiomaIncompatible: {
     titulo: 'Unsupported language',
-    mensaje: 'This page is in {{idioma}}. ZenithNexus does not fully support this language. The experience may not be optimal.',
+    mensaje: 'This page is in {{idioma}}. {{nombreSitio}} does not fully support this language. The experience may not be optimal.',
     btnAuto: 'Enable auto-recognition',
     btnConfig: 'Change in settings',
     btnIgnorar: 'Ignore'
@@ -66,93 +66,93 @@ export const content = {
     narracion: 'Narrating page...'
   },
 
-   // Notificaciones
-   notificacion: {
-     lecturaDetenida: 'Reading stopped',
-     dictamenDetenido: 'Dictation stopped',
-     errorContenido: 'The main content of this page could not be detected.'
-   },
+  // Notificaciones
+  notificacion: {
+    lecturaDetenida: 'Reading stopped',
+    dictamenDetenido: 'Dictation stopped',
+    errorContenido: 'The main content of this page could not be detected.'
+  },
 
-   // PDF Reader
-   pdfReader: {
-     titulo: 'PDF Reader - ZenithNexus',
-     paginaDe: 'Page {{actual}} of {{total}}',
-     play: 'Play',
-     stop: 'Stop',
-     next: 'Next',
-     prev: 'Previous',
-     irAPagina: 'Go to page',
-     cargando: 'Loading...',
-     precargando: 'Preloading page {{pagina}}...',
-     leyendo: 'Reading page {{pagina}}...',
-     pausado: 'Paused',
-     detenido: 'Stopped',
-     completado: 'Reading completed',
-     reanudar: 'Resume from page {{pagina}}',
-     empezarDesdeInicio: 'Start from beginning',
-     ultimaLeida: 'Last read: page {{pagina}}',
-     progreso: 'Progress: {{porcentaje}}%',
-     errorPagina: 'Error loading page {{pagina}}',
-     errorPDF: 'Error processing PDF',
-     texto: 'Text',
-     tablaContenido: 'Table of Contents',
-     marcadores: 'Bookmarks',
-     oraciones: 'sentences',
-     velocidad: 'Speed',
-     agregar: 'Add',
-     noMarcadores: 'No bookmarks yet',
-     pagina: 'Page',
-     eliminarMarcador: 'Delete bookmark',
-     velocidadLenta: 'Slow',
-     velocidadNormal: 'Normal',
-     velocidadRapida: 'Fast',
-     ocultarToolbar: 'Hide tools',
-     ocultarCompletamente: 'Hide completely',
-     dictar: 'Dictate',
-     resaltar: 'Highlight',
-     configuracion: 'Config'
-   },
+  // PDF Reader
+  pdfReader: {
+    titulo: 'PDF Reader - {{nombreSitio}}',
+    paginaDe: 'Page {{actual}} of {{total}}',
+    play: 'Play',
+    stop: 'Stop',
+    next: 'Next',
+    prev: 'Previous',
+    irAPagina: 'Go to page',
+    cargando: 'Loading...',
+    precargando: 'Preloading page {{pagina}}...',
+    leyendo: 'Reading page {{pagina}}...',
+    pausado: 'Paused',
+    detenido: 'Stopped',
+    completado: 'Reading completed',
+    reanudar: 'Resume from page {{pagina}}',
+    empezarDesdeInicio: 'Start from beginning',
+    ultimaLeida: 'Last read: page {{pagina}}',
+    progreso: 'Progress: {{porcentaje}}%',
+    errorPagina: 'Error loading page {{pagina}}',
+    errorPDF: 'Error processing PDF',
+    texto: 'Text',
+    tablaContenido: 'Table of Contents',
+    marcadores: 'Bookmarks',
+    oraciones: 'sentences',
+    velocidad: 'Speed',
+    agregar: 'Add',
+    noMarcadores: 'No bookmarks yet',
+    pagina: 'Page',
+    eliminarMarcador: 'Delete bookmark',
+    velocidadLenta: 'Slow',
+    velocidadNormal: 'Normal',
+    velocidadRapida: 'Fast',
+    ocultarToolbar: 'Hide tools',
+    ocultarCompletamente: 'Hide completely',
+    dictar: 'Dictate',
+    resaltar: 'Highlight',
+    configuracion: 'Config'
+  },
 
-    // Document tips
-    documentTip: {
-      googleDocs: '{{titulo}} · Read with {{leer_hotkey}} · Dictate with {{microfono_hotkey}}',
-      pdf: 'PDF detected · Preparing tools...'
-    },
+  // Document tips
+  documentTip: {
+    googleDocs: '{{titulo}} · Read with {{leer_hotkey}} · Dictate with {{microfono_hotkey}}',
+    pdf: 'PDF detected · Preparing tools...'
+  },
 
-    // Toolbar - visual narration controls
-    visualControls: {
-      toggleSubs: 'Enable/disable subtitles',
-      toggleHighlight: 'Enable/disable text highlighting'
-    },
+  // Toolbar - visual narration controls
+  visualControls: {
+    toggleSubs: 'Enable/disable subtitles',
+    toggleHighlight: 'Enable/disable text highlighting'
+  },
 
-    terminosPopup: {
-      funcLectura: 'read aloud',
-      funcMicrofono: 'the microphone',
-      funcEscritura: 'automatic writing',
-      funcNarrador: 'page narrator',
-      btnAceptarContinuar: 'Accept and Continue',
-      cuerpoAntesFunc: 'To use',
-      cuerpoDespuesFunc: 'you must accept the terms and conditions of use of ZenithNexus.',
-    },
+  terminosPopup: {
+    funcLectura: 'read aloud',
+    funcMicrofono: 'the microphone',
+    funcEscritura: 'automatic writing',
+    funcNarrador: 'page narrator',
+    btnAceptarContinuar: 'Accept and Continue',
+    cuerpoAntesFunc: 'To use',
+    cuerpoDespuesFunc: 'you must accept the terms and conditions of use of {{nombreSitio}}.',
+  },
 
-    // Ventana Picture-in-Picture (PiP)
-    pip: {
-      reading: 'Reading',
-      recording: 'Dictating',
-      ready: 'Ready',
-      progress: 'Progress',
-      listening: 'Listening...',
-      listeningPlaceholder: 'Dictated text will appear here...',
-      copy: 'Copy',
-      clear: 'Clear',
-      stopMic: 'Disable Microphone',
-      startMic: 'Enable Microphone',
-      pause: 'Pause',
-      play: 'Play',
-      stop: 'Stop all',
-      speed: 'Speed:',
-      trial: 'Trial'
-    }
+  // Ventana Picture-in-Picture (PiP)
+  pip: {
+    reading: 'Reading',
+    recording: 'Dictating',
+    ready: 'Ready',
+    progress: 'Progress',
+    listening: 'Listening...',
+    listeningPlaceholder: 'Dictated text will appear here...',
+    copy: 'Copy',
+    clear: 'Clear',
+    stopMic: 'Disable Microphone',
+    startMic: 'Enable Microphone',
+    pause: 'Pause',
+    play: 'Play',
+    stop: 'Stop all',
+    speed: 'Speed:',
+    trial: 'Trial'
+  }
 };
 
 export default {};
