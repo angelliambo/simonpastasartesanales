@@ -1,3 +1,5 @@
+import { BRAND_CONFIG } from '../config/brand';
+
 export type TranslationValue = string | Record<string, unknown>;
 export type TranslationObject = Record<string, TranslationValue>;
 
@@ -22,7 +24,7 @@ export function translate(
   fallbackLang: string,
   params: Record<string, string> = {},
 ): string {
-  const mergedParams = { ...params };
+  const mergedParams = { siteName: BRAND_CONFIG.siteName, ...params };
   const currentBase = currentLang.split('-')[0];
   const fallbackBase = fallbackLang.split('-')[0];
 
