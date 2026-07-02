@@ -17,7 +17,6 @@ const PrivacyPolicyPage = lazy(
   () => import("./pages/legal/PrivacyPolicyPage")
 );
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
-const VoiceCommandsPage = lazy(() => import("./pages/VoiceCommandsPage"));
 
 const AppRoutes = () => {
   return (
@@ -55,7 +54,6 @@ const AppRoutes = () => {
               <Route path="/support" element={<NotFoundPage />} />
             )}
 
-            <Route path="/commands" element={<VoiceCommandsPage />} />
             <Route path="/legal/terms" element={<TermsAndConditionsPage />} />
             <Route path="/legal/privacy" element={<PrivacyPolicyPage />} />
             <Route path="*" element={<NotFoundPage />} />
