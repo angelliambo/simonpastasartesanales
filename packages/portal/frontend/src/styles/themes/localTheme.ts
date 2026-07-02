@@ -7,16 +7,16 @@ import type { ThemeOverride } from '@factory/shared/design-sys/theme/types';
  */
 export const localThemeOverride: ThemeOverride = {
   colors: {
-    primary: {
-      50: '#fff7ed',
-      500: '#f97316',
-      600: '#ea580c',
-      700: '#c2410c',
-    }
+    // primary: {
+    //   50: '#fff7ed',
+    //   500: '#f97316',
+    //   600: '#ea580c',
+    //   700: '#c2410c',
+    // }
   },
   typography: {
-    fontFamily: {
-      primary: '"Inter", sans-serif',
-    }
+    // fontFamily: {
+    //   primary: '"Inter", sans-serif',
+    // }
   }
 };
