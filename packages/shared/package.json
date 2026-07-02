@@ -1,6 +1,6 @@
 {
   "name": "@factory/shared",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "MERN SaaS Factory Framework — shared core, white-label config and design system",
   "exports": {
     "./design-sys/theme/*": {
