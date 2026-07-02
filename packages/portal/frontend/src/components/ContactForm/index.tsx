@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { CONTACT_EMAIL } from '../shared/contact';
-import type { TFunction } from '../shared/types';
+import { BRAND_CONFIG } from '@factory/shared/config/brand';
+import type { TFunction } from '@factory/shared/design-sys/organisms/LegalPages/shared/types';
 import {
   SectionTitle, Paragraph, ContactCard, FormGroup, Label,
   Input, TextArea, SubmitButton, SuccessMessage, ErrorMessage,
-} from '../shared/styles';
+} from '@factory/shared/design-sys/organisms/LegalPages/shared/styles';
 
 interface ContactFormProps {
   t?: TFunction;
@@ -82,7 +82,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({
         completá el formulario a continuación. Te responderemos a la brevedad.
       </Paragraph>
       <Paragraph>
-        También podés contactarnos directamente a: <strong>{CONTACT_EMAIL}</strong>
+        También podés contactarnos directamente a: <strong>{BRAND_CONFIG.supportEmail}</strong>
       </Paragraph>
 
       <form onSubmit={handleSubmit}>
