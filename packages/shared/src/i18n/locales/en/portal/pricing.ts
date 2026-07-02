@@ -1,5 +1,5 @@
 export const pricing = {
-    title: 'Premium Plans for {{nombreSitio}}',
+  title: 'Premium Plans for {{nombreSitio}}',
   subtitle: 'Choose the plan that best fits your needs.',
   planFree: 'Free',
   planSemestral: 'Semestral',
@@ -24,8 +24,8 @@ export const pricing = {
   billingSuccess: 'Payment Confirmed!',
   billingSuccessSubtitle: 'Your plan has been successfully activated. You are now a Premium member.',
   billingButton: 'Go to Dashboard',
-  seoTitle: 'Premium Plans - ZenithNexus',
-  seoDescription: 'Choose the ZenithNexus plan that best fits your needs. Unlock unlimited dictation, advanced premium voices, and extended PDF reader features.',
-  seoKeywords: 'zenithnexus plans, extension pricing, unlimited dictation, premium voices, lemon squeezy zenithnexus',
+  seoTitle: 'Premium Plans - {{nombreSitio}}',
+  seoDescription: 'Choose the {{nombreSitio}} plan that best fits your needs. Unlock unlimited dictation, advanced premium voices, and extended PDF reader features.',
+  seoKeywords: '{{nombreSitio}} plans, extension pricing, unlimited dictation, premium voices, lemon squeezy {{nombreSitio}}',
 };
 export default {};

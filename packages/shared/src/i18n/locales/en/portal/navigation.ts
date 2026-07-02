@@ -5,7 +5,7 @@ export const navigation = {
   labelProgress: 'Progress',
   labelCommunication: 'Communication',
   labelSettings: 'Settings',
-  appTitle: 'ZenithNexus Portal',
+  appTitle: '{{nombreSitio}} Portal',
   ariaClose: 'Close navigation',
   ariaOpen: 'Open navigation',
 };

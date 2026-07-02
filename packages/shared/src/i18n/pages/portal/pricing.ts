@@ -24,7 +24,7 @@ export const pricing = {
   billingSuccess: '¡Pago Confirmado!',
   billingSuccessSubtitle: 'Tu plan ha sido activado con éxito. Ya eres miembro Premium.',
   billingButton: 'Ir al Panel de Control',
-  seoTitle: 'Planes Premium - ZenithNexus',
-  seoDescription: 'Elegí el plan de ZenithNexus que mejor se adapte a tus necesidades. Desbloquea dictado ilimitado, voces premium avanzadas y lector de PDF extendido.',
-  seoKeywords: 'planes zenithnexus, precios extension, dictado ilimitado, voces premium, lemon squeezy zenithnexus',
+  seoTitle: 'Planes Premium - {{nombreSitio}}',
+  seoDescription: 'Elegí el plan de {{nombreSitio}} que mejor se adapte a tus necesidades. Desbloquea dictado ilimitado, voces premium avanzadas y lector de PDF extendido.',
+  seoKeywords: 'planes {{nombreSitio}}, precios extension, dictado ilimitado, voces premium, lemon squeezy {{nombreSitio}}',
 };

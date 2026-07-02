@@ -12,16 +12,16 @@ export const content = {
     btnSitio: 'Sí, solo este sitio',
     btnNunca: 'No molestar nunca más'
   },
-  
+
   // Popup de idioma incompatible (advertencia)
   idiomaIncompatible: {
     titulo: 'Idioma no soportado',
-    mensaje: 'Esta página está en {{idioma}}. ZenithNexus no soporta completamente este idioma. La experiencia puede no ser óptima.',
+    mensaje: 'Esta página está en {{idioma}}. {{nombreSitio}} no soporta completamente este idioma. La experiencia puede no ser óptima.',
     btnAuto: 'Activar reconocimiento automático',
     btnConfig: 'Cambiar en configuración',
     btnIgnorar: 'Ignorar'
   },
-  
+
   // Premium feature lock
   featureLocked: 'Función premium',
   upgradeMessage: 'Esta función requiere un plan premium.',
@@ -34,12 +34,12 @@ export const content = {
     btnAuto: 'Activar reconocimiento automático',
     btnMantener: 'Mantener actual'
   },
-  
+
   // Confirmación de idioma
   idiomaConfirm: {
     titulo: 'Idioma detectado'
   },
-  
+
   // Banner de permisos
   permisos: {
     titulo: 'Permiso de micrófono',
@@ -48,7 +48,7 @@ export const content = {
     btnActivarMicrofono: 'Activar Micrófono',
     btnMasTarde: 'Más tarde'
   },
-  
+
   // Indicador STT (dictado)
   stt: {
     escuchando: 'Dictando...',
@@ -57,7 +57,7 @@ export const content = {
     dormant: 'Inactivo',
     error: 'Error de micrófono'
   },
-  
+
   // Indicador TTS (lectura)
   tts: {
     procesando: 'Preparando...',
@@ -65,7 +65,7 @@ export const content = {
     lectura: 'Leyendo...',
     narracion: 'Narrando página...'
   },
-  
+
   // Notificaciones
   notificacion: {
     lecturaDetenida: 'Lectura detenida',
@@ -133,7 +133,7 @@ export const content = {
     funcNarrador: 'el narrador de páginas',
     btnAceptarContinuar: 'Aceptar y Continuar',
     cuerpoAntesFunc: 'Para usar',
-    cuerpoDespuesFunc: 'debes aceptar los términos y condiciones de uso de ZenithNexus.',
+    cuerpoDespuesFunc: 'debes aceptar los términos y condiciones de uso de {{nombreSitio}}.',
   },
 
   // Estados adicionales
@@ -173,7 +173,7 @@ export const content = {
     play: 'Reproducir',
     stop: 'Detener todo',
     speed: 'Velocidad:',
-    tip: '💡 Controla ZenithNexus mientras navegas o trabajas en otras pestañas.',
+    tip: '💡 Controla {{nombreSitio}} mientras navegas o trabajas en otras pestañas.',
     trial: 'Prueba'
   }
 };

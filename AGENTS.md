@@ -1,4 +1,4 @@
-# ZenithNexus — AGENTS.md
+# Factory — AGENTS.md
 
 Monorepo: `packages/ext` (Chrome Extension), `packages/portal` (MERN), `packages/shared` (config + types + design-sys).
 

@@ -39,9 +39,9 @@ export const privacy = {
   seccion8Texto: 'Si tiene preguntas sobre esta Política de Privacidad, puede comunicarse a través de los canales oficiales de {{nombreSitio}}.',
 
   footerCopy: '© 2026 {{nombreSitio}}. Todos los derechos reservados. | Versión de legales: {{versionLegales}}',
-  seoTitle: 'Política de Privacidad - ZenithNexus',
-  seoDescription: 'Política de privacidad de ZenithNexus. Toda tu información de voz y dictado se procesa de forma 100% local en tu navegador.',
-  seoKeywords: 'privacidad zenithnexus, seguridad datos, dictado local, procesamiento local',
+  seoTitle: 'Política de Privacidad - {{nombreSitio}}',
+  seoDescription: 'Política de privacidad de {{nombreSitio}}. Toda tu información de voz y dictado se procesa de forma 100% local en tu navegador.',
+  seoKeywords: 'privacidad {{nombreSitio}}, seguridad datos, dictado local, procesamiento local',
 };
 
 export default {};

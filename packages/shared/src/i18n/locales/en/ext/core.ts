@@ -31,7 +31,7 @@ export const contextMenu = {
 export const terminos = {
   titulo: 'Terms and Conditions',
   tituloActualizados: 'Updated Terms',
-  descripcion: 'To use ZenithNexus, you must accept the terms and conditions of use.',
+  descripcion: 'To use {{nombreSitio}}, you must accept the terms and conditions of use.',
   versionLabel: 'Version: ',
   btnAceptar: 'Accept Terms',
   btnVer: 'View Full Terms',

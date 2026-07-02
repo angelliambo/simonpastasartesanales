@@ -31,9 +31,9 @@ export const dashboard = {
   confirmDeleteButton: 'Confirm deletion',
   wellcomeCardTitle: 'Wellcome',
   wellcomeCardSubtitle: 'Log in to view your dashboard.',
-  seoTitle: 'Dashboard - ZenithNexus',
-  seoDescription: 'Control panel for your ZenithNexus account. Manage subscriptions, premium licenses, and user configurations.',
-  seoKeywords: 'zenithnexus dashboard, zenithnexus account, zenithnexus license, premium subscription',
+  seoTitle: 'Dashboard - {{nombreSitio}}',
+  seoDescription: 'Control panel for your {{nombreSitio}} account. Manage subscriptions, premium licenses, and user configurations.',
+  seoKeywords: '{{nombreSitio}} dashboard, {{nombreSitio}} account, {{nombreSitio}} license, premium subscription',
 };
 
 export default {};

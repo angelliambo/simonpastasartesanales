@@ -54,7 +54,7 @@ export const legal = {
   seccion8Titulo: '8. Changes to the Service',
   seccion8Texto: 'The {{nombreSitio}} Team reserves the right to modify, suspend or discontinue any aspect of the extension at any time, without notice and without liability to Users.',
 
-seccion9Titulo: '9. Termination',
+  seccion9Titulo: '9. Termination',
   seccion9Texto1: 'The {{nombreSitio}} Team may terminate or suspend access to the extension immediately, without notice, for any reason, including but not limited to:',
   seccion9Item1: 'Breach of these Terms',
   seccion9Item2: 'Fraudulent or illegal activity',
@@ -86,9 +86,9 @@ seccion9Titulo: '9. Termination',
   seccion13Texto2: 'The {{nombreSitio}} Team does not actively block or impede the functioning of any other system or service.',
 
   footerCopy: '© 2026 {{nombreSitio}}. All rights reserved. | Legal Version: {{versionLegales}}',
-  seoTitle: 'Terms and Conditions - ZenithNexus',
-  seoDescription: 'Terms and conditions of use for the ZenithNexus platform and extension. Learn more about our license of use and limitation of liability.',
-  seoKeywords: 'zenithnexus terms, conditions of use, zenithnexus license, legal zenithnexus',
+  seoTitle: 'Terms and Conditions - {{nombreSitio}}',
+  seoDescription: 'Terms and conditions of use for the {{nombreSitio}} platform and extension. Learn more about our license of use and limitation of liability.',
+  seoKeywords: '{{nombreSitio}} terms, conditions of use, {{nombreSitio}} license, legal {{nombreSitio}}',
 };
 
 export default {};

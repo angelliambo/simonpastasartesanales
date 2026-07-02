@@ -25,9 +25,9 @@ export const wellcome = {
   errorCodigoIncorrecto: 'Incorrect code',
   codigoEnviadoACorreo: 'Code sent to your email.',
   codigoDev: 'Code (dev): {{code}}',
-  seoTitle: 'Welcome - ZenithNexus',
-  seoDescription: 'Connect your ZenithNexus account to sync the extension and activate your premium features.',
-  seoKeywords: 'welcome zenithnexus, login zenithnexus, extension sync',
+  seoTitle: 'Welcome - {{nombreSitio}}',
+  seoDescription: 'Connect your {{nombreSitio}} account to sync the extension and activate your premium features.',
+  seoKeywords: 'welcome {{nombreSitio}}, login {{nombreSitio}}, extension sync',
 };
 
 export default wellcome;

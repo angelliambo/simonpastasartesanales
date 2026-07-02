@@ -1,6 +1,6 @@
 export const cookie = {
   title: 'Cookie Policy',
-  intro: 'At ZenithNexus we use cookies to improve your experience and offer you personalized features.',
+  intro: 'At {{nombreSitio}} we use cookies to improve your experience and offer you personalized features.',
   whyImportant: 'Why are cookies important?',
   reasonEssential: 'Essential functionality:',
   reasonEssentialDesc: 'They allow the portal to function properly and remember your preferences.',
