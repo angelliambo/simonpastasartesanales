@@ -1,4 +1,4 @@
-import { BRAND_CONFIG } from '../config/brand';
+import { BRAND_CONFIG } from '@factory/shared/config/brand';
 
 export const globals = {
   siteName: BRAND_CONFIG.siteName,

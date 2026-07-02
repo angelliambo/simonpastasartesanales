@@ -1,4 +1,4 @@
-import { BRAND_CONFIG } from '../config/brand';
+import { BRAND_CONFIG } from '@factory/shared/config/brand';
 
 export type TranslationValue = string | Record<string, unknown>;
 export type TranslationObject = Record<string, TranslationValue>;

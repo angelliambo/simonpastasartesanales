@@ -17,7 +17,7 @@ import {
 } from "@ant-design/icons";
 import { FEATURES } from "@factory/shared/config/features";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
-import { SUPPORTED_LOCALES } from "@factory/shared/i18n/index";
+import { SUPPORTED_LOCALES } from "../i18n";
 
 const TopBar = styled.header`
   display: flex;

@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { translate } from '@factory/shared/i18n';
-import { globals } from '@factory/shared/i18n';
-import type { TranslationObject } from '@factory/shared/i18n';
-import { locales as allLocales } from '@factory/shared/i18n/locales';
+import { translate } from './t';
+import { globals } from './globals';
+import type { TranslationObject } from './index';
+import { locales as allLocales } from './locales';
 
 const STORAGE_KEY = 'zn_portal_lang';
 const DEFAULT_LANG = 'es';
