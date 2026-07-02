@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "types": [],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@factory/shared/*": [
+        "../../shared/src/*"
+      ],
+      "@shared/*": [
+        "../../shared/src/*"
+      ],
+      "@design-sys/*": [
+        "../../shared/src/design-sys/*"
+      ],
+      "shared-types/*": [
+        "../shared/dist/*"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ]
+}

@@ -1,0 +1,45 @@
+export const errors = {
+  somethingWentWrong: 'Algo salió mal',
+  unexpectedError: 'Ha ocurrido un error inesperado. Por favor, intentá de nuevo.',
+  errorDetails: 'Detalles del error (click para expandir)',
+  retry: '🔄 Intentar de nuevo',
+  themeTitle: 'Problema con el tema visual',
+  themeMessage: 'Hubo un problema al cargar la configuración visual. Hemos restaurado los valores por defecto. Por favor, intenta recargar la página.',
+  networkTitle: 'Problema de conexión',
+  networkMessage: 'No pudimos conectarnos al servidor. Por favor, verifica tu conexión a internet e intenta nuevamente.',
+  componentTitle: 'Error en un componente',
+  componentMessage: 'Algo salió mal al cargar esta sección. Puedes intentar recargar la página o volver atrás.',
+  unknownTitle: 'Algo salió mal',
+  unknownMessage: 'Ocurrió un error inesperado. No te preocupes, puedes intentar recargar la página o volver al inicio.',
+  technicalDetails: 'Detalles técnicos del error',
+  errorLabel: 'Error:',
+  causingComponent: 'Componente que causó el error:',
+  retryButton: '🔄 Reintentar',
+  goBackButton: '← Volver atrás',
+  goHomeButton: '🏠 Ir al inicio',
+
+  // Plantillas de estado genéricas para acciones
+  actionSuccess: 'Se completó con éxito: {{action}}',
+  actionError: 'No se pudo completar: {{action}}',
+  actionInfo: 'Información sobre {{action}}: {{info}}',
+  actionWarning: 'Advertencia al {{action}}: {{warning}}',
+
+  // Nombres de acciones para traducción dinámica
+  actionCreateUser: 'Creación de usuario',
+  actionDeleteUser: 'Eliminación de usuario',
+  actionUpdateUser: 'Actualización de usuario',
+  actionLoginAs: 'Inicio de sesión suplantado',
+  actionCopyEmail: 'Copia de dirección de correo',
+  actionDeleteAccount: 'Eliminación definitiva de cuenta',
+  actionRequestDeletion: 'Solicitud de código de eliminación',
+  actionRegister: 'Registro de cuenta',
+  actionLogin: 'Inicio de sesión',
+  actionGoogleLogin: 'Inicio de sesión con Google',
+  errWeb300: 'Error en la carga del portal web o inicialización.',
+  errWeb301: 'Fallo en la carga del diccionario de idiomas del portal.',
+  errWeb400: 'Error de inicio de sesión o registro de usuario.',
+  errApi500: 'Error crítico del servidor. Inténtalo de nuevo más tarde.',
+  errApi501: 'Fallo de verificación en la cuenta de Google.',
+};
+
+export default {};

@@ -1,0 +1,26 @@
+export const theme = {
+  pageTitle: 'テーマとアクセシビリティ設定',
+  themeSectionTitle: 'メインテーマ',
+  themeLight: 'ライトテーマ',
+  themeDark: 'ダークテーマ',
+  accessibilitySectionTitle: 'アクセシビリティオプション',
+  accessibilitySectionDescription: '視覚タイプに最適化されたカラーパレットを選択',
+  accessibilityDefault: '標準',
+  accessibilityDefaultDesc: '標準的な視覚向けの通常色',
+  accessibilityProtanopia: '第一色盲用',
+  accessibilityProtanopiaDesc: '赤の識別困難に対応',
+  accessibilityDeuteranopia: '第二色盲用',
+  accessibilityDeuteranopiaDesc: '緑の識別困難に対応',
+  accessibilityTritanopia: '第三色盲用',
+  accessibilityTritanopiaDesc: '青の識別困難に対応',
+  accessibilityHighContrast: 'ハイコントラスト',
+  accessibilityHighContrastDesc: '最大コントラストで読みやすさ向上',
+  currentConfigTitle: '現在の設定',
+  currentConfigThemeLabel: 'テーマ：',
+  currentConfigThemeLight: 'ライト',
+  currentConfigThemeDark: 'ダーク',
+  currentConfigAccessibilityLabel: 'アクセシビリティ：',
+  currentConfigAutoSaveNote: '変更は自動的に保存され、アプリケーション全体に即座に適用されます。',
+};
+
+export default {};

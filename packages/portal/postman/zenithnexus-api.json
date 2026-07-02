@@ -1,0 +1,469 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "ZenithNexus API",
+    "description": "Colección completa de Postman para la API de ZenithNexus. Incluye Auth (email+código + bridge), Identity, License y User.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "🏥 Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ]
+            },
+            "description": "Verifica que el servidor BFF esté funcionando."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🔐 Auth (Email+Código)",
+      "item": [
+        {
+          "name": "Send Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/send-token",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "send-token"
+              ]
+            },
+            "description": "Envía código de verificación de 6 dígitos al email."
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tiene token\", () => pm.expect(json.token).to.not.be.empty);",
+                  "pm.test(\"Tiene userId\", () => pm.expect(json.userId).to.not.be.empty);",
+                  "pm.environment.set(\"jwtToken\", json.token);",
+                  "pm.environment.set(\"userId\", json.userId);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"code\": \"{{authCode}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/verify-token",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "verify-token"
+              ]
+            },
+            "description": "Verifica el código recibido por email. Si el usuario no existe, lo crea automáticamente. Devuelve isNewUser. Guarda jwtToken y userId en variables."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🔗 Bridge (Extensión)",
+      "item": [
+        {
+          "name": "Exchange (userId → JWT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.environment.set(\"jwtToken\", json.token);",
+                  "pm.environment.set(\"userId\", json.userId);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{userId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/exchange",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "exchange"
+              ]
+            },
+            "description": "Intercambia userId por JWT. Usado por el bridge extensión → portal."
+          },
+          "response": []
+        },
+        {
+          "name": "Google Auth (One Tap)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credential\": \"<google-id-token>\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/google",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "google"
+              ]
+            },
+            "description": "Autenticación con Google ID Token. No configurado en dev (requiere Google Client ID)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "👤 Identity (Registro Ext)",
+      "item": [
+        {
+          "name": "Register / Sync",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var json = pm.response.json();",
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.environment.set(\"userId\", json.userId);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"name\": \"Angel\",\n  \"googleId\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/identity/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "identity",
+                "register"
+              ]
+            },
+            "description": "Registra o sincroniza usuario desde la extensión (Wellcome.tsx). Idempotente: si el email ya existe, devuelve el userId sin crear duplicado. Si el usuario estaba eliminado, lo reactiva."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "📋 License",
+      "item": [
+        {
+          "name": "Status",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Tiene plan, status, expiresAt\", () => {",
+                  "  var j = pm.response.json();",
+                  "  pm.expect(j).to.have.property('plan');",
+                  "  pm.expect(j).to.have.property('status');",
+                  "  pm.expect(j).to.have.property('expiresAt');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/license/status?email={{email}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "license",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{email}}"
+                },
+                {
+                  "key": "claimToken",
+                  "value": "{{claimToken}}",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Consulta el estado de la licencia. Si no hay claimToken, devuelve plan free."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Checkout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"variantId\": {{variantId_6m}}\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/license/checkout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "license",
+                "checkout"
+              ]
+            },
+            "description": "Genera URL de pago de LemonSqueezy."
+          },
+          "response": []
+        },
+        {
+          "name": "Claim License",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"claimToken\": \"{{claimToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/license/claim",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "license",
+                "claim"
+              ]
+            },
+            "description": "Asocia license a un dispositivo mediante claimToken."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Claim Token",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/license/claim-token?email={{email}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "license",
+                "claim-token"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{email}}"
+                }
+              ]
+            },
+            "description": "Obtiene el claimToken activo del usuario."
+          },
+          "response": []
+        },
+        {
+          "name": "Simulate Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Signature",
+                "value": "test-signature"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"meta\": {\n    \"event_name\": \"order_created\",\n    \"custom_data\": {\n      \"email\": \"{{email}}\"\n    }\n  },\n  \"data\": {\n    \"id\": \"order-123\",\n    \"type\": \"orders\",\n    \"attributes\": {\n      \"identifier\": \"LS-ORD-001\",\n      \"variant_id\": {{variantId_6m}},\n      \"customer_id\": 1,\n      \"status\": \"paid\"\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/webhooks/lemon-squeezy",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "webhooks",
+                "lemon-squeezy"
+              ]
+            },
+            "description": "Simula webhook de LemonSqueezy (order_created)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🗑️ User (Eliminación)",
+      "item": [
+        {
+          "name": "Request Deletion",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user/request-deletion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "request-deletion"
+              ]
+            },
+            "description": "Solicita código de eliminación de cuenta. Envía código al email."
+          },
+          "response": []
+        },
+        {
+          "name": "Confirm Deletion",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwtToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"code\": \"{{authCode}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user/confirm-deletion",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "user",
+                "confirm-deletion"
+              ]
+            },
+            "description": "Confirma eliminación de cuenta con código + JWT (requiere verifyIsLoggedIn middleware)."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "mern-saas-factory-framework",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MERN SaaS Factory Framework - Modular Monorepo Boilerplate",
+  "workspaces": [
+    "packages/portal",
+    "packages/portal/backend",
+    "packages/portal/frontend",
+    "packages/shared"
+  ],
+  "resolutions": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "@types/react": "^19.0.0"
+  },
+  "scripts": {
+    "portal:build": "yarn workspace @factory/portal build:all",
+    "portal:fdeploy": "yarn workspace @factory/portal fdeploy",
+    "portal:cleanup": "yarn workspace @factory/portal cleanup",
+    "portal:test-email": "yarn workspace @factory/backend test-email",
+    "shared:build": "yarn workspace @factory/shared build",
+    "shared:cleanup": "yarn workspace @factory/shared clean",
+    "build": "yarn shared:build && yarn portal:build",
+    "cleanup": "yarn shared:cleanup && yarn portal:cleanup",
+    "reset": "yarn cleanup && yarn cache clean --all && yarn install && yarn build",
+    "free-ports": "node scripts/free-ports.js",
+    "gen-key": "node scripts/generate-env-keys.js",
+    "audit:i18n": "yarn workspace @factory/shared audit:i18n",
+    "portal:audit-performance": "node scripts/audit-portal.js",
+    "wording:audit": "node scripts/audit-wording.js",
+    "gp": "node scripts/gp.js",
+    "rollout": "yarn portal:fdeploy"
+  },
+  "license": "MIT"
+}

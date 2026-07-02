@@ -1,0 +1,27 @@
+export const install = {
+  titleIos: 'Installer sur iOS',
+  titleAndroid: 'Installer sur Android',
+  titleNative: 'Installer l\'App',
+  titleNotAvailable: 'Installation non disponible',
+  subtitleIos: 'Suivez ces étapes pour ajouter l\'app à votre écran d\'accueil',
+  subtitleAndroid: 'Installez l\'app comme une application native sur votre appareil',
+  subtitleNative: 'Installez l\'app directement depuis votre navigateur',
+  subtitleNotAvailable: 'Votre navigateur ne prend pas en charge l\'installation PWA',
+  nextStep: 'Étape Suivante',
+  gotIt: 'Compris',
+  stepIos1: '1. Appuyez sur le bouton "Partager" en bas',
+  stepIos2: '2. Faites défiler et sélectionnez "Ajouter à l\'écran d\'accueil"',
+  stepIos3: '3. Appuyez sur "Ajouter" pour confirmer',
+  stepIos4: '4. Prêt ! L\'app apparaîtra sur votre écran d\'accueil',
+  stepAndroid1: '1. Appuyez sur le menu à trois points dans votre navigateur',
+  stepAndroid2: '2. Sélectionnez "Installer l\'app" ou "Ajouter à l\'écran d\'accueil"',
+  stepAndroid3: '3. Confirmez l\'installation',
+  stepAndroid4: '4. Prêt ! L\'app sera installée comme une application native',
+  stepNative1: '1. Cliquez sur le bouton "Installer"',
+  stepNative2: '2. Confirmez l\'installation dans la boîte de dialogue du navigateur',
+  stepNative3: '3. Prêt ! L\'app sera installée sur votre système',
+  notAvailableMessage: 'Votre navigateur ne prend pas en charge l\'installation PWA',
+  notAvailableSuggestion: 'Essayez Chrome, Edge ou Safari',
+};
+
+export default {};

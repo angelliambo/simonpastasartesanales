@@ -1,0 +1,40 @@
+# ⚠️ IMPORTANTE: Configurar el nombre de la app antes de desplegar
+# Ejecutar: fly apps create zenithnexus-portal o usar: fly launch
+app = "zenithnexus-portal"
+
+[build]
+  dockerfile = "../../Dockerfile"
+  [build.args]
+    REACT_APP_API_URL = "https://<domain>/api"
+    REACT_APP_GOOGLE_CLIENT_ID = "786288401709-4e10f2e6u3k0mkjaup9i13frbrsub3r5.apps.googleusercontent.com"
+primary_region = "gru"
+
+[env]
+HOSTNAME = "0.0.0.0"
+NODE_ENV = "production"
+PORT = "5000"
+# ⚠️ IMPORTANTE: Actualizar con la URL de tu app en Fly.io
+# FRONTEND_URL = "https://zenithnexus-portal.fly.dev"
+LOG_LEVEL = "info"
+LOG_REQUESTS = "true"
+LOG_ERRORS = "true"
+ENABLE_REQUEST_LOGGING = "false"
+ENABLE_ERROR_LOGGING = "true"
+ENABLE_DETAILED_ERRORS = "false"
+
+[http_service]
+auto_start_machines = true
+auto_stop_machines = true
+force_https = true
+internal_port = 80
+min_machines_running = 0
+
+[[statics]]
+guest_path = "/app/build"
+tigris_bucket = ""
+url_prefix = "/"
+
+[[vm]]
+cpu_kind = "shared"
+cpus = 1
+memory_mb = 1_024

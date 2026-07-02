@@ -1,0 +1,57 @@
+{
+  "id": "cb1c7df7-7170-4f51-872f-57125ee1c9ba",
+  "name": "ZenithNexus - Dev",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "email",
+      "value": "info@<domain>",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "userId",
+      "value": "6a10e3676bc9a4272ed3f186",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "jwtToken",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "authCode",
+      "value": "123456",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "claimToken",
+      "value": "",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "variantId_6m",
+      "value": "1663832",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "variantId_1y",
+      "value": "1663854",
+      "type": "default",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2026-05-22T00:00:00Z",
+  "_postman_exported_using": "Postman/10.0.0"
+}

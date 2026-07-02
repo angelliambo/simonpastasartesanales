@@ -1,0 +1,80 @@
+# Robots.txt for ZenithNexus Portal
+# https://www.robotstxt.org/robotstxt.html
+
+# Allow all search engine bots and AI crawlers
+User-agent: *
+Allow: /
+
+# Specifically invite and optimize for AI web crawlers
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: PerplexityBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Allow standard search engine crawlers
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Block access to private routes and API endpoints
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /build/
+Disallow: /.env
+Disallow: /.git/
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /yarn.lock
+Disallow: /tsconfig.json
+Disallow: /README.md
+Disallow: /CHANGELOG.md
+Disallow: /LICENSE
+
+# Block code/metadata extensions from indexation
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /*.map$
+Disallow: /*.ts$
+Disallow: /*.tsx$
+Disallow: /*.md$
+
+# Allow access to static assets and public routes
+Allow: /favicon.ico
+Allow: /robots.txt
+Allow: /sitemap.xml
+Allow: /manifest.json
+Allow: /apple-touch-icon.png
+Allow: /favicon-16x16.png
+Allow: /favicon-32x32.png
+Allow: /logo192.png
+Allow: /logo512.png
+Allow: /og-image.png
+
+# Sitemaps
+Sitemap: https://<domain>/sitemap.xml

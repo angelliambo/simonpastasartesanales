@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#3b82f6" />
+  <link rel="canonical" href="https://<domain>/" />
+
+  <!-- Meta tags básicos para SEO -->
+  <meta name="description"
+    content="ZenithNexus - Lector PDF a voz (TTS) local y Dictado por voz (STT) privado. La extensión de productividad y accesibilidad definitiva. 100% segura y offline." />
+  <meta name="keywords"
+    content="ZenithNexus, lector PDF a voz, dictado por voz, TTS local, STT privado, extensión accesibilidad, texto a voz offline, dislexia, productividad Chrome" />
+  <meta name="author" content="ZenithNexus" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="es-ES" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="rating" content="General" />
+  <meta name="distribution" content="Global" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://<domain>/" />
+  <meta property="og:title" content="ZenithNexus — Lector PDF a voz (TTS) local y Dictado por voz (STT) privado" />
+  <meta property="og:description"
+    content="ZenithNexus - Lector PDF a voz (TTS) local y Dictado por voz (STT) privado. La extensión de productividad y accesibilidad definitiva. 100% segura y offline." />
+  <meta property="og:image" content="https://<domain>/og-image.png" />
+  <meta property="og:image:secure_url" content="https://<domain>/og-image.png" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:image:alt" content="ZenithNexus — Lector PDF a voz y Dictado" />
+  <meta property="og:site_name" content="ZenithNexus" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://<domain>/" />
+  <meta property="twitter:title" content="ZenithNexus — Lector PDF a voz (TTS) local y Dictado por voz (STT) privado" />
+  <meta property="twitter:description"
+    content="ZenithNexus - Lector PDF a voz (TTS) local y Dictado por voz (STT) privado. La extensión de productividad y accesibilidad definitiva. 100% segura y offline." />
+  <meta property="twitter:image" content="https://<domain>/og-image.png" />
+  <meta property="twitter:image:alt" content="ZenithNexus — Lector PDF a voz y Dictado" />
+  <meta property="twitter:site" content="@factory" />
+  <meta property="twitter:creator" content="@factory" />
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+  <!-- Preconnect para mejorar performance (conectar temprano a recursos externos) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fuentes optimizadas: carga diferida con font-display swap para evitar render blocking -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+      rel="stylesheet">
+  </noscript>
+
+  <!-- Preload de imágenes críticas para LCP -->
+  <!-- Logo crítico para LCP - se carga con alta prioridad (todos los dispositivos) -->
+  <link rel="preload" href="%PUBLIC_URL%/logo192.png" as="image" fetchpriority="high">
+
+  <!-- og-image - LCP candidate en mobile, preload condicional con media query -->
+  <link rel="preload" href="%PUBLIC_URL%/og-image.png" as="image" fetchpriority="high" media="(max-width: 768px)">
+
+  <!-- Preload de recursos críticos para mejorar LCP -->
+  <!-- CSS crítico: Solo en producción (en desarrollo se inyecta dinámicamente) -->
+  <!-- El preload del CSS se maneja automáticamente por webpack en desarrollo -->
+
+  <!-- DNS prefetch para recursos externos (mejora conexión temprana) -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://accounts.google.com">
+
+  <!-- Google Identity Services - Carga lazy solo cuando se necesita (LoginPage/RegisterPage) -->
+  <!-- Script removido de aquí para lazy load - ahorra ~74KB en carga inicial -->
+
+  <title>ZenithNexus — Lector PDF a voz (TTS) local y Dictado por voz (STT) privado</title>
+
+  <!-- DESHABILITAR SERVICE WORKER TEMPORALMENTE -->
+  <script>
+    // Deshabilitar Service Worker completamente
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+  </script>
+
+  <!-- APLICAR TEMA ANTES DE QUE REACT SE MONTE - EVITA PARPADEO -->
+  <script>
+    (function () {
+      try {
+        // Esperar a que document.body esté disponible
+        if (typeof document === 'undefined' || !document.documentElement) {
+          return;
+        }
+
+        // Leer tema del localStorage
+        const savedConfig = localStorage.getItem('zn-portal-user-theme');
+        let theme = 'light';
+
+        if (savedConfig) {
+          try {
+            const parsed = JSON.parse(savedConfig);
+            // Verificar si tiene autoDetect habilitado
+            if (parsed.autoDetect !== false) {
+              // Detectar preferencia del sistema
+              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              theme = prefersDark ? 'dark' : 'light';
+            } else {
+              theme = parsed.theme || 'light';
+            }
+          } catch (e) {
+            // Si hay error, detectar preferencia del sistema
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            theme = prefersDark ? 'dark' : 'light';
+          }
+        } else {
+          // Si no hay configuración guardada, detectar preferencia del sistema
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          theme = prefersDark ? 'dark' : 'light';
+        }
+
+        // Aplicar tema inmediatamente al HTML
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-accessibility', 'default');
+
+        // Aplicar color de fondo según tema para evitar parpadeo
+        if (theme === 'dark') {
+          document.documentElement.style.backgroundColor = '#1a1a1a';
+        } else {
+          document.documentElement.style.backgroundColor = '#ffffff';
+        }
+
+        // Aplicar al body solo si existe (puede no existir aún en el head)
+        if (document.body) {
+          document.body.className = 'theme-' + theme + ' accessibility-default';
+          if (theme === 'dark') {
+            document.body.style.backgroundColor = '#1a1a1a';
+          } else {
+            document.body.style.backgroundColor = '#ffffff';
+          }
+        } else {
+          // Si body no existe aún, esperar a que esté disponible
+          const applyToBody = function () {
+            if (document.body) {
+              document.body.className = 'theme-' + theme + ' accessibility-default';
+              if (theme === 'dark') {
+                document.body.style.backgroundColor = '#1a1a1a';
+              } else {
+                document.body.style.backgroundColor = '#ffffff';
+              }
+            } else {
+              // Reintentar en el siguiente tick
+              setTimeout(applyToBody, 0);
+            }
+          };
+          // Intentar aplicar cuando el DOM esté listo
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', applyToBody);
+          } else {
+            applyToBody();
+          }
+        }
+      } catch (e) {
+        // Si hay error, usar tema light por defecto
+        if (document.documentElement) {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.style.backgroundColor = '#ffffff';
+        }
+        if (document.body) {
+          document.body.className = 'theme-light accessibility-default';
+          document.body.style.backgroundColor = '#ffffff';
+        }
+      }
+    })();
+  </script>
+
+</head>
+
+<body>
+  <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
+  <div id="root">
+    <!-- Contenido semántico estructurado de marketing para SEO y Agentes de IA (reemplazado por React al inicializar la SPA) -->
+    <div style="display: none;">
+      <h1>ZenithNexus - Lector PDF a voz (TTS) local y Dictado por voz (STT) privado</h1>
+      <h2>La extensión de productividad, accesibilidad y lectura definitiva para tu navegador Chrome.</h2>
+      <p>
+        ZenithNexus es la herramienta líder en accesibilidad que transforma la manera en que lees, escribes e
+        interactúas con la voz en Internet. Diseñada para profesionales, estudiantes y usuarios con dislexia o TDAH,
+        permite escuchar documentos en voz alta y dictar texto con alta precisión. Todo se procesa de forma 100% local
+        en tu navegador para garantizar una privacidad absoluta y soporte offline total.
+      </p>
+
+      <h3>¿Por qué elegir la extensión de accesibilidad ZenithNexus?</h3>
+      <ul>
+        <li><strong>Lector PDF a voz (TTS - Text-to-Speech) Local:</strong> Lee y escucha cualquier archivo PDF o página
+          web con voces integradas de alta calidad. Cuenta con resaltado palabra por palabra en sincronía con la
+          lectura, velocidad de voz personalizable (0.5x a 2.0x) y panel de texto para lectura inmersiva.</li>
+        <li><strong>Dictado por Voz Profesional (STT - Speech-to-Text) Privado:</strong> Dicta texto con precisión en
+          cualquier formulario, correo electrónico o red social. Admite dictado inteligente con puntuación automática en
+          9 idiomas sin enviar tu voz a servidores externos.</li>
+        <li><strong>Modo Narrador Web Inteligente:</strong> Escucha artículos web completos sin distracciones. Omitimos
+          automáticamente anuncios, menús de navegación y barras laterales para ofrecerte una experiencia de audiolibro
+          limpia.</li>
+        <li><strong>Privacidad Garantizada y Funcionamiento Offline:</strong> Cero almacenamiento de datos, sin
+          grabación de voz en la nube. ZenithNexus funciona completamente en el lado del cliente (browser-side)
+          respetando al máximo tu privacidad y seguridad informática.</li>
+      </ul>
+
+      <h3>Descarga ZenithNexus en la Chrome Web Store</h3>
+      <p>
+        Optimiza tu productividad y cuida tu salud visual. ZenithNexus es compatible con los principales navegadores
+        Chromium. Descarga hoy mismo la extensión y experimenta la comunicación y la lectura en su punto máximo de
+        seguridad.
+      </p>
+    </div>
+
+    <div
+      style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: fixed; inset: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; transition: background-color 0.2s;">
+      <div
+        style="width: 48px; height: 48px; border: 4px solid rgba(156, 163, 175, 0.15); border-top: 4px solid #3b82f6; border-radius: 50%; animation: portal-spin 1s linear infinite; margin-bottom: 24px;">
+      </div>
+      <div style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: #3b82f6;" id="portal-loader-logo">
+        ZenithNexus</div>
+      <div style="font-size: 13px; color: #9ca3af; margin-top: 8px;" id="portal-loader-text">Cargando aplicación...
+      </div>
+    </div>
+    <script>
+      (function () {
+        const theme = document.documentElement.getAttribute('data-theme') || 'light';
+        const logoEl = document.getElementById('portal-loader-logo');
+        const textEl = document.getElementById('portal-loader-text');
+        if (theme === 'dark') {
+          if (logoEl) logoEl.style.color = '#60a5fa';
+          if (textEl) textEl.style.color = '#9ca3af';
+        } else {
+          if (logoEl) logoEl.style.color = '#2563eb';
+          if (textEl) textEl.style.color = '#4b5563';
+        }
+      })();
+    </script>
+    <style>
+      @keyframes portal-spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </div>
+</body>
+
+</html>
