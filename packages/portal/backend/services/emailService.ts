@@ -1,8 +1,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import config from "../config/environment";
-import { translate } from "@factory/shared/i18n/t";
-import { locales } from "@factory/shared/i18n/locales";
+import { translateEmail } from "./emailTranslations";
 
 function normalizeLocale(requested?: string): string {
   if (!requested) return "es-MX";
@@ -31,7 +30,7 @@ function normalizeLocale(requested?: string): string {
 
 function t(key: string, locale?: string, params: Record<string, string> = {}): string {
   const currentLang = normalizeLocale(locale);
-  return translate(key, locales as any, currentLang, "es-MX", params);
+  return translateEmail(key, currentLang, params);
 }
 
 interface EmailPayload {

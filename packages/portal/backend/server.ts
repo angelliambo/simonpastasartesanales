@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import { createServer } from "http";
 import helmet from "helmet";
 import apiRoutes from "./routes/index";
-import webhookRoutes from "./routes/webhookRoutes";
+
 import { connectDB } from "./config/db";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -40,8 +40,6 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-app.use("/api/webhooks", checkFeature("ENABLE_BILLING_LEMON"), webhookRoutes);
 
 app.use(
   cors({

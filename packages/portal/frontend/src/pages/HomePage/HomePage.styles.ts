@@ -167,7 +167,7 @@ export const HeroActions = styled.div`
 `;
 
 const gradientBtnMixin = css`
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  background: ${({ theme }) => theme.gradients.premium};
   color: #fff;
   border: none;
   border-radius: ${({ theme }) => theme.borderRadius.lg};

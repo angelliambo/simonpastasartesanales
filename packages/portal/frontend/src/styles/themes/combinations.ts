@@ -3,6 +3,7 @@ import { lightTheme } from "./light";
 import { darkTheme } from "./dark";
 import { highContrastTheme } from "./accessibility/high-contrast";
 import { grayScale, daltonismScales } from "./colors";
+import { localThemeOverride } from "./localTheme";
 
 /**
  * Combina un tema base con un tema de accesibilidad
@@ -331,7 +332,6 @@ export function getCombinedTheme(
         theme = lightTheme;
     }
 
-    // Validar que el tema tenga todas las propiedades necesarias
     if (
       !theme ||
       !theme.colors ||
@@ -343,13 +343,59 @@ export function getCombinedTheme(
       return lightTheme;
     }
 
-    // Aplicar colores personalizados si están definidos
-    const finalTheme = applyCustomColors(theme, customColors);
+    // Aplicar colores personalizados dinámicos si están definidos
+    let finalTheme = applyCustomColors(theme, customColors);
 
-    return finalTheme;
-  } catch (error) {
-    console.error("Error en getCombinedTheme:", error);
-    // Siempre retornar un tema válido como último recurso
-    return lightTheme;
+  // Aplicar sobreescrituras semánticas del tema local
+  finalTheme = deepMerge(finalTheme, localThemeOverride);
+
+  // Re-calcular dinámicamente gradientes y brillos basados en los colores finales resultantes
+  if (finalTheme.colors && finalTheme.colors.primary && finalTheme.colors.secondary && finalTheme.colors.tertiary) {
+    finalTheme.gradients = {
+      ...finalTheme.gradients,
+      brand: `linear-gradient(135deg, ${finalTheme.colors.primary[400] || '#60a5fa'} 0%, ${finalTheme.colors.tertiary[300] || '#d8b4fe'} 50%, ${finalTheme.colors.secondary[400] || '#4ade80'} 100%)`,
+      premium: `linear-gradient(135deg, ${finalTheme.colors.primary[500] || '#3b82f6'} 0%, ${finalTheme.colors.tertiary[500] || '#a855f7'} 50%, ${finalTheme.colors.tertiary[700] || '#7c3aed'} 100%)`,
+      highlight: `linear-gradient(135deg, ${finalTheme.colors.primary[500] || '#3b82f6'} 0%, ${finalTheme.colors.primary[700] || '#1d4ed8'} 100%)`,
+    };
+
+    if (finalTheme.effects) {
+      finalTheme.effects = {
+        ...finalTheme.effects,
+        glow: {
+          primary: `0 4px 12px ${(finalTheme.colors.primary[500] || '#3b82f6')}66`,
+          premium: `0 4px 12px ${(finalTheme.colors.tertiary[500] || '#a855f7')}66`,
+          success: `0 4px 12px ${(finalTheme.colors.success[500] || '#22c55e')}66`,
+        }
+      };
+    }
   }
+
+  return finalTheme;
+} catch (error) {
+  console.error("Error en getCombinedTheme:", error);
+  // Siempre retornar un tema válido como último recurso
+  return lightTheme;
+}
+}
+
+/**
+ * Utilidad de mezcla profunda (deep merge) para fusionar el override del tema.
+ */
+function deepMerge(target: any, source: any): any {
+  if (!source) return target;
+  const output = { ...target };
+
+  for (const key of Object.keys(source)) {
+    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+      if (key in target) {
+        output[key] = deepMerge(target[key], source[key]);
+      } else {
+        output[key] = source[key];
+      }
+    } else {
+      output[key] = source[key];
+    }
+  }
+
+  return output;
 }

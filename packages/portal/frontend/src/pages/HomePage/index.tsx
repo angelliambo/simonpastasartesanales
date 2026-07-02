@@ -48,21 +48,6 @@ import {
   StatLabel,
   StatList,
   StatListItem,
-  PricingGrid,
-  PricingCard,
-  PopularBadge,
-  BestValueBadge,
-  PlanName,
-  PlanSubtitle,
-  PriceContainer,
-  Currency,
-  PriceAmount,
-  BillingPeriod,
-  FeaturesList,
-  FeatureItem,
-  FeatureDisabledItem,
-  PricingButton,
-  FreePricingButton,
   TestimonialsGrid,
   TestimonialCard,
   TestimonialQuote,
@@ -82,16 +67,7 @@ import {
   HeroGoogleButtonWrapper,
 } from "./HomePage.styles";
 
-const FEATURE_KEY_MAP: Record<string, string> = {
-  "Lector de texto seleccionado": "pages.plans.featureLector",
-  "Subtítulos cinéticos": "pages.plans.featureSubtitulos",
-  "Dictado ilimitado": "pages.plans.featureDictado",
-  "Comandos de voz (puntuación)": "pages.plans.featureVozPuntuacion",
-  "Narrador de página completa": "pages.plans.featureNarrador",
-  "Resaltar texto al leer": "pages.plans.featureResaltar",
-  "Leer en PDF": "pages.plans.featurePDF",
-  "Pantalla flotante (Always-on-Top)": "pages.plans.featurePip",
-};
+
 
 const SECTIONS = [
   "hero",
