@@ -1,5 +1,4 @@
 export { home } from './home';
-export { pricing } from './pricing';
 export { login, register } from './login';
 export { errors } from './errors';
 export { navigation } from './navigation';

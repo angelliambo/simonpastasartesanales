@@ -11,18 +11,6 @@
       "types": "./dist/design-sys/atoms/*/index.d.ts",
       "default": "./dist/design-sys/atoms/*/index.js"
     },
-    "./design-sys/organisms/*": {
-      "types": "./dist/design-sys/organisms/*/index.d.ts",
-      "default": "./dist/design-sys/organisms/*/index.js"
-    },
-    "./design-sys/organisms/LegalPages/*": {
-      "types": "./dist/design-sys/organisms/LegalPages/*/index.d.ts",
-      "default": "./dist/design-sys/organisms/LegalPages/*/index.js"
-    },
-    "./design-sys/organisms/LegalPages/shared/*": {
-      "types": "./dist/design-sys/organisms/LegalPages/shared/*.d.ts",
-      "default": "./dist/design-sys/organisms/LegalPages/shared/*.js"
-    },
     "./design-sys/mixins/*": {
       "types": "./dist/design-sys/mixins/*.d.ts",
       "default": "./dist/design-sys/mixins/*.js"

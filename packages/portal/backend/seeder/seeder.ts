@@ -5,7 +5,7 @@ import path from "path";
 import { encrypt, hashEmail } from "../utils/encryption";
 import UserModel from "../models/userModel";
 import License, { generateClaimToken } from "../models/DeviceLicense";
-import { PLANS } from "@factory/shared/config/plans";
+
 
 // ── Guardia de producción ──
 if (process.env.NODE_ENV === "production" && process.env.ALLOW_SEED !== "true") {
@@ -110,7 +110,7 @@ async function seed() {
         claimToken: generateClaimToken(),
         lemonOrderId: 0,
         lemonCustomerId: 0,
-        variantId: PLANS[u.plan as keyof typeof PLANS]?.variantId || 0,
+        variantId: 0,
         plan: u.plan,
         status: u.plan === "free" ? "active" : "active",
         expiresAt: u.expiresAt,

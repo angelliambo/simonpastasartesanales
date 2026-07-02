@@ -1,10 +1,7 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useCreateCheckoutMutation } from "../../services/api/licenseService";
 import { useSnackbar } from "../../components/ui/atoms/Snackbar";
-import { PLANS } from "@factory/shared/config/plans";
-import { CHROME_STORE_URL } from "@factory/shared/config/urls";
 import type { PlanId } from "@factory/shared/types/plan";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { FEATURES } from "@factory/shared/config/features";
@@ -25,7 +22,6 @@ import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
   AudioOutlined,
   SoundOutlined,
-  BookOutlined,
   FileTextOutlined,
   MessageOutlined,
   MacCommandOutlined,
@@ -100,7 +96,6 @@ const FEATURE_KEY_MAP: Record<string, string> = {
 const SECTIONS = [
   "hero",
   "features",
-  ...(FEATURES.ENABLE_BILLING_LEMON ? ["pricing"] : []),
   "stats",
   "testimonials",
   "cta",
@@ -109,7 +104,6 @@ const SECTIONS = [
 const SECTION_LABELS: Record<string, string> = {
   features: "Funciones",
   stats: "Estadísticas",
-  ...(FEATURES.ENABLE_BILLING_LEMON ? { pricing: "Planes" } : {}),
   testimonials: "Opiniones",
   cta: "Comenzar",
 };
@@ -208,11 +202,6 @@ const HomePage: React.FC = () => {
 
   const handleLogin = useCallback(() => setShowRegister(true), []);
   const handlePricing = useCallback(() => navigate("/pricing"), [navigate]);
-  const handleLicense = useCallback(() => navigate("/license"), [navigate]);
-
-  const handleInstall = useCallback(() => {
-    window.open(CHROME_STORE_URL, "_blank", "noopener,noreferrer");
-  }, []);
 
   const userInteracted = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -242,40 +231,6 @@ const HomePage: React.FC = () => {
     return new Set(["hero"]);
   });
   const { showError } = useSnackbar();
-  const [pendingPlanId, setPendingPlanId] = useState<string | null>(null);
-  const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
-  const [checkout, { isLoading }] = useCreateCheckoutMutation();
-
-  const handleSubscribe = async (planId: string) => {
-    if (!loggedInUser) {
-      setPendingPlanId(planId);
-      setShowRegister(true);
-      return;
-    }
-
-    try {
-      setLoadingPlanId(planId);
-      const response = await checkout({ plan: planId }).unwrap();
-      if (response?.url) {
-        window.open(response.url, "_blank");
-        navigate(`/billing?plan=${planId}`);
-      } else {
-        showError(t("pages.pricing.errorNoCheckoutUrl") || "No checkout URL");
-      }
-    } catch (err: any) {
-      showError(err.data?.error || t("pages.pricing.errorServerError") || "Server Error");
-    } finally {
-      setLoadingPlanId(null);
-    }
-  };
-
-  useEffect(() => {
-    if (loggedInUser && pendingPlanId) {
-      const planToSub = pendingPlanId;
-      setPendingPlanId(null);
-      handleSubscribe(planToSub);
-    }
-  }, [loggedInUser, pendingPlanId]);
 
   useAutoScroll(SECTIONS, activeSection, userInteracted, timerRef, setActiveSection);
 
@@ -506,99 +461,6 @@ const HomePage: React.FC = () => {
         </FeaturesInner>
       </VhSection>
 
-      {FEATURES.ENABLE_BILLING_LEMON && preloadedSections.has("pricing") && (
-        <VhSection
-          id="pricing"
-          $variant="black"
-          $visible={preloadedSections.has("pricing")}
-        >
-          <Container maxWidth="lg" padding="none">
-            <SectionTitle>{t("pages.home.pricingSectionTitle")}</SectionTitle>
-            <SectionSubtitle>
-              {t("pages.home.pricingSectionSubtitle")}
-            </SectionSubtitle>
-            <PricingGrid>
-              {(["free", "6_meses", "1_ano"] as PlanId[]).map((planId) => {
-                const plan = PLANS[planId];
-                const allPremium = PLANS["1_ano"].features;
-                const planDescKey =
-                  planId === "free"
-                    ? "planFreeDesc"
-                    : planId === "6_meses"
-                      ? "planSemestralDesc"
-                      : "planAnualDesc";
-                const billingKey =
-                  planId === "free"
-                    ? "billingFree"
-                    : planId === "6_meses"
-                      ? "billingSemestral"
-                      : "billingAnual";
-                return (
-                  <PricingCard
-                    key={planId}
-                    $popular={plan.badge === "popular"}
-                    $bestValue={plan.badge === "best-value"}
-                  >
-                    {plan.badge === "popular" && (
-                      <PopularBadge>{t("pages.plans.popular")}</PopularBadge>
-                    )}
-                    {plan.badge === "best-value" && (
-                      <BestValueBadge>
-                        {t("pages.plans.bestValue")}
-                      </BestValueBadge>
-                    )}
-                    <PlanName>{plan.name}</PlanName>
-                    <PlanSubtitle>{t("pages.plans." + planDescKey)}</PlanSubtitle>
-                    <PriceContainer>
-                      <Currency>$</Currency>
-                      <PriceAmount>{plan.price}</PriceAmount>
-                      <BillingPeriod>
-                        {t("pages.plans." + billingKey)}
-                      </BillingPeriod>
-                    </PriceContainer>
-                    <FeaturesList>
-                      {plan.features.map((f) => (
-                        <FeatureItem key={f}>
-                          {t(FEATURE_KEY_MAP[f] || f)}
-                        </FeatureItem>
-                      ))}
-                      {planId !== "1_ano" &&
-                        allPremium
-                          .filter((f) => !plan.features.includes(f))
-                          .map((f) => (
-                            <FeatureDisabledItem key={f}>
-                              {t(FEATURE_KEY_MAP[f] || f)}
-                            </FeatureDisabledItem>
-                          ))}
-                    </FeaturesList>
-                    {planId === "free" ? (
-                      <FreePricingButton disabled variant="secondary">
-                        {t("pages.plans.currentPlan")}
-                      </FreePricingButton>
-                    ) : (
-                      <PricingButton
-                        $primary={plan.badge === "popular"}
-                        variant={plan.badge === "popular" ? "primary" : "secondary"}
-                        disabled={isLoading}
-                        onClick={() => handleSubscribe(planId)}
-                      >
-                        {isLoading && loadingPlanId === planId ? (
-                          <>
-                            <ZnIcon icon={LoadingOutlined} spin style={{ marginRight: '8px' }} />
-                            {t("pages.pricing.processingRequest")}
-                          </>
-                        ) : (
-                          `${t("pages.plans.choose")} ${plan.name.split(" ")[0]}`
-                        )}
-                      </PricingButton>
-                    )}
-                  </PricingCard>
-                );
-              })}
-            </PricingGrid>
-          </Container>
-        </VhSection>
-      )}
 
       <VhSection
         id="stats"

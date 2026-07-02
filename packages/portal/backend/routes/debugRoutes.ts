@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel";
 import { decrypt, encrypt, hashEmail } from "../utils/encryption";
 import config from "../config/environment";
-import { getOrderStatus, getSubscriptionStatus, findOrderByEmail, getVariantDetails } from "../services/lemonSqueezy";
+
 import { verifyIsLoggedIn, verifyIsAdmin } from "../middleware/verifyAuthToken";
 import SupportTicket, { generateTicketId } from "../models/SupportTicket";
 import { sendUserTicketReplyNotification } from "../services/emailService";
@@ -394,37 +394,7 @@ router.get("/licenses/lookup", async (req: Request, res: Response) => {
         createdAt: user.createdAt,
       },
       license: license || null,
-      lemonSqueezy: null,
-      lemonSqueezyOrders: null,
     };
-
-    // Siempre consultar LS por email (aunque no haya DeviceLicense)
-    try {
-      const orders = await findOrderByEmail(email);
-      result.lemonSqueezyOrders = orders;
-    } catch (e: any) {
-      result.lemonSqueezyError = e.message;
-    }
-
-    if (license?.lemonSubscriptionId) {
-      try {
-        result.lemonSqueezy = await getSubscriptionStatus(license.lemonSubscriptionId);
-      } catch (e: any) {
-        result.lemonSqueezySubError = e.message;
-      }
-    } else if (license?.lemonOrderId) {
-      try {
-        const order = await getOrderStatus(license.lemonOrderId);
-        result.lemonSqueezy = order;
-        if (order.subscriptionId) {
-          try {
-            result.lemonSqueezySub = await getSubscriptionStatus(order.subscriptionId);
-          } catch { }
-        }
-      } catch (e: any) {
-        result.lemonSqueezyOrderError = e.message;
-      }
-    }
 
     res.json({ success: true, ...result });
   } catch (error) {

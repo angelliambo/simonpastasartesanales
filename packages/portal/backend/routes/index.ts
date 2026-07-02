@@ -2,7 +2,6 @@ import express from "express";
 import rateLimit from "express-rate-limit";
 import authTokenRoutes from "./authTokenRoutes";
 import googleAuth from "./googleAuth";
-import licenseRoutes from "./licenseRoutes";
 import identityRoutes from "./identityRoutes";
 import supportRoutes from "./supportRoutes";
 import userRoutes from "./userRoutes";
@@ -26,7 +25,6 @@ const authLimiter = rateLimit({
 
 apiRoutes.use("/auth", checkFeature("ENABLE_GOOGLE_AUTH"), authLimiter, authTokenRoutes);
 apiRoutes.use("/auth", checkFeature("ENABLE_GOOGLE_AUTH"), authLimiter, googleAuth);
-apiRoutes.use("/license", checkFeature("ENABLE_BILLING_LEMON"), licenseRoutes);
 apiRoutes.use("/identity", identityRoutes);
 apiRoutes.use("/support", checkFeature("ENABLE_TICKETING_SYSTEM"), supportRoutes);
 apiRoutes.use("/user", userRoutes);

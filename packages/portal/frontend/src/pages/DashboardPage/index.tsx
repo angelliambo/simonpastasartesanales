@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useGetProfileQuery, useRequestDeletionMutation, useDeleteAccountMutation } from "../../services/api/userService";
 import { logout } from "../../store/slices/authSlice";
-import { PLANS } from "@factory/shared/config/plans";
+
 import { AnimatedBackground } from "../../components/AnimatedBackground";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { useSnackbar } from "../../components/ui/atoms/Snackbar";
@@ -85,8 +85,7 @@ const DashboardPage: React.FC = () => {
   const getPlanName = (plan?: string) => {
     if (plan === "god_mode") return "God Mode";
     if (plan === "trial") return "Prueba";
-    if (plan && plan in PLANS) return (PLANS as any)[plan]?.name || plan;
-    return "Free";
+    return plan || "Free";
   };
 
   const getRemainingDays = (expiresAtStr?: string | null) => {

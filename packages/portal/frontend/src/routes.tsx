@@ -6,12 +6,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { FEATURES } from "@factory/shared/config/features";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
-const PricingPage = lazy(() => import("./pages/PricingPage"));
 const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const SupportPage = lazy(() => import("./pages/SupportPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
-const BillingPage = lazy(() => import("./pages/BillingPage"));
 const TermsAndConditionsPage = lazy(
   () => import("./pages/legal/TermsAndConditionsPage")
 );
@@ -47,19 +45,6 @@ const AppRoutes = () => {
                 <Route path="/dashboard" element={<NotFoundPage />} />
                 <Route path="/admin" element={<NotFoundPage />} />
                 <Route path="/debug" element={<NotFoundPage />} />
-              </>
-            )}
-
-            {/* Rutas de Facturación */}
-            {FEATURES.ENABLE_BILLING_LEMON ? (
-              <>
-                <Route path="/pricing" element={<PricingPage />} />
-                <Route path="/billing" element={<ProtectedRoute><BillingPage /></ProtectedRoute>} />
-              </>
-            ) : (
-              <>
-                <Route path="/pricing" element={<NotFoundPage />} />
-                <Route path="/billing" element={<NotFoundPage />} />
               </>
             )}
 

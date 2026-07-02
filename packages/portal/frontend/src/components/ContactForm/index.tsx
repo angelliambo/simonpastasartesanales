@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { BRAND_CONFIG } from '@factory/shared/config/brand';
-import type { TFunction } from '@factory/shared/design-sys/organisms/LegalPages/shared/types';
 import {
   SectionTitle, Paragraph, ContactCard, FormGroup, Label,
   Input, TextArea, SubmitButton, SuccessMessage, ErrorMessage,
-} from '@factory/shared/design-sys/organisms/LegalPages/shared/styles';
+} from './ContactForm.styles';
 
 interface ContactFormProps {
-  t?: TFunction;
   userId?: string;
   userEmail?: string;
   userName?: string;

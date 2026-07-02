@@ -1,4 +1,5 @@
-import type { PlanId, PlanStatus } from './plan';
+export type PlanId = 'free' | 'trial' | 'god_mode' | string;
+export type PlanStatus = 'active' | 'expired' | 'trialing' | 'cancelled' | string;
 
 export interface LicenseValidation {
   valid: boolean;
