@@ -168,12 +168,7 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
     background-color: var(--color-background-primary);
   }
 
-  /* Footer con mejor contraste */
-  .ant-layout-footer {
-    background-color: var(--color-background-secondary) !important;
-    border-top: 2px solid var(--color-border-normal) !important;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06) !important;
-  }
+
 
   .ant-card {
     background-color: var(--color-background-card);
@@ -303,19 +298,7 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
       position: relative !important;
     }
 
-    /* Mejorar espaciado en configuraciones */
-    .config-page-layout .ant-card {
-      margin-bottom: 12px !important;
-    }
 
-    .config-page-layout .ant-row {
-      margin: 0 -4px !important;
-    }
-
-    .config-page-layout .ant-col {
-      padding: 0 4px !important;
-      margin-bottom: 12px !important;
-    }
 
     /* Espaciado mejorado para temas de accesibilidad */
     .ant-card-body {
@@ -344,58 +327,7 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
       font-size: 16px !important;
     }
 
-    /* Footer móvil - reducir altura y centrar */
-    .ant-layout-footer {
-      padding: 16px 12px 12px !important;
-    }
 
-    /* Forzar centrado de todo el contenido del footer */
-    .ant-layout-footer > div {
-      text-align: center !important;
-    }
-
-    .ant-layout-footer .ant-row {
-      text-align: center !important;
-      justify-content: center !important;
-    }
-
-    .ant-layout-footer .ant-col {
-      text-align: center !important;
-      margin-bottom: 12px !important;
-    }
-
-    .ant-layout-footer .ant-col:last-child {
-      margin-bottom: 0 !important;
-    }
-
-    /* Reducir espaciado entre elementos del footer */
-    .ant-layout-footer .ant-row:first-child {
-      margin-bottom: 12px !important;
-    }
-
-    .ant-layout-footer .ant-divider {
-      margin: 12px 0 8px !important;
-    }
-
-    /* Centrar texto del copyright */
-    .ant-layout-footer .ant-row:last-child {
-      text-align: center !important;
-      justify-content: center !important;
-    }
-
-    .ant-layout-footer .ant-row:last-child .ant-col {
-      text-align: center !important;
-    }
-
-    /* Forzar centrado de elementos internos */
-    .ant-layout-footer .ant-typography {
-      text-align: center !important;
-    }
-
-    .ant-layout-footer .ant-typography h4,
-    .ant-layout-footer .ant-typography h5 {
-      text-align: center !important;
-    }
   }
 
   @media (max-width: 480px) {
@@ -408,78 +340,8 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
       margin: 0 2px;
     }
 
-    /* Espaciado más compacto para pantallas muy pequeñas */
-    .config-page-layout .ant-card {
-      margin-bottom: 8px !important;
-    }
-
-    .config-page-layout .ant-col {
-      margin-bottom: 8px !important;
-    }
-
     .ant-card-body {
       padding: 8px !important;
-    }
-
-    /* Footer más compacto para pantallas pequeñas */
-    .ant-layout-footer {
-      padding: 12px 8px 8px !important;
-    }
-
-    /* Forzar centrado en pantallas pequeñas */
-    .ant-layout-footer > div {
-      text-align: center !important;
-    }
-
-    .ant-layout-footer .ant-row {
-      text-align: center !important;
-      justify-content: center !important;
-    }
-
-    .ant-layout-footer .ant-col {
-      text-align: center !important;
-      margin-bottom: 8px !important;
-    }
-
-    .ant-layout-footer .ant-row:first-child {
-      margin-bottom: 8px !important;
-    }
-
-    .ant-layout-footer .ant-divider {
-      margin: 8px 0 6px !important;
-    }
-
-    /* Centrar copyright en pantallas pequeñas */
-    .ant-layout-footer .ant-row:last-child {
-      text-align: center !important;
-      justify-content: center !important;
-    }
-
-    .ant-layout-footer .ant-row:last-child .ant-col {
-      text-align: center !important;
-    }
-
-    /* Reducir tamaños de texto en footer para móvil pequeño */
-    .ant-layout-footer .ant-typography h4 {
-      font-size: 14px !important;
-    }
-
-    .ant-layout-footer .ant-typography h5 {
-      font-size: 13px !important;
-    }
-
-    .ant-layout-footer .ant-typography {
-      font-size: 12px !important;
-    }
-
-    /* Forzar centrado de todos los elementos de texto */
-    .ant-layout-footer .ant-typography {
-      text-align: center !important;
-    }
-
-    .ant-layout-footer .ant-typography h4,
-    .ant-layout-footer .ant-typography h5 {
-      text-align: center !important;
     }
   }
 

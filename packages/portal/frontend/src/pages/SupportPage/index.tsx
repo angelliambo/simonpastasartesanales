@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import type { RootState } from "../../store/store";
 import { ContactForm } from "../../components/ContactForm";
-import { Input } from "../../components/ui/atoms/Input";
 import Button from "../../components/ui/atoms/Button";
 import { useSnackbar } from "../../components/ui/atoms/Snackbar";
 import {
@@ -27,7 +26,20 @@ import {
   MessageBubble,
   MessageMeta,
   ChatInputArea,
-  BackBtn
+  BackBtn,
+  UserNumberBox,
+  UserNumberStrong,
+  DetailHeaderRow,
+  DetailLoadingText,
+  DetailTitleWrapper,
+  DetailSubject,
+  ChatInput,
+  ListSectionTitle,
+  ListLoadingText,
+  EmptyListMessage,
+  CardBadgeWrapper,
+  TicketNewMessageBadge,
+  CardFooterRow,
 } from "./SupportPage.styles";
 
 const SupportPage: React.FC = () => {
@@ -179,19 +191,9 @@ const SupportPage: React.FC = () => {
           </Subtitle>
 
           {authUser && (
-            <div style={{
-              marginBottom: "1.5rem",
-              fontSize: "0.95rem",
-              color: "#a78bfa",
-              fontWeight: 600,
-              backgroundColor: "rgba(167, 139, 250, 0.08)",
-              border: "1px solid rgba(167, 139, 250, 0.2)",
-              padding: "0.6rem 1.2rem",
-              borderRadius: "10px",
-              display: "inline-block"
-            }}>
-              Tu número de usuario: <strong style={{ color: "#ffffff", fontFamily: "monospace" }}>Usuario N° {authUser._id}</strong>
-            </div>
+            <UserNumberBox>
+              Tu número de usuario: <UserNumberStrong>Usuario N° {authUser._id}</UserNumberStrong>
+            </UserNumberBox>
           )}
 
           {authUser && (
@@ -216,24 +218,24 @@ const SupportPage: React.FC = () => {
             <CustomCard>
               {selectedTicketId ? (
                 <div>
-                  <div style={{ marginBottom: "1rem", display: "flex", gap: "1rem", alignItems: "center" }}>
+                  <DetailHeaderRow>
                     <BackBtn onClick={handleBack}>← Volver</BackBtn>
                     {loadingDetail ? (
-                      <span style={{ color: "rgba(255,255,255,0.4)" }}>Cargando conversación...</span>
+                      <DetailLoadingText>Cargando conversación...</DetailLoadingText>
                     ) : (
                       selectedTicket && (
-                        <div style={{ display: "flex", flex: 1, justifyContent: "space-between", alignItems: "center" }}>
+                        <DetailTitleWrapper>
                           <div>
                             <TicketId>{selectedTicket.ticketId}</TicketId>
-                            <h2 style={{ fontSize: "1.2rem", margin: 0 }}>{selectedTicket.subject}</h2>
+                            <DetailSubject>{selectedTicket.subject}</DetailSubject>
                           </div>
                           <TicketStatus $status={selectedTicket.status}>
                             {getStatusLabel(selectedTicket.status)}
                           </TicketStatus>
-                        </div>
+                        </DetailTitleWrapper>
                       )
                     )}
-                  </div>
+                  </DetailHeaderRow>
 
                   {selectedTicket && (
                     <ChatContainer>
@@ -264,12 +266,11 @@ const SupportPage: React.FC = () => {
                       </ChatMessages>
 
                       <ChatInputArea onSubmit={handleSendReply}>
-                        <Input
+                        <ChatInput
                           value={replyText}
                           onChange={(e) => setReplyText(e.target.value)}
                           placeholder="Escribe tu respuesta aquí..."
                           disabled={sendingReply || selectedTicket.status === "closed"}
-                          style={{ flex: 1 }}
                         />
                         <Button
                           type="submit"
@@ -283,39 +284,32 @@ const SupportPage: React.FC = () => {
                 </div>
               ) : (
                 <div>
-                  <h3 style={{ fontSize: "1.1rem", marginBottom: "1rem" }}>Tus Tickets de Soporte</h3>
+                  <ListSectionTitle>Tus Tickets de Soporte</ListSectionTitle>
                   {loadingTickets ? (
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>Cargando tickets...</span>
+                    <ListLoadingText>Cargando tickets...</ListLoadingText>
                   ) : tickets.length === 0 ? (
-                    <div style={{ color: "rgba(255,255,255,0.4)", textAlign: "center", padding: "2rem 0" }}>
+                    <EmptyListMessage>
                       No tienes ningún ticket de soporte creado aún.
-                    </div>
+                    </EmptyListMessage>
                   ) : (
                     <TicketList>
                       {tickets.map((ticket) => (
                         <TicketCard key={ticket.ticketId} onClick={() => setSelectedTicketId(ticket.ticketId)}>
                           <TicketHeader>
-                            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                            <CardBadgeWrapper>
                               <TicketId>{ticket.ticketId}</TicketId>
                               {!ticket.userRead && (
-                                <span style={{
-                                  background: "#10b981",
-                                  color: "white",
-                                  fontSize: "0.7rem",
-                                  fontWeight: "bold",
-                                  padding: "0.15rem 0.4rem",
-                                  borderRadius: "4px",
-                                }}>
+                                <TicketNewMessageBadge>
                                   NUEVO MENSAJE 💬
-                                </span>
+                                </TicketNewMessageBadge>
                               )}
-                            </div>
+                            </CardBadgeWrapper>
                             <TicketDate>{formatDate(ticket.createdAt)}</TicketDate>
                           </TicketHeader>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <TicketSubject style={{ fontWeight: !ticket.userRead ? "bold" : "normal" }}>{ticket.subject}</TicketSubject>
+                          <CardFooterRow>
+                            <TicketSubject $unread={!ticket.userRead}>{ticket.subject}</TicketSubject>
                             <TicketStatus $status={ticket.status}>{getStatusLabel(ticket.status)}</TicketStatus>
-                          </div>
+                          </CardFooterRow>
                         </TicketCard>
                       ))}
                     </TicketList>

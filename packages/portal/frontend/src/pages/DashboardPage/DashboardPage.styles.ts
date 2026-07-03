@@ -59,14 +59,17 @@ export const Label = styled.span`
   font-size: 0.9rem;
 `;
 
-export const Value = styled.span`
+export const Value = styled.span<{ $isMonospace?: boolean }>`
   color: ${({ theme }) => theme.colors.text.primary};
   font-size: 0.9rem;
   font-weight: 500;
+  ${({ $isMonospace }) => $isMonospace && `font-family: monospace;`}
 `;
 
 export const CustomBadge = styled.span<{ $plan: string }>`
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   padding: 2px 8px;
   border-radius: 6px;
   font-size: 0.8rem;
@@ -119,10 +122,15 @@ export const RedSubtitle = styled(Text)`
   display: block;
 `;
 
-export const DangerRequestButton = styled(Button)`
+export const DangerRequestButton = styled(Button)<{ $isSemiOpaque?: boolean }>`
   background: rgba(239, 68, 68, 0.15);
   color: #ef4444;
   border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  ${({ $isSemiOpaque }) => $isSemiOpaque && `opacity: 0.5;`}
   
   &:hover {
     background: rgba(239, 68, 68, 0.25);
@@ -153,4 +161,112 @@ export const DeleteErrorText = styled.p`
 export const SuccessMsgText = styled.p`
   color: #22c55e;
   font-size: 14px;
+`;
+
+// Nuevos componentes de estilos del dashboard para eliminar inline-styles
+export const StatusTextWrapper = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+`;
+
+export const ActiveStatusIconWrapper = styled.span`
+  color: #22c55e;
+  display: inline-flex;
+`;
+
+export const InactiveStatusIconWrapper = styled.span`
+  color: #ef4444;
+  display: inline-flex;
+`;
+
+export const NoTicketsMessage = styled.div`
+  color: rgba(255, 255, 255, 0.4);
+  padding: 1rem 0;
+`;
+
+export const ActionLink = styled.span<{ $fontSize?: string }>`
+  color: #818cf8;
+  cursor: pointer;
+  text-decoration: underline;
+  ${({ $fontSize }) => $fontSize && `font-size: ${$fontSize};`}
+`;
+
+export const TicketsListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+`;
+
+export const TicketListItem = styled.div`
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+`;
+
+export const TicketInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`;
+
+export const TicketHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export const TicketIdText = styled.span`
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #818cf8;
+`;
+
+export const NewResponseBadge = styled.span`
+  background: #10b981;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+export const TicketSubjectText = styled.span<{ $unread: boolean }>`
+  font-weight: ${({ $unread }) => ($unread ? 700 : 500)};
+  font-size: 0.95rem;
+`;
+
+export const TicketDateText = styled.span`
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+`;
+
+export const TicketStatusBadge = styled.span<{ $status: string }>`
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: ${({ $status }) => $status === "open" ? "rgba(59, 130, 246, 0.15)" : $status === "in_progress" ? "rgba(245, 158, 11, 0.15)" : "rgba(107, 114, 128, 0.15)"};
+  color: ${({ $status }) => $status === "open" ? "#60a5fa" : $status === "in_progress" ? "#fbbf24" : "#9ca3af"};
+  border: 1px solid ${({ $status }) => $status === "open" ? "rgba(59, 130, 246, 0.25)" : $status === "in_progress" ? "rgba(245, 158, 11, 0.25)" : "rgba(107, 114, 128, 0.25)"};
+`;
+
+export const FooterAlignWrapper = styled.div`
+  text-align: right;
+  margin-top: 0.5rem;
 `;

@@ -36,7 +36,22 @@ import {
   DeleteMsgText,
   DeleteConfirmInput,
   DeleteErrorText,
-  SuccessMsgText
+  SuccessMsgText,
+  StatusTextWrapper,
+  ActiveStatusIconWrapper,
+  InactiveStatusIconWrapper,
+  NoTicketsMessage,
+  ActionLink,
+  TicketsListWrapper,
+  TicketListItem,
+  TicketInfoWrapper,
+  TicketHeaderWrapper,
+  TicketIdText,
+  NewResponseBadge,
+  TicketSubjectText,
+  TicketDateText,
+  TicketStatusBadge,
+  FooterAlignWrapper,
 } from "./DashboardPage.styles";
 
 const DashboardPage: React.FC = () => {
@@ -149,7 +164,7 @@ const DashboardPage: React.FC = () => {
             <CustomCard title={t('pages.dashboard.accountInfo', 'Información de la Cuenta')}>
               <Row>
                 <Label>{t('pages.dashboard.userIdLabel', 'Usuario N°')}</Label>
-                <Value style={{ fontFamily: "monospace" }}>{profile._id}</Value>
+                <Value $isMonospace={true}>{profile._id}</Value>
               </Row>
               <Row>
                 <Label>{t('pages.dashboard.emailLabel', 'Email')}</Label>
@@ -158,7 +173,7 @@ const DashboardPage: React.FC = () => {
               <Row>
                 <Label>{t('pages.dashboard.planLabel', 'Plan')}</Label>
                 <Value>
-                  <CustomBadge $plan={profile.plan} style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                  <CustomBadge $plan={profile.plan}>
                     {profile.plan === "god_mode" && <ZnIcon icon={ThunderboltOutlined} />}
                     {profile.plan === "trial" && <ZnIcon icon={HourglassOutlined} />}
                     {getPlanName(profile.plan)}
@@ -185,19 +200,23 @@ const DashboardPage: React.FC = () => {
               <Row>
                 <Label>{t('pages.dashboard.statusLabel', 'Estado')}</Label>
                 <Value>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                  <StatusTextWrapper>
                     {profile.isActive ? (
                       <>
-                        <ZnIcon icon={CheckCircleOutlined} style={{ color: "#22c55e" }} />
+                        <ActiveStatusIconWrapper>
+                          <ZnIcon icon={CheckCircleOutlined} />
+                        </ActiveStatusIconWrapper>
                         {t('pages.dashboard.statusActive', 'Activa')}
                       </>
                     ) : (
                       <>
-                        <ZnIcon icon={CloseCircleOutlined} style={{ color: "#ef4444" }} />
+                        <InactiveStatusIconWrapper>
+                          <ZnIcon icon={CloseCircleOutlined} />
+                        </InactiveStatusIconWrapper>
                         {t('pages.dashboard.statusInactive', 'Inactiva')}
                       </>
                     )}
-                  </span>
+                  </StatusTextWrapper>
                 </Value>
               </Row>
               {(profile as any).expiresAt && (
@@ -227,62 +246,30 @@ const DashboardPage: React.FC = () => {
               {loadingTickets ? (
                 <LoadingText>{t('pages.dashboard.loadingTickets', 'Cargando tickets...')}</LoadingText>
               ) : tickets.length === 0 ? (
-                <div style={{ color: "rgba(255,255,255,0.4)", padding: "1rem 0" }}>
+                <NoTicketsMessage>
                   {t('pages.dashboard.noTickets', 'No tienes ningún ticket de soporte registrado.')}{' '}
-                  <span
-                    onClick={() => navigate('/support')}
-                    style={{ color: "#818cf8", cursor: "pointer", textDecoration: "underline" }}
-                  >
+                  <ActionLink onClick={() => navigate('/support')}>
                     {t('pages.dashboard.createTicketLink', 'Crear uno nuevo')}
-                  </span>
-                </div>
+                  </ActionLink>
+                </NoTicketsMessage>
               ) : (
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginTop: "0.5rem" }}>
+                <TicketsListWrapper>
                   {tickets.map((t: any) => (
-                    <div
+                    <TicketListItem
                       key={t.ticketId}
                       onClick={() => navigate(`/support?ticketId=${t.ticketId}`)}
-                      style={{
-                        background: "rgba(255, 255, 255, 0.03)",
-                        border: "1px solid rgba(255, 255, 255, 0.05)",
-                        borderRadius: "8px",
-                        padding: "1rem",
-                        cursor: "pointer",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        transition: "all 0.2s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(255, 255, 255, 0.06)";
-                        e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(255, 255, 255, 0.03)";
-                        e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.05)";
-                      }}
                     >
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                          <span style={{ fontFamily: "monospace", fontSize: "0.9rem", color: "#818cf8" }}>{t.ticketId}</span>
+                      <TicketInfoWrapper>
+                        <TicketHeaderWrapper>
+                          <TicketIdText>{t.ticketId}</TicketIdText>
                           {!t.userRead && (
-                            <span style={{
-                              background: "#10b981",
-                              color: "white",
-                              fontSize: "0.65rem",
-                              fontWeight: "bold",
-                              padding: "2px 6px",
-                              borderRadius: "4px",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              gap: "4px"
-                            }}>
+                            <NewResponseBadge>
                               NUEVA RESPUESTA <ZnIcon icon={MessageOutlined} />
-                            </span>
+                            </NewResponseBadge>
                           )}
-                        </div>
-                        <span style={{ fontWeight: !t.userRead ? 700 : 500, fontSize: "0.95rem" }}>{t.subject}</span>
-                        <span style={{ fontSize: "0.8rem", color: "rgba(255, 255, 255, 0.4)" }}>
+                        </TicketHeaderWrapper>
+                        <TicketSubjectText $unread={!t.userRead}>{t.subject}</TicketSubjectText>
+                        <TicketDateText>
                           {new Date(t.createdAt).toLocaleDateString('es-MX', {
                             day: "2-digit",
                             month: "2-digit",
@@ -290,31 +277,23 @@ const DashboardPage: React.FC = () => {
                             hour: "2-digit",
                             minute: "2-digit"
                           })}
-                        </span>
-                      </div>
+                        </TicketDateText>
+                      </TicketInfoWrapper>
 
-                      <span style={{
-                        fontSize: "0.75rem",
-                        fontWeight: "bold",
-                        padding: "0.25rem 0.6rem",
-                        borderRadius: "9999px",
-                        background: t.status === "open" ? "rgba(59, 130, 246, 0.15)" : t.status === "in_progress" ? "rgba(245, 158, 11, 0.15)" : "rgba(107, 114, 128, 0.15)",
-                        color: t.status === "open" ? "#60a5fa" : t.status === "in_progress" ? "#fbbf24" : "#9ca3af",
-                        border: `1px solid ${t.status === "open" ? "rgba(59, 130, 246, 0.25)" : t.status === "in_progress" ? "rgba(245, 158, 11, 0.25)" : "rgba(107, 114, 128, 0.25)"}`
-                      }}>
+                      <TicketStatusBadge $status={t.status}>
                         {t.status === "open" ? "Abierto" : t.status === "in_progress" ? "En progreso" : "Cerrado"}
-                      </span>
-                    </div>
+                      </TicketStatusBadge>
+                    </TicketListItem>
                   ))}
-                  <div style={{ textAlign: "right", marginTop: "0.5rem" }}>
-                    <span
+                  <FooterAlignWrapper>
+                    <ActionLink
                       onClick={() => navigate('/support')}
-                      style={{ color: "#818cf8", cursor: "pointer", textDecoration: "underline", fontSize: "0.9rem" }}
+                      $fontSize="0.9rem"
                     >
                       {t('pages.dashboard.viewAllTicketsLink', 'Ver y gestionar todos los tickets →')}
-                    </span>
-                  </div>
-                </div>
+                    </ActionLink>
+                  </FooterAlignWrapper>
+                </TicketsListWrapper>
               )}
             </CustomCard>
 
@@ -325,7 +304,7 @@ const DashboardPage: React.FC = () => {
                   <RedSubtitle>
                     {t('pages.dashboard.deleteAccountWarning', 'Esta acción eliminará tu cuenta y todos tus datos. No se puede deshacer.')}
                   </RedSubtitle>
-                  <DangerRequestButton onClick={handleRequestDelete} style={{ display: "inline-flex", alignItems: "center", gap: "6px", justifyContent: "center" }}>
+                  <DangerRequestButton onClick={handleRequestDelete}>
                     <ZnIcon icon={DeleteOutlined} /> {t('pages.dashboard.requestDeleteButton', 'Solicitar eliminación')}
                   </DangerRequestButton>
                 </>
@@ -344,7 +323,7 @@ const DashboardPage: React.FC = () => {
                   <DangerRequestButton
                     onClick={handleConfirmDelete}
                     disabled={deleteCode.length < 4}
-                    style={{ opacity: deleteCode.length < 4 ? 0.5 : 1 }}
+                    $isSemiOpaque={deleteCode.length < 4}
                   >
                     {t('pages.dashboard.confirmDeleteButton', 'Confirmar eliminación')}
                   </DangerRequestButton>

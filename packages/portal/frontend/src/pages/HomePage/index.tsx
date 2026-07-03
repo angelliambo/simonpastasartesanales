@@ -1,13 +1,10 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useSnackbar } from "../../components/ui/atoms/Snackbar";
-import type { PlanId } from "@factory/shared/types/plan";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { FEATURES } from "@factory/shared/config/features";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { Container } from "../../components/ui/atoms/Container";
-import { Row, Col } from "../../components/ui/atoms/Grid";
 import RegisterModal from "../../components/RegisterModal";
 import GoogleSignInButton from "../../components/GoogleSignInButton";
 import {
@@ -27,7 +24,6 @@ import {
   MacCommandOutlined,
   KeyOutlined,
   RocketOutlined,
-  LoadingOutlined,
   DesktopOutlined,
 } from "@ant-design/icons";
 
@@ -65,6 +61,10 @@ import {
   ScrollDot,
   ScrollDotLabel,
   HeroGoogleButtonWrapper,
+  FeaturesRow,
+  FeatureCol,
+  CardInnerWrapper,
+  CtaButtonContent,
 } from "./HomePage.styles";
 
 
@@ -205,8 +205,6 @@ const HomePage: React.FC = () => {
     }
     return new Set(["hero"]);
   });
-  const { showError } = useSnackbar();
-
   useAutoScroll(SECTIONS, activeSection, userInteracted, timerRef, setActiveSection);
 
   useEffect(() => {
@@ -307,7 +305,7 @@ const HomePage: React.FC = () => {
                       <GoogleSignInButton size="large" text="continue_with" width="240px" oneTap={true} />
                     </HeroGoogleButtonWrapper>
                   )}
-                  <HeroOutlinedButton onClick={handleLogin} variant="secondary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+                  <HeroOutlinedButton onClick={handleLogin} variant="secondary">
                     <ZnIcon icon={KeyOutlined} /> Ingresar con Correo
                   </HeroOutlinedButton>
                   {FEATURES.ENABLE_BILLING_LEMON && (
@@ -355,15 +353,14 @@ const HomePage: React.FC = () => {
           <Container maxWidth="lg" padding="none">
             <ContentSection
               title={t("pages.home.features") || "Caracteristicas"}
-              style={{ marginBottom: 0 }}
+              marginBottom={0}
             >
-              <Row
+              <FeaturesRow
                 gutter={[24, 24]}
                 align="stretch"
-                style={{ display: "flex", flexWrap: "wrap" }}
               >
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
                       icon={<ZnIcon icon={AudioOutlined} size={48} />}
@@ -371,10 +368,10 @@ const HomePage: React.FC = () => {
                       subtitle={t("pages.home.dictadoDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                  </CardInnerWrapper>
+                </FeatureCol>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
                       icon={<ZnIcon icon={SoundOutlined} size={48} />}
@@ -382,10 +379,10 @@ const HomePage: React.FC = () => {
                       subtitle={t("pages.home.ttsDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                  </CardInnerWrapper>
+                </FeatureCol>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
                       icon={<ZnIcon icon={DesktopOutlined} size={48} />}
@@ -393,10 +390,10 @@ const HomePage: React.FC = () => {
                       subtitle={t("pages.home.pipDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                  </CardInnerWrapper>
+                </FeatureCol>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
                       icon={<ZnIcon icon={FileTextOutlined} size={48} />}
@@ -404,10 +401,10 @@ const HomePage: React.FC = () => {
                       subtitle={t("pages.home.pdfDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                  </CardInnerWrapper>
+                </FeatureCol>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
                       icon={<ZnIcon icon={MessageOutlined} size={48} />}
@@ -415,10 +412,10 @@ const HomePage: React.FC = () => {
                       subtitle={t("pages.home.subsDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                  </CardInnerWrapper>
+                </FeatureCol>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
                       icon={<ZnIcon icon={MacCommandOutlined} size={48} />}
@@ -426,9 +423,9 @@ const HomePage: React.FC = () => {
                       subtitle={t("pages.home.shortcutsDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-              </Row>
+                  </CardInnerWrapper>
+                </FeatureCol>
+              </FeaturesRow>
             </ContentSection>
           </Container>
         </FeaturesInner>
@@ -580,17 +577,15 @@ const HomePage: React.FC = () => {
                 }
             }
           >
-            {FEATURES.ENABLE_GOOGLE_AUTH ? (
-              loggedInUser ? (
-                <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-                  Ir al Dashboard <ZnIcon icon={RocketOutlined} />
-                </span>
-              ) : (
-                "Comenzar Gratis"
-              )
-            ) : (
-              BRAND_CONFIG.whatsappUrl ? "Contacto por WhatsApp" : "Ver Funciones"
-            )}
+            {FEATURES.ENABLE_GOOGLE_AUTH
+              ? loggedInUser
+                ? <CtaButtonContent>
+                    Ir al Dashboard <ZnIcon icon={RocketOutlined} />
+                  </CtaButtonContent>
+                : "Comenzar Gratis"
+              : BRAND_CONFIG.whatsappUrl
+                ? "Contacto por WhatsApp"
+                : "Ver Funciones"}
           </CtaButton>
         </Container>
       </VhSection>

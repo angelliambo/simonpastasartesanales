@@ -1,12 +1,7 @@
 import React from "react";
-import Card from "./ui/atoms/Card";
-import { Row, Col } from "./ui/atoms/Grid";
-import Button from "./ui/atoms/Button";
-import Space from "./ui/atoms/Space";
-import Divider from "./ui/atoms/Divider";
-import Title from "./ui/atoms/Title";
-import Text from "./ui/atoms/Text";
-import styled from "styled-components";
+import Card from "../ui/atoms/Card";
+import { Row, Col } from "../ui/atoms/Grid";
+import Text from "../ui/atoms/Text";
 import {
   SunOutlined,
   MoonOutlined,
@@ -15,87 +10,24 @@ import {
   CheckOutlined,
 } from "@ant-design/icons";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
-import { useTheme, AccessibilityTheme } from "../styles/ThemeProvider";
-
-const Container = styled.div`
-  padding: ${({ theme }) => theme.spacing.lg};
-  max-width: 800px;
-  margin: 0 auto;
-`;
-
-const PageTitle = styled(Title)`
-  margin-bottom: ${({ theme }) => theme.spacing.xl};
-`;
-
-const SectionCard = styled(Card)`
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
-`;
-
-const SectionTitle = styled(Title)`
-  margin-bottom: ${({ theme }) => theme.spacing.md};
-`;
-
-const ThemeButton = styled(Button)`
-  width: 100%;
-  height: 60px;
-  font-size: ${({ theme }) => theme.typography.fontSize.md};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-`;
-
-const DescriptionText = styled(Text)`
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
-  display: block;
-`;
-
-const AccessOptionButton = styled(Button)`
-  width: 100%;
-  height: 80px;
-  padding: ${({ theme }) => theme.spacing.sm};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: ${({ theme }) => theme.spacing.xs};
-  text-align: center;
-`;
-
-const OptionIconWrapper = styled.div`
-  font-size: 18px;
-`;
-
-const ActiveCheckIcon = styled.span`
-  margin-left: ${({ theme }) => theme.spacing.sm};
-`;
-
-const OptionLabel = styled(Text)`
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-`;
-
-const OptionDesc = styled(Text)`
-  font-size: ${({ theme }) => theme.typography.fontSize.xs};
-  text-align: center;
-`;
-
-const InfoSpace = styled(Space)`
-  width: 100%;
-  max-width: 300px;
-`;
-
-const InfoRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const InfoDivider = styled(Divider)`
-  margin: 12px 0;
-`;
-
-const FooterNote = styled(Text)`
-  font-size: ${({ theme }) => theme.typography.fontSize.xs};
-`;
+import { useTheme, AccessibilityTheme } from "../../styles/ThemeProvider";
+import {
+  Container,
+  PageTitle,
+  SectionCard,
+  SectionTitle,
+  ThemeButton,
+  DescriptionText,
+  AccessOptionButton,
+  OptionIconWrapper,
+  ActiveCheckIcon,
+  OptionLabel,
+  OptionDesc,
+  InfoSpace,
+  InfoRow,
+  InfoDivider,
+  FooterNote,
+} from "./ThemeSettings.styles";
 
 const ThemeSettings: React.FC = () => {
   const { theme, accessibility, setTheme, setAccessibility } = useTheme();

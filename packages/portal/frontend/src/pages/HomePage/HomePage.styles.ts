@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import Button from "../../components/ui/atoms/Button";
+import { Row, Col } from "../../components/ui/atoms/Grid";
 
 export const VhSection = styled.section<{
   $visible?: boolean;
@@ -244,6 +245,10 @@ export const HeroOutlinedButton = styled(Button)`
   min-width: 180px;
   font-family: inherit;
   line-height: 1.4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 
   @media (max-height: 800px) {
     padding: 10px 24px;
@@ -264,101 +269,27 @@ export const HeroPrimaryButton = styled(Button)`
 
 export const FeaturesInner = styled.div`
   width: 100%;
+`;
 
-  @media (max-width: 768px) {
-    .content-section {
-      margin-bottom: 20px !important;
-    }
-    .content-section h2 {
-      font-size: 22px !important;
-      margin-bottom: 12px !important;
-    }
-    .content-card {
-      padding: 16px 14px !important;
-    }
-    .content-card [class*="CardIcon"] {
-      font-size: 32px !important;
-      margin-bottom: 8px !important;
-      height: auto !important;
-    }
-    .content-card [class*="CardTitle"] {
-      font-size: 15px !important;
-      margin-bottom: 6px !important;
-    }
-    .content-card [class*="CardSubtitle"] {
-      font-size: 12px !important;
-      margin-bottom: 0px !important;
-      line-height: 1.4 !important;
-    }
+// Componentes de diseño responsivo flex
+export const FeaturesRow = styled(Row)`
+  display: flex;
+  flex-wrap: wrap;
+`;
 
-    /* Reducir espacio entre las tarjetas en mobile */
-    .ant-row {
-      margin-left: -6px !important;
-      margin-right: -6px !important;
-      row-gap: 12px !important;
-    }
-    .ant-col {
-      padding-left: 6px !important;
-      padding-right: 6px !important;
-    }
-  }
+export const FeatureCol = styled(Col)`
+  display: flex;
+`;
 
-  @media (max-height: 800px) {
-    .content-section {
-      margin-bottom: 0px !important;
-    }
-    .content-section h2 {
-      font-size: 20px !important;
-      margin-bottom: 8px !important;
-    }
-    .content-card {
-      padding: 10px 14px !important;
-    }
-    .content-card [class*="CardIcon"] {
-      font-size: 28px !important;
-      margin-bottom: 4px !important;
-      height: auto !important;
-    }
-    .content-card [class*="CardTitle"] {
-      font-size: 14px !important;
-      margin-bottom: 2px !important;
-    }
-    .content-card [class*="CardSubtitle"] {
-      font-size: 11px !important;
-      margin-bottom: 0px !important;
-      line-height: 1.25 !important;
-    }
+export const CardInnerWrapper = styled.div`
+  flex: 1;
+  display: flex;
+`;
 
-    /* Target Antd Row and Col spacing directly */
-    .ant-row {
-      margin-left: -6px !important;
-      margin-right: -6px !important;
-      row-gap: 12px !important;
-    }
-    .ant-col {
-      padding-left: 6px !important;
-      padding-right: 6px !important;
-    }
-  }
-
-  @media (max-height: 700px) {
-    .content-card {
-      padding: 8px 10px !important;
-    }
-    .content-card [class*="CardIcon"] {
-      font-size: 22px !important;
-      margin-bottom: 2px !important;
-    }
-    .content-card [class*="CardTitle"] {
-      font-size: 13px !important;
-    }
-    .content-card [class*="CardSubtitle"] {
-      font-size: 10.5px !important;
-    }
-    .ant-row {
-      row-gap: 8px !important;
-    }
-  }
+export const CtaButtonContent = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 `;
 
 export const StatsGrid = styled.div`

@@ -1,146 +1,24 @@
 import React, { useCallback, useMemo, memo } from "react";
-import styled, { css } from "styled-components";
-import { Container } from "../../atoms/Container";
-import Card from "../../atoms/Card";
 import { getHeroGradient } from "../../../../styles/themes";
 import {
   useResponsive,
   useThemeColors,
   useResponsiveSpacing,
 } from "../../../../hooks";
-
-const LayoutOuter = styled.div<{ colors: any; $isMobile: boolean; $paddingTop: number }>`
-  background: ${({ colors }) => colors.background.secondary};
-  min-height: 100vh;
-  padding-top: ${({ $isMobile, $paddingTop }) => ($isMobile ? `${$paddingTop}px` : "0px")};
-  ${({ $isMobile }) =>
-    $isMobile &&
-    css`
-      padding-left: 0;
-      padding-right: 0;
-      padding-bottom: 0;
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-      margin-left: 0;
-      margin-right: 0;
-      overflow-x: hidden;
-    `}
-`;
-
-const LayoutInner = styled(Container) <{ $isMobile: boolean }>`
-  ${({ $isMobile }) =>
-    $isMobile &&
-    css`
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-      overflow-x: hidden;
-      padding-bottom: 0;
-    `}
-`;
-
-const HeroCard = styled(Card) <{ colors: any; $isMobile: boolean; $gradient: string; $marginBottom: string }>`
-  background: ${({ $gradient }) => $gradient};
-  margin-top: 0;
-  margin-bottom: ${({ $isMobile, $marginBottom }) => ($isMobile ? $marginBottom : "48px")};
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  color: ${({ colors }) => colors.text.inverse};
-  border: 2px solid ${({ colors }) => colors.border.normal};
-  ${({ $isMobile }) =>
-    $isMobile
-      ? css`
-          height: 200px;
-          min-height: 200px;
-          max-height: 200px;
-          width: 100%;
-        `
-      : css`
-          min-height: 250px;
-        `}
-`;
-
-const HeroIcon = styled.div<{ colors: any; $isMobile: boolean; $marginBottom: string }>`
-  font-size: ${({ $isMobile }) => ($isMobile ? "48px" : "64px")};
-  margin-bottom: ${({ $isMobile, $marginBottom }) => ($isMobile ? $marginBottom : "16px")};
-  color: ${({ colors }) => colors.text.inverse};
-  line-height: 1;
-`;
-
-const HeroTitle = styled.h1<{ colors: any; $isMobile: boolean; $marginBottom: string }>`
-  color: ${({ colors }) => colors.text.inverse};
-  margin-bottom: ${({ $isMobile, $marginBottom }) => ($isMobile ? $marginBottom : "16px")};
-  font-size: ${({ $isMobile }) => ($isMobile ? "28px" : "36px")};
-  font-weight: 700;
-  line-height: 1.2;
-  margin-top: 0;
-  ${({ $isMobile }) => $isMobile && css`min-height: 34px;`}
-`;
-
-const HeroSubtitle = styled.p<{ colors: any; $isMobile: boolean; $marginBottom: string }>`
-  color: ${({ colors }) => colors.text.inverse};
-  font-size: ${({ $isMobile }) => ($isMobile ? "16px" : "18px")};
-  opacity: 0.9;
-  max-width: 600px;
-  margin-bottom: ${({ $isMobile, $marginBottom }) => ($isMobile ? $marginBottom : "32px")};
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0;
-  ${({ $isMobile }) => $isMobile && css`min-height: 48px;`}
-`;
-
-const SectionOuter = styled.div<{ $isMobile: boolean; $marginBottom: number }>`
-  margin-bottom: ${({ $marginBottom }) => `${$marginBottom}px`};
-  ${({ $isMobile }) =>
-    $isMobile &&
-    css`
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-      overflow-x: hidden;
-    `}
-`;
-
-const SectionTitle = styled.h2<{ colors: any; $isMobile: boolean; $marginBottom: number }>`
-  text-align: center;
-  margin-bottom: ${({ $marginBottom }) => `${$marginBottom}px`};
-  color: ${({ colors }) => colors.text.primary};
-  font-size: ${({ $isMobile }) => ($isMobile ? "22px" : "28px")};
-`;
-
-const CardWrapper = styled(Card) <{ $hasClick: boolean }>`
-  height: 100%;
-  cursor: ${({ $hasClick }) => ($hasClick ? "pointer" : "default")};
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  
-`;
-
-const CardIcon = styled.div<{ colors: any; $marginBottom: string }>`
-  font-size: 48px;
-  color: ${({ colors }) => colors.text.primary};
-  margin-bottom: ${({ $marginBottom }) => $marginBottom};
-  display: flex;
-  justify-content: center;
-`;
-
-const CardTitle = styled.h3<{ colors: any; $marginBottom: string }>`
-  margin-bottom: ${({ $marginBottom }) => $marginBottom};
-  color: ${({ colors }) => colors.text.primary};
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const CardSubtitle = styled.p<{ colors: any; $marginBottom: string }>`
-  color: ${({ colors }) => colors.text.secondary};
-  font-size: 14px;
-  margin-bottom: ${({ $marginBottom }) => $marginBottom};
-`;
+import {
+  LayoutOuter,
+  LayoutInner,
+  HeroCard,
+  HeroIcon,
+  HeroTitle,
+  HeroSubtitle,
+  SectionOuter,
+  SectionTitle,
+  CardWrapper,
+  CardIcon,
+  CardTitle,
+  CardSubtitle,
+} from "./ConfigPageLayout.styles";
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -245,7 +123,8 @@ export const ContentSection = memo<{
   title?: string;
   className?: string;
   style?: React.CSSProperties;
-}>(({ children, title, className = "", style = {} }) => {
+  marginBottom?: number;
+}>(({ children, title, className = "", style = {}, marginBottom: customMargin }) => {
   const colors = useThemeColors();
   const { isMobile } = useResponsive();
   const spacing = useResponsiveSpacing();
@@ -254,9 +133,11 @@ export const ContentSection = memo<{
     return parseInt(size.replace("px", "")) || 0;
   }, []);
 
-  const marginBottom = isMobile
+  const defaultMargin = isMobile
     ? getSpacingNumber(spacing.lg) * 2
     : getSpacingNumber(spacing.lg) * 3;
+
+  const marginBottom = customMargin !== undefined ? customMargin : defaultMargin;
   const titleMarginBottom = isMobile
     ? getSpacingNumber(spacing.md) * 2
     : getSpacingNumber(spacing.lg);
