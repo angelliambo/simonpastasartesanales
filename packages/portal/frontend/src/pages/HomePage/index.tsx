@@ -1,16 +1,10 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useCreateCheckoutMutation } from "../../services/api/licenseService";
-import { useSnackbar } from "../../components/ui/atoms/Snackbar";
-import { PLANS } from "@factory/shared/config/plans";
-import { CHROME_STORE_URL } from "@factory/shared/config/urls";
-import type { PlanId } from "@factory/shared/types/plan";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { FEATURES } from "@factory/shared/config/features";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { Container } from "../../components/ui/atoms/Container";
-import { Row, Col } from "../../components/ui/atoms/Grid";
 import RegisterModal from "../../components/RegisterModal";
 import GoogleSignInButton from "../../components/GoogleSignInButton";
 import {
@@ -19,19 +13,17 @@ import {
 } from "../../components/ui/organisms/ConfigPageLayout";
 
 import { RootState } from "../../store/store";
-import { AnimatedBackground } from "../../components/AnimatedBackground";
 import AppFooter from "../../components/AppFooter";
+import { SUPPORTED_LOCALES } from "../../i18n";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
   AudioOutlined,
   SoundOutlined,
-  BookOutlined,
   FileTextOutlined,
   MessageOutlined,
   MacCommandOutlined,
   KeyOutlined,
   RocketOutlined,
-  LoadingOutlined,
   DesktopOutlined,
 } from "@ant-design/icons";
 
@@ -46,28 +38,15 @@ import {
   HeroOutlinedButton,
   HeroPrimaryButton,
   FeaturesInner,
-  StatsGrid,
+  StatsRow,
+  StatCol,
   StatItem,
   StatNumber,
   StatLabel,
   StatList,
   StatListItem,
-  PricingGrid,
-  PricingCard,
-  PopularBadge,
-  BestValueBadge,
-  PlanName,
-  PlanSubtitle,
-  PriceContainer,
-  Currency,
-  PriceAmount,
-  BillingPeriod,
-  FeaturesList,
-  FeatureItem,
-  FeatureDisabledItem,
-  PricingButton,
-  FreePricingButton,
-  TestimonialsGrid,
+  TestimonialsRow,
+  TestimonialCol,
   TestimonialCard,
   TestimonialQuote,
   TestimonialAuthor,
@@ -84,23 +63,17 @@ import {
   ScrollDot,
   ScrollDotLabel,
   HeroGoogleButtonWrapper,
+  FeaturesRow,
+  FeatureCol,
+  CardInnerWrapper,
+  CtaButtonContent,
 } from "./HomePage.styles";
 
-const FEATURE_KEY_MAP: Record<string, string> = {
-  "Lector de texto seleccionado": "pages.plans.featureLector",
-  "Subtítulos cinéticos": "pages.plans.featureSubtitulos",
-  "Dictado ilimitado": "pages.plans.featureDictado",
-  "Comandos de voz (puntuación)": "pages.plans.featureVozPuntuacion",
-  "Narrador de página completa": "pages.plans.featureNarrador",
-  "Resaltar texto al leer": "pages.plans.featureResaltar",
-  "Leer en PDF": "pages.plans.featurePDF",
-  "Pantalla flotante (Always-on-Top)": "pages.plans.featurePip",
-};
+
 
 const SECTIONS = [
   "hero",
   "features",
-  ...(FEATURES.ENABLE_BILLING_LEMON ? ["pricing"] : []),
   "stats",
   "testimonials",
   "cta",
@@ -109,7 +82,6 @@ const SECTIONS = [
 const SECTION_LABELS: Record<string, string> = {
   features: "Funciones",
   stats: "Estadísticas",
-  ...(FEATURES.ENABLE_BILLING_LEMON ? { pricing: "Planes" } : {}),
   testimonials: "Opiniones",
   cta: "Comenzar",
 };
@@ -181,38 +153,20 @@ const HomePage: React.FC = () => {
   const { t, lang } = useTranslation();
 
   const LANG_FLAGS: Record<string, { flag: string; name: string }> = {
-    "es-MX": { flag: "🇲🇽", name: "Español" },
-    "en-US": { flag: "🇺🇸", name: "English" },
-    "en-GB": { flag: "🇬🇧", name: "English" },
-    "fr-FR": { flag: "🇫🇷", name: "Français" },
-    "de-DE": { flag: "🇩🇪", name: "Deutsch" },
-    "it-IT": { flag: "🇮🇹", name: "Italiano" },
-    "pt-BR": { flag: "🇧🇷", name: "Português" },
-    "ja-JP": { flag: "🇯🇵", name: "日本語" },
+    "es": { flag: "🇪🇸", name: "Español" },
+    "en": { flag: "🇺🇸", name: "English" },
   };
 
   const secondLang: Record<string, { flag: string; name: string }> = {
-    "es-MX": { flag: "🇺🇸", name: "English" },
-    "es-ES": { flag: "🇺🇸", name: "English" },
-    "en-US": { flag: "🇫🇷", name: "Français" },
-    "en-GB": { flag: "🇫🇷", name: "Français" },
-    "fr-FR": { flag: "🇩🇪", name: "Deutsch" },
-    "de-DE": { flag: "🇬🇧", name: "English" },
-    "it-IT": { flag: "🇫🇷", name: "Français" },
-    "pt-BR": { flag: "🇪🇸", name: "Español" },
-    "ja-JP": { flag: "🇺🇸", name: "English" },
+    "es": { flag: "🇺🇸", name: "English" },
+    "en": { flag: "🇪🇸", name: "Español" },
   };
 
-  const currentFlag = LANG_FLAGS[lang] || LANG_FLAGS["en-US"];
-  const secondLangItem = secondLang[lang] || secondLang["en-US"];
+  const currentFlag = LANG_FLAGS[lang] || LANG_FLAGS["es"];
+  const secondLangItem = secondLang[lang] || secondLang["en"];
 
   const handleLogin = useCallback(() => setShowRegister(true), []);
   const handlePricing = useCallback(() => navigate("/pricing"), [navigate]);
-  const handleLicense = useCallback(() => navigate("/license"), [navigate]);
-
-  const handleInstall = useCallback(() => {
-    window.open(CHROME_STORE_URL, "_blank", "noopener,noreferrer");
-  }, []);
 
   const userInteracted = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -220,7 +174,19 @@ const HomePage: React.FC = () => {
   const scrollTo = (id: string) => {
     userInteracted.current = true;
     clearTimeout(timerRef.current);
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 70;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
   };
 
   const [activeSection, setActiveSection] = useState("hero");
@@ -241,42 +207,6 @@ const HomePage: React.FC = () => {
     }
     return new Set(["hero"]);
   });
-  const { showError } = useSnackbar();
-  const [pendingPlanId, setPendingPlanId] = useState<string | null>(null);
-  const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
-  const [checkout, { isLoading }] = useCreateCheckoutMutation();
-
-  const handleSubscribe = async (planId: string) => {
-    if (!loggedInUser) {
-      setPendingPlanId(planId);
-      setShowRegister(true);
-      return;
-    }
-
-    try {
-      setLoadingPlanId(planId);
-      const response = await checkout({ plan: planId }).unwrap();
-      if (response?.url) {
-        window.open(response.url, "_blank");
-        navigate(`/billing?plan=${planId}`);
-      } else {
-        showError(t("pages.pricing.errorNoCheckoutUrl") || "No checkout URL");
-      }
-    } catch (err: any) {
-      showError(err.data?.error || t("pages.pricing.errorServerError") || "Server Error");
-    } finally {
-      setLoadingPlanId(null);
-    }
-  };
-
-  useEffect(() => {
-    if (loggedInUser && pendingPlanId) {
-      const planToSub = pendingPlanId;
-      setPendingPlanId(null);
-      handleSubscribe(planToSub);
-    }
-  }, [loggedInUser, pendingPlanId]);
-
   useAutoScroll(SECTIONS, activeSection, userInteracted, timerRef, setActiveSection);
 
   useEffect(() => {
@@ -320,11 +250,114 @@ const HomePage: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Configuración del botón CTA (al final de la página)
+  const getCtaConfig = () => {
+    if (FEATURES.ENABLE_GOOGLE_AUTH) {
+      if (loggedInUser) {
+        return {
+          label: (
+            <CtaButtonContent>
+              {t("pages.home.heroDashboardButton")} <ZnIcon icon={RocketOutlined} />
+            </CtaButtonContent>
+          ),
+          onClick: () => navigate("/dashboard")
+        };
+      } else {
+        return {
+          label: t("pages.home.ctaButton"),
+          onClick: handleLogin
+        };
+      }
+    } else {
+      if (BRAND_CONFIG.whatsappUrl) {
+        return {
+          label: t("pages.home.whatsappContactButton"),
+          onClick: () => window.open(BRAND_CONFIG.whatsappUrl, "_blank", "noopener,noreferrer")
+        };
+      } else {
+        return {
+          label: t("pages.home.seeFeaturesButton"),
+          onClick: () => scrollTo("features")
+        };
+      }
+    }
+  };
 
+  const ctaConfig = getCtaConfig();
+
+  // Título y Subtítulo de la sección CTA
+  const ctaTitle = FEATURES.ENABLE_GOOGLE_AUTH
+    ? (loggedInUser ? t("pages.home.ctaTitleLogged") : t("pages.home.ctaTitle"))
+    : t("pages.home.ctaTitle");
+
+  const ctaSubtitle = FEATURES.ENABLE_GOOGLE_AUTH
+    ? (loggedInUser
+      ? t("pages.home.ctaSubtitleLogged", { siteName: BRAND_CONFIG.siteName })
+      : t("pages.home.ctaSubtitle"))
+    : t("pages.home.ctaSubtitleDefault");
+
+  // Render para los botones de acción del Hero
+  const renderHeroActions = () => {
+    if (FEATURES.ENABLE_GOOGLE_AUTH) {
+      if (loggedInUser) {
+        return (
+          <>
+            <HeroPrimaryButton onClick={() => navigate("/dashboard")} variant="primary">
+              {t("pages.home.heroDashboardButton")}
+            </HeroPrimaryButton>
+            {FEATURES.ENABLE_BILLING_LEMON && (
+              <HeroOutlinedButton onClick={handlePricing} variant="secondary">
+                {t("pages.home.pricingButton")}
+              </HeroOutlinedButton>
+            )}
+          </>
+        );
+      } else {
+        return (
+          <>
+            <HeroPrimaryButton onClick={handleLogin} variant="primary">
+              {t("pages.home.ctaButton")}
+            </HeroPrimaryButton>
+            {FEATURES.ENABLE_GOOGLE_AUTH && G_ID && (
+              <HeroGoogleButtonWrapper>
+                <GoogleSignInButton size="large" text="continue_with" width="240px" oneTap={true} />
+              </HeroGoogleButtonWrapper>
+            )}
+            <HeroOutlinedButton onClick={handleLogin} variant="secondary">
+              <ZnIcon icon={KeyOutlined} /> {t("pages.home.heroEmailLoginButton")}
+            </HeroOutlinedButton>
+            {FEATURES.ENABLE_BILLING_LEMON && (
+              <HeroOutlinedButton onClick={handlePricing} variant="secondary">
+                {t("pages.home.pricingButton")}
+              </HeroOutlinedButton>
+            )}
+          </>
+        );
+      }
+    } else {
+      return (
+        <>
+          {BRAND_CONFIG.whatsappUrl ? (
+            <HeroPrimaryButton onClick={() => window.open(BRAND_CONFIG.whatsappUrl, "_blank", "noopener,noreferrer")} variant="primary">
+              {t("pages.home.whatsappContactButton")}
+            </HeroPrimaryButton>
+          ) : (
+            <HeroPrimaryButton onClick={() => scrollTo("features")} variant="primary">
+              {t("pages.home.seeFeaturesButton")}
+            </HeroPrimaryButton>
+          )}
+          {FEATURES.ENABLE_BILLING_LEMON && (
+            <HeroOutlinedButton onClick={handlePricing} variant="secondary">
+              {t("pages.home.pricingButton")}
+            </HeroOutlinedButton>
+          )}
+        </>
+      );
+    }
+  };
 
   return (
     <>
-      <AnimatedBackground />
       <ScrollNav>
         {SECTIONS.map((s) => (
           <ScrollDotWrapper key={s}>
@@ -341,318 +374,178 @@ const HomePage: React.FC = () => {
 
       <VhSection
         id="hero"
-        $variant="black"
         $visible={preloadedSections.has("hero")}
       >
         <HeroContent>
           <LogoWrapper>
             <Logo
               src={BRAND_CONFIG.logoUrl || `${process.env.PUBLIC_URL}/assets/images/logo.png`}
-              alt={BRAND_CONFIG.name}
+              alt={BRAND_CONFIG.siteName}
             />
           </LogoWrapper>
-          <HeroTitle>{BRAND_CONFIG.name}</HeroTitle>
+          <HeroTitle>{BRAND_CONFIG.siteName}</HeroTitle>
           <HeroSubtitle>
-            {t("pages.home.heroSubtitle") ||
-              "Comunicación en su punto máximo. Dictado por voz, texto a voz y herramientas de accesibilidad para la web."}
+            {t("pages.home.heroSubtitle")}
           </HeroSubtitle>
           <HeroActions>
-            {FEATURES.ENABLE_GOOGLE_AUTH ? (
-              loggedInUser ? (
-                <>
-                  <HeroPrimaryButton onClick={() => navigate("/dashboard")} variant="primary">
-                    Ir al Dashboard
-                  </HeroPrimaryButton>
-                  {FEATURES.ENABLE_BILLING_LEMON && (
-                    <HeroOutlinedButton onClick={handlePricing} variant="secondary">
-                      {t("pages.home.pricingButton")}
-                    </HeroOutlinedButton>
-                  )}
-                </>
-              ) : (
-                <>
-                  <HeroPrimaryButton onClick={handleLogin} variant="primary">
-                    Comenzar Gratis
-                  </HeroPrimaryButton>
-                  {FEATURES.ENABLE_GOOGLE_AUTH && G_ID && (
-                    <HeroGoogleButtonWrapper>
-                      <GoogleSignInButton size="large" text="continue_with" width="240px" oneTap={true} />
-                    </HeroGoogleButtonWrapper>
-                  )}
-                  <HeroOutlinedButton onClick={handleLogin} variant="secondary" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
-                    <ZnIcon icon={KeyOutlined} /> Ingresar con Correo
-                  </HeroOutlinedButton>
-                  {FEATURES.ENABLE_BILLING_LEMON && (
-                    <HeroOutlinedButton onClick={handlePricing} variant="secondary">
-                      {t("pages.home.pricingButton")}
-                    </HeroOutlinedButton>
-                  )}
-                </>
-              )
-            ) : (
-              <>
-                {BRAND_CONFIG.whatsappUrl ? (
-                  <HeroPrimaryButton onClick={() => window.open(BRAND_CONFIG.whatsappUrl, "_blank", "noopener,noreferrer")} variant="primary">
-                    Contacto por WhatsApp
-                  </HeroPrimaryButton>
-                ) : (
-                  <HeroPrimaryButton onClick={() => scrollTo("features")} variant="primary">
-                    Ver Funciones
-                  </HeroPrimaryButton>
-                )}
-                {FEATURES.ENABLE_BILLING_LEMON && (
-                  <HeroOutlinedButton onClick={handlePricing} variant="secondary">
-                    {t("pages.home.pricingButton")}
-                  </HeroOutlinedButton>
-                )}
-              </>
-            )}
+            {renderHeroActions()}
           </HeroActions>
         </HeroContent>
       </VhSection>
 
       {showRegister && (
         <RegisterModal
-          onClose={() => { setShowRegister(false); setPendingPlanId(null); }}
+          onClose={() => setShowRegister(false)}
           initialStep="email"
         />
       )}
 
       <VhSection
         id="features"
-        $variant="blue"
+        $variant="alternate"
         $visible={preloadedSections.has("features")}
       >
         <FeaturesInner>
           <Container maxWidth="lg" padding="none">
             <ContentSection
-              title={t("pages.home.features") || "Caracteristicas"}
-              style={{ marginBottom: 0 }}
+              title={t("pages.home.features")}
+              marginBottom={0}
             >
-              <Row
+              <FeaturesRow
                 gutter={[24, 24]}
                 align="stretch"
-                style={{ display: "flex", flexWrap: "wrap" }}
               >
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={AudioOutlined} size={48} />}
+                      $icon={AudioOutlined}
                       title={t("pages.home.dictadoTitle")}
                       subtitle={t("pages.home.dictadoDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                  </CardInnerWrapper>
+                </FeatureCol>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={SoundOutlined} size={48} />}
+                      $icon={SoundOutlined}
                       title={t("pages.home.ttsTitle")}
                       subtitle={t("pages.home.ttsDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                  </CardInnerWrapper>
+                </FeatureCol>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={DesktopOutlined} size={48} />}
+                      $icon={DesktopOutlined}
                       title={t("pages.home.pipTitle")}
                       subtitle={t("pages.home.pipDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                  </CardInnerWrapper>
+                </FeatureCol>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={FileTextOutlined} size={48} />}
+                      $icon={FileTextOutlined}
                       title={t("pages.home.pdfTitle")}
                       subtitle={t("pages.home.pdfDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                  </CardInnerWrapper>
+                </FeatureCol>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={MessageOutlined} size={48} />}
+                      $icon={MessageOutlined}
                       title={t("pages.home.subsTitle")}
                       subtitle={t("pages.home.subsDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-                <Col xs={24} sm={12} md={8} style={{ display: "flex" }}>
-                  <div style={{ flex: 1, display: "flex" }}>
+                  </CardInnerWrapper>
+                </FeatureCol>
+                <FeatureCol xs={24} sm={12} md={8}>
+                  <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={MacCommandOutlined} size={48} />}
+                      $icon={MacCommandOutlined}
                       title={t("pages.home.shortcutsTitle")}
                       subtitle={t("pages.home.shortcutsDesc")}
                       variant="glass"
                     />
-                  </div>
-                </Col>
-              </Row>
+                  </CardInnerWrapper>
+                </FeatureCol>
+              </FeaturesRow>
             </ContentSection>
           </Container>
         </FeaturesInner>
       </VhSection>
 
-      {FEATURES.ENABLE_BILLING_LEMON && preloadedSections.has("pricing") && (
-        <VhSection
-          id="pricing"
-          $variant="black"
-          $visible={preloadedSections.has("pricing")}
-        >
-          <Container maxWidth="lg" padding="none">
-            <SectionTitle>{t("pages.home.pricingSectionTitle")}</SectionTitle>
-            <SectionSubtitle>
-              {t("pages.home.pricingSectionSubtitle")}
-            </SectionSubtitle>
-            <PricingGrid>
-              {(["free", "6_meses", "1_ano"] as PlanId[]).map((planId) => {
-                const plan = PLANS[planId];
-                const allPremium = PLANS["1_ano"].features;
-                const planDescKey =
-                  planId === "free"
-                    ? "planFreeDesc"
-                    : planId === "6_meses"
-                      ? "planSemestralDesc"
-                      : "planAnualDesc";
-                const billingKey =
-                  planId === "free"
-                    ? "billingFree"
-                    : planId === "6_meses"
-                      ? "billingSemestral"
-                      : "billingAnual";
-                return (
-                  <PricingCard
-                    key={planId}
-                    $popular={plan.badge === "popular"}
-                    $bestValue={plan.badge === "best-value"}
-                  >
-                    {plan.badge === "popular" && (
-                      <PopularBadge>{t("pages.plans.popular")}</PopularBadge>
-                    )}
-                    {plan.badge === "best-value" && (
-                      <BestValueBadge>
-                        {t("pages.plans.bestValue")}
-                      </BestValueBadge>
-                    )}
-                    <PlanName>{plan.name}</PlanName>
-                    <PlanSubtitle>{t("pages.plans." + planDescKey)}</PlanSubtitle>
-                    <PriceContainer>
-                      <Currency>$</Currency>
-                      <PriceAmount>{plan.price}</PriceAmount>
-                      <BillingPeriod>
-                        {t("pages.plans." + billingKey)}
-                      </BillingPeriod>
-                    </PriceContainer>
-                    <FeaturesList>
-                      {plan.features.map((f) => (
-                        <FeatureItem key={f}>
-                          {t(FEATURE_KEY_MAP[f] || f)}
-                        </FeatureItem>
-                      ))}
-                      {planId !== "1_ano" &&
-                        allPremium
-                          .filter((f) => !plan.features.includes(f))
-                          .map((f) => (
-                            <FeatureDisabledItem key={f}>
-                              {t(FEATURE_KEY_MAP[f] || f)}
-                            </FeatureDisabledItem>
-                          ))}
-                    </FeaturesList>
-                    {planId === "free" ? (
-                      <FreePricingButton disabled variant="secondary">
-                        {t("pages.plans.currentPlan")}
-                      </FreePricingButton>
-                    ) : (
-                      <PricingButton
-                        $primary={plan.badge === "popular"}
-                        variant={plan.badge === "popular" ? "primary" : "secondary"}
-                        disabled={isLoading}
-                        onClick={() => handleSubscribe(planId)}
-                      >
-                        {isLoading && loadingPlanId === planId ? (
-                          <>
-                            <ZnIcon icon={LoadingOutlined} spin style={{ marginRight: '8px' }} />
-                            {t("pages.pricing.processingRequest")}
-                          </>
-                        ) : (
-                          `${t("pages.plans.choose")} ${plan.name.split(" ")[0]}`
-                        )}
-                      </PricingButton>
-                    )}
-                  </PricingCard>
-                );
-              })}
-            </PricingGrid>
-          </Container>
-        </VhSection>
-      )}
 
       <VhSection
         id="stats"
-        $variant="blue"
         $visible={preloadedSections.has("stats")}
       >
-        <Container maxWidth="lg" padding="none">
-          <StatsGrid>
-            <StatItem>
-              <StatNumber>7</StatNumber>
-              <StatLabel>{t("pages.home.statsIdiomas")}</StatLabel>
-              <StatList>
-                <StatListItem>
-                  {currentFlag.flag} {currentFlag.name}
-                </StatListItem>
-                <StatListItem>
-                  {secondLangItem.flag} {secondLangItem.name}
-                </StatListItem>
-                <StatListItem>
-                  {t("pages.home.statsIdiomasOthers")}
-                </StatListItem>
-              </StatList>
-            </StatItem>
-            <StatItem>
-              <StatNumber>100%</StatNumber>
-              <StatLabel>{t("pages.home.statsLocal")}</StatLabel>
-              <StatList>
-                <StatListItem>
-                  {t("pages.home.statsPrivacidadItem1")}
-                </StatListItem>
-                <StatListItem>
-                  {t("pages.home.statsPrivacidadItem2")}
-                </StatListItem>
-                <StatListItem>
-                  {t("pages.home.statsPrivacidadItem3")}
-                </StatListItem>
-              </StatList>
-            </StatItem>
-            <StatItem>
-              <StatNumber $large>∞</StatNumber>
-              <StatLabel>{t("pages.home.statsCompatibilidad")}</StatLabel>
-              <StatList>
-                <StatListItem>💻 Windows</StatListItem>
-                <StatListItem>💻 macOS</StatListItem>
-                <StatListItem>💻 Linux</StatListItem>
-              </StatList>
-            </StatItem>
-          </StatsGrid>
+        <Container maxWidth="lg">
+          <StatsRow gutter={[24, 32]} justify="center">
+            <StatCol xs={24} md={8}>
+              <StatItem>
+                <StatNumber>{SUPPORTED_LOCALES.length}</StatNumber>
+                <StatLabel>{t("pages.home.statsIdiomas")}</StatLabel>
+                <StatList>
+                  <StatListItem>
+                    {currentFlag.flag} {currentFlag.name}
+                  </StatListItem>
+                  <StatListItem>
+                    {secondLangItem.flag} {secondLangItem.name}
+                  </StatListItem>
+                  <StatListItem>
+                    {t("pages.home.statsIdiomasOthers")}
+                  </StatListItem>
+                </StatList>
+              </StatItem>
+            </StatCol>
+            <StatCol xs={24} md={8}>
+              <StatItem>
+                <StatNumber>100%</StatNumber>
+                <StatLabel>{t("pages.home.statsLocal")}</StatLabel>
+                <StatList>
+                  <StatListItem>
+                    {t("pages.home.statsPrivacidadItem1")}
+                  </StatListItem>
+                  <StatListItem>
+                    {t("pages.home.statsPrivacidadItem2")}
+                  </StatListItem>
+                  <StatListItem>
+                    {t("pages.home.statsPrivacidadItem3")}
+                  </StatListItem>
+                </StatList>
+              </StatItem>
+            </StatCol>
+            <StatCol xs={24} md={8}>
+              <StatItem>
+                <StatNumber $large>∞</StatNumber>
+                <StatLabel>{t("pages.home.statsCompatibilidad")}</StatLabel>
+                <StatList>
+                  <StatListItem>📱 Móvil</StatListItem>
+                  <StatListItem>💻 Escritorio</StatListItem>
+                  <StatListItem>🌐 Navegadores</StatListItem>
+                </StatList>
+              </StatItem>
+            </StatCol>
+          </StatsRow>
         </Container>
       </VhSection>
 
       <VhSection
         id="testimonials"
-        $variant="black"
+        $variant="alternate"
         $visible={preloadedSections.has("testimonials")}
       >
         <Container maxWidth="lg">
@@ -660,152 +553,81 @@ const HomePage: React.FC = () => {
           <SectionSubtitle>
             {t("pages.home.testimonialsSubtitle")}
           </SectionSubtitle>
-          <TestimonialsGrid>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial1")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>S</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName1")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole1")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial2")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>M</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName2")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole2")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial3")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>Y</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName3")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole3")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial4")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>D</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName4")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole4")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial5")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>E</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName5")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole5")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial6")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>P</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName6")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole6")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-          </TestimonialsGrid>
+          <TestimonialsRow gutter={[24, 24]} justify="center">
+            <TestimonialCol xs={24} md={8}>
+              <TestimonialCard>
+                <TestimonialQuote>
+                  {t("pages.home.testimonial1")}
+                </TestimonialQuote>
+                <TestimonialAuthor>
+                  <TestimonialAvatar>S</TestimonialAvatar>
+                  <div>
+                    <TestimonialName>
+                      {t("pages.home.testimonialName1")}
+                    </TestimonialName>
+                    <TestimonialRole>
+                      {t("pages.home.testimonialRole1")}
+                    </TestimonialRole>
+                  </div>
+                </TestimonialAuthor>
+              </TestimonialCard>
+            </TestimonialCol>
+            <TestimonialCol xs={24} md={8}>
+              <TestimonialCard>
+                <TestimonialQuote>
+                  {t("pages.home.testimonial2")}
+                </TestimonialQuote>
+                <TestimonialAuthor>
+                  <TestimonialAvatar>M</TestimonialAvatar>
+                  <div>
+                    <TestimonialName>
+                      {t("pages.home.testimonialName2")}
+                    </TestimonialName>
+                    <TestimonialRole>
+                      {t("pages.home.testimonialRole2")}
+                    </TestimonialRole>
+                  </div>
+                </TestimonialAuthor>
+              </TestimonialCard>
+            </TestimonialCol>
+            <TestimonialCol xs={24} md={8}>
+              <TestimonialCard>
+                <TestimonialQuote>
+                  {t("pages.home.testimonial3")}
+                </TestimonialQuote>
+                <TestimonialAuthor>
+                  <TestimonialAvatar>Y</TestimonialAvatar>
+                  <div>
+                    <TestimonialName>
+                      {t("pages.home.testimonialName3")}
+                    </TestimonialName>
+                    <TestimonialRole>
+                      {t("pages.home.testimonialRole3")}
+                    </TestimonialRole>
+                  </div>
+                </TestimonialAuthor>
+              </TestimonialCard>
+            </TestimonialCol>
+          </TestimonialsRow>
         </Container>
       </VhSection>
 
       <VhSection
         id="cta"
-        $variant="blue"
         $visible={preloadedSections.has("cta")}
       >
         <Container maxWidth="sm">
           <CtaTitle>
-            {FEATURES.ENABLE_GOOGLE_AUTH
-              ? (loggedInUser ? "Bienvenido de vuelta" : t("pages.home.ctaTitle") || "Comienza Hoy")
-              : "Comienza Hoy"}
+            {ctaTitle}
           </CtaTitle>
           <CtaSubtitle>
-            {FEATURES.ENABLE_GOOGLE_AUTH ? (
-              loggedInUser
-                ? `Ya sos parte de ${BRAND_CONFIG.name}. Accedé a tu panel de control.`
-                : t("pages.home.ctaSubtitle") || "Registrate ahora para comenzar a utilizar todos nuestros servicios web."
-            ) : (
-              "Descubre cómo nuestro servicio puede optimizar el rendimiento de tu negocio."
-            )}
+            {ctaSubtitle}
           </CtaSubtitle>
           <CtaButton
             variant="primary"
-            onClick={
-              FEATURES.ENABLE_GOOGLE_AUTH
-                ? (loggedInUser ? () => navigate("/dashboard") : handleLogin)
-                : () => {
-                  if (BRAND_CONFIG.whatsappUrl) {
-                    window.open(BRAND_CONFIG.whatsappUrl, "_blank", "noopener,noreferrer");
-                  } else {
-                    scrollTo("features");
-                  }
-                }
-            }
+            onClick={ctaConfig.onClick}
           >
-            {FEATURES.ENABLE_GOOGLE_AUTH ? (
-              loggedInUser ? (
-                <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-                  Ir al Dashboard <ZnIcon icon={RocketOutlined} />
-                </span>
-              ) : (
-                "Comenzar Gratis"
-              )
-            ) : (
-              BRAND_CONFIG.whatsappUrl ? "Contacto por WhatsApp" : "Ver Funciones"
-            )}
+            {ctaConfig.label}
           </CtaButton>
         </Container>
       </VhSection>

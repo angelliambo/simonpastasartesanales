@@ -1,6 +1,6 @@
 {
   "name": "@factory/shared",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "MERN SaaS Factory Framework — shared core, white-label config and design system",
   "exports": {
     "./design-sys/theme/*": {
@@ -10,18 +10,6 @@
     "./design-sys/atoms/*": {
       "types": "./dist/design-sys/atoms/*/index.d.ts",
       "default": "./dist/design-sys/atoms/*/index.js"
-    },
-    "./design-sys/organisms/*": {
-      "types": "./dist/design-sys/organisms/*/index.d.ts",
-      "default": "./dist/design-sys/organisms/*/index.js"
-    },
-    "./design-sys/organisms/LegalPages/*": {
-      "types": "./dist/design-sys/organisms/LegalPages/*/index.d.ts",
-      "default": "./dist/design-sys/organisms/LegalPages/*/index.js"
-    },
-    "./design-sys/organisms/LegalPages/shared/*": {
-      "types": "./dist/design-sys/organisms/LegalPages/shared/*.d.ts",
-      "default": "./dist/design-sys/organisms/LegalPages/shared/*.js"
     },
     "./design-sys/mixins/*": {
       "types": "./dist/design-sys/mixins/*.d.ts",
@@ -34,26 +22,6 @@
     "./types/*": {
       "types": "./dist/types/*.d.ts",
       "default": "./dist/types/*.js"
-    },
-    "./i18n": {
-      "types": "./dist/i18n/index.d.ts",
-      "default": "./dist/i18n/index.js"
-    },
-    "./i18n/pages": {
-      "types": "./dist/i18n/pages/index.d.ts",
-      "default": "./dist/i18n/pages/index.js"
-    },
-    "./i18n/locales": {
-      "types": "./dist/i18n/locales/index.d.ts",
-      "default": "./dist/i18n/locales/index.js"
-    },
-    "./i18n/locales/*": {
-      "types": "./dist/i18n/locales/*/index.d.ts",
-      "default": "./dist/i18n/locales/*/index.js"
-    },
-    "./i18n/*": {
-      "types": "./dist/i18n/*.d.ts",
-      "default": "./dist/i18n/*.js"
     }
   },
   "files": [
@@ -62,8 +30,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "clean": "rm -rf dist node_modules",
-    "audit:i18n": "node scripts/audit_i18n.js"
+    "clean": "rm -rf dist node_modules"
   },
   "peerDependencies": {
     "react": ">=18.0.0 || ^19.0.0",

@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { translate } from '@factory/shared/i18n';
-import { globals } from '@factory/shared/i18n';
-import type { TranslationObject } from '@factory/shared/i18n';
-import { locales as allLocales } from '@factory/shared/i18n/locales';
+import { translate } from './t';
+import { globals } from './globals';
+import type { TranslationObject } from './index';
+import { locales as allLocales } from './locales';
 
 const STORAGE_KEY = 'zn_portal_lang';
 const DEFAULT_LANG = 'es';
@@ -16,6 +16,7 @@ interface Language {
 
 const LANGUAGES: Language[] = [
   { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'en', name: 'English', flag: '🇺🇸' },
 ];
 
 const TRANSLATIONS = allLocales as unknown as Record<string, TranslationObject>;
@@ -35,52 +36,56 @@ const I18nContext = createContext<I18nContextType>({
 });
 
 function loadLang(): string {
+  const getSanitizedLang = (rawLang: string | null | undefined): string | null => {
+    if (!rawLang) return null;
+    const exactMatch = LANGUAGES.find((l) => l.code === rawLang);
+    if (exactMatch) return exactMatch.code;
+    const baseLang = rawLang.split('-')[0].toLowerCase();
+    const baseMatch = LANGUAGES.find((l) => l.code.split('-')[0].toLowerCase() === baseLang);
+    return baseMatch ? baseMatch.code : null;
+  };
+
   try {
     if (typeof window !== 'undefined') {
       try {
         const params = new URLSearchParams(window.location.search);
         const urlLang = params.get('lang');
-        if (urlLang && LANGUAGES.some((l) => l.code === urlLang)) {
-          localStorage.setItem(STORAGE_KEY, urlLang);
-          return urlLang;
+        const sanitized = getSanitizedLang(urlLang);
+        if (sanitized) {
+          localStorage.setItem(STORAGE_KEY, sanitized);
+          return sanitized;
         }
       } catch { }
     }
 
     try {
       const portalLang = localStorage.getItem(STORAGE_KEY);
-      if (portalLang) return portalLang;
+      const sanitized = getSanitizedLang(portalLang);
+      if (sanitized) return sanitized;
     } catch { }
 
     const extLang = (typeof window !== 'undefined' ? (window as any).__ZN_LANG__ : undefined) as string | undefined;
-    if (extLang && LANGUAGES.some((l) => l.code === extLang)) return extLang;
+    const sanitizedExt = getSanitizedLang(extLang);
+    if (sanitizedExt) return sanitizedExt;
 
     try {
       const devExtLang = localStorage.getItem('zn_idiomaUI');
       if (devExtLang) {
         const parsed = JSON.parse(devExtLang);
-        if (parsed && LANGUAGES.some((l) => l.code === parsed)) return parsed;
+        const sanitizedDevExt = getSanitizedLang(parsed);
+        if (sanitizedDevExt) return sanitizedDevExt;
       }
     } catch { }
 
-    // Fallback: Detectar idioma del navegador si no hay configuración previa
     if (typeof navigator !== 'undefined') {
       try {
         const navLang = navigator.language || (navigator as any).userLanguage;
-        if (navLang) {
-          // Buscar coincidencia exacta (ej. 'es-ES' -> 'es-ES')
-          const exactMatch = LANGUAGES.find((l) => l.code.toLowerCase() === navLang.toLowerCase());
-          if (exactMatch) return exactMatch.code;
-
-          // Buscar coincidencia por idioma base (ej. 'es-AR' -> 'es-MX', 'pt-PT' -> 'pt-BR')
-          const baseLang = navLang.split('-')[0].toLowerCase();
-          const partialMatch = LANGUAGES.find((l) => l.code.split('-')[0].toLowerCase() === baseLang);
-          if (partialMatch) return partialMatch.code;
-        }
+        const sanitizedBrowser = getSanitizedLang(navLang);
+        if (sanitizedBrowser) return sanitizedBrowser;
       } catch { }
     }
   } catch (err) {
-    console.error('[ZenithNexus] [ZN-ERR-WEB-301]: Fallo al inicializar la detección de idioma.', err);
+    console.error('[SaaS Boilerplate] Fallo al inicializar la detección de idioma.', err);
   }
 
   return DEFAULT_LANG;

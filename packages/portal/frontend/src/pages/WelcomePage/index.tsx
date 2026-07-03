@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { RootState } from "../../store/store";
-import { AnimatedBackground } from "../../components/AnimatedBackground";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import GoogleSignInButton from "../../components/GoogleSignInButton";
 import { useSendTokenMutation, useVerifyTokenMutation } from "../../services/api/authService";
 import { setCredentials } from "../../store/slices/authSlice";
@@ -124,12 +124,11 @@ export const WelcomePage: React.FC = () => {
 
   return (
     <>
-      <AnimatedBackground />
       <WelcomeContainer>
         <WelcomeCard variant="elevated">
           <WelcomeHeader>
-            <Logo src={`${process.env.PUBLIC_URL}/assets/images/logo.png`} alt="ZenithNexus" />
-            <Title>Zenith<span>Nexus</span></Title>
+            <Logo src={`${process.env.PUBLIC_URL}/assets/images/logo.png`} alt={BRAND_CONFIG.siteName} />
+            <Title>{BRAND_CONFIG.siteName}</Title>
             <Subtitle>{t("pages.brandSlogan.slogan") || "Comunicación en su punto máximo."}</Subtitle>
           </WelcomeHeader>
 

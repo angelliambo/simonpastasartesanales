@@ -8,13 +8,13 @@ const variantMap: Record<BadgeVariant, ReturnType<typeof css>> = {
     border: 1px solid ${({ theme }) => theme.colors.border.normal};
   `,
   premium: css`
-    background: rgba(245, 158, 11, 0.1);
-    color: #f59e0b;
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    background: ${({ theme }) => `${theme.colors.warning[500]}1a`};
+    color: ${({ theme }) => theme.colors.warning[500]};
+    border: 1px solid ${({ theme }) => `${theme.colors.warning[500]}4d`};
 
     &:hover {
-      background: rgba(245, 158, 11, 0.2);
-      border-color: rgba(245, 158, 11, 0.5);
+      background: ${({ theme }) => `${theme.colors.warning[500]}33`};
+      border-color: ${({ theme }) => `${theme.colors.warning[500]}80`};
     }
   `,
   popular: css`

@@ -9,6 +9,7 @@ import { useResponsive } from "../../hooks/useResponsive";
 import { Link } from "react-router-dom";
 import { SafetyOutlined } from "@ant-design/icons";
 import { ZnIcon } from "@shared/design-sys/atoms/ZnIcon";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { createShouldForwardProp } from "../../utils/shouldForwardProp";
 
 // Styled Components
@@ -283,7 +284,7 @@ export const CookieModal: React.FC<CookieModalProps> = ({
             colors={colors}
             $isMobile={isMobile}
           >
-            En ZenithNexus utilizamos cookies para mejorar tu experiencia y ofrecerte
+            En {BRAND_CONFIG.siteName} utilizamos cookies para mejorar tu experiencia y ofrecerte
             funcionalidades personalizadas.
           </BodyTextPrimary>
 

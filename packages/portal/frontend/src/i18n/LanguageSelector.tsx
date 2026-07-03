@@ -139,7 +139,9 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 
   const getCountryCode = (locale: string): string => {
     const parts = locale.split('-');
+    const langCode = parts[0].toLowerCase();
     const country = parts[1] || parts[0];
+    if (langCode === 'en') return 'us';
     return country.toLowerCase();
   };
 

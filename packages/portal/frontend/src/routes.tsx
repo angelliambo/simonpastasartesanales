@@ -6,12 +6,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { FEATURES } from "@factory/shared/config/features";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
-const PricingPage = lazy(() => import("./pages/PricingPage"));
 const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const SupportPage = lazy(() => import("./pages/SupportPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
-const BillingPage = lazy(() => import("./pages/BillingPage"));
 const TermsAndConditionsPage = lazy(
   () => import("./pages/legal/TermsAndConditionsPage")
 );
@@ -19,7 +17,6 @@ const PrivacyPolicyPage = lazy(
   () => import("./pages/legal/PrivacyPolicyPage")
 );
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
-const VoiceCommandsPage = lazy(() => import("./pages/VoiceCommandsPage"));
 
 const AppRoutes = () => {
   return (
@@ -50,19 +47,6 @@ const AppRoutes = () => {
               </>
             )}
 
-            {/* Rutas de Facturación */}
-            {FEATURES.ENABLE_BILLING_LEMON ? (
-              <>
-                <Route path="/pricing" element={<PricingPage />} />
-                <Route path="/billing" element={<ProtectedRoute><BillingPage /></ProtectedRoute>} />
-              </>
-            ) : (
-              <>
-                <Route path="/pricing" element={<NotFoundPage />} />
-                <Route path="/billing" element={<NotFoundPage />} />
-              </>
-            )}
-
             {/* Ruta de Soporte / Tickets */}
             {FEATURES.ENABLE_TICKETING_SYSTEM ? (
               <Route path="/support" element={<SupportPage />} />
@@ -70,7 +54,6 @@ const AppRoutes = () => {
               <Route path="/support" element={<NotFoundPage />} />
             )}
 
-            <Route path="/commands" element={<VoiceCommandsPage />} />
             <Route path="/legal/terms" element={<TermsAndConditionsPage />} />
             <Route path="/legal/privacy" element={<PrivacyPolicyPage />} />
             <Route path="*" element={<NotFoundPage />} />

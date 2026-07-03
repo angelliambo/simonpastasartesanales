@@ -2,13 +2,14 @@ import express, { Request, Response, NextFunction } from "express";
 import { createServer } from "http";
 import helmet from "helmet";
 import apiRoutes from "./routes/index";
-import webhookRoutes from "./routes/webhookRoutes";
+
 import { connectDB } from "./config/db";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { config, logger, displayConfig } from "./config/environment";
 import rateLimit from "express-rate-limit";
 import { checkFeature } from "./middleware/checkFeature";
+import { FEATURES } from "@factory/shared/config/features";
 
 const app = express();
 
@@ -40,8 +41,6 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-app.use("/api/webhooks", checkFeature("ENABLE_BILLING_LEMON"), webhookRoutes);
 
 app.use(
   cors({
@@ -101,19 +100,25 @@ app.use((error: Error, _req: Request, res: Response, _next: NextFunction) => {
 
 const startServer = async () => {
   try {
-    logger.info("🗄️ [SERVER] Conectando a MongoDB...");
-    await connectDB();
+    const isDbRequired = FEATURES.ENABLE_GOOGLE_AUTH || FEATURES.ENABLE_TICKETING_SYSTEM;
 
-    // Drop legacy email_1 index if present (migration from old schema)
-    try {
-      const User = (await import("./models/userModel")).default;
-      const idx = await User.collection?.indexExists("email_1");
-      if (idx) {
-        await User.collection?.dropIndex("email_1");
-        logger.info("🗑️ [DB] Índice legacy email_1 eliminado");
+    if (isDbRequired) {
+      logger.info("🗄️ [SERVER] Conectando a MongoDB...");
+      await connectDB();
+
+      // Drop legacy email_1 index if present (migration from old schema)
+      try {
+        const User = (await import("./models/userModel")).default;
+        const idx = await User.collection?.indexExists("email_1");
+        if (idx) {
+          await User.collection?.dropIndex("email_1");
+          logger.info("🗑️ [DB] Índice legacy email_1 eliminado");
+        }
+      } catch {
+        /* ignorar si falla */
       }
-    } catch {
-      /* ignorar si falla */
+    } else {
+      logger.info("🗄️ [SERVER] Conexión a MongoDB omitida (login/registro y soporte deshabilitados en FEATURES)");
     }
 
     const server = createServer(app);
@@ -128,11 +133,15 @@ const startServer = async () => {
       const { memoryCache } = await import("./utils/cache");
       memoryCache.cleanup();
 
-      const mongoose = await import("mongoose");
-      mongoose.default.connection.close().then(() => {
-        logger.info("✅ [SERVER] Conexión a MongoDB cerrada");
+      if (isDbRequired) {
+        const mongoose = await import("mongoose");
+        mongoose.default.connection.close().then(() => {
+          logger.info("✅ [SERVER] Conexión a MongoDB cerrada");
+          process.exit(0);
+        });
+      } else {
         process.exit(0);
-      });
+      }
     };
 
     process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));

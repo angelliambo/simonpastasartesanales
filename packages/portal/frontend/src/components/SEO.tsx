@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation, LANGUAGES } from "../i18n/I18nProvider";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 
 export interface SEOProps {
   title?: string;
@@ -40,17 +41,17 @@ const SEO: React.FC<SEOProps> = ({
   const finalLocale = locale || currentLang;
 
   // Fallbacks usando las traducciones de la Home si no se proveen metadatos específicos
-  const finalTitle = title || t('pages.home.seoTitle') || "ZenithNexus - Dictado por Voz y Accesibilidad Web";
-  const finalDescription = description || t('pages.home.seoDescription') || "Comunicación en su punto máximo. Dictado por voz, texto a voz y herramientas de accesibilidad para la web.";
+  const finalTitle = title || t('pages.home.seoTitle') || `${BRAND_CONFIG.siteName} - SaaS Platform`;
+  const finalDescription = description || t('pages.home.seoDescription') || "La estructura modular definitiva para tu próximo proyecto web.";
 
   const rawKeywords = keywords || t('pages.home.seoKeywords');
   const finalKeywords = Array.isArray(rawKeywords)
     ? rawKeywords.join(", ")
     : (rawKeywords || "dictado por voz, texto a voz, lector pdf audio, accesibilidad web, extension chrome productividad");
 
-  const fullTitle = finalTitle.includes("ZenithNexus")
+  const fullTitle = finalTitle.includes(BRAND_CONFIG.siteName)
     ? finalTitle
-    : `${finalTitle} | ZenithNexus`;
+    : `${finalTitle} | ${BRAND_CONFIG.siteName}`;
 
   const currentUrl =
     canonicalUrl || (typeof window !== "undefined" ? window.location.origin + window.location.pathname + window.location.search : "");
@@ -58,7 +59,7 @@ const SEO: React.FC<SEOProps> = ({
   const defaultStructuredData = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "ZenithNexus",
+    "name": BRAND_CONFIG.siteName,
     "operatingSystem": "Windows, macOS, Linux, ChromeOS",
     "applicationCategory": "AccessibilityApplication, ProductivityApplication",
     "description": finalDescription,
@@ -97,7 +98,7 @@ const SEO: React.FC<SEOProps> = ({
       <title>{fullTitle}</title>
       <meta name="description" content={finalDescription} />
       <meta name="keywords" content={finalKeywords} />
-      <meta name="author" content="ZenithNexus" />
+      <meta name="author" content={BRAND_CONFIG.siteName} />
       <meta
         name="robots"
         content={`${noIndex ? "noindex" : "index"}, ${noFollow ? "nofollow" : "follow"
@@ -121,7 +122,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="og:image:width" content={ogImage === "/og-image.png" ? "1024" : "1200"} />
       <meta property="og:image:height" content={ogImage === "/og-image.png" ? "1024" : "630"} />
       <meta property="og:image:alt" content={finalTitle} />
-      <meta property="og:site_name" content="ZenithNexus" />
+      <meta property="og:site_name" content={BRAND_CONFIG.siteName} />
       <meta property="og:locale" content={finalLocale} />
 
       {/* Twitter Cards */}
@@ -157,7 +158,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       <meta
         name="apple-mobile-web-app-title"
-        content="ZenithNexus"
+        content={BRAND_CONFIG.siteName}
       />
 
       {/* Preconnect para mejorar performance */}

@@ -3,7 +3,6 @@ FROM node:20-alpine AS base-dependencies
 WORKDIR /app
 COPY package.json yarn.lock* ./
 COPY packages/shared/package*.json ./packages/shared/
-COPY packages/ext/package*.json ./packages/ext/
 COPY packages/portal/package*.json ./packages/portal/
 COPY packages/portal/backend/package*.json ./packages/portal/backend/
 COPY packages/portal/frontend/package*.json ./packages/portal/frontend/
@@ -25,7 +24,7 @@ FROM shared-builder AS backend-builder
 WORKDIR /app
 COPY packages/portal/backend ./packages/portal/backend
 RUN touch packages/portal/backend/env.production
-RUN yarn workspace @factory/portal-backend build
+RUN yarn workspace @factory/backend build
 
 # 4. Compilar frontend
 FROM shared-builder AS frontend-builder
@@ -35,7 +34,7 @@ ARG REACT_APP_API_URL
 ARG REACT_APP_GOOGLE_CLIENT_ID
 ENV REACT_APP_API_URL=$REACT_APP_API_URL
 ENV REACT_APP_GOOGLE_CLIENT_ID=$REACT_APP_GOOGLE_CLIENT_ID
-RUN yarn workspace @factory/portal-frontend build
+RUN yarn workspace @factory/frontend build
 
 # 5. Imagen final de Nginx + Node Backend
 FROM nginx:alpine
@@ -45,7 +44,6 @@ WORKDIR /app
 # Copiar la estructura del monorepo necesaria para producción
 COPY package.json yarn.lock* ./
 COPY packages/shared/package*.json ./packages/shared/
-COPY packages/ext/package*.json ./packages/ext/
 COPY packages/portal/package*.json ./packages/portal/
 COPY packages/portal/backend/package*.json ./packages/portal/backend/
 COPY packages/portal/frontend/package*.json ./packages/portal/frontend/

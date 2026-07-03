@@ -34,11 +34,11 @@ export const Subtitle = styled.p`
 
 export const CustomCard = styled(Card)`
   margin-bottom: 1.5rem;
-  background: rgba(255, 255, 255, 0.02) !important;
-  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  border-radius: 16px !important;
+  border-radius: 16px;
   padding: 1.5rem;
 `;
 
@@ -101,9 +101,9 @@ export const TicketId = styled.span`
   color: #818cf8;
 `;
 
-export const TicketSubject = styled.h3`
+export const TicketSubject = styled.h3<{ $unread?: boolean }>`
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: ${({ $unread }) => ($unread ? "bold" : "normal")};
   margin: 0;
   color: ${({ theme }) => theme.colors.text.primary};
 `;
@@ -212,4 +212,89 @@ export const BackBtn = styled(Button)`
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }
+`;
+
+// Nuevos componentes estilizados semánticos
+import { Input as AtomInput } from "../../components/ui/atoms/Input";
+
+export const UserNumberBox = styled.div`
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: #a78bfa;
+  font-weight: 600;
+  background-color: rgba(167, 139, 250, 0.08);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  display: inline-block;
+`;
+
+export const UserNumberStrong = styled.strong`
+  color: #ffffff;
+  font-family: monospace;
+`;
+
+export const DetailHeaderRow = styled.div`
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+`;
+
+export const DetailLoadingText = styled.span`
+  color: rgba(255, 255, 255, 0.4);
+`;
+
+export const DetailTitleWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const DetailSubject = styled.h2`
+  font-size: 1.2rem;
+  margin: 0;
+  color: ${({ theme }) => theme.colors.text.primary};
+`;
+
+export const ChatInput = styled(AtomInput)`
+  flex: 1;
+`;
+
+export const ListSectionTitle = styled.h3`
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: ${({ theme }) => theme.colors.text.primary};
+`;
+
+export const ListLoadingText = styled.span`
+  color: rgba(255, 255, 255, 0.4);
+`;
+
+export const EmptyListMessage = styled.div`
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  padding: 2rem 0;
+`;
+
+export const CardBadgeWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export const TicketNewMessageBadge = styled.span`
+  background: #10b981;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+`;
+
+export const CardFooterRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;

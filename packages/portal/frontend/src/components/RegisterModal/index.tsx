@@ -5,6 +5,7 @@ import { setCredentials } from '../../store/slices/authSlice';
 import { useSnackbar } from '../ui/atoms/Snackbar';
 import { useTranslation } from '../../i18n/I18nProvider';
 import GoogleSignInButton from '../GoogleSignInButton';
+import { BRAND_CONFIG } from '@factory/shared/config/brand';
 import {
   Overlay, Card, CloseBtn, Title, Subtitle,
   Input, Button, Message, Loading, LegalDisclaimer, GoogleButtonContainer,
@@ -92,7 +93,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, initialStep = 'e
     <Overlay onClick={onClose}>
       <Card onClick={(e) => e.stopPropagation()}>
         <CloseBtn onClick={onClose}>✕</CloseBtn>
-        <Title>Ingresar a ZenithNexus</Title>
+        <Title>Ingresar a {BRAND_CONFIG.siteName}</Title>
         <Subtitle>
           {step === 'code'
             ? 'Ingresá el código que enviamos a tu correo.'

@@ -1,19 +1,31 @@
 import styled, { css } from "styled-components";
 import Button from "../../components/ui/atoms/Button";
+import { Row, Col } from "../../components/ui/atoms/Grid";
 
 export const VhSection = styled.section<{
   $visible?: boolean;
-  $variant?: "black" | "blue";
+  $variant?: "default" | "alternate" | "accent";
 }>`
   min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px 0;
+  
+  /* Agregamos una separación lateral base para que NADA toque el borde de la pantalla */
+  padding: 20px 24px; 
+  
   position: relative;
   z-index: 1;
-  background: ${({ $variant }) =>
-    $variant === "black" ? "#000000" : "#020a25"};
+  background: ${({ $variant, theme }) => {
+    if ($variant === "alternate") {
+      return theme.colors.background.secondary || "#f8f9fa";
+    }
+    if ($variant === "accent") {
+      return theme.colors.background.tertiary || "#e0e0e0";
+    }
+    return theme.colors.background.primary || "#ffffff";
+  }};
+  color: ${({ theme }) => theme.colors.text.primary};
   opacity: ${({ $visible }) => ($visible ? 1 : 0.6)};
   transform: translateY(${({ $visible }) => ($visible ? 0 : 20)}px);
   transition:
@@ -22,15 +34,15 @@ export const VhSection = styled.section<{
   will-change: opacity, transform;
 
   @media (max-height: 800px) {
-    padding: 10px 0;
+    padding: 10px 24px;
   }
   @media (max-height: 700px) {
-    padding: 5px 0;
+    padding: 5px 24px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     min-height: 100dvh;
-    padding: 20px 0;
+    padding: 20px 16px; /* Separación lateral ligeramente más compacta en celulares */
   }
 `;
 
@@ -49,7 +61,7 @@ export const LogoWrapper = styled.div`
     margin-bottom: ${({ theme }) => theme.spacing.sm};
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     margin-bottom: ${({ theme }) => theme.spacing.lg};
   }
 
@@ -78,7 +90,7 @@ export const LogoWrapper = styled.div`
       height: 120px;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
       width: 100px;
       height: 100px;
       filter: blur(12px);
@@ -102,7 +114,7 @@ export const Logo = styled.img`
     height: 50px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 72px;
     height: 72px;
   }
@@ -113,12 +125,12 @@ export const HeroTitle = styled.h1`
   font-weight: 800;
   margin: 0 0 ${({ theme }) => theme.spacing.sm} 0;
   line-height: 1.1;
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.text.primary};
 
   span {
     background: ${({ theme }) =>
-      theme.gradients?.brand ||
-      "linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6)"};
+    theme.gradients?.brand ||
+    "linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6)"};
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -132,13 +144,13 @@ export const HeroTitle = styled.h1`
     font-size: 30px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     font-size: 36px;
   }
 `;
 
 export const HeroSubtitle = styled.p`
-  color: rgba(255, 255, 255, 0.75);
+  color: ${({ theme }) => theme.colors.text.secondary};
   font-size: 18px;
   margin: 0 auto ${({ theme }) => theme.spacing.xl};
   max-width: 480px;
@@ -153,7 +165,7 @@ export const HeroSubtitle = styled.p`
     margin-bottom: ${({ theme }) => theme.spacing.sm};
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     font-size: 16px;
     margin-bottom: ${({ theme }) => theme.spacing.lg};
   }
@@ -167,7 +179,7 @@ export const HeroActions = styled.div`
 `;
 
 const gradientBtnMixin = css`
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  background: ${({ theme }) => theme.gradients.premium};
   color: #fff;
   border: none;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
@@ -239,6 +251,10 @@ export const HeroOutlinedButton = styled(Button)`
   min-width: 180px;
   font-family: inherit;
   line-height: 1.4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 
   @media (max-height: 800px) {
     padding: 10px 24px;
@@ -259,84 +275,47 @@ export const HeroPrimaryButton = styled(Button)`
 
 export const FeaturesInner = styled.div`
   width: 100%;
-
-  @media (max-height: 800px) {
-    .content-section {
-      margin-bottom: 0px !important;
-    }
-    .content-section h2 {
-      font-size: 20px !important;
-      margin-bottom: 8px !important;
-    }
-    .content-card {
-      padding: 10px 14px !important;
-    }
-    .content-card [class*="CardIcon"] {
-      font-size: 28px !important;
-      margin-bottom: 4px !important;
-      height: auto !important;
-    }
-    .content-card [class*="CardTitle"] {
-      font-size: 14px !important;
-      margin-bottom: 2px !important;
-    }
-    .content-card [class*="CardSubtitle"] {
-      font-size: 11px !important;
-      margin-bottom: 0px !important;
-      line-height: 1.25 !important;
-    }
-
-    /* Target Antd Row and Col spacing directly */
-    .ant-row {
-      margin-left: -6px !important;
-      margin-right: -6px !important;
-      row-gap: 12px !important;
-    }
-    .ant-col {
-      padding-left: 6px !important;
-      padding-right: 6px !important;
-    }
-  }
-
-  @media (max-height: 700px) {
-    .content-card {
-      padding: 8px 10px !important;
-    }
-    .content-card [class*="CardIcon"] {
-      font-size: 22px !important;
-      margin-bottom: 2px !important;
-    }
-    .content-card [class*="CardTitle"] {
-      font-size: 13px !important;
-    }
-    .content-card [class*="CardSubtitle"] {
-      font-size: 10.5px !important;
-    }
-    .ant-row {
-      row-gap: 8px !important;
-    }
-  }
+  
+  /* Limitamos el ancho en pantallas grandes para que las cards no se estiren al infinito */
+  max-width: 1200px;
+  
+  /* Centramos el bloque entero en medio del navegador */
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 `;
 
-export const StatsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: ${({ theme }) => theme.spacing.xl};
+export const FeaturesRow = styled(Row)`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0;
+`;
+
+export const FeatureCol = styled(Col)`
+  display: flex;
+`;
+
+export const CardInnerWrapper = styled.div`
+  flex: 1;
+  display: flex;
+`;
+
+export const CtaButtonContent = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+`;
+
+export const StatsRow = styled(Row)`
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
+`;
 
-  @media (max-height: 800px) {
-    gap: ${({ theme }) => theme.spacing.md};
-  }
-  @media (max-height: 700px) {
-    gap: ${({ theme }) => theme.spacing.xs};
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing.lg};
-  }
+export const StatCol = styled(Col)`
+  display: flex;
+  justify-content: center;
 `;
 
 export const StatItem = styled.div`
@@ -395,7 +374,7 @@ export const StatNumber = styled.span<{ $large?: boolean }>`
     font-size: 26px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     font-size: 32px;
     ${({ $large }) => $large && `transform: scale(1.5);`}
   }
@@ -403,7 +382,7 @@ export const StatNumber = styled.span<{ $large?: boolean }>`
 
 export const StatLabel = styled.span`
   font-size: 14px;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.secondary};
   text-transform: uppercase;
   letter-spacing: 1px;
 
@@ -427,7 +406,7 @@ export const StatList = styled.div`
 
 export const StatListItem = styled.span`
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  color: ${({ theme }) => theme.colors.text.tertiary};
   display: flex;
   align-items: center;
   gap: 6px;
@@ -442,7 +421,7 @@ export const PricingGrid = styled.div`
   margin: ${({ theme }) => theme.spacing.xl} auto 0;
   align-items: stretch;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
@@ -465,7 +444,7 @@ const PricingCardSilverBorder = css`
         rgba(255, 255, 255, 0.3)
       )
       padding-box,
-    #0e111a padding-box,
+    ${({ theme }) => theme.colors.background.card || "#0e111a"} padding-box,
     linear-gradient(
         135deg,
         rgba(192, 192, 192, 0.4),
@@ -500,7 +479,7 @@ const PricingCardGoldBorder = css`
         rgba(170, 119, 28, 0.2)
       )
       padding-box,
-    #0e111a padding-box,
+    ${({ theme }) => theme.colors.background.card || "#0e111a"} padding-box,
     linear-gradient(
         135deg,
         rgba(191, 149, 63, 0.5),
@@ -537,16 +516,14 @@ export const PricingCard = styled.div<{ $popular?: boolean; $bestValue?: boolean
     padding: 0.8rem 0.8rem;
   }
 
-  ${({ $popular, $bestValue }) =>
+  ${({ $popular, $bestValue, theme }) =>
     $popular
       ? PricingCardSilverBorder
       : $bestValue
         ? PricingCardGoldBorder
         : `
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: ${theme.colors.background.card || "#ffffff"};
+      border: 1px solid ${theme.colors.border.light || "#dee2e6"};
     `}
 
   &:hover {
@@ -596,7 +573,7 @@ export const PlanName = styled.h3`
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 0.3rem;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.primary};
 
   @media (max-height: 800px) {
     font-size: 1.1rem;
@@ -606,7 +583,7 @@ export const PlanName = styled.h3`
 
 export const PlanSubtitle = styled.p`
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: ${({ theme }) => theme.colors.text.secondary};
   margin: 0;
 
   @media (max-height: 800px) {
@@ -631,13 +608,13 @@ export const PriceContainer = styled.div`
 export const Currency = styled.span`
   font-size: 1.2rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+  color: ${({ theme }) => theme.colors.text.secondary};
 `;
 
 export const PriceAmount = styled.span`
   font-size: 2.8rem;
   font-weight: 800;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.primary};
   letter-spacing: -0.02em;
 
   @media (max-height: 800px) {
@@ -650,7 +627,7 @@ export const PriceAmount = styled.span`
 
 export const BillingPeriod = styled.span`
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: ${({ theme }) => theme.colors.text.tertiary};
   margin-left: 0.4rem;
 `;
 
@@ -672,7 +649,7 @@ export const FeatureItem = styled.li`
   display: flex;
   align-items: center;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: ${({ theme }) => theme.colors.text.secondary};
   margin-bottom: 0.8rem;
 
   &::before {
@@ -697,7 +674,7 @@ export const FeatureDisabledItem = styled.li`
   display: flex;
   align-items: center;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.55);
+  color: ${({ theme }) => theme.colors.text.tertiary};
   margin-bottom: 0.8rem;
 
   &::before {
@@ -720,9 +697,9 @@ export const FeatureDisabledItem = styled.li`
 
 export const PricingButton = styled(Button) <{ $primary?: boolean }>`
   width: 100%;
-  background: ${({ $primary }) =>
+  background: ${({ $primary, theme }) =>
     $primary
-      ? "linear-gradient(135deg, #a855f7, #7c3aed)"
+      ? (theme.gradients?.premium || "linear-gradient(135deg, #a855f7, #7c3aed)")
       : "rgba(255,255,255,0.08)"};
   color: #fff;
   border: none;
@@ -744,9 +721,9 @@ export const PricingButton = styled(Button) <{ $primary?: boolean }>`
   }
 
   &:hover {
-    background: ${({ $primary }) =>
+    background: ${({ $primary, theme }) =>
     $primary
-      ? "linear-gradient(135deg, #b967ff, #8b5cf6)"
+      ? (theme.gradients?.brand || "linear-gradient(135deg, #b967ff, #8b5cf6)")
       : "rgba(255,255,255,0.15)"};
     transform: translateY(-2px);
   }
@@ -759,39 +736,33 @@ export const FreePricingButton = styled(PricingButton)`
   }
 `;
 
-export const TestimonialsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: ${({ theme }) => theme.spacing.lg};
+export const TestimonialsRow = styled(Row)`
   max-width: 1000px;
   width: 100%;
   margin: ${({ theme }) => theme.spacing.xl} auto 0;
 
   @media (max-height: 800px) {
     margin-top: 1rem;
-    gap: ${({ theme }) => theme.spacing.sm};
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
   }
 `;
 
+export const TestimonialCol = styled(Col)`
+  display: flex;
+`;
+
 export const TestimonialCard = styled.div`
-  background: ${({ theme }) =>
-    theme.effects?.glassBackground || "rgba(255,255,255,0.08)"};
-  backdrop-filter: blur(${({ theme }) => theme.effects?.blur?.glass || "12px"});
-  -webkit-backdrop-filter: blur(
-    ${({ theme }) => theme.effects?.blur?.glass || "12px"}
-  );
-  border: 1px solid
-    ${({ theme }) => theme.effects?.glassBorder || "rgba(255,255,255,0.1)"};
+  flex: 1;
+  background: ${({ theme }) => theme.colors.background.card || "#ffffff"};
+  border: 1px solid ${({ theme }) => theme.colors.border.light || "#eef0f2"};
   border-radius: 16px;
   padding: ${({ theme }) => theme.spacing.lg};
   text-align: left;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   @media (max-height: 800px) {
     padding: ${({ theme }) => theme.spacing.sm};
@@ -806,7 +777,7 @@ export const TestimonialCard = styled.div`
 
 export const TestimonialQuote = styled.p`
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.75);
+  color: ${({ theme }) => theme.colors.text.secondary};
   line-height: 1.7;
   margin: 0 0 ${({ theme }) => theme.spacing.md};
   font-style: italic;
@@ -847,13 +818,13 @@ export const TestimonialAvatar = styled.div`
 export const TestimonialName = styled.span`
   font-size: 14px;
   font-weight: 600;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.primary};
 `;
 
 export const TestimonialRole = styled.p`
   margin: 0;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
+  color: ${({ theme }) => theme.colors.text.tertiary};
 `;
 
 export const SectionTitle = styled.h2`
@@ -876,14 +847,14 @@ export const SectionTitle = styled.h2`
     font-size: 20px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     font-size: 24px;
   }
 `;
 
 export const SectionSubtitle = styled.p`
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.75);
+  color: ${({ theme }) => theme.colors.text.secondary};
   max-width: 500px;
   margin: 0 auto;
   text-align: center;
@@ -894,12 +865,18 @@ export const SectionSubtitle = styled.p`
   @media (max-height: 700px) {
     font-size: 12px;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 14px;
+    margin-bottom: 24px;
+    padding: 0 16px;
+  }
 `;
 
 export const CtaTitle = styled.h2`
   font-size: 28px;
   font-weight: 700;
-  color: #fff;
+  color: inherit;
   margin: 0 auto ${({ theme }) => theme.spacing.sm};
   text-align: center;
 
@@ -910,7 +887,8 @@ export const CtaTitle = styled.h2`
 
 export const CtaSubtitle = styled.p`
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.75);
+  color: inherit;
+  opacity: 0.8;
   margin: 0 auto ${({ theme }) => theme.spacing.lg};
   max-width: 400px;
   text-align: center;
@@ -932,8 +910,10 @@ export const CtaButton = styled(Button)`
     font-size: 14px;
   }
 
-  @media (max-width: 768px) {
-    min-width: 100%;
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-width: 240px;
+    width: auto;
+    max-width: 100%;
   }
 `;
 
@@ -948,7 +928,7 @@ export const ScrollNav = styled.nav`
   align-items: center;
   gap: 14px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
 `;
@@ -963,23 +943,23 @@ export const ScrollDot = styled.button<{ $active?: boolean }>`
   border-radius: 50%;
   border: 2px solid
     ${({ $active, theme }) =>
-    $active ? theme.colors.warning[500] : "rgba(255,255,255,0.4)"};
+    $active ? theme.colors.primary[500] : "rgba(0,0,0,0.25)"};
   background: ${({ $active, theme }) =>
-    $active ? theme.colors.warning[500] : "transparent"};
+    $active ? theme.colors.primary[500] : "transparent"};
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   padding: 0;
   transform: ${({ $active }) => ($active ? "scale(1.4)" : "scale(1)")};
   box-shadow: ${({ $active, theme }) =>
     $active
-      ? `0 0 8px ${theme.colors.warning[500]}99, 0 0 16px ${theme.colors.warning[500]}4D`
+      ? `0 0 8px ${theme.colors.primary[500]}99, 0 0 16px ${theme.colors.primary[500]}4D`
       : "none"};
 
   &:hover {
     background: ${({ $active, theme }) =>
-    $active ? theme.colors.warning[500] : "rgba(255,255,255,0.3)"};
+    $active ? theme.colors.primary[500] : "rgba(0,0,0,0.08)"};
     border-color: ${({ $active, theme }) =>
-    $active ? theme.colors.warning[500] : "rgba(255,255,255,0.6)"};
+    $active ? theme.colors.primary[500] : "rgba(0,0,0,0.4)"};
   }
 `;
 
@@ -989,8 +969,8 @@ export const ScrollDotLabel = styled.span<{ $active?: boolean }>`
   top: 50%;
   transform: translateY(-50%);
   font-size: 10px;
-  color: ${({ $active }) =>
-    $active ? "#f59e0b" : "rgba(255, 255, 255, 0.5)"};
+  color: ${({ $active, theme }) =>
+    $active ? theme.colors.primary[500] : theme.colors.text.secondary};
   white-space: nowrap;
   pointer-events: none;
   opacity: ${({ $active }) => ($active ? 1 : 0)};
