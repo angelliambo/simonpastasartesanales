@@ -934,7 +934,6 @@ export const SectionSubtitle = styled.p`
     margin-bottom: 24px;
   }
 `;
-`;
 
 export const CtaTitle = styled.h2`
   font-size: 28px;
