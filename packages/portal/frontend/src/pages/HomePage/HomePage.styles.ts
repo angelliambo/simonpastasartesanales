@@ -292,25 +292,15 @@ export const CtaButtonContent = styled.span`
   gap: 6px;
 `;
 
-export const StatsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: ${({ theme }) => theme.spacing.xl};
+export const StatsRow = styled(Row)`
   max-width: 800px;
   width: 100%;
-  margin: 0 auto;
+  margin: 0 auto !important;
+`;
 
-  @media (max-height: 800px) {
-    gap: ${({ theme }) => theme.spacing.md};
-  }
-  @media (max-height: 700px) {
-    gap: ${({ theme }) => theme.spacing.xs};
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing.lg};
-  }
+export const StatCol = styled(Col)`
+  display: flex;
+  justify-content: center;
 `;
 
 export const StatItem = styled.div`
@@ -731,25 +721,22 @@ export const FreePricingButton = styled(PricingButton)`
   }
 `;
 
-export const TestimonialsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: ${({ theme }) => theme.spacing.lg};
+export const TestimonialsRow = styled(Row)`
   max-width: 1000px;
   width: 100%;
-  margin: ${({ theme }) => theme.spacing.xl} auto 0;
+  margin: ${({ theme }) => theme.spacing.xl} auto 0 !important;
 
   @media (max-height: 800px) {
-    margin-top: 1rem;
-    gap: ${({ theme }) => theme.spacing.sm};
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+    margin-top: 1rem !important;
   }
 `;
 
+export const TestimonialCol = styled(Col)`
+  display: flex;
+`;
+
 export const TestimonialCard = styled.div`
+  flex: 1;
   background: ${({ theme }) => theme.colors.background.card || "#ffffff"};
   border: 1px solid ${({ theme }) => theme.colors.border.light || "#eef0f2"};
   border-radius: 16px;
@@ -758,6 +745,9 @@ export const TestimonialCard = styled.div`
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   @media (max-height: 800px) {
     padding: ${({ theme }) => theme.spacing.sm};
@@ -906,7 +896,9 @@ export const CtaButton = styled(Button)`
   }
 
   @media (max-width: 768px) {
-    min-width: 100%;
+    min-width: 240px;
+    width: auto;
+    max-width: 100%;
   }
 `;
 

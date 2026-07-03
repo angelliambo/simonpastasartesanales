@@ -62,6 +62,19 @@ export const home = {
   testimonial3: 'Suscripciones integradas con Lemon Squeezy funcionando el primer día. Excelente soporte y estructura modular impecable.',
   testimonialName3: 'Javier Domínguez',
   testimonialRole3: 'Fundador de SaaS Flow',
+
+  // CTA Section
+  ctaTitle: 'Comienza Hoy',
+  ctaTitleLogged: 'Bienvenido de vuelta',
+  ctaSubtitle: 'Regístrate ahora para comenzar a utilizar todos nuestros servicios web.',
+  ctaSubtitleLogged: 'Ya eres parte de {{siteName}}. Accede a tu panel de control.',
+  ctaSubtitleDefault: 'Descubre cómo nuestro servicio puede optimizar el rendimiento de tu negocio.',
+
+  // Action Buttons
+  heroDashboardButton: 'Ir al Dashboard',
+  heroEmailLoginButton: 'Ingresar con Correo',
+  whatsappContactButton: 'Contacto por WhatsApp',
+  seeFeaturesButton: 'Ver Funciones',
 };
 
 export default home;

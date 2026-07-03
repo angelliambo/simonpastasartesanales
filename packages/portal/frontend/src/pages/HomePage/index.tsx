@@ -38,13 +38,15 @@ import {
   HeroOutlinedButton,
   HeroPrimaryButton,
   FeaturesInner,
-  StatsGrid,
+  StatsRow,
+  StatCol,
   StatItem,
   StatNumber,
   StatLabel,
   StatList,
   StatListItem,
-  TestimonialsGrid,
+  TestimonialsRow,
+  TestimonialCol,
   TestimonialCard,
   TestimonialQuote,
   TestimonialAuthor,
@@ -248,7 +250,111 @@ const HomePage: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Configuración del botón CTA (al final de la página)
+  const getCtaConfig = () => {
+    if (FEATURES.ENABLE_GOOGLE_AUTH) {
+      if (loggedInUser) {
+        return {
+          label: (
+            <CtaButtonContent>
+              {t("pages.home.heroDashboardButton")} <ZnIcon icon={RocketOutlined} />
+            </CtaButtonContent>
+          ),
+          onClick: () => navigate("/dashboard")
+        };
+      } else {
+        return {
+          label: t("pages.home.ctaButton"),
+          onClick: handleLogin
+        };
+      }
+    } else {
+      if (BRAND_CONFIG.whatsappUrl) {
+        return {
+          label: t("pages.home.whatsappContactButton"),
+          onClick: () => window.open(BRAND_CONFIG.whatsappUrl, "_blank", "noopener,noreferrer")
+        };
+      } else {
+        return {
+          label: t("pages.home.seeFeaturesButton"),
+          onClick: () => scrollTo("features")
+        };
+      }
+    }
+  };
 
+  const ctaConfig = getCtaConfig();
+
+  // Título y Subtítulo de la sección CTA
+  const ctaTitle = FEATURES.ENABLE_GOOGLE_AUTH
+    ? (loggedInUser ? t("pages.home.ctaTitleLogged") : t("pages.home.ctaTitle"))
+    : t("pages.home.ctaTitle");
+
+  const ctaSubtitle = FEATURES.ENABLE_GOOGLE_AUTH
+    ? (loggedInUser
+        ? t("pages.home.ctaSubtitleLogged", { siteName: BRAND_CONFIG.siteName })
+        : t("pages.home.ctaSubtitle"))
+    : t("pages.home.ctaSubtitleDefault");
+
+  // Render para los botones de acción del Hero
+  const renderHeroActions = () => {
+    if (FEATURES.ENABLE_GOOGLE_AUTH) {
+      if (loggedInUser) {
+        return (
+          <>
+            <HeroPrimaryButton onClick={() => navigate("/dashboard")} variant="primary">
+              {t("pages.home.heroDashboardButton")}
+            </HeroPrimaryButton>
+            {FEATURES.ENABLE_BILLING_LEMON && (
+              <HeroOutlinedButton onClick={handlePricing} variant="secondary">
+                {t("pages.home.pricingButton")}
+              </HeroOutlinedButton>
+            )}
+          </>
+        );
+      } else {
+        return (
+          <>
+            <HeroPrimaryButton onClick={handleLogin} variant="primary">
+              {t("pages.home.ctaButton")}
+            </HeroPrimaryButton>
+            {FEATURES.ENABLE_GOOGLE_AUTH && G_ID && (
+              <HeroGoogleButtonWrapper>
+                <GoogleSignInButton size="large" text="continue_with" width="240px" oneTap={true} />
+              </HeroGoogleButtonWrapper>
+            )}
+            <HeroOutlinedButton onClick={handleLogin} variant="secondary">
+              <ZnIcon icon={KeyOutlined} /> {t("pages.home.heroEmailLoginButton")}
+            </HeroOutlinedButton>
+            {FEATURES.ENABLE_BILLING_LEMON && (
+              <HeroOutlinedButton onClick={handlePricing} variant="secondary">
+                {t("pages.home.pricingButton")}
+              </HeroOutlinedButton>
+            )}
+          </>
+        );
+      }
+    } else {
+      return (
+        <>
+          {BRAND_CONFIG.whatsappUrl ? (
+            <HeroPrimaryButton onClick={() => window.open(BRAND_CONFIG.whatsappUrl, "_blank", "noopener,noreferrer")} variant="primary">
+              {t("pages.home.whatsappContactButton")}
+            </HeroPrimaryButton>
+          ) : (
+            <HeroPrimaryButton onClick={() => scrollTo("features")} variant="primary">
+              {t("pages.home.seeFeaturesButton")}
+            </HeroPrimaryButton>
+          )}
+          {FEATURES.ENABLE_BILLING_LEMON && (
+            <HeroOutlinedButton onClick={handlePricing} variant="secondary">
+              {t("pages.home.pricingButton")}
+            </HeroOutlinedButton>
+          )}
+        </>
+      );
+    }
+  };
 
   return (
     <>
@@ -279,67 +385,17 @@ const HomePage: React.FC = () => {
           </LogoWrapper>
           <HeroTitle>{BRAND_CONFIG.siteName}</HeroTitle>
           <HeroSubtitle>
-            {t("pages.home.heroSubtitle") ||
-              "Comunicación en su punto máximo. Dictado por voz, texto a voz y herramientas de accesibilidad para la web."}
+            {t("pages.home.heroSubtitle")}
           </HeroSubtitle>
           <HeroActions>
-            {FEATURES.ENABLE_GOOGLE_AUTH ? (
-              loggedInUser ? (
-                <>
-                  <HeroPrimaryButton onClick={() => navigate("/dashboard")} variant="primary">
-                    Ir al Dashboard
-                  </HeroPrimaryButton>
-                  {FEATURES.ENABLE_BILLING_LEMON && (
-                    <HeroOutlinedButton onClick={handlePricing} variant="secondary">
-                      {t("pages.home.pricingButton")}
-                    </HeroOutlinedButton>
-                  )}
-                </>
-              ) : (
-                <>
-                  <HeroPrimaryButton onClick={handleLogin} variant="primary">
-                    Comenzar Gratis
-                  </HeroPrimaryButton>
-                  {FEATURES.ENABLE_GOOGLE_AUTH && G_ID && (
-                    <HeroGoogleButtonWrapper>
-                      <GoogleSignInButton size="large" text="continue_with" width="240px" oneTap={true} />
-                    </HeroGoogleButtonWrapper>
-                  )}
-                  <HeroOutlinedButton onClick={handleLogin} variant="secondary">
-                    <ZnIcon icon={KeyOutlined} /> Ingresar con Correo
-                  </HeroOutlinedButton>
-                  {FEATURES.ENABLE_BILLING_LEMON && (
-                    <HeroOutlinedButton onClick={handlePricing} variant="secondary">
-                      {t("pages.home.pricingButton")}
-                    </HeroOutlinedButton>
-                  )}
-                </>
-              )
-            ) : (
-              <>
-                {BRAND_CONFIG.whatsappUrl ? (
-                  <HeroPrimaryButton onClick={() => window.open(BRAND_CONFIG.whatsappUrl, "_blank", "noopener,noreferrer")} variant="primary">
-                    Contacto por WhatsApp
-                  </HeroPrimaryButton>
-                ) : (
-                  <HeroPrimaryButton onClick={() => scrollTo("features")} variant="primary">
-                    Ver Funciones
-                  </HeroPrimaryButton>
-                )}
-                {FEATURES.ENABLE_BILLING_LEMON && (
-                  <HeroOutlinedButton onClick={handlePricing} variant="secondary">
-                    {t("pages.home.pricingButton")}
-                  </HeroOutlinedButton>
-                )}
-              </>
-            )}
+            {renderHeroActions()}
           </HeroActions>
         </HeroContent>
       </VhSection>
 
       {showRegister && (
         <RegisterModal
-          onClose={() => { setShowRegister(false); setPendingPlanId(null); }}
+          onClose={() => setShowRegister(false)}
           initialStep="email"
         />
       )}
@@ -352,7 +408,7 @@ const HomePage: React.FC = () => {
         <FeaturesInner>
           <Container maxWidth="lg" padding="none">
             <ContentSection
-              title={t("pages.home.features") || "Caracteristicas"}
+              title={t("pages.home.features")}
               marginBottom={0}
             >
               <FeaturesRow
@@ -436,48 +492,54 @@ const HomePage: React.FC = () => {
         id="stats"
         $visible={preloadedSections.has("stats")}
       >
-        <Container maxWidth="lg" padding="none">
-          <StatsGrid>
-            <StatItem>
-              <StatNumber>{SUPPORTED_LOCALES.length}</StatNumber>
-              <StatLabel>{t("pages.home.statsIdiomas")}</StatLabel>
-              <StatList>
-                <StatListItem>
-                  {currentFlag.flag} {currentFlag.name}
-                </StatListItem>
-                <StatListItem>
-                  {secondLangItem.flag} {secondLangItem.name}
-                </StatListItem>
-                <StatListItem>
-                  {t("pages.home.statsIdiomasOthers")}
-                </StatListItem>
-              </StatList>
-            </StatItem>
-            <StatItem>
-              <StatNumber>100%</StatNumber>
-              <StatLabel>{t("pages.home.statsLocal")}</StatLabel>
-              <StatList>
-                <StatListItem>
-                  {t("pages.home.statsPrivacidadItem1")}
-                </StatListItem>
-                <StatListItem>
-                  {t("pages.home.statsPrivacidadItem2")}
-                </StatListItem>
-                <StatListItem>
-                  {t("pages.home.statsPrivacidadItem3")}
-                </StatListItem>
-              </StatList>
-            </StatItem>
-            <StatItem>
-              <StatNumber $large>∞</StatNumber>
-              <StatLabel>{t("pages.home.statsCompatibilidad")}</StatLabel>
-              <StatList>
-                <StatListItem>📱 Móvil</StatListItem>
-                <StatListItem>💻 Escritorio</StatListItem>
-                <StatListItem>🌐 Navegadores</StatListItem>
-              </StatList>
-            </StatItem>
-          </StatsGrid>
+        <Container maxWidth="lg">
+          <StatsRow gutter={[24, 32]} justify="center">
+            <StatCol xs={24} md={8}>
+              <StatItem>
+                <StatNumber>{SUPPORTED_LOCALES.length}</StatNumber>
+                <StatLabel>{t("pages.home.statsIdiomas")}</StatLabel>
+                <StatList>
+                  <StatListItem>
+                    {currentFlag.flag} {currentFlag.name}
+                  </StatListItem>
+                  <StatListItem>
+                    {secondLangItem.flag} {secondLangItem.name}
+                  </StatListItem>
+                  <StatListItem>
+                    {t("pages.home.statsIdiomasOthers")}
+                  </StatListItem>
+                </StatList>
+              </StatItem>
+            </StatCol>
+            <StatCol xs={24} md={8}>
+              <StatItem>
+                <StatNumber>100%</StatNumber>
+                <StatLabel>{t("pages.home.statsLocal")}</StatLabel>
+                <StatList>
+                  <StatListItem>
+                    {t("pages.home.statsPrivacidadItem1")}
+                  </StatListItem>
+                  <StatListItem>
+                    {t("pages.home.statsPrivacidadItem2")}
+                  </StatListItem>
+                  <StatListItem>
+                    {t("pages.home.statsPrivacidadItem3")}
+                  </StatListItem>
+                </StatList>
+              </StatItem>
+            </StatCol>
+            <StatCol xs={24} md={8}>
+              <StatItem>
+                <StatNumber $large>∞</StatNumber>
+                <StatLabel>{t("pages.home.statsCompatibilidad")}</StatLabel>
+                <StatList>
+                  <StatListItem>📱 Móvil</StatListItem>
+                  <StatListItem>💻 Escritorio</StatListItem>
+                  <StatListItem>🌐 Navegadores</StatListItem>
+                </StatList>
+              </StatItem>
+            </StatCol>
+          </StatsRow>
         </Container>
       </VhSection>
 
@@ -491,56 +553,62 @@ const HomePage: React.FC = () => {
           <SectionSubtitle>
             {t("pages.home.testimonialsSubtitle")}
           </SectionSubtitle>
-          <TestimonialsGrid>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial1")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>S</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName1")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole1")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial2")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>M</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName2")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole2")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-            <TestimonialCard>
-              <TestimonialQuote>
-                {t("pages.home.testimonial3")}
-              </TestimonialQuote>
-              <TestimonialAuthor>
-                <TestimonialAvatar>Y</TestimonialAvatar>
-                <div>
-                  <TestimonialName>
-                    {t("pages.home.testimonialName3")}
-                  </TestimonialName>
-                  <TestimonialRole>
-                    {t("pages.home.testimonialRole3")}
-                  </TestimonialRole>
-                </div>
-              </TestimonialAuthor>
-            </TestimonialCard>
-          </TestimonialsGrid>
+          <TestimonialsRow gutter={[24, 24]} justify="center">
+            <TestimonialCol xs={24} md={8}>
+              <TestimonialCard>
+                <TestimonialQuote>
+                  {t("pages.home.testimonial1")}
+                </TestimonialQuote>
+                <TestimonialAuthor>
+                  <TestimonialAvatar>S</TestimonialAvatar>
+                  <div>
+                    <TestimonialName>
+                      {t("pages.home.testimonialName1")}
+                    </TestimonialName>
+                    <TestimonialRole>
+                      {t("pages.home.testimonialRole1")}
+                    </TestimonialRole>
+                  </div>
+                </TestimonialAuthor>
+              </TestimonialCard>
+            </TestimonialCol>
+            <TestimonialCol xs={24} md={8}>
+              <TestimonialCard>
+                <TestimonialQuote>
+                  {t("pages.home.testimonial2")}
+                </TestimonialQuote>
+                <TestimonialAuthor>
+                  <TestimonialAvatar>M</TestimonialAvatar>
+                  <div>
+                    <TestimonialName>
+                      {t("pages.home.testimonialName2")}
+                    </TestimonialName>
+                    <TestimonialRole>
+                      {t("pages.home.testimonialRole2")}
+                    </TestimonialRole>
+                  </div>
+                </TestimonialAuthor>
+              </TestimonialCard>
+            </TestimonialCol>
+            <TestimonialCol xs={24} md={8}>
+              <TestimonialCard>
+                <TestimonialQuote>
+                  {t("pages.home.testimonial3")}
+                </TestimonialQuote>
+                <TestimonialAuthor>
+                  <TestimonialAvatar>Y</TestimonialAvatar>
+                  <div>
+                    <TestimonialName>
+                      {t("pages.home.testimonialName3")}
+                    </TestimonialName>
+                    <TestimonialRole>
+                      {t("pages.home.testimonialRole3")}
+                    </TestimonialRole>
+                  </div>
+                </TestimonialAuthor>
+              </TestimonialCard>
+            </TestimonialCol>
+          </TestimonialsRow>
         </Container>
       </VhSection>
 
@@ -550,42 +618,16 @@ const HomePage: React.FC = () => {
       >
         <Container maxWidth="sm">
           <CtaTitle>
-            {FEATURES.ENABLE_GOOGLE_AUTH
-              ? (loggedInUser ? "Bienvenido de vuelta" : t("pages.home.ctaTitle") || "Comienza Hoy")
-              : "Comienza Hoy"}
+            {ctaTitle}
           </CtaTitle>
           <CtaSubtitle>
-            {FEATURES.ENABLE_GOOGLE_AUTH ? (
-              loggedInUser
-                ? `Ya sos parte de ${BRAND_CONFIG.siteName}. Accedé a tu panel de control.`
-                : t("pages.home.ctaSubtitle") || "Registrate ahora para comenzar a utilizar todos nuestros servicios web."
-            ) : (
-              "Descubre cómo nuestro servicio puede optimizar el rendimiento de tu negocio."
-            )}
+            {ctaSubtitle}
           </CtaSubtitle>
           <CtaButton
             variant="primary"
-            onClick={
-              FEATURES.ENABLE_GOOGLE_AUTH
-                ? (loggedInUser ? () => navigate("/dashboard") : handleLogin)
-                : () => {
-                  if (BRAND_CONFIG.whatsappUrl) {
-                    window.open(BRAND_CONFIG.whatsappUrl, "_blank", "noopener,noreferrer");
-                  } else {
-                    scrollTo("features");
-                  }
-                }
-            }
+            onClick={ctaConfig.onClick}
           >
-            {FEATURES.ENABLE_GOOGLE_AUTH
-              ? loggedInUser
-                ? <CtaButtonContent>
-                    Ir al Dashboard <ZnIcon icon={RocketOutlined} />
-                  </CtaButtonContent>
-                : "Comenzar Gratis"
-              : BRAND_CONFIG.whatsappUrl
-                ? "Contacto por WhatsApp"
-                : "Ver Funciones"}
+            {ctaConfig.label}
           </CtaButton>
         </Container>
       </VhSection>

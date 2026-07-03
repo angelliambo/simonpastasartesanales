@@ -211,8 +211,7 @@ Para construir cualquier portal de nuestra plataforma MERN SaaS, solo necesitas 
   - To sync, run: `node packages/ext/dev-tools/zenithnexus-translation-system/bin/zn.js sync` (parado en `dev-tools/` para cargar la configuración correcta).
   - Always verify the translation output files in `locales/` after sync. If translations in other languages are a carbon copy of `es` (identical strings), the translation service has run out of credits. Revert the sync and warn the user.
   - Verify that translated text in languages requiring escaped characters (e.g. French/Italian apostrophes/quotes) are correctly formatted and do not break TypeScript/JS compilation.
-- In React: `{t('pages.page.key') || 'fallback'}`.
-
+- In React: `{t('pages.page.key')}` (MANDATORIO: nunca uses fallbacks con `|| "texto"` ya que silencia errores de claves i18n inexistentes).
 ### i18n rule: icons never in translations
 
 Icons/emojis (`🎤`, `✍️`, `✅`, `❌`, etc.) → **NO** van en los values de traducción.
