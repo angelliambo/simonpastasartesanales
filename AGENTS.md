@@ -114,20 +114,86 @@ import type { PlanId } from '@shared/types/plan';
 
 **Theme types** come from `@design-sys/theme/types` (styled-components module augmentation).
 
-## Style system & Code quality
+## Reglas del Sistema de Diseño (design-sys) y Maquetación
 
-- **No inline styles** (`style={{ }}`). Use `styled-components` with theme tokens or existing `ui/atoms/*` components.
-- **Strict separate files**: For new components (atoms/molecules/organisms), always split into `index.tsx` (structure), `<Component>.styles.ts` (styles), and `<Component>.types.ts` (types/interfaces).
-- **Transient Props**: Always use `$` prefix for styled-components props that shouldn't leak to the DOM.
-- **Antd compatibility**: Keep design-sys APIs compatible with Ant Design properties (e.g. `open`/`visible`, `onOk`/`onCancel`, `confirmLoading`, etc.).
-- **Strict typing (No 'any')**:
-  - Do NOT use `any` in types unless there is absolutely no other choice.
-  - If you encounter a hard-to-type scenario, use `unknown` instead of `any`, which forces type checks (type guards/narrowing) before usage.
-- **No `as unknown as`**, **no `export *`**, **no `var`**.
-- **Never hardcode** colors/spacing — always use `theme.colors.*`, `theme.spacing.*`.
-- **Shared constants** (prices, variant IDs, URLs) go in `packages/shared/src/config/`. Never duplicate.
-- **No barrel exports (index.ts re-exporting)** anywhere in the project. Import directly from the source file.
-- **Never hardcode icons/emojis**: Never hardcode emojis, custom SVG markup, or raw character icons directly inline inside JSX. Always use the shared `<ZnIcon>` component from `@design-sys/atoms/ZnIcon` for rendering icons to ensure consistency and support design-sys tokens.
+Aquí tienes las reglas, criterios e instrucciones obligatorias para trabajar con el sistema de diseño (design-sys) y la maquetación del proyecto.
+
+### 1. Estructura y Arquitectura de design-sys
+
+El sistema de diseño reside en `packages/shared/src/design-sys/` y se organiza así:
+- `theme/`: Tipos, tema claro (`light.ts`) y tema oscuro (`dark.ts`).
+- `atoms/`: Componentes básicos (`Button`, `Card`, `Badge`, etc.).
+- `mixins/`: Estilos reutilizables (efectos, botones, textos, animaciones).
+- `organisms/`: Estructuras complejas (layouts de página).
+
+#### 🚫 Sin Importaciones de Barril (Barrel Exports)
+Está estrictamente prohibido el uso de archivos `index.ts` que re-exporten otros archivos. Importa siempre desde la fuente:
+
+```typescript
+// ✅ CORRECTO
+import lightTheme from '@design-sys/theme/light';
+import { Button } from '@design-sys/atoms/Button';
+
+// ❌ INCORRECTO
+import { Button, lightTheme } from '@design-sys';
+```
+
+### 2. Creación de Componentes y Props
+
+Cada nuevo componente debe ir en su propia carpeta con esta estructura exacta:
+- `index.tsx`: Solo la estructura del componente (JSX/TSX).
+- `<Component>.styles.ts`: Todos los styled-components.
+- `<Component>.types.ts`: Interfaces y tipos de TypeScript.
+
+#### 🧬 Props Transitorias (Transient Props)
+Usa siempre el prefijo `$` para las props personalizadas en styled-components. Así evitamos que se filtren al HTML nativo:
+
+```tsx
+// ✅ CORRECTO
+const StyledDiv = styled.div<{ $isActive?: boolean }>`
+  background: ${props => props.$isActive ? props.theme.colors.primary : 'transparent'};
+`;
+```
+
+### 3. Arquitectura CSS y Buenas Prácticas
+
+- **Prohibido el anidamiento excesivo**: No concatenes selectores CSS nativos (ej. `& .content-card > div:first-child`). Si un elemento necesita estilos propios, crea un nuevo componente estilizado secundario (ej. `const CardIcon = styled.div...`) dentro del archivo `.styles.ts`.
+- **Prohibido el uso de `!important`**: El código debe respetar la especificidad natural. Si necesitas usar `!important`, significa que la estructura de tus componentes está mal planteada.
+- **Prohibido el uso de estilos en línea**: Nunca uses `style={{ ... }}` en el JSX.
+
+#### 🎨 Gestión de Colores y Tokens
+- **Origen de datos**: Todos los colores deben provenir estrictamente de `props.theme.colors.*`.
+- **Formato**: Los colores del tema deben estar definidos como valores hexadecimales (ej. `#FFFFFF`).
+- **Evitar RGBA**: Evita el uso de funciones `rgba()` hardcodeadas. Si necesitas opacidad, utiliza tokens de color que ya la incluyan o propiedades de CSS como `opacity`.
+- **Espaciados**: Usa siempre `props.theme.spacing.*`. No hardcodees valores numéricos (ej. `12px`).
+
+### 4. Layout, Maquetación y Diseño Responsivo
+
+Adoptamos una filosofía Mobile-First estricta. Todo se diseña pensando primero en pantallas pequeñas y se adapta a pantallas grandes mediante media-queries.
+
+#### 📐 Filosofía de Maquetación: Simple y Limpia
+Para construir cualquier portal de nuestra plataforma MERN SaaS, solo necesitas estas herramientas básicas. No uses soluciones complejas.
+- **Display Grid (`display: grid`)**: Se reserva únicamente para la estructura del Layout General de la página (la rejilla global). No lo uses dentro de tarjetas (cards), formularios ni componentes internos.
+- **Display Flex (`display: flex`)**: Es la herramienta principal para el contenido interno de las páginas y componentes. Usa `align-items` y `justify-content` para alinear.
+- **Distribución de espacio (`gap`)**: Utiliza exclusivamente la propiedad `gap` combinada con Flexbox para separar elementos hermanos.
+- **Otros Displays Permitidos**: `block`, `relative`, `absolute`, `sticky`. Son más que suficientes para resolver cualquier interfaz.
+
+#### 📏 Reglas Semánticas de Dimensiones y Espacios
+- **Alturas Dinámicas**: Nunca fuerces la altura de tarjetas o contenedores con un `height` estático. La altura debe estar determinada de forma natural por el contenido que lleva dentro.
+- **Márgenes Exteriores (`margin`)**: Úsalo exclusivamente para separar contenedores independientes entre sí.
+- **Espaciado Interior (`padding`)**: Úsalo exclusivamente para separar el borde interno de un contenedor y su contenido.
+
+### 5. Iconos, Emojis e Internacionalización
+
+- **Usa `<ZnIcon>`**: Importa siempre desde `@design-sys/atoms/ZnIcon`.
+- **Prohibido hardcodear**: No pongas caracteres de emojis (`🎤`, `✅`), SVG crudos o iconos de texto directamente inline en el JSX.
+- **Traducciones (i18n)**: Los iconos y emojis no se traducen. Pásalos en el JSX del componente, a menos que uses llaves específicas con el sufijo `Icon`.
+
+### 6. Tipado Estricto en TypeScript
+
+- **No usar `any`**: Totalmente prohibido. Si algo es difícil de tipar, usa `unknown` y aplica Type Guards.
+- **No usar `as unknown as`**: Evita los castings dobles e innecesarios.
+- **Exportaciones**: Exporta siempre de manera explícita (`export const MyComponent...`). No uses `export *`.
 
 ## Portal-specific quirks
 
@@ -240,3 +306,5 @@ See `PLAN_DE_TRABAJO_UNIFICADO.md` → "Tabla de Versiones por Fase".
 
 - El agente DEBE comunicarse siempre con el usuario en castellano (español).
 - Todos los planes de implementación, bitácoras de tareas, reportes y walkthroughs deben estar redactados en castellano.
+
+
