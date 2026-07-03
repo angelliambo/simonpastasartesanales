@@ -1,3 +1,5 @@
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
+
 export class SenderProvider {
   name = "sender";
 
@@ -8,8 +10,8 @@ export class SenderProvider {
       return;
     }
 
-    const fromEmail = process.env.EMAIL_FROM_EMAIL || "noreply@<domain>";
-    const fromName = process.env.EMAIL_FROM_NAME || "ZenithNexus";
+    const fromEmail = process.env.EMAIL_FROM_EMAIL || `noreply@${BRAND_CONFIG.domain}`;
+    const fromName = process.env.EMAIL_FROM_NAME || BRAND_CONFIG.siteName;
 
     const sendSingle = async (toEmail: string, isBcc = false): Promise<void> => {
       try {

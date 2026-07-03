@@ -1,6 +1,6 @@
 {
   "name": "@factory/frontend",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
@@ -13,7 +13,7 @@
     "@types/jest": "^27.5.2",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
-    "@factory/shared": "1.0.0",
+    "@factory/shared": "1.1.0",
     "antd": "^5.26.6",
     "react": "^19.1.0",
     "react-app-rewired": "^2.2.1",
@@ -41,6 +41,7 @@
     "webpack-bundle-analyzer": "^5.0.1"
   },
   "scripts": {
+    "update-seo": "npx tsx scripts/update-seo.ts",
     "clean": "rm -rf build node_modules",
     "start": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-app-rewired start",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-app-rewired build",

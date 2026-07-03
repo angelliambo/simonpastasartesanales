@@ -1,8 +1,8 @@
-# SaaS Boilerplate - Tu Plataforma Lista para Despegar
+# ZenithNexus - Privacy-First Text to Speech (TTS), Voice Dictation (STT) & Native PDF Reader
 
-SaaS Boilerplate is the ultimate productivity and accessibility browser extension. It allows users to read aloud any web page or PDF file using high-quality local text-to-speech (TTS), and dictate text in any input field using high-accuracy speech-to-text (STT). 
+ZenithNexus is the ultimate productivity and accessibility browser extension. It allows users to read aloud any web page or PDF file using high-quality local text-to-speech (TTS), and dictate text in any input field using high-accuracy speech-to-text (STT). 
 
-Designed with a strict privacy-first philosophy, SaaS Boilerplate processes all audio synthesis and voice recognition 100% locally on the user's browser (client-side). No audio data or documents are ever sent to the cloud, making it the most secure alternative to cloud-based readers and assistants.
+Designed with a strict privacy-first philosophy, ZenithNexus processes all audio synthesis and voice recognition 100% locally on the user's browser (client-side). No audio data or documents are ever sent to the cloud, making it the most secure alternative to cloud-based readers and assistants.
 
 ---
 
@@ -17,13 +17,13 @@ Designed with a strict privacy-first philosophy, SaaS Boilerplate processes all 
 
 ## Technical Architecture & Design
 
-SaaS Boilerplate is structured as a monorepo containing three core packages:
+ZenithNexus is structured as a monorepo containing three core packages:
 - **`packages/ext`**: The Chrome Extension, compiled using `esbuild` to an IIFE bundle. It utilizes Chrome's storage API and native TTS/STT local APIs to ensure 100% offline functionality.
 - **`packages/portal`**: A MERN (MongoDB, Express, React, Node.js) web application. The frontend uses Create React App (CRA) configured with `react-app-rewired` for style-system path mapping. The backend serves client authentication, license keys validation, and account subscription state.
 - **`packages/shared`**: Shared styling system (`styled-components` design tokens, light/dark themes, Atoms/Organisms), pricing config (plans, limits), and TypeScript common types.
 
 ### Offline & Client-Side Processing Pipeline
-1. **Audio Synthesis (TTS)**: SaaS Boilerplate leverages the browser's native Speech Synthesis engine. Voices are accessed offline, utilizing high-quality system voices installed locally on Windows, macOS, ChromeOS, or Linux.
+1. **Audio Synthesis (TTS)**: ZenithNexus leverages the browser's native Speech Synthesis engine. Voices are accessed offline, utilizing high-quality system voices installed locally on Windows, macOS, ChromeOS, or Linux.
 2. **Speech Recognition (STT)**: Employs local Web Speech API recognizers or Web-Assembly local transformer models depending on environment capability, guaranteeing that spoken audio never leaves the machine.
 3. **PDF Rendering**: Utilizes `pdfjs-dist` to parse and render documents entirely inside the extension sandbox, completely isolated from network tracking.
 
@@ -55,9 +55,9 @@ The reader interface supports full keyboard navigation:
 ---
 
 ## Primary Resources & Links
-- [Official Website](https://porfolio-landing-1.fly.dev)
+- [Official Website](https://<domain>)
 - [Download Extension - Chrome Web Store](https://chrome.google.com/webstore)
-- [Pricing and License Plans](https://porfolio-landing-1.fly.dev/pricing)
-- [Voice Commands Help Guide](https://porfolio-landing-1.fly.dev/commands)
-- [Privacy Policy & Data Security](https://porfolio-landing-1.fly.dev/legal/privacy)
-- [Terms and Conditions](https://porfolio-landing-1.fly.dev/legal/terms)
+- [Pricing and License Plans](https://<domain>/pricing)
+- [Voice Commands Help Guide](https://<domain>/commands)
+- [Privacy Policy & Data Security](https://<domain>/legal/privacy)
+- [Terms and Conditions](https://<domain>/legal/terms)

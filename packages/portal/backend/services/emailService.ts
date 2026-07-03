@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 import { join } from "path";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import config from "../config/environment";
 import { translateEmail } from "./emailTranslations";
 
@@ -70,7 +71,9 @@ export function renderTemplate(titulo: string, contenido: string, locale?: strin
     .replace(/\{\{contenido\}\}/g, contenido)
     .replace(/\{\{slogan\}\}/g, slogan)
     .replace(/\{\{terminosLabel\}\}/g, terminosLabel)
-    .replace(/\{\{privacidadLabel\}\}/g, privacidadLabel);
+    .replace(/\{\{privacidadLabel\}\}/g, privacidadLabel)
+    .replace(/<domain>/g, BRAND_CONFIG.domain)
+    .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
 }
 
 function buildTicketContent(ticketId: string, message: string, userId?: string, locale?: string): string {

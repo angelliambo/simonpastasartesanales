@@ -1,11 +1,11 @@
 # ⚠️ IMPORTANTE: Configurar el nombre de la app antes de desplegar
 # Ejecutar: fly apps create <app-name> o usar: fly launch
-app = "<app-name>"
+app = "porfolio-landing-1"
 
 [build]
   dockerfile = "../../Dockerfile"
   [build.args]
-    REACT_APP_API_URL = "https://<domain>/api"
+    REACT_APP_API_URL = "https://porfolio-landing-1.fly.dev/api"
     REACT_APP_GOOGLE_CLIENT_ID = "<google-client-id>"
 primary_region = "gru"
 
@@ -14,7 +14,7 @@ HOSTNAME = "0.0.0.0"
 NODE_ENV = "production"
 PORT = "5000"
 # ⚠️ IMPORTANTE: Actualizar con la URL de tu app en Fly.io
-# FRONTEND_URL = "https://<app-name>.fly.dev"
+# FRONTEND_URL = "https://porfolio-landing-1.fly.dev"
 LOG_LEVEL = "info"
 LOG_REQUESTS = "true"
 LOG_ERRORS = "true"
@@ -37,4 +37,4 @@ url_prefix = "/"
 [[vm]]
 cpu_kind = "shared"
 cpus = 1
-memory_mb = 1_024
+memory_mb = 1024
