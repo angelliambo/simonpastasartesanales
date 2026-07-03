@@ -292,8 +292,8 @@ const HomePage: React.FC = () => {
 
   const ctaSubtitle = FEATURES.ENABLE_GOOGLE_AUTH
     ? (loggedInUser
-        ? t("pages.home.ctaSubtitleLogged", { siteName: BRAND_CONFIG.siteName })
-        : t("pages.home.ctaSubtitle"))
+      ? t("pages.home.ctaSubtitleLogged", { siteName: BRAND_CONFIG.siteName })
+      : t("pages.home.ctaSubtitle"))
     : t("pages.home.ctaSubtitleDefault");
 
   // Render para los botones de acción del Hero
@@ -402,7 +402,7 @@ const HomePage: React.FC = () => {
 
       <VhSection
         id="features"
-        $variant="blue"
+        $variant="alternate"
         $visible={preloadedSections.has("features")}
       >
         <FeaturesInner>
@@ -419,7 +419,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={AudioOutlined} size={48} />}
+                      $icon={AudioOutlined}
                       title={t("pages.home.dictadoTitle")}
                       subtitle={t("pages.home.dictadoDesc")}
                       variant="glass"
@@ -430,7 +430,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={SoundOutlined} size={48} />}
+                      $icon={SoundOutlined}
                       title={t("pages.home.ttsTitle")}
                       subtitle={t("pages.home.ttsDesc")}
                       variant="glass"
@@ -441,7 +441,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={DesktopOutlined} size={48} />}
+                      $icon={DesktopOutlined}
                       title={t("pages.home.pipTitle")}
                       subtitle={t("pages.home.pipDesc")}
                       variant="glass"
@@ -452,7 +452,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={FileTextOutlined} size={48} />}
+                      $icon={FileTextOutlined}
                       title={t("pages.home.pdfTitle")}
                       subtitle={t("pages.home.pdfDesc")}
                       variant="glass"
@@ -463,7 +463,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={MessageOutlined} size={48} />}
+                      $icon={MessageOutlined}
                       title={t("pages.home.subsTitle")}
                       subtitle={t("pages.home.subsDesc")}
                       variant="glass"
@@ -474,7 +474,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      icon={<ZnIcon icon={MacCommandOutlined} size={48} />}
+                      $icon={MacCommandOutlined}
                       title={t("pages.home.shortcutsTitle")}
                       subtitle={t("pages.home.shortcutsDesc")}
                       variant="glass"
@@ -545,7 +545,7 @@ const HomePage: React.FC = () => {
 
       <VhSection
         id="testimonials"
-        $variant="blue"
+        $variant="alternate"
         $visible={preloadedSections.has("testimonials")}
       >
         <Container maxWidth="lg">

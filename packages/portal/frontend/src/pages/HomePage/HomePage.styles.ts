@@ -4,21 +4,27 @@ import { Row, Col } from "../../components/ui/atoms/Grid";
 
 export const VhSection = styled.section<{
   $visible?: boolean;
-  $variant?: "black" | "blue";
+  $variant?: "default" | "alternate" | "accent";
 }>`
   min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px 0;
+  
+  /* Agregamos una separación lateral base para que NADA toque el borde de la pantalla */
+  padding: 20px 24px; 
+  
   position: relative;
   z-index: 1;
-  background: ${({ $variant, theme }) =>
-    $variant === "black"
-      ? (theme.colors.background.tertiary || "#f1f3f5")
-      : $variant === "blue"
-        ? (theme.colors.background.primary || "#f8f9fa")
-        : (theme.colors.background.secondary || "#ffffff")};
+  background: ${({ $variant, theme }) => {
+    if ($variant === "alternate") {
+      return theme.colors.background.secondary || "#f8f9fa";
+    }
+    if ($variant === "accent") {
+      return theme.colors.background.tertiary || "#e0e0e0";
+    }
+    return theme.colors.background.primary || "#ffffff";
+  }};
   color: ${({ theme }) => theme.colors.text.primary};
   opacity: ${({ $visible }) => ($visible ? 1 : 0.6)};
   transform: translateY(${({ $visible }) => ($visible ? 0 : 20)}px);
@@ -28,15 +34,15 @@ export const VhSection = styled.section<{
   will-change: opacity, transform;
 
   @media (max-height: 800px) {
-    padding: 10px 0;
+    padding: 10px 24px;
   }
   @media (max-height: 700px) {
-    padding: 5px 0;
+    padding: 5px 24px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     min-height: 100dvh;
-    padding: 20px 0;
+    padding: 20px 16px; /* Separación lateral ligeramente más compacta en celulares */
   }
 `;
 
@@ -55,7 +61,7 @@ export const LogoWrapper = styled.div`
     margin-bottom: ${({ theme }) => theme.spacing.sm};
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     margin-bottom: ${({ theme }) => theme.spacing.lg};
   }
 
@@ -84,7 +90,7 @@ export const LogoWrapper = styled.div`
       height: 120px;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
       width: 100px;
       height: 100px;
       filter: blur(12px);
@@ -108,7 +114,7 @@ export const Logo = styled.img`
     height: 50px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 72px;
     height: 72px;
   }
@@ -123,8 +129,8 @@ export const HeroTitle = styled.h1`
 
   span {
     background: ${({ theme }) =>
-      theme.gradients?.brand ||
-      "linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6)"};
+    theme.gradients?.brand ||
+    "linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6)"};
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -138,7 +144,7 @@ export const HeroTitle = styled.h1`
     font-size: 30px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     font-size: 36px;
   }
 `;
@@ -159,7 +165,7 @@ export const HeroSubtitle = styled.p`
     margin-bottom: ${({ theme }) => theme.spacing.sm};
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     font-size: 16px;
     margin-bottom: ${({ theme }) => theme.spacing.lg};
   }
@@ -269,12 +275,21 @@ export const HeroPrimaryButton = styled(Button)`
 
 export const FeaturesInner = styled.div`
   width: 100%;
+  
+  /* Limitamos el ancho en pantallas grandes para que las cards no se estiren al infinito */
+  max-width: 1200px;
+  
+  /* Centramos el bloque entero en medio del navegador */
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 `;
 
-// Componentes de diseño responsivo flex
 export const FeaturesRow = styled(Row)`
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
+  margin: 0;
 `;
 
 export const FeatureCol = styled(Col)`
@@ -295,7 +310,7 @@ export const CtaButtonContent = styled.span`
 export const StatsRow = styled(Row)`
   max-width: 800px;
   width: 100%;
-  margin: 0 auto !important;
+  margin: 0 auto;
 `;
 
 export const StatCol = styled(Col)`
@@ -359,7 +374,7 @@ export const StatNumber = styled.span<{ $large?: boolean }>`
     font-size: 26px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     font-size: 32px;
     ${({ $large }) => $large && `transform: scale(1.5);`}
   }
@@ -406,7 +421,7 @@ export const PricingGrid = styled.div`
   margin: ${({ theme }) => theme.spacing.xl} auto 0;
   align-items: stretch;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
@@ -724,10 +739,10 @@ export const FreePricingButton = styled(PricingButton)`
 export const TestimonialsRow = styled(Row)`
   max-width: 1000px;
   width: 100%;
-  margin: ${({ theme }) => theme.spacing.xl} auto 0 !important;
+  margin: ${({ theme }) => theme.spacing.xl} auto 0;
 
   @media (max-height: 800px) {
-    margin-top: 1rem !important;
+    margin-top: 1rem;
   }
 `;
 
@@ -832,7 +847,7 @@ export const SectionTitle = styled.h2`
     font-size: 20px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     font-size: 24px;
   }
 `;
@@ -851,7 +866,7 @@ export const SectionSubtitle = styled.p`
     font-size: 12px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     font-size: 14px;
     margin-bottom: 24px;
     padding: 0 16px;
@@ -895,7 +910,7 @@ export const CtaButton = styled(Button)`
     font-size: 14px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     min-width: 240px;
     width: auto;
     max-width: 100%;
@@ -913,7 +928,7 @@ export const ScrollNav = styled.nav`
   align-items: center;
   gap: 14px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
 `;

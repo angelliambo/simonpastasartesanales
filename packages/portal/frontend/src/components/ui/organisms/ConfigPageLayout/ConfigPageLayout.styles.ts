@@ -103,62 +103,103 @@ export const SectionTitle = styled.h2<{ colors: any; $isMobile: boolean; $margin
   font-size: ${({ $isMobile }) => ($isMobile ? "22px" : "28px")};
 `;
 
-export const CardWrapper = styled(Card) <{ $hasClick: boolean }>`
-  height: 100%;
+export const CardWrapper = styled.div<{ $hasClick: boolean }>`
+border: 1px solid ${({ theme }) => theme.colors.border.normal};
+border-radius: ${({ theme }) => theme.borderRadius.sm};
   cursor: ${({ $hasClick }) => ($hasClick ? "pointer" : "default")};
-  text-align: center;
   display: flex;
-  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 16px;
+  padding: 16px;
 
-  @media (max-width: 768px) {
-    padding: 16px 14px !important;
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0px;
   }
+
   @media (max-height: 800px) {
-    padding: 10px 14px !important;
+    padding: 12px 14px;
   }
   @media (max-height: 700px) {
-    padding: 8px 10px !important;
+    padding: 8px 10px;
+  }
+`;
+export const IconWrapper = styled.div<{ $marginBottom: string }>`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  justify-content: center;
+    margin-bottom: ${({ $marginBottom }) => $marginBottom};
   }
 `;
 
 export const CardIcon = styled.div<{ colors: any; $marginBottom: string }>`
-  font-size: 48px;
+  font-size: 22px;
   color: ${({ colors }) => colors.text.primary};
   margin-bottom: ${({ $marginBottom }) => $marginBottom};
   display: flex;
   justify-content: center;
 
-  @media (max-width: 768px) {
-    font-size: 32px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 28px;
     margin-bottom: 8px;
     height: auto;
   }
   @media (max-height: 800px) {
-    font-size: 28px;
+    font-size: 32px;
     margin-bottom: 4px;
     height: auto;
   }
   @media (max-height: 700px) {
-    font-size: 22px;
+    font-size: 48px;
     margin-bottom: 2px;
   }
 `;
 
-export const CardTitle = styled.h3<{ colors: any; $marginBottom: string }>`
-  margin-bottom: ${({ $marginBottom }) => $marginBottom};
-  color: ${({ colors }) => colors.text.primary};
-  font-size: 18px;
-  font-weight: 600;
+export const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+`;
 
-  @media (max-width: 768px) {
-    font-size: 15px;
-    margin-bottom: 6px;
+export const CardTitle = styled.h3<{ colors: any; $marginBottom: string }>`
+  margin-top: 0;
+  margin-bottom: 6px;
+  color: ${({ colors }) => colors.text.primary};
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 18px;
+    margin-bottom: ${({ $marginBottom }) => $marginBottom};
   }
   @media (max-height: 800px) {
     font-size: 14px;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
   }
   @media (max-height: 700px) {
     font-size: 13px;
@@ -166,18 +207,17 @@ export const CardTitle = styled.h3<{ colors: any; $marginBottom: string }>`
 `;
 
 export const CardSubtitle = styled.p<{ colors: any; $marginBottom: string }>`
+  margin: 0;
   color: ${({ colors }) => colors.text.secondary};
-  font-size: 14px;
-  margin-bottom: ${({ $marginBottom }) => $marginBottom};
+  font-size: 12px;
+  line-height: 1.4;
 
-  @media (max-width: 768px) {
-    font-size: 12px;
-    margin-bottom: 0px;
-    line-height: 1.4;
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 14px;
+    margin-bottom: ${({ $marginBottom }) => $marginBottom};
   }
   @media (max-height: 800px) {
     font-size: 11px;
-    margin-bottom: 0px;
     line-height: 1.25;
   }
   @media (max-height: 700px) {

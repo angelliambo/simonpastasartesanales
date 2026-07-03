@@ -18,7 +18,10 @@ import {
   CardIcon,
   CardTitle,
   CardSubtitle,
+  TextWrapper,
+  IconWrapper,
 } from "./ConfigPageLayout.styles";
+import { ZnIcon } from "@factory/shared/design-sys/atoms/ZnIcon";
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -170,7 +173,7 @@ export const ContentCard = memo<{
   children?: React.ReactNode;
   title?: string;
   subtitle?: string;
-  icon?: string | React.ReactNode;
+  $icon?: any;
   onClick?: () => void;
   className?: string;
   style?: React.CSSProperties;
@@ -179,15 +182,21 @@ export const ContentCard = memo<{
   children,
   title,
   subtitle,
-  icon,
+  $icon,
   onClick,
   className = "",
   style = {},
   variant = "elevated",
 }) => {
   const colors = useThemeColors();
-  const { isMobile } = useResponsive();
+  const { isMobile, isTablet } = useResponsive();
   const spacing = useResponsiveSpacing();
+
+  const handleIconSize = () => {
+    if (isMobile) return 24;
+    if (isTablet) return 32;
+    return 48;
+  };
 
   return (
     <CardWrapper
@@ -198,30 +207,29 @@ export const ContentCard = memo<{
       $hasClick={!!onClick}
       style={style}
     >
-      {icon && (
-        <CardIcon
-          colors={colors}
-          $marginBottom={spacing.xs}
-        >
-          {icon}
-        </CardIcon>
+      {$icon && (
+        <IconWrapper $marginBottom={spacing.md}>
+          <ZnIcon icon={$icon} size={handleIconSize()} />
+        </IconWrapper>
       )}
-      {title && (
-        <CardTitle
-          colors={colors}
-          $marginBottom={isMobile ? spacing.md : spacing.xs}
-        >
-          {title}
-        </CardTitle>
-      )}
-      {subtitle && (
-        <CardSubtitle
-          colors={colors}
-          $marginBottom={spacing.xs}
-        >
-          {subtitle}
-        </CardSubtitle>
-      )}
+      <TextWrapper>
+        {title && (
+          <CardTitle
+            colors={colors}
+            $marginBottom={spacing.xs}
+          >
+            {title}
+          </CardTitle>
+        )}
+        {subtitle && (
+          <CardSubtitle
+            colors={colors}
+            $marginBottom={spacing.xs}
+          >
+            {subtitle}
+          </CardSubtitle>
+        )}
+      </TextWrapper>
       {children}
     </CardWrapper>
   );

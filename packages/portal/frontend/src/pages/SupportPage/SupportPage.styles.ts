@@ -34,11 +34,11 @@ export const Subtitle = styled.p`
 
 export const CustomCard = styled(Card)`
   margin-bottom: 1.5rem;
-  background: rgba(255, 255, 255, 0.02) !important;
-  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  border-radius: 16px !important;
+  border-radius: 16px;
   padding: 1.5rem;
 `;
 
