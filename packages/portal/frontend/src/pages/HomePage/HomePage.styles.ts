@@ -34,8 +34,8 @@ export const VhSection = styled.section<{
   }
 
   @media (max-width: 768px) {
-    min-height: 100dvh;
-    padding: 20px 0;
+    min-height: auto;
+    padding: 80px 16px 60px;
   }
 `;
 
@@ -319,6 +319,43 @@ export const FeaturesInner = styled.div`
     }
     .ant-row {
       row-gap: 8px !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content-section {
+      margin-bottom: 0px !important;
+    }
+    .content-section h2 {
+      font-size: 22px !important;
+      margin-bottom: 12px !important;
+    }
+    .content-card {
+      padding: 16px !important;
+    }
+    .content-card [class*="CardIcon"], .content-card .zn-icon, .content-card span.anticon {
+      font-size: 24px !important;
+      margin-bottom: 6px !important;
+      height: auto !important;
+    }
+    .content-card [class*="CardTitle"] {
+      font-size: 15px !important;
+      margin-bottom: 4px !important;
+    }
+    .content-card [class*="CardSubtitle"] {
+      font-size: 12px !important;
+      margin-bottom: 0px !important;
+      line-height: 1.4 !important;
+    }
+
+    .ant-row {
+      margin-left: -8px !important;
+      margin-right: -8px !important;
+      row-gap: 12px !important;
+    }
+    .ant-col {
+      padding-left: 8px !important;
+      padding-right: 8px !important;
     }
   }
 `;
@@ -880,7 +917,7 @@ export const SectionTitle = styled.h2`
 
 export const SectionSubtitle = styled.p`
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.75);
+  color: ${({ theme }) => theme.colors.text.secondary};
   max-width: 500px;
   margin: 0 auto;
   text-align: center;
@@ -891,6 +928,12 @@ export const SectionSubtitle = styled.p`
   @media (max-height: 700px) {
     font-size: 12px;
   }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+`;
 `;
 
 export const CtaTitle = styled.h2`
