@@ -15,6 +15,7 @@
     "@types/react": "^19.0.0"
   },
   "scripts": {
+    "update-seo": "yarn workspace @factory/frontend update-seo",
     "portal:build": "yarn workspace @factory/portal build:all",
     "portal:fdeploy": "yarn workspace @factory/portal fdeploy",
     "portal:cleanup": "yarn workspace @factory/portal cleanup",

@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { existsSync } from "fs";
 import { FEATURES } from "@factory/shared/config/features";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 
 const loadEnvironment = () => {
   const nodeEnv = process.env.NODE_ENV || "development";
@@ -115,7 +116,7 @@ export const config: EnvironmentConfig = {
   LEMONSQUEEZY_API_KEY: process.env.LEMONSQUEEZY_API_KEY || "",
   LEMONSQUEEZY_STORE_ID: process.env.LEMONSQUEEZY_STORE_ID || "",
   LEMONSQUEEZY_WEBHOOK_SECRET: process.env.LEMONSQUEEZY_WEBHOOK_SECRET || "",
-  CONTACT_EMAIL: process.env.CONTACT_EMAIL || "info@<domain>",
+  CONTACT_EMAIL: process.env.CONTACT_EMAIL || BRAND_CONFIG.supportEmail,
 };
 
 export const logger = {

@@ -1,7 +1,7 @@
 {
-  "short_name": "SaaS Boilerplate",
-  "name": "SaaS Boilerplate - Tu Plataforma Lista para Despegar",
-  "description": "La estructura modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte.",
+  "short_name": "ZenithNexus",
+  "name": "ZenithNexus - Lector PDF a voz (TTS) y Dictado por voz (STT)",
+  "description": "Lector PDF a voz (TTS) y Dictado por voz (STT) 100% privado y local.",
   "icons": [
     {
       "src": "favicon.ico",
