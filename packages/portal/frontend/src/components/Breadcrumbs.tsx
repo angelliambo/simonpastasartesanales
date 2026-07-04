@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { useBreadcrumbs } from "../hooks/useBreadcrumbs";
 import { useResponsive } from "../hooks/useResponsive";
 import SEO from "./SEO";
-import { Breadcrumb } from "../components/ui/atoms/Breadcrumb";
-import Text from "../components/ui/atoms/Text";
+import { Breadcrumb } from '@design-sys/atoms/Breadcrumb';
+import Text from '@design-sys/atoms/Text';
 
 interface BreadcrumbsProps {
   className?: string;

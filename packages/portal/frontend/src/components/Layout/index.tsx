@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Container } from "../ui/atoms/Container";
-import { usePersonalization } from "../../contexts/PersonalizationContext";
+import { Container } from '@design-sys/atoms/Container';
+import { usePersonalization } from '@design-sys/contexts/PersonalizationContext';
 import { LanguageSelector } from "../../i18n/LanguageSelector";
 import { RootState } from "../../store/store";
 import { logout } from "../../store/slices/authSlice";

@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "../ui/atoms/Card";
-import { Row, Col } from "../ui/atoms/Grid";
-import Text from "../ui/atoms/Text";
+import Card from '@design-sys/atoms/Card';
+import { Row, Col } from '@design-sys/atoms/Grid';
+import Text from '@design-sys/atoms/Text';
 import {
   SunOutlined,
   MoonOutlined,

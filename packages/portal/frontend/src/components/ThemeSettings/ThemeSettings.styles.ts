@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import Card from "../ui/atoms/Card";
-import Button from "../ui/atoms/Button";
-import Space from "../ui/atoms/Space";
-import Divider from "../ui/atoms/Divider";
-import Title from "../ui/atoms/Title";
-import Text from "../ui/atoms/Text";
+import Card from '@design-sys/atoms/Card';
+import Button from '@design-sys/atoms/Button';
+import Space from '@design-sys/atoms/Space';
+import Divider from '@design-sys/atoms/Divider';
+import Title from '@design-sys/atoms/Title';
+import Text from '@design-sys/atoms/Text';
 
 export const Container = styled.div`
   padding: ${({ theme }) => theme.spacing.lg};

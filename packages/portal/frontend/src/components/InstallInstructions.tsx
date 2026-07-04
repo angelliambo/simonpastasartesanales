@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useThemeColors } from "../hooks/useThemeColors";
-import Title from "./ui/atoms/Title";
-import Text from "./ui/atoms/Text";
-import Button from "./ui/atoms/Button";
-import Steps from "./ui/atoms/Steps";
+import Title from '@design-sys/atoms/Title';
+import Text from '@design-sys/atoms/Text';
+import Button from '@design-sys/atoms/Button';
+import Steps from '@design-sys/atoms/Steps';
 import Modal from "./ui/organisms/Modal";
 import {
   DownloadOutlined,
