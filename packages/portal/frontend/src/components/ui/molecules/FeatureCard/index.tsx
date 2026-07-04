@@ -1,7 +1,7 @@
 // frontend/src/components/ui/FeatureCard.tsx
 import React from "react";
-import Card from "../../atoms/Card";
-import Button from "../../atoms/Button";
+import Card from '@design-sys/atoms/Card';
+import Button from '@design-sys/atoms/Button';
 import { useAccessibilityPreferences } from "../../../../hooks/accessibility/useAccessibilityPreferences";
 import { useThemeColors } from "../../../../hooks/useThemeColors";
 

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import Card from "../../atoms/Card";
-import { Container } from "../../atoms/Container";
+import Card from '@design-sys/atoms/Card';
+import { Container } from '@design-sys/atoms/Container';
 
 export const LayoutOuter = styled.div<{ colors: any; $isMobile: boolean; $paddingTop: number }>`
   background: ${({ colors }) => colors.background.secondary};

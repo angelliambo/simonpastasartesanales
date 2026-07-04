@@ -1,5 +1,5 @@
 import React from "react";
-import { AllSize } from "../../atoms/shared";
+import { AllSize } from '@design-sys/atoms/shared';
 
 // =====================================
 // DRAWER COMPONENT TYPES - ANTD COMPATIBLE

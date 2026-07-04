@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
-import Spin from "../../atoms/Spin";
-import Text from "../../atoms/Text";
+import Spin from '@design-sys/atoms/Spin';
+import Text from '@design-sys/atoms/Text';
 
 export type ColumnType<RecordType> = {
   title: React.ReactNode;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Skeleton, SkeletonAvatar } from "../atoms/Skeleton";
+import { Skeleton, SkeletonAvatar } from '@design-sys/atoms/Skeleton';
 import { useResponsive } from "../../../hooks/useResponsive";
 
 interface ChatHistorySkeletonProps {

@@ -1,6 +1,6 @@
 import React from "react";
-import Card from "../atoms/Card";
-import { Skeleton } from "../atoms/Skeleton";
+import Card from '@design-sys/atoms/Card';
+import { Skeleton } from '@design-sys/atoms/Skeleton';
 import { useResponsive } from "../../../hooks/useResponsive";
 
 interface ProgressSkeletonProps {

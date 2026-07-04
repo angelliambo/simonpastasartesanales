@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "../atoms/Card";
-import { Skeleton, SkeletonImage } from "../atoms/Skeleton";
-import { Row, Col } from "../atoms/Grid";
+import Card from '@design-sys/atoms/Card';
+import { Skeleton, SkeletonImage } from '@design-sys/atoms/Skeleton';
+import { Row, Col } from '@design-sys/atoms/Grid';
 import { useResponsive } from "../../../hooks/useResponsive";
 
 export const GamesSkeleton: React.FC = () => {

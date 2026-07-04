@@ -9,8 +9,8 @@ import {
   ModalBody,
   ModalFooter,
 } from "./Modal.styles";
-import { Button } from "../../atoms/Button";
-import { usePersonalization } from "../../../../contexts/PersonalizationContext";
+import { Button } from '@design-sys/atoms/Button';
+import { usePersonalization } from '@design-sys/contexts/PersonalizationContext';
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import { CloseOutlined } from "@ant-design/icons";
 
