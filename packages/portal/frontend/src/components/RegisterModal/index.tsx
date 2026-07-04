@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSendTokenMutation, useVerifyTokenMutation } from '../../services/api/authService';
 import { setCredentials } from '../../store/slices/authSlice';
-import { useSnackbar } from '../ui/atoms/Snackbar';
+import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import { useTranslation } from '../../i18n/I18nProvider';
 import GoogleSignInButton from '../GoogleSignInButton';
 import { BRAND_CONFIG } from '@factory/shared/config/brand';

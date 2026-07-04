@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Tooltip from "../../atoms/Tooltip";
-import Button from "../../atoms/Button";
-import { message } from "../../atoms/Message";
+import Tooltip from '@design-sys/atoms/Tooltip';
+import Button from '@design-sys/atoms/Button';
+import { message } from '@design-sys/atoms/Message';
 import { CopyOutlined } from "@ant-design/icons";
 import { ZnIcon } from "@shared/design-sys/atoms/ZnIcon";
 import { useThemeColors } from "../../../../hooks/useThemeColors";

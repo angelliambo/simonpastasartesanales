@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "../atoms/Card";
-import { Row, Col } from "../atoms/Grid";
-import { Skeleton } from "../atoms/Skeleton";
+import Card from '@design-sys/atoms/Card';
+import { Row, Col } from '@design-sys/atoms/Grid';
+import { Skeleton } from '@design-sys/atoms/Skeleton';
 import { useResponsive } from "../../../hooks/useResponsive";
 
 interface AnalyticsSkeletonProps {

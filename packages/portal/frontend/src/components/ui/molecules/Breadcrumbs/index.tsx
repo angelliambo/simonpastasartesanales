@@ -1,6 +1,6 @@
 import React from "react";
-import { Breadcrumb } from "../../atoms/Breadcrumb";
-import Text from "../../atoms/Text";
+import { Breadcrumb } from '@design-sys/atoms/Breadcrumb';
+import Text from '@design-sys/atoms/Text';
 import { Link } from "react-router-dom";
 import {
   useBreadcrumbs,

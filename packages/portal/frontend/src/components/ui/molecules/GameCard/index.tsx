@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "../../atoms/Card";
-import Tag from "../../atoms/Tag";
-import Text from "../../atoms/Text";
+import Card from '@design-sys/atoms/Card';
+import Tag from '@design-sys/atoms/Tag';
+import Text from '@design-sys/atoms/Text';
 import { useThemeColors } from "../../../../hooks";
 import { getGradient } from "../../../../styles/themes";
 

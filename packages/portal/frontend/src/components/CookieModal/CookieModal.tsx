@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Card from "../ui/atoms/Card";
-import Text from "../ui/atoms/Text";
-import Title from "../ui/atoms/Title";
-import Button from "../ui/atoms/Button";
+import Card from '@design-sys/atoms/Card';
+import Text from '@design-sys/atoms/Text';
+import Title from '@design-sys/atoms/Title';
+import Button from '@design-sys/atoms/Button';
 import { useThemeColors } from "../../hooks/useThemeColors";
 import { useResponsive } from "../../hooks/useResponsive";
 import { Link } from "react-router-dom";

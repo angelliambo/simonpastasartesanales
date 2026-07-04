@@ -5,7 +5,7 @@ import { useGetProfileQuery, useRequestDeletionMutation, useDeleteAccountMutatio
 import { logout } from "../../store/slices/authSlice";
 
 import { useTranslation } from "../../i18n/I18nProvider";
-import { useSnackbar } from "../../components/ui/atoms/Snackbar";
+import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
   ThunderboltOutlined,

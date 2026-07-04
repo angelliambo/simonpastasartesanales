@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Space from "./ui/atoms/Space";
-import Tooltip from "./ui/atoms/Tooltip";
+import Space from '@design-sys/atoms/Space';
+import Tooltip from '@design-sys/atoms/Tooltip';
 import { DisconnectOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import { ZnIcon } from "@shared/design-sys/atoms/ZnIcon";
 import { useOffline } from "../hooks/useOffline";
-import Text from "./ui/atoms/Text";
+import Text from '@design-sys/atoms/Text';
 
 interface OfflineIndicatorProps {
   showDetails?: boolean;

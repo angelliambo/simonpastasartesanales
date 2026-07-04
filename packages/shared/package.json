@@ -7,6 +7,14 @@
       "types": "./dist/design-sys/theme/*.d.ts",
       "default": "./dist/design-sys/theme/*.js"
     },
+    "./design-sys/contexts/*": {
+      "types": "./dist/design-sys/contexts/*.d.ts",
+      "default": "./dist/design-sys/contexts/*.js"
+    },
+    "./design-sys/hooks/*": {
+      "types": "./dist/design-sys/hooks/*.d.ts",
+      "default": "./dist/design-sys/hooks/*.js"
+    },
     "./design-sys/atoms/*": {
       "types": "./dist/design-sys/atoms/*/index.d.ts",
       "default": "./dist/design-sys/atoms/*/index.js"

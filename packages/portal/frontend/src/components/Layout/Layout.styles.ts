@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Button from "../ui/atoms/Button";
+import Button from '@design-sys/atoms/Button';
 
 export const TopBar = styled.header`
   display: flex;

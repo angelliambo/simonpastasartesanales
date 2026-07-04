@@ -1,4 +1,4 @@
-import { AllSize } from "../../atoms/shared";
+import { AllSize } from '@design-sys/atoms/shared';
 
 export type TableColumnAlign = "left" | "center" | "right";
 

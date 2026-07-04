@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useGoogleLoginMutation } from "../../services/api/authService";
 import { setCredentials } from "../../store/slices/authSlice";
-import { useSnackbar } from "../ui/atoms/Snackbar";
+import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import { useTranslation } from "../../i18n/I18nProvider";
 import { GoogleSignInButtonProps, GoogleCredentialResponse } from "./GoogleSignInButton.types";
 import { StyledButtonContainer } from "./GoogleSignInButton.styles";

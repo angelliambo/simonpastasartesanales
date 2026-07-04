@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Button from "../../atoms/Button";
-import Card from "../../atoms/Card";
-import Text from "../../atoms/Text";
-import Space from "../../atoms/Space";
+import Button from '@design-sys/atoms/Button';
+import Card from '@design-sys/atoms/Card';
+import Text from '@design-sys/atoms/Text';
+import Space from '@design-sys/atoms/Space';
 import {
   ReloadOutlined,
   CloseOutlined,
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
-import { UpdateNotificationContainer } from "../../atoms/styles/updateNotification.mixins";
+import { UpdateNotificationContainer } from '@design-sys/atoms/styles/updateNotification.mixins';
 
 interface UpdateNotificationProps {
   onUpdate: () => void;

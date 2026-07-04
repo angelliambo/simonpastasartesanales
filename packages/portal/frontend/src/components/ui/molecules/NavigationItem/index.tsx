@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Text from "../../atoms/Text";
-import Button from "../../atoms/Button";
+import Text from '@design-sys/atoms/Text';
+import Button from '@design-sys/atoms/Button';
 import { DefaultTheme } from "../../../../styles/theme";
 
 interface NavigationItemProps {

@@ -1,4 +1,4 @@
-import { AllSize } from "../../atoms/shared";
+import { AllSize } from '@design-sys/atoms/shared';
 
 export interface ModalProps {
   /** Controla si el modal está abierto (compatible con antd) */

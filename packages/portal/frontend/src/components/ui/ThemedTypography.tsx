@@ -1,6 +1,6 @@
 import React from "react";
-import Title from "./atoms/Title";
-import Text from "./atoms/Text";
+import Title from '@design-sys/atoms/Title';
+import Text from '@design-sys/atoms/Text';
 import { useThemeColors } from "../../hooks";
 
 interface ThemedTypographyProps {

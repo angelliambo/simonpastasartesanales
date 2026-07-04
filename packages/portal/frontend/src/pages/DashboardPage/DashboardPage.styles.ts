@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import Text from "../../components/ui/atoms/Text";
-import Button from "../../components/ui/atoms/Button";
-import { Input } from "../../components/ui/atoms/Input";
-import { Card } from "../../components/ui/atoms/Card";
+import Text from '@design-sys/atoms/Text';
+import Button from '@design-sys/atoms/Button';
+import { Input } from '@design-sys/atoms/Input';
+import { Card } from '@design-sys/atoms/Card';
 
 export const PageContainer = styled.div`
   min-height: 100vh;

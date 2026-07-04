@@ -7,7 +7,7 @@ import {
   SIZE_MAPPING_TABS,
 } from "./Tabs.types";
 import { useThemeColors } from "../../../../hooks";
-import { usePersonalization } from "../../../../contexts/PersonalizationContext";
+import { usePersonalization } from '@design-sys/contexts/PersonalizationContext';
 
 // =====================================
 // HELPER FUNCTIONS

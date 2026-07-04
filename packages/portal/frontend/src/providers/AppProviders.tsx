@@ -4,8 +4,8 @@ import { StoreProvider } from "../store/StoreProvider";
 import { ProgressProvider } from "../contexts/ProgressContext";
 import { ThemeProvider, useTheme } from "../styles/ThemeProvider";
 import { ResponsiveProvider } from "../contexts/ResponsiveContext";
-import { PersonalizationProvider } from "../contexts/PersonalizationContext";
-import { SnackbarProvider } from "../components/ui/atoms/Snackbar";
+import { PersonalizationProvider } from '@design-sys/contexts/PersonalizationContext';
+import { SnackbarProvider } from '@design-sys/atoms/Snackbar';
 import { I18nProvider } from "../i18n/I18nProvider";
 import { ConfigProvider, theme as antdTheme } from "antd";
 

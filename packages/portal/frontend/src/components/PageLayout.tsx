@@ -4,7 +4,7 @@ import { useResponsive } from "../hooks/useResponsive";
 import { usePageSEO } from "../hooks/useBreadcrumbs";
 import Breadcrumbs from "./Breadcrumbs";
 import SEO from "./SEO";
-import Text from "../components/ui/atoms/Text";
+import Text from '@design-sys/atoms/Text';
 
 interface PageLayoutProps {
   children: React.ReactNode;

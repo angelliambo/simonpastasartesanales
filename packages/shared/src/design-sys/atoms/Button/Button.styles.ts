@@ -1,147 +1,420 @@
-import styled, { css, keyframes } from 'styled-components';
-import type { ButtonVariant, ButtonSize } from './Button.types';
+import styled, { css, keyframes } from "styled-components";
+import {
+  StyledButtonProps,
+  LoadingSpinnerProps,
+  ButtonIconProps,
+} from "./Button.types";
+import { createShouldForwardProp } from '../../utils/shouldForwardProp';
 
-const shimmerSweep = keyframes`
-  from { left: -100%; }
-  to { left: 100%; }
+// Animación del spinner (de ui/Button.tsx)
+const spinAnimation = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 `;
 
-// Mapa de estilos por variante
-const variantMap: Record<ButtonVariant, ReturnType<typeof css>> = {
-  primary: css`
-    background: ${({ theme }) => theme.colors.primary[500]};
-    color: white;
-    &:hover:not(:disabled) {
-      background: ${({ theme }) => theme.colors.primary[600]};
-      transform: translateY(-1px);
+// Loading Spinner mejorado
+export const LoadingSpinner = styled.div.withConfig({
+  shouldForwardProp: createShouldForwardProp(["size", "reducedMotion"]),
+})<LoadingSpinnerProps>`
+  width: ${({ size }) => {
+    switch (size) {
+      case "xs":
+        return "12px";
+      case "sm":
+        return "16px";
+      case "md":
+        return "20px";
+      case "lg":
+        return "24px";
+      case "xl":
+        return "28px";
+      default:
+        return "20px";
     }
-  `,
-  secondary: css`
-    background: rgba(255, 255, 255, 0.08);
-    color: ${({ theme }) => theme.colors.text.primary};
-    border: 1px solid ${({ theme }) => theme.colors.border.normal};
-    &:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: ${({ theme }) => theme.colors.border.dark};
+  }};
+  height: ${({ size }) => {
+    switch (size) {
+      case "xs":
+        return "12px";
+      case "sm":
+        return "16px";
+      case "md":
+        return "20px";
+      case "lg":
+        return "24px";
+      case "xl":
+        return "28px";
+      default:
+        return "20px";
     }
-  `,
-  ghost: css`
-    background: transparent;
-    color: ${({ theme }) => theme.colors.text.secondary};
-    &:hover:not(:disabled) {
-      background: ${({ theme }) => theme.colors.neutral[100]};
-      color: ${({ theme }) => theme.colors.text.primary};
-    }
-  `,
-  premium: css`
-    background: ${({ theme }) => theme.gradients.premium};
-    color: white;
-    box-shadow: ${({ theme }) => theme.effects.glow.premium};
-    &:hover:not(:disabled) {
-      box-shadow: 0 6px 16px rgba(168, 85, 247, 0.6);
-      transform: translateY(-2px);
-    }
-  `,
-  shimmer: css`
-    background: ${({ theme }) => theme.colors.primary[500]};
-    color: white;
-    position: relative;
-    overflow: hidden;
+  }};
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: ${({ reducedMotion }) =>
+    reducedMotion
+      ? "none"
+      : css`
+          ${spinAnimation} 1s linear infinite
+        `};
+`;
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.15),
-        transparent
-      );
-      pointer-events: none;
+// Icon component (mejorado de ui/Button.tsx)
+export const ButtonIcon = styled.span.withConfig({
+  shouldForwardProp: createShouldForwardProp(["size", "position"]),
+})<ButtonIconProps>`
+  display: inline-flex;
+  align-items: center;
+  font-size: ${({ size }) => {
+    switch (size) {
+      case "xs":
+        return "12px";
+      case "sm":
+        return "14px";
+      case "md":
+        return "16px";
+      case "lg":
+        return "18px";
+      case "xl":
+        return "20px";
+      default:
+        return "16px";
     }
+  }};
+  line-height: 1;
 
-    &:hover:not(:disabled) {
-      background: ${({ theme }) => theme.colors.primary[600]};
-      transform: translateY(-2px);
+  ${({ position }) =>
+    position === "left" &&
+    css`
+      margin-right: 8px;
+    `}
 
-      &::before {
-        animation: ${shimmerSweep} 0.5s ease-out;
-      }
-    }
-  `,
-};
+  ${({ position }) =>
+    position === "right" &&
+    css`
+      margin-left: 8px;
+    `}
+`;
 
-// Mapa de estilos por tamaño
-const sizeMap: Record<ButtonSize, ReturnType<typeof css>> = {
-  small: css`
-    padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
-    font-size: ${({ theme }) => theme.typography.fontSize.xs};
-  `,
-  medium: css`
-    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
-    font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  `,
-  large: css`
-    padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
-    font-size: ${({ theme }) => theme.typography.fontSize.md};
-  `,
-};
-
-export const StyledButton = styled.button<{
-  $variant: ButtonVariant;
-  $size: ButtonSize;
-  $fullWidth?: boolean;
-  $loading?: boolean;
-}>`
+// Styled Button principal (mejorado de atoms/Button.tsx)
+export const StyledButton = styled.button.withConfig({
+  shouldForwardProp: createShouldForwardProp([
+    "$size",
+    "$variant",
+    "colors",
+    "accessibility",
+    "gap",
+  ]),
+})<StyledButtonProps>`
+  font-family: var(--font-family, "Hind Vadodara", sans-serif);
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: ${({ theme }) => theme.spacing.sm};
-  border: none;
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: 1;
-  cursor: pointer;
-  transition: all ${({ theme }) => theme.transitions.fast};
+  gap: 8px;
+  transition: ${({ accessibility }) =>
+    accessibility?.reducedMotion ? "none" : "all 0.3s ease"};
   text-decoration: none;
-  width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
-  box-sizing: border-box;
+  outline: none;
   position: relative;
+  overflow: hidden;
 
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none !important;
+  // Tamaños (expandidos y mejorados)
+  ${({ $size = "md", accessibility }) => {
+    const textMultiplier = accessibility?.largeText ? 1.25 : 1;
+    const spacingMultiplier = accessibility?.largeText ? 1.5 : 1;
+
+    switch ($size) {
+      case "xs":
+        return css`
+          padding: ${4 * spacingMultiplier}px ${8 * spacingMultiplier}px;
+          font-size: ${12 * textMultiplier}px;
+          min-height: ${24 * spacingMultiplier}px;
+        `;
+      case "sm":
+        return css`
+          padding: ${6 * spacingMultiplier}px ${12 * spacingMultiplier}px;
+          font-size: ${14 * textMultiplier}px;
+          min-height: ${32 * spacingMultiplier}px;
+        `;
+      case "md":
+        return css`
+          padding: ${8 * spacingMultiplier}px ${16 * spacingMultiplier}px;
+          font-size: ${14 * textMultiplier}px;
+          min-height: ${40 * spacingMultiplier}px;
+        `;
+      case "lg":
+        return css`
+          padding: ${12 * spacingMultiplier}px ${20 * spacingMultiplier}px;
+          font-size: ${16 * textMultiplier}px;
+          min-height: ${48 * spacingMultiplier}px;
+        `;
+      case "xl":
+        return css`
+          padding: ${16 * spacingMultiplier}px ${24 * spacingMultiplier}px;
+          font-size: ${18 * textMultiplier}px;
+          min-height: ${56 * spacingMultiplier}px;
+        `;
+      default:
+        return css`
+          padding: ${8 * spacingMultiplier}px ${16 * spacingMultiplier}px;
+          font-size: ${14 * textMultiplier}px;
+          min-height: ${40 * spacingMultiplier}px;
+        `;
+    }
+  }}
+
+  // Variantes (de atoms/Button.tsx con mejoras)
+  ${({ $variant = "primary", colors, accessibility }) => {
+    const highContrast = accessibility?.highContrast;
+    const backgroundColors = colors?.background || {};
+    const backgroundCard =
+      backgroundColors.card ??
+      backgroundColors.surface ??
+      backgroundColors.primary ??
+      "#ffffff";
+    const backgroundSecondary =
+      backgroundColors.secondary ?? backgroundCard;
+    const borderColors = colors?.border || {};
+    const textColors = colors?.text || {};
+    const textPrimary = textColors.primary ?? "#111827";
+    const textInverse = textColors.inverse ?? "#ffffff";
+
+    switch ($variant) {
+      case "primary":
+        return css`
+          background-color: ${colors.primary[500]};
+          color: ${highContrast ? "#ffffff" : textInverse};
+          border-color: ${colors.primary[500]};
+
+          &:hover:not(:disabled) {
+            background-color: ${colors.primary[600]};
+            border-color: ${colors.primary[600]};
+            ${!accessibility?.reducedMotion &&
+            css`
+              transform: translateY(-1px);
+              box-shadow: ${colors.shadow?.medium ||
+              "0 4px 12px rgba(0,0,0,0.15)"};
+            `}
+          }
+
+          &:active:not(:disabled) {
+            background-color: ${colors.primary[700]};
+            border-color: ${colors.primary[700]};
+            transform: translateY(0);
+          }
+
+          ${highContrast &&
+          css`
+            border: 2px solid ${colors.border?.contrast || "#000000"};
+            font-weight: 600;
+          `}
+        `;
+
+      case "secondary":
+        return css`
+          background-color: ${backgroundCard};
+          color: ${highContrast ? "#000000" : textPrimary};
+          border-color: ${borderColors.normal ?? "#d1d5db"};
+
+          &:hover:not(:disabled) {
+            background-color: ${backgroundSecondary};
+            border-color: ${colors.primary[500]};
+            color: ${colors.primary[500]};
+          }
+
+          ${highContrast &&
+          css`
+            border: 2px solid ${borderColors?.contrast || "#000000"};
+            font-weight: 600;
+          `}
+        `;
+
+      case "outlined":
+        return css`
+          background-color: transparent;
+          color: ${highContrast ? "#000000" : textPrimary};
+          border: 2px solid ${borderColors.normal ?? "#d1d5db"};
+
+          &:hover:not(:disabled) {
+            background-color: transparent;
+            border-color: ${colors.primary[500]};
+            color: ${colors.primary[500]};
+            ${!accessibility?.reducedMotion &&
+            css`
+              transform: translateY(-1px);
+            `}
+          }
+
+          &:active:not(:disabled) {
+            background-color: ${colors.primary[50]};
+            border-color: ${colors.primary[600]};
+            color: ${colors.primary[600]};
+            transform: translateY(0);
+          }
+
+          ${highContrast &&
+          css`
+            border: 2px solid ${borderColors?.contrast || "#000000"};
+            font-weight: 600;
+          `}
+        `;
+
+      case "tertiary":
+        return css`
+          background-color: transparent;
+          color: ${highContrast ? "#000000" : textPrimary};
+          border-color: transparent;
+
+          &:hover:not(:disabled) {
+            background-color: ${backgroundSecondary};
+          }
+
+          ${highContrast &&
+          css`
+            border: 1px solid ${borderColors?.contrast || "#000000"};
+          `}
+        `;
+
+      case "success":
+        return css`
+          background-color: ${colors.success[500]};
+          color: ${highContrast ? "#ffffff" : textInverse};
+          border-color: ${colors.success[500]};
+
+          &:hover:not(:disabled) {
+            background-color: ${colors.success[600]};
+            border-color: ${colors.success[600]};
+          }
+
+          ${highContrast &&
+          css`
+            border: 2px solid ${colors.border?.contrast || "#000000"};
+            font-weight: 600;
+          `}
+        `;
+
+      case "warning":
+        return css`
+          background-color: ${colors.warning[500]};
+          color: ${highContrast ? "#000000" : textInverse};
+          border-color: ${colors.warning[500]};
+
+          &:hover:not(:disabled) {
+            background-color: ${colors.warning[600]};
+            border-color: ${colors.warning[600]};
+          }
+        `;
+
+      case "error":
+        return css`
+          background-color: ${colors.error[500]};
+          color: ${highContrast ? "#ffffff" : textInverse};
+          border-color: ${colors.error[500]};
+
+          &:hover:not(:disabled) {
+            background-color: ${colors.error[600]};
+            border-color: ${colors.error[600]};
+          }
+        `;
+
+      case "info":
+        return css`
+          background-color: ${colors.info[500]};
+          color: ${highContrast ? "#ffffff" : textInverse};
+          border-color: ${colors.info[500]};
+
+          &:hover:not(:disabled) {
+            background-color: ${colors.info[600]};
+            border-color: ${colors.info[600]};
+          }
+        `;
+
+      case "ghost":
+        return css`
+          background-color: transparent;
+          color: ${highContrast ? "#000000" : textPrimary};
+          border-color: ${borderColors.normal ?? "#d1d5db"};
+
+          &:hover:not(:disabled) {
+            background-color: ${backgroundSecondary};
+            border-color: ${colors.primary[500]};
+          }
+
+          ${highContrast &&
+          css`
+            border: 2px solid ${borderColors?.contrast || "#000000"};
+          `}
+        `;
+
+      case "link":
+        return css`
+          background-color: transparent;
+          color: ${colors.primary[500]};
+          border-color: transparent;
+          text-decoration: underline;
+
+          &:hover:not(:disabled) {
+            color: ${colors.primary[600]};
+            text-decoration: none;
+          }
+
+          ${highContrast &&
+          css`
+            text-decoration: underline;
+            font-weight: 600;
+          `}
+        `;
+
+      default:
+        return css`
+          background-color: ${colors.primary[500]};
+          color: ${textInverse};
+          border-color: ${colors.primary[500]};
+        `;
+    }
+  }}
+  
+  // Estados
+  ${({ $disabled }) =>
+    $disabled &&
+    css`
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
+    `}
+  
+  ${({ $fullWidth }) =>
+    $fullWidth &&
+    css`
+      width: 100%;
+    `}
+  
+  // Focus (mejorado para accesibilidad)
+  &:focus-visible {
+    outline: 3px solid
+      ${({ colors, accessibility }) =>
+        accessibility?.highContrast
+          ? "#000000"
+          : colors.primary[200] || colors.primary[500]};
+    outline-offset: 2px;
   }
 
-  &:active:not(:disabled) {
-    transform: translateY(0);
-  }
+  // Loading state
+  ${({ $loading }) =>
+    $loading &&
+    css`
+      position: relative;
 
-  ${({ $variant }) => variantMap[$variant]}
-  ${({ $size }) => sizeMap[$size]}
-`;
-
-export const LoadingSpinner = styled.span`
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
-  border-radius: 50%;
-  animation: spin 0.6s linear infinite;
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-`;
-
-export const ButtonIcon = styled.span<{ $position: 'left' | 'right' }>`
-  display: inline-flex;
-  order: ${({ $position }) => ($position === 'left' ? '-1' : '1')};
+      > *:not(${LoadingSpinner}) {
+        opacity: 0.7;
+      }
+    `}
 `;

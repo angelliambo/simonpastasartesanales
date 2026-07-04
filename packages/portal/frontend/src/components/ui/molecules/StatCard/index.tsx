@@ -1,6 +1,6 @@
 // frontend/src/components/ui/StatCard.tsx
 import React from "react";
-import Card from "../../atoms/Card";
+import Card from '@design-sys/atoms/Card';
 import { useAccessibilityPreferences } from "../../../../hooks/accessibility/useAccessibilityPreferences";
 import { useThemeColors } from "../../../../hooks/useThemeColors";
 

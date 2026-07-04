@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Button from "../../components/ui/atoms/Button";
-import { Card } from "../../components/ui/atoms/Card";
+import Button from '@design-sys/atoms/Button';
+import { Card } from '@design-sys/atoms/Card';
 
 export const PageContainer = styled.div`
   min-height: 100vh;
@@ -215,7 +215,7 @@ export const BackBtn = styled(Button)`
 `;
 
 // Nuevos componentes estilizados semánticos
-import { Input as AtomInput } from "../../components/ui/atoms/Input";
+import { Input as AtomInput } from '@design-sys/atoms/Input';
 
 export const UserNumberBox = styled.div`
   margin-bottom: 1.5rem;

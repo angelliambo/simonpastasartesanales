@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Spin from "./ui/atoms/Spin";
-import Text from "./ui/atoms/Text";
+import Spin from '@design-sys/atoms/Spin';
+import Text from '@design-sys/atoms/Text';
 
 const LoadingContainer = styled.div<{ $isDark: boolean }>`
   height: 100vh;

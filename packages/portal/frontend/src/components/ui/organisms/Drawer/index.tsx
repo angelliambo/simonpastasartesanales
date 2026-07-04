@@ -15,7 +15,7 @@ import {
   DrawerBody,
   DrawerFooter,
 } from "./Drawer.styles";
-import { usePersonalization } from "../../../../contexts/PersonalizationContext";
+import { usePersonalization } from '@design-sys/contexts/PersonalizationContext';
 import { CloseOutlined } from "@ant-design/icons";
 import { ZnIcon } from "@shared/design-sys/atoms/ZnIcon";
 

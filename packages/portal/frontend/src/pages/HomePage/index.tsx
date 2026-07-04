@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { FEATURES } from "@factory/shared/config/features";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
-import { Container } from "../../components/ui/atoms/Container";
+import { Container } from '@design-sys/atoms/Container';
 import RegisterModal from "../../components/RegisterModal";
 import GoogleSignInButton from "../../components/GoogleSignInButton";
 import {
