@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import type { RootState } from "../../store/store";
 import { ContactForm } from "../../components/ContactForm";
-import Button from "../../components/ui/atoms/Button";
-import { useSnackbar } from "../../components/ui/atoms/Snackbar";
+import Button from '@design-sys/atoms/Button';
+import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import {
   PageContainer,
   Content,

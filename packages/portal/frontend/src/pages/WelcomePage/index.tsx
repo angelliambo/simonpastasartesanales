@@ -7,7 +7,7 @@ import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import GoogleSignInButton from "../../components/GoogleSignInButton";
 import { useSendTokenMutation, useVerifyTokenMutation } from "../../services/api/authService";
 import { setCredentials } from "../../store/slices/authSlice";
-import { useSnackbar } from "../../components/ui/atoms/Snackbar";
+import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import {
   GlobalOutlined,
   CheckCircleOutlined,

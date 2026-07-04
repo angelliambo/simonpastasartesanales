@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import Button from "../../components/ui/atoms/Button";
-import { Row, Col } from "../../components/ui/atoms/Grid";
+import Button from '@design-sys/atoms/Button';
+import { Row, Col } from '@design-sys/atoms/Grid';
 
 export const VhSection = styled.section<{
   $visible?: boolean;

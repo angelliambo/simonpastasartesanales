@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
-import Card from "../../components/ui/atoms/Card";
-import Button from "../../components/ui/atoms/Button";
+import Card from '@design-sys/atoms/Card';
+import Button from '@design-sys/atoms/Button';
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 
 const fadeIn = keyframes`

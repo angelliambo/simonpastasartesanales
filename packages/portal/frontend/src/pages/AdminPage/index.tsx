@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { setCredentials } from "../../store/slices/authSlice";
-import { Input } from "../../components/ui/atoms/Input";
-import { Select } from "../../components/ui/atoms/Select";
-import { Switch } from "../../components/ui/atoms/Switch";
-import Button from "../../components/ui/atoms/Button";
-import { useSnackbar } from "../../components/ui/atoms/Snackbar";
+import { Input } from '@design-sys/atoms/Input';
+import { Select } from '@design-sys/atoms/Select';
+import { Switch } from '@design-sys/atoms/Switch';
+import Button from '@design-sys/atoms/Button';
+import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
   CopyOutlined,
