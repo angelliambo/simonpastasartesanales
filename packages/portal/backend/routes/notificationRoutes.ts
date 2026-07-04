@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { sendEmail } from "../services/emailService";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 
 const router = Router();
 
@@ -29,11 +30,11 @@ router.post("/send", async (req: Request, res: Response) => {
     }
 
     const subjectMap: Record<string, string> = {
-      wellcome: "Bienvenido a ZenithNexus 🚀",
-      ticket: `[${variables?.ticket_id || "ZN"}] Hemos recibido tu consulta`,
+      wellcome: `Bienvenido a ${BRAND_CONFIG.siteName} 🚀`,
+      ticket: `[${variables?.ticket_id || "SUPPORT"}] Hemos recibido tu consulta`,
       deletion_code: "Código de verificación — Eliminación de cuenta",
       deletion_confirmed: "Cuenta programada para eliminación",
-      test: subject || "🧪 Notificación de prueba — ZenithNexus",
+      test: subject || `🧪 Notificación de prueba — ${BRAND_CONFIG.siteName}`,
     };
 
     const templateMap: Record<string, string> = {
@@ -44,9 +45,9 @@ router.post("/send", async (req: Request, res: Response) => {
       test: "0p7kx4x5wk8g9yjr",
     };
 
-    const resolvedSubject = subjectMap[template] || subject || "Notificación ZenithNexus";
+    const resolvedSubject = subjectMap[template] || subject || `Notificación ${BRAND_CONFIG.siteName}`;
     const resolvedTemplate = templateMap[template] || template;
-    const htmlContent = variables?.content || variables?.mensaje || "Notificación ZenithNexus";
+    const htmlContent = variables?.content || variables?.mensaje || `Notificación ${BRAND_CONFIG.siteName}`;
 
     const locale = req.body.locale || (typeof req.headers["accept-language"] === "string" ? req.headers["accept-language"] : undefined);
     await sendEmail({

@@ -101,7 +101,7 @@ export const config: EnvironmentConfig = {
   NODE_ENV: process.env.NODE_ENV || "development",
   PORT: parseInt(process.env.PORT || "5000", 10),
   FRONTEND_URL: process.env.FRONTEND_URL || "http://localhost:3000",
-  BBD: process.env.BBD || "mongodb://localhost:27017/zenithnexus-dev",
+  BBD: process.env.BBD || "mongodb://localhost:27017/factory-dev",
   JWT_SECRET_KEY: process.env.JWT_SECRET_KEY || "__MUST_SET_JWT_SECRET__",
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || "180d",
   JWT_EXPIRES_IN_SECONDS: parseDuration(process.env.JWT_EXPIRES_IN || "180d", 180),

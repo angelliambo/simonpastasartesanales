@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
+
 if (process.env.NODE_ENV === 'production') {
   console.log = () => {};
   console.debug = () => {};
@@ -12,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
   const originalError = console.error;
   console.error = (...args: unknown[]) => {
     const argStr = args.map(a => String(a)).join(' ');
-    if (argStr.includes('ZN-ERR') || argStr.includes('ZenithNexus')) {
+    if (argStr.includes('ERR') || argStr.includes(BRAND_CONFIG.siteName)) {
       originalError(...args);
     }
   };

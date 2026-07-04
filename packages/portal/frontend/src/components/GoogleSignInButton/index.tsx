@@ -4,6 +4,7 @@ import { useGoogleLoginMutation } from "../../services/api/authService";
 import { setCredentials } from "../../store/slices/authSlice";
 import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import { useTranslation } from "../../i18n/I18nProvider";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { GoogleSignInButtonProps, GoogleCredentialResponse } from "./GoogleSignInButton.types";
 import { StyledButtonContainer } from "./GoogleSignInButton.styles";
 
@@ -75,7 +76,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
         onSuccessRef.current();
       }
     } catch (e) {
-      console.error(`[ZenithNexus] [ZN-ERR-API-501]: ${tRef.current('pages.portal.errors.errApi501')}`, e);
+      console.error(`[${BRAND_CONFIG.siteName}] [ERR-API-501]: ${tRef.current('pages.portal.errors.errApi501')}`, e);
     }
   };
 

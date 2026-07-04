@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import type { RootState } from "../../store/store";
 import { ContactForm } from "../../components/ContactForm";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import Button from '@design-sys/atoms/Button';
 import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import {
@@ -257,7 +258,7 @@ const SupportPage: React.FC = () => {
                                 {c.message}
                               </MessageBubble>
                               <MessageMeta>
-                                {isAdmin ? "Soporte ZenithNexus" : "Tú"} — {formatDate(c.createdAt)}
+                                {isAdmin ? `Soporte ${BRAND_CONFIG.siteName}` : "Tú"} — {formatDate(c.createdAt)}
                               </MessageMeta>
                             </MessageWrapper>
                           );

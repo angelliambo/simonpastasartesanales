@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { translate } from './t';
 import { globals } from './globals';
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import type { TranslationObject } from './index';
 import { locales as allLocales } from './locales';
 
@@ -136,7 +137,7 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       try {
         return translate(key, TRANSLATIONS, lang, FALLBACK_LOCALE, { ...globals, ...params });
       } catch (err) {
-        console.error(`[ZenithNexus] [ZN-ERR-WEB-301]: Fallo al traducir la clave "${key}".`, err);
+        console.error(`[${BRAND_CONFIG.siteName}] [ERR-WEB-301]: Fallo al traducir la clave "${key}".`, err);
         return key;
       }
     },

@@ -18,7 +18,7 @@ const nodeEnv = process.env.NODE_ENV || "development";
 const envFile = path.resolve(__dirname, `../env.${nodeEnv}`);
 dotenv.config({ path: envFile });
 
-const BBD = process.env.BBD || "mongodb://localhost:27017/zenithnexus-portal";
+const BBD = process.env.BBD || "mongodb://localhost:27017/factory-portal";
 
 interface SeedUser {
   email: string;
@@ -31,9 +31,9 @@ interface SeedUser {
 
 const USERS: SeedUser[] = [
   {
-    email: "admin@zn.com",
+    email: `"admin@${process.env.EMAIL_DOMAIN}"`,
     password: "test1234",
-    name: "Admin ZenithNexus",
+    name: "Admin",
     role: "admin",
     plan: "god_mode",
     expiresAt: null,

@@ -10,6 +10,7 @@ import { config, logger, displayConfig } from "./config/environment";
 import rateLimit from "express-rate-limit";
 import { checkFeature } from "./middleware/checkFeature";
 import { FEATURES } from "@factory/shared/config/features";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 
 const app = express();
 
@@ -28,7 +29,7 @@ const apiLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-logger.info("🚀 [SERVER] Iniciando servidor ZenithNexus Portal");
+logger.info(`🚀 [SERVER] Iniciando servidor ${BRAND_CONFIG.siteName} Portal`);
 displayConfig();
 
 app.use(
@@ -69,7 +70,7 @@ app.use("/api", apiLimiter, apiRoutes);
 app.get("/", (_req: Request, res: Response) => {
   logger.debug("🏥 [SERVER] Health check solicitado");
   res.json({
-    message: "ZenithNexus Portal API",
+    message: `${BRAND_CONFIG.siteName} Portal API`,
     status: "healthy",
     timestamp: new Date().toISOString(),
     version: "2.1.0",

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "../i18n/I18nProvider";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 
 export interface BreadcrumbItem {
   name: string;
@@ -121,7 +122,7 @@ export const usePageSEO = () => {
     const translatedKeywords = t(`pages.${pageKey}.seoKeywords`);
 
     // Fallbacks si no existen en i18n
-    const title = translatedTitle || (routeInfo ? `${routeInfo.name} | ZenithNexus` : "ZenithNexus - Dictado por Voz y Accesibilidad Web");
+    const title = translatedTitle || (routeInfo ? `${routeInfo.name} | ${BRAND_CONFIG.siteName}` : `${BRAND_CONFIG.siteName} - Dictado por Voz y Accesibilidad Web`);
     const description = translatedDescription || "Comunicación en su punto máximo. Dictado por voz, texto a voz y herramientas de accesibilidad para la web.";
     const keywords = translatedKeywords
       ? translatedKeywords.split(",").map(k => k.trim())

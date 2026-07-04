@@ -2,7 +2,7 @@ export const ENV_CONFIG = {
   API_URL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
   IS_PRODUCTION: process.env.NODE_ENV === "production",
   IS_DEVELOPMENT: process.env.NODE_ENV === "development",
-  PRODUCTION_API_URL: "https://zenithnexus-portal.fly.dev/api",
+  PRODUCTION_API_URL: "https://api.yourdomain.com/api",
   DEVELOPMENT_API_URL: "http://localhost:5000/api",
 };
 
@@ -25,7 +25,7 @@ export const ENVIRONMENT_CONFIG = {
     logLevel: "debug",
   },
   production: {
-    apiUrl: "https://zenithnexus-portal.fly.dev/api",
+    apiUrl: "https://api.yourdomain.com/api",
     debug: false,
     logLevel: "error",
   },

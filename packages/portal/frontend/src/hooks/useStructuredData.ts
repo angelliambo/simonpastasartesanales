@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SHOW_SOCIAL_LINKS, SOCIAL_X_URL, SOCIAL_INSTAGRAM_URL } from '@shared/config/urls';
+import { BRAND_CONFIG } from '@factory/shared/config/brand';
 
 export interface StructuredDataConfig {
   type: 'WebSite' | 'WebPage' | 'SoftwareApplication' | 'Organization' | 'BreadcrumbList' | 'FAQPage';
@@ -33,7 +34,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
         return {
           "@context": "https://schema.org",
           "@type": "WebSite",
-          "name": config.name || "ZenithNexus",
+          "name": config.name || BRAND_CONFIG.siteName,
           "description": config.description || "Comunicación en su punto máximo. Dictado por voz, texto a voz y herramientas de accesibilidad para la web.",
           "url": baseUrl,
           "potentialAction": {
@@ -46,7 +47,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
           },
           "publisher": {
             "@type": "Organization",
-            "name": "ZenithNexus",
+            "name": BRAND_CONFIG.siteName,
             "logo": {
               "@type": "ImageObject",
               "url": `${baseUrl}/logo.png`
@@ -58,18 +59,18 @@ export const useStructuredData = (config: StructuredDataConfig) => {
         return {
           "@context": "https://schema.org",
           "@type": "WebPage",
-          "name": config.name || "ZenithNexus",
+          "name": config.name || BRAND_CONFIG.siteName,
           "description": config.description,
           "url": currentUrl,
           "datePublished": config.datePublished || currentDate,
           "dateModified": config.dateModified || currentDate,
           "author": {
             "@type": "Organization",
-            "name": config.author || "ZenithNexus"
+            "name": config.author || BRAND_CONFIG.siteName
           },
           "publisher": {
             "@type": "Organization",
-            "name": "ZenithNexus",
+            "name": BRAND_CONFIG.siteName,
             "logo": {
               "@type": "ImageObject",
               "url": `${baseUrl}/logo.png`
@@ -77,7 +78,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
           },
           "mainEntity": {
             "@type": "Organization",
-            "name": "ZenithNexus",
+            "name": BRAND_CONFIG.siteName,
             "description": "Extensión de Chrome premium para dictado por voz y accesibilidad web"
           }
         };
@@ -86,7 +87,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
         return {
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
-          "name": config.name || "ZenithNexus Chrome Extension",
+          "name": config.name || `${BRAND_CONFIG.siteName} Chrome Extension`,
           "description": config.description || "Herramientas de dictado por voz, texto a voz, lector PDF y atajos de teclado para Chrome.",
           "url": currentUrl,
           "image": config.image || `${baseUrl}/og-image.png`,
@@ -99,7 +100,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
           },
           "author": {
             "@type": "Organization",
-            "name": config.author || "ZenithNexus"
+            "name": config.author || BRAND_CONFIG.siteName
           }
         };
 
@@ -107,7 +108,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
         return {
           "@context": "https://schema.org",
           "@type": "Organization",
-          "name": "ZenithNexus",
+          "name": BRAND_CONFIG.siteName,
           "description": "Plataforma de herramientas premium de accesibilidad y dictado por voz para la web.",
           "url": baseUrl,
           "logo": `${baseUrl}/logo.png`,
