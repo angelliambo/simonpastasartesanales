@@ -6,7 +6,7 @@ export { useAccessibility } from "./useAccessibility";
 export { useAccessibilityRedux } from "./useAccessibilityRedux";
 export { useBreadcrumbs, usePageSEO } from "./useBreadcrumbs";
 export { useOffline, useOfflineCapability, useOfflineData } from "./useOffline";
-export { useSnackbar } from "../components/ui/atoms/Snackbar";
+export { useSnackbar } from '@design-sys/atoms/Snackbar';
 export { useTheme } from "../styles/ThemeProvider";
 export { useResponsiveContext } from "../contexts/ResponsiveContext";
 
