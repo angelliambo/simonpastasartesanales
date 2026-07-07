@@ -5,6 +5,8 @@ import { useTranslation } from "../../i18n/I18nProvider";
 import { FEATURES } from "@factory/shared/config/features";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { Container } from '@design-sys/atoms/Container';
+import { SocialFeedGrid } from "@design-sys/atoms/SocialFeed";
+import { useGetInstagramFeedQuery } from "../../services/api/socialFeedService";
 import RegisterModal from "../../components/RegisterModal";
 import GoogleSignInButton from "../../components/GoogleSignInButton";
 import {
@@ -151,6 +153,10 @@ const HomePage: React.FC = () => {
     email?: string;
   } | null;
   const { t, lang } = useTranslation();
+
+  const { data: socialFeedData, isLoading: isLoadingFeed } = useGetInstagramFeedQuery(undefined, {
+    skip: !FEATURES.ENABLE_SOCIAL_FEEDS,
+  });
 
   const LANG_FLAGS: Record<string, { flag: string; name: string }> = {
     "es": { flag: "🇪🇸", name: "Español" },
@@ -553,62 +559,127 @@ const HomePage: React.FC = () => {
           <SectionSubtitle>
             {t("pages.home.testimonialsSubtitle")}
           </SectionSubtitle>
-          <TestimonialsRow gutter={[24, 24]} justify="center">
-            <TestimonialCol xs={24} md={8}>
-              <TestimonialCard>
-                <TestimonialQuote>
-                  {t("pages.home.testimonial1")}
-                </TestimonialQuote>
-                <TestimonialAuthor>
-                  <TestimonialAvatar>S</TestimonialAvatar>
-                  <div>
-                    <TestimonialName>
-                      {t("pages.home.testimonialName1")}
-                    </TestimonialName>
-                    <TestimonialRole>
-                      {t("pages.home.testimonialRole1")}
-                    </TestimonialRole>
-                  </div>
-                </TestimonialAuthor>
-              </TestimonialCard>
-            </TestimonialCol>
-            <TestimonialCol xs={24} md={8}>
-              <TestimonialCard>
-                <TestimonialQuote>
-                  {t("pages.home.testimonial2")}
-                </TestimonialQuote>
-                <TestimonialAuthor>
-                  <TestimonialAvatar>M</TestimonialAvatar>
-                  <div>
-                    <TestimonialName>
-                      {t("pages.home.testimonialName2")}
-                    </TestimonialName>
-                    <TestimonialRole>
-                      {t("pages.home.testimonialRole2")}
-                    </TestimonialRole>
-                  </div>
-                </TestimonialAuthor>
-              </TestimonialCard>
-            </TestimonialCol>
-            <TestimonialCol xs={24} md={8}>
-              <TestimonialCard>
-                <TestimonialQuote>
-                  {t("pages.home.testimonial3")}
-                </TestimonialQuote>
-                <TestimonialAuthor>
-                  <TestimonialAvatar>Y</TestimonialAvatar>
-                  <div>
-                    <TestimonialName>
-                      {t("pages.home.testimonialName3")}
-                    </TestimonialName>
-                    <TestimonialRole>
-                      {t("pages.home.testimonialRole3")}
-                    </TestimonialRole>
-                  </div>
-                </TestimonialAuthor>
-              </TestimonialCard>
-            </TestimonialCol>
-          </TestimonialsRow>
+          {FEATURES.ENABLE_SOCIAL_FEEDS ? (
+            <SocialFeedGrid
+              posts={socialFeedData?.feed}
+              isLoading={isLoadingFeed}
+              fallbackComponent={
+                <TestimonialsRow gutter={[24, 24]} justify="center">
+                  <TestimonialCol xs={24} md={8}>
+                    <TestimonialCard>
+                      <TestimonialQuote>
+                        {t("pages.home.testimonial1")}
+                      </TestimonialQuote>
+                      <TestimonialAuthor>
+                        <TestimonialAvatar>S</TestimonialAvatar>
+                        <div>
+                          <TestimonialName>
+                            {t("pages.home.testimonialName1")}
+                          </TestimonialName>
+                          <TestimonialRole>
+                            {t("pages.home.testimonialRole1")}
+                          </TestimonialRole>
+                        </div>
+                      </TestimonialAuthor>
+                    </TestimonialCard>
+                  </TestimonialCol>
+                  <TestimonialCol xs={24} md={8}>
+                    <TestimonialCard>
+                      <TestimonialQuote>
+                        {t("pages.home.testimonial2")}
+                      </TestimonialQuote>
+                      <TestimonialAuthor>
+                        <TestimonialAvatar>M</TestimonialAvatar>
+                        <div>
+                          <TestimonialName>
+                            {t("pages.home.testimonialName2")}
+                          </TestimonialName>
+                          <TestimonialRole>
+                            {t("pages.home.testimonialRole2")}
+                          </TestimonialRole>
+                        </div>
+                      </TestimonialAuthor>
+                    </TestimonialCard>
+                  </TestimonialCol>
+                  <TestimonialCol xs={24} md={8}>
+                    <TestimonialCard>
+                      <TestimonialQuote>
+                        {t("pages.home.testimonial3")}
+                      </TestimonialQuote>
+                      <TestimonialAuthor>
+                        <TestimonialAvatar>Y</TestimonialAvatar>
+                        <div>
+                          <TestimonialName>
+                            {t("pages.home.testimonialName3")}
+                          </TestimonialName>
+                          <TestimonialRole>
+                            {t("pages.home.testimonialRole3")}
+                          </TestimonialRole>
+                        </div>
+                      </TestimonialAuthor>
+                    </TestimonialCard>
+                  </TestimonialCol>
+                </TestimonialsRow>
+              }
+            />
+          ) : (
+            <TestimonialsRow gutter={[24, 24]} justify="center">
+              <TestimonialCol xs={24} md={8}>
+                <TestimonialCard>
+                  <TestimonialQuote>
+                    {t("pages.home.testimonial1")}
+                  </TestimonialQuote>
+                  <TestimonialAuthor>
+                    <TestimonialAvatar>S</TestimonialAvatar>
+                    <div>
+                      <TestimonialName>
+                        {t("pages.home.testimonialName1")}
+                      </TestimonialName>
+                      <TestimonialRole>
+                        {t("pages.home.testimonialRole1")}
+                      </TestimonialRole>
+                    </div>
+                  </TestimonialAuthor>
+                </TestimonialCard>
+              </TestimonialCol>
+              <TestimonialCol xs={24} md={8}>
+                <TestimonialCard>
+                  <TestimonialQuote>
+                    {t("pages.home.testimonial2")}
+                  </TestimonialQuote>
+                  <TestimonialAuthor>
+                    <TestimonialAvatar>M</TestimonialAvatar>
+                    <div>
+                      <TestimonialName>
+                        {t("pages.home.testimonialName2")}
+                      </TestimonialName>
+                      <TestimonialRole>
+                        {t("pages.home.testimonialRole2")}
+                      </TestimonialRole>
+                    </div>
+                  </TestimonialAuthor>
+                </TestimonialCard>
+              </TestimonialCol>
+              <TestimonialCol xs={24} md={8}>
+                <TestimonialCard>
+                  <TestimonialQuote>
+                    {t("pages.home.testimonial3")}
+                  </TestimonialQuote>
+                  <TestimonialAuthor>
+                    <TestimonialAvatar>Y</TestimonialAvatar>
+                    <div>
+                      <TestimonialName>
+                        {t("pages.home.testimonialName3")}
+                      </TestimonialName>
+                      <TestimonialRole>
+                        {t("pages.home.testimonialRole3")}
+                      </TestimonialRole>
+                    </div>
+                  </TestimonialAuthor>
+                </TestimonialCard>
+              </TestimonialCol>
+            </TestimonialsRow>
+          )}
         </Container>
       </VhSection>
 
