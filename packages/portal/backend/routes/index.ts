@@ -7,6 +7,7 @@ import supportRoutes from "./supportRoutes";
 import userRoutes from "./userRoutes";
 import notificationRoutes from "./notificationRoutes";
 import adminRoutes from "./debugRoutes";
+import socialFeedRoutes from "./socialFeedRoutes";
 import { checkFeature } from "../middleware/checkFeature";
 
 const apiRoutes = express.Router();
@@ -30,5 +31,6 @@ apiRoutes.use("/support", checkFeature("ENABLE_TICKETING_SYSTEM"), supportRoutes
 apiRoutes.use("/user", checkFeature("ENABLE_GOOGLE_AUTH"), userRoutes);
 apiRoutes.use("/notification", checkFeature("ENABLE_GOOGLE_AUTH"), notificationRoutes);
 apiRoutes.use("/admin", checkFeature("ENABLE_GOOGLE_AUTH"), adminRoutes);
+apiRoutes.use("/social-feed", checkFeature("ENABLE_SOCIAL_FEEDS"), socialFeedRoutes);
 
 export default apiRoutes;
