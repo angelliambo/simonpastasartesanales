@@ -1,0 +1,26 @@
+export const support = {
+  title: 'Soporte y Contacto',
+  subtitle: 'Consultá tus tickets existentes o creá uno nuevo. Te responderemos a la brevedad.',
+  userNumberLabel: 'Tu número de usuario: ',
+  userNumberValue: 'Usuario N° {{userId}}',
+  tabCreateTicket: 'Crear Nuevo Ticket',
+  tabMyTickets: 'Mis Tickets',
+  loadingConversations: 'Cargando conversación...',
+  badgeNewMessage: 'NUEVO MENSAJE 💬',
+  listTitle: 'Tus Tickets de Soporte',
+  loadingTickets: 'Cargando tickets...',
+  emptyTickets: 'No tienes ningún ticket de soporte creado aún.',
+  inputPlaceholder: 'Escribe tu respuesta aquí...',
+  buttonSubmit: 'Responder',
+  buttonSubmitting: 'Enviando...',
+  buttonBack: '← Volver',
+  statusOpen: 'Abierto',
+  statusInProgress: 'En progreso',
+  statusClosed: 'Cerrado',
+  originalMessage: 'Mensaje original',
+  errorSendingReply: 'Error al enviar respuesta',
+  supportAgent: 'Soporte {{siteName}}',
+  userYou: 'Tú',
+};
+
+export default support;

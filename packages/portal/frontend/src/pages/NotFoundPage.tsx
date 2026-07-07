@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useTranslation } from "../i18n/I18nProvider";
 
 const Container = styled.div`
   display: flex;
@@ -56,16 +57,17 @@ const StyledButton = styled.button`
 
 const NotFoundPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <Container>
-      <ErrorCode>404</ErrorCode>
-      <Title>Page not found</Title>
+      <ErrorCode>{t('pages.notFound.title')}</ErrorCode>
+      <Title>{t('pages.notFound.message')}</Title>
       <Description>
-        The page you are looking for does not exist or has been moved.
+        {t('pages.notFound.description')}
       </Description>
       <StyledButton onClick={() => navigate("/")}>
-        🏠 Go home
+        🏠 {t('pages.notFound.goHomeButton')}
       </StyledButton>
     </Container>
   );
