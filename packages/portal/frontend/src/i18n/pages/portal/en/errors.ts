@@ -1,0 +1,45 @@
+export const errors = {
+  somethingWentWrong: 'Something went wrong',
+  unexpectedError: 'An unexpected error has occurred. Please try again.',
+  errorDetails: 'Error details (click to expand)',
+  retry: '🔄 Try again',
+  themeTitle: 'Visual Theme Issue',
+  themeMessage: 'There was a problem loading the visual settings. Default values have been restored. Please try reloading the page.',
+  networkTitle: 'Connection Problem',
+  networkMessage: 'Could not connect to the server. Please check your internet connection and try again.',
+  componentTitle: 'Component Error',
+  componentMessage: 'Something went wrong loading this section. You can try reloading the page or going back.',
+  unknownTitle: 'Something went wrong',
+  unknownMessage: 'An unexpected error occurred. Don\'t worry, you can try reloading the page or going back home.',
+  technicalDetails: 'Technical details of the error',
+  errorLabel: 'Error:',
+  causingComponent: 'Component causing the error:',
+  retryButton: '🔄 Retry',
+  goBackButton: '← Go back',
+  goHomeButton: '🏠 Go home',
+
+  // Generic action templates
+  actionSuccess: 'Successfully completed: {{action}}',
+  actionError: 'Could not complete: {{action}}',
+  actionInfo: 'Information about {{action}}: {{info}}',
+  actionWarning: 'Warning when {{action}}: {{warning}}',
+
+  // Action names for dynamic translation
+  actionCreateUser: 'User creation',
+  actionDeleteUser: 'User deletion',
+  actionUpdateUser: 'User update',
+  actionLoginAs: 'Impersonated login',
+  actionCopyEmail: 'Copying email address',
+  actionDeleteAccount: 'Account permanent deletion',
+  actionRequestDeletion: 'Request deletion code',
+  actionRegister: 'Account registration',
+  actionLogin: 'Login',
+  actionGoogleLogin: 'Login with Google',
+  errWeb300: 'Error loading web portal or initialization.',
+  errWeb301: 'Failed to load portal language dictionary.',
+  errWeb400: 'Login or registration error.',
+  errApi500: 'Critical server error. Please try again later.',
+  errApi501: 'Google account verification failure.',
+};
+
+export default {};

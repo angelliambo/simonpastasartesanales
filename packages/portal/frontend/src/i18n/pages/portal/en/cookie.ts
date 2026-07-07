@@ -1,0 +1,21 @@
+export const cookie = {
+  title: 'Cookie Policy',
+  intro: 'At {{siteName}}, we use cookies to improve your experience and offer you personalized features.',
+  whyImportant: 'Why are cookies important?',
+  reasonEssential: 'Essential functionality:',
+  reasonEssentialDesc: 'They allow the portal to function properly and remember your preferences.',
+  reasonPersonalization: 'Personalized experience:',
+  reasonPersonalizationDesc: 'We adapt content and features according to your needs.',
+  reasonImprovements: 'Continuous improvements:',
+  reasonImprovementsDesc: 'They help us understand how the portal is used to constantly improve it.',
+  reasonSecurity: 'Security:',
+  reasonSecurityDesc: 'They protect your information and prevent unauthorized access.',
+  importantLabel: 'Important:',
+  importantMessage: 'If you do not accept cookies, some features of the portal may be limited or not function correctly. We recommend accepting them to enjoy the best experience possible.',
+  readMore: 'You can read more about our',
+  policyLink: 'Cookie Policy',
+  rejectButton: 'Reject',
+  acceptButton: 'Accept Cookies',
+};
+
+export default {};

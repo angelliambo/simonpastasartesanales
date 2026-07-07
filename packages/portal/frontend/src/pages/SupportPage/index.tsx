@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import type { RootState } from "../../store/store";
 import { ContactForm } from "../../components/ContactForm";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
+import { useTranslation } from "../../i18n/I18nProvider";
 import Button from '@design-sys/atoms/Button';
 import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import {
@@ -44,6 +45,7 @@ import {
 } from "./SupportPage.styles";
 
 const SupportPage: React.FC = () => {
+  const { t, currentLocale } = useTranslation();
   const { showError } = useSnackbar();
   const authUser = useSelector((state: RootState) => state.auth.user);
   const token = useSelector((state: RootState) => state.auth.token);
@@ -153,10 +155,10 @@ const SupportPage: React.FC = () => {
         setReplyText("");
         await fetchTicketDetail(selectedTicketId);
       } else {
-        showError(d.error || "Error al enviar respuesta");
+        showError(d.error || t('pages.support.errorSendingReply'));
       }
     } catch (err: any) {
-      showError(err.message || "Error al enviar respuesta");
+      showError(err.message || t('pages.support.errorSendingReply'));
     } finally {
       setSendingReply(false);
     }
@@ -164,7 +166,7 @@ const SupportPage: React.FC = () => {
 
   const formatDate = (dateStr: string) => {
     try {
-      return new Date(dateStr).toLocaleString("es-MX", {
+      return new Date(dateStr).toLocaleString(currentLocale === "es" ? "es-MX" : "en-US", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -177,33 +179,33 @@ const SupportPage: React.FC = () => {
   };
 
   const getStatusLabel = (status: "open" | "in_progress" | "closed") => {
-    if (status === "open") return "Abierto";
-    if (status === "in_progress") return "En progreso";
-    return "Cerrado";
+    if (status === "open") return t('pages.support.statusOpen');
+    if (status === "in_progress") return t('pages.support.statusInProgress');
+    return t('pages.support.statusClosed');
   };
 
   return (
     <>
       <PageContainer>
         <Content>
-          <Title>Soporte y Contacto</Title>
+          <Title>{t('pages.support.title')}</Title>
           <Subtitle>
-            Consultá tus tickets existentes o creá uno nuevo. Te responderemos a la brevedad.
+            {t('pages.support.subtitle')}
           </Subtitle>
 
           {authUser && (
             <UserNumberBox>
-              Tu número de usuario: <UserNumberStrong>Usuario N° {authUser._id}</UserNumberStrong>
+              {t('pages.support.userNumberLabel')}<UserNumberStrong>{t('pages.support.userNumberValue', { userId: authUser._id })}</UserNumberStrong>
             </UserNumberBox>
           )}
 
           {authUser && (
             <TabContainer>
               <Tab $active={activeTab === "new_ticket"} onClick={() => { setActiveTab("new_ticket"); setSelectedTicketId(null); }}>
-                Crear Nuevo Ticket
+                {t('pages.support.tabCreateTicket')}
               </Tab>
               <Tab $active={activeTab === "my_tickets"} onClick={() => setActiveTab("my_tickets")}>
-                Mis Tickets
+                {t('pages.support.tabMyTickets')}
               </Tab>
             </TabContainer>
           )}
@@ -220,9 +222,9 @@ const SupportPage: React.FC = () => {
               {selectedTicketId ? (
                 <div>
                   <DetailHeaderRow>
-                    <BackBtn onClick={handleBack}>← Volver</BackBtn>
+                    <BackBtn onClick={handleBack}>{t('pages.support.buttonBack')}</BackBtn>
                     {loadingDetail ? (
-                      <DetailLoadingText>Cargando conversación...</DetailLoadingText>
+                      <DetailLoadingText>{t('pages.support.loadingConversations')}</DetailLoadingText>
                     ) : (
                       selectedTicket && (
                         <DetailTitleWrapper>
@@ -246,7 +248,7 @@ const SupportPage: React.FC = () => {
                           <MessageBubble $isAdmin={false}>
                             {selectedTicket.message}
                           </MessageBubble>
-                          <MessageMeta>{formatDate(selectedTicket.createdAt)} (Mensaje original)</MessageMeta>
+                          <MessageMeta>{formatDate(selectedTicket.createdAt)} ({t('pages.support.originalMessage')})</MessageMeta>
                         </MessageWrapper>
 
                         {/* Comentarios */}
@@ -258,7 +260,7 @@ const SupportPage: React.FC = () => {
                                 {c.message}
                               </MessageBubble>
                               <MessageMeta>
-                                {isAdmin ? `Soporte ${BRAND_CONFIG.siteName}` : "Tú"} — {formatDate(c.createdAt)}
+                                {isAdmin ? t('pages.support.supportAgent', { siteName: BRAND_CONFIG.siteName }) : t('pages.support.userYou')} — {formatDate(c.createdAt)}
                               </MessageMeta>
                             </MessageWrapper>
                           );
@@ -270,14 +272,14 @@ const SupportPage: React.FC = () => {
                         <ChatInput
                           value={replyText}
                           onChange={(e) => setReplyText(e.target.value)}
-                          placeholder="Escribe tu respuesta aquí..."
+                          placeholder={t('pages.support.inputPlaceholder')}
                           disabled={sendingReply || selectedTicket.status === "closed"}
                         />
                         <Button
                           type="submit"
                           disabled={sendingReply || !replyText.trim() || selectedTicket.status === "closed"}
                         >
-                          {sendingReply ? "Enviando..." : "Responder"}
+                          {sendingReply ? t('pages.support.buttonSubmitting') : t('pages.support.buttonSubmit')}
                         </Button>
                       </ChatInputArea>
                     </ChatContainer>
@@ -285,12 +287,12 @@ const SupportPage: React.FC = () => {
                 </div>
               ) : (
                 <div>
-                  <ListSectionTitle>Tus Tickets de Soporte</ListSectionTitle>
+                  <ListSectionTitle>{t('pages.support.listTitle')}</ListSectionTitle>
                   {loadingTickets ? (
-                    <ListLoadingText>Cargando tickets...</ListLoadingText>
+                    <ListLoadingText>{t('pages.support.loadingTickets')}</ListLoadingText>
                   ) : tickets.length === 0 ? (
                     <EmptyListMessage>
-                      No tienes ningún ticket de soporte creado aún.
+                      {t('pages.support.emptyTickets')}
                     </EmptyListMessage>
                   ) : (
                     <TicketList>
@@ -301,7 +303,7 @@ const SupportPage: React.FC = () => {
                               <TicketId>{ticket.ticketId}</TicketId>
                               {!ticket.userRead && (
                                 <TicketNewMessageBadge>
-                                  NUEVO MENSAJE 💬
+                                  {t('pages.support.badgeNewMessage')}
                                 </TicketNewMessageBadge>
                               )}
                             </CardBadgeWrapper>

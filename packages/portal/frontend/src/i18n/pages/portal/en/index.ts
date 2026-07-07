@@ -6,4 +6,4 @@ export { cookie } from './cookie';
 export { notFound } from './notFound';
 export { dashboard } from './dashboard';
 export { admin } from './admin';
-
+export { support } from './support';

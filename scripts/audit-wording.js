@@ -25,9 +25,9 @@ const timestamp = getTimestamp();
 const REPORT_FILE = `report-${timestamp}.json`;
 const REPORT_PATH = path.join(REPORT_DIR, REPORT_FILE);
 
-const locales = ['es-ES', 'en-US', 'en-GB', 'de-DE', 'fr-FR', 'it-IT', 'ja-JP', 'pt-BR'];
-const categories = ['ext', 'portal', 'commons'];
-const localesDir = path.resolve(__dirname, '../packages/shared/src/i18n/locales');
+const locales = ['en'];
+const categories = ['portal', 'commons'];
+const localesDir = path.resolve(__dirname, '../packages/portal/frontend/src/i18n/pages');
 
 function parseTranslationFile(filePath) {
   if (!fs.existsSync(filePath)) {
@@ -110,24 +110,24 @@ const reportData = {
 };
 
 categories.forEach(category => {
-  const esMXCatPath = path.join(localesDir, 'es-MX', category);
-  if (!fs.existsSync(esMXCatPath)) {
-    console.error(`❌ Categoría es-MX no encontrada en ruta: ${esMXCatPath}`);
+  const esCatPath = path.join(localesDir, category, 'es');
+  if (!fs.existsSync(esCatPath)) {
+    console.error(`❌ Categoría es no encontrada en ruta: ${esCatPath}`);
     return;
   }
   
-  const files = fs.readdirSync(esMXCatPath).filter(f => f.endsWith('.ts') && f !== 'index.ts');
+  const files = fs.readdirSync(esCatPath).filter(f => f.endsWith('.ts') && f !== 'index.ts');
   
   files.forEach(file => {
-    const esMXFilePath = path.join(esMXCatPath, file);
-    const esMXData = parseTranslationFile(esMXFilePath);
+    const esFilePath = path.join(esCatPath, file);
+    const esData = parseTranslationFile(esFilePath);
     
-    if (!esMXData) {
+    if (!esData) {
       return;
     }
     
     locales.forEach(locale => {
-      const localeFilePath = path.join(localesDir, locale, category, file);
+      const localeFilePath = path.join(localesDir, category, locale, file);
       
       if (!fs.existsSync(localeFilePath)) {
         reportData.details.missingFiles.push({ locale, category, file });
@@ -144,7 +144,7 @@ categories.forEach(category => {
         return;
       }
       
-      Object.keys(esMXData).forEach(objName => {
+      Object.keys(esData).forEach(objName => {
         if (!localeData[objName]) {
           reportData.details.missingObjects.push({ locale, category, file, object: objName });
           reportData.summary.missingObjects++;
@@ -152,28 +152,28 @@ categories.forEach(category => {
           return;
         }
         
-        const esMXObj = esMXData[objName];
+        const esObj = esData[objName];
         const localeObj = localeData[objName];
         
-        Object.keys(esMXObj).forEach(key => {
-          const esMXVal = esMXObj[key];
+        Object.keys(esObj).forEach(key => {
+          const esVal = esObj[key];
           const localeVal = localeObj[key];
           
           if (localeVal === undefined) {
-            reportData.details.missingKeys.push({ locale, category, file, object: objName, key, esMX: esMXVal });
+            reportData.details.missingKeys.push({ locale, category, file, object: objName, key, es: esVal });
             reportData.summary.missingKeys++;
             reportData.summary.totalErrors++;
-          } else if (localeVal === esMXVal && locale !== 'es-ES') {
+          } else if (localeVal === esVal) {
             const isNaturalMatch = 
-              esMXVal.trim() === '' || 
-              /^[0-9\-\+\.\s%px]+$/.test(esMXVal) || 
-              /^\{\{\w+\}\}$/.test(esMXVal) ||
-              /^[A-Za-z0-9]+$/.test(esMXVal) && esMXVal.toLowerCase() === 'google' ||
-              esMXVal === '{{nombreSitio}}' ||
-              esMXVal === 'Google Docs' ||
-              esMXVal === 'PDF Document' ||
-              esMXVal === 'Excel' ||
-              esMXVal === 'PowerPoint';
+              esVal.trim() === '' || 
+              /^[0-9\-\+\.\s%px]+$/.test(esVal) || 
+              /^\{\{\w+\}\}$/.test(esVal) ||
+              /^[A-Za-z0-9]+$/.test(esVal) && esVal.toLowerCase() === 'google' ||
+              esVal === '{{nombreSitio}}' ||
+              esVal === 'Google Docs' ||
+              esVal === 'PDF Document' ||
+              esVal === 'Excel' ||
+              esVal === 'PowerPoint';
               
             if (!isNaturalMatch) {
               reportData.details.suspectIdenticals.push({ locale, category, file, object: objName, key, value: localeVal });
