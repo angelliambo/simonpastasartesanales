@@ -112,6 +112,22 @@ Para personalizar el nombre del SaaS, logo, emails y colores sin romper la compa
 3. **Variables de Entorno**:
    Crea y configura los archivos `.env` en `packages/portal/frontend` y `packages/portal/backend` a partir de sus respectivos ejemplos (como se detalla en la [GUIA_DESPLIEGUE.md](file:///home/aliambo/git/mern-saas-factory-framework/GUIA_DESPLIEGUE.md)).
 
+4. **Configurar Google Analytics (GA4)**:
+   Para activar la medición de analíticas automáticamente en tu proyecto hijo:
+   - Agrega la siguiente variable de entorno en el `.env` del frontend (`packages/portal/frontend/.env`):
+     ```env
+     REACT_APP_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+     ```
+   - El boilerplate inicializará GA4 y registrará las visitas a páginas (Pageviews) automáticamente al cambiar de ruta gracias al hook `usePageTracking`.
+   - Para registrar eventos de clics o CTAs personalizados, importa y envuelve cualquier botón, enlace o elemento interactivo con el componente wrapper `TrackedClick`:
+     ```tsx
+     import TrackedClick from "../../components/TrackedClick";
+
+     <TrackedClick label="Hero - Comenzar Gratis" action="click_cta" category="marketing">
+       <button>Comenzar</button>
+     </TrackedClick>
+     ```
+
 ---
 
 ## 📦 Comandos de Desarrollo del Monorepo

@@ -18,6 +18,7 @@ import {
 import { FEATURES } from "@factory/shared/config/features";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { SUPPORTED_LOCALES } from "../../i18n";
+import { usePageTracking } from "../../hooks/usePageTracking";
 import {
   TopBar,
   AccessBtn,
@@ -42,6 +43,7 @@ import {
 } from "./Layout.styles";
 
 const Layout: React.FC = React.memo(() => {
+  usePageTracking();
   const { accessibility } = usePersonalization();
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.auth.token);
