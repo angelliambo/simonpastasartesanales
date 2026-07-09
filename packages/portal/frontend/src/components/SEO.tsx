@@ -47,7 +47,7 @@ const SEO: React.FC<SEOProps> = ({
   const rawKeywords = keywords || t('pages.home.seoKeywords');
   const finalKeywords = Array.isArray(rawKeywords)
     ? rawKeywords.join(", ")
-    : (rawKeywords || "dictado por voz, texto a voz, lector pdf audio, accesibilidad web, extension chrome productividad");
+    : (rawKeywords || BRAND_CONFIG.seoKeywords || "portal saas, boilerplate, panel de control web, base para startup, desarrollo modular, login google, soporte integrado");
 
   const fullTitle = finalTitle.includes(BRAND_CONFIG.siteName)
     ? finalTitle

@@ -15,7 +15,7 @@ const DEFAULT_BORDER_RADIUS = {
 };
 
 /**
- * ZenithNexus Design System — Light Theme
+ * SaaS Boilerplate Design System — Light Theme
  */
 const lightTheme = {
   colors: {

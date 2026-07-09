@@ -79,7 +79,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
           "mainEntity": {
             "@type": "Organization",
             "name": BRAND_CONFIG.siteName,
-            "description": "Extensión de Chrome premium para dictado por voz y accesibilidad web"
+            "description": BRAND_CONFIG.seoDescription || "Estructura modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte."
           }
         };
 
@@ -87,12 +87,12 @@ export const useStructuredData = (config: StructuredDataConfig) => {
         return {
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
-          "name": config.name || `${BRAND_CONFIG.siteName} Chrome Extension`,
-          "description": config.description || "Herramientas de dictado por voz, texto a voz, lector PDF y atajos de teclado para Chrome.",
+          "name": config.name || `${BRAND_CONFIG.siteName} Portal`,
+          "description": config.description || BRAND_CONFIG.seoDescription || "Estructura modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte.",
           "url": currentUrl,
           "image": config.image || `${baseUrl}/og-image.png`,
           "applicationCategory": config.appData?.applicationCategory || "BusinessApplication",
-          "operatingSystem": config.appData?.operatingSystem || "Chrome",
+          "operatingSystem": config.appData?.operatingSystem || "All",
           "offers": {
             "@type": "Offer",
             "price": "0",
@@ -109,7 +109,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
           "@context": "https://schema.org",
           "@type": "Organization",
           "name": BRAND_CONFIG.siteName,
-          "description": "Plataforma de herramientas premium de accesibilidad y dictado por voz para la web.",
+          "description": BRAND_CONFIG.seoDescription || "Plataforma SaaS premium modular con paneles de administración, facturación y soporte.",
           "url": baseUrl,
           "logo": `${baseUrl}/logo.png`,
           "image": `${baseUrl}/og-image.png`,
