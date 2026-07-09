@@ -1,10 +1,10 @@
 {
-  "id": "e93816e8-2321-4f9e-bc43-2287f3d53b21",
-  "name": "ZenithNexus - Prod",
+  "id": "cb1c7df7-7170-4f51-872f-57125ee1c9ba",
+  "name": "SaaS Boilerplate - Dev",
   "values": [
     {
       "key": "baseUrl",
-      "value": "https://zenithnexus-portal.fly.dev/api",
+      "value": "http://localhost:5000/api",
       "type": "default",
       "enabled": true
     },
@@ -16,7 +16,7 @@
     },
     {
       "key": "userId",
-      "value": "",
+      "value": "6a10e3676bc9a4272ed3f186",
       "type": "default",
       "enabled": true
     },

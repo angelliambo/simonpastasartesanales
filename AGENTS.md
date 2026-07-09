@@ -1,6 +1,6 @@
 # Factory — AGENTS.md
 
-Monorepo: `packages/ext` (Chrome Extension), `packages/portal` (MERN), `packages/shared` (config + types + design-sys).
+Monorepo: `packages/portal` (MERN), `packages/shared` (config + types + design-sys).
 
 ## .env files — DO NOT TOUCH
 
@@ -33,32 +33,23 @@ En desarrollo usar: `mlsn.4bb633feab403e93829bcd242c3de2e24fe1574d4d002fa4e73067
 
 Los templates de email están en `packages/portal/backend/email-templates/base.html`.
 
-## GOD_MODE (admin only)
+Set matching secrets in `.env` files to unlock all premium features:
 
-Set matching secrets in both `.env` files to unlock all premium features:
-
-- `packages/ext/.env`: `EXT_GOD_MODE_SECRET=<secret>`
 - `packages/portal/backend/.env`: `GOD_MODE_SECRET=<secret>`
 
-The ext sends `X-God-Mode` header → backend validates → returns `plan: god_mode`.
+The backend validates `X-God-Mode` header → returns `plan: god_mode`.
 
 | Env | Secret |
 |-----|--------|
 | Local | `local-god-mode-2022` |
 | Prod | `fly secrets set GOD_MODE_SECRET=<hash>` |
 
-## Build commands
-
 ```bash
-yarn build                  # shared → ext → portal (full pipeline)
+yarn build                  # shared → portal (full pipeline)
 yarn shared:build           # tsc -> dist/
-yarn ext:build              # esbuild (not tsc) -> dist/
-yarn ext:type-check         # tsc --noEmit (pre-existing bcryptjs error is noise)
 yarn portal:build           # react-app-rewired (CRA, ForkTsChecker disabled)
-yarn ext:package            # comprime ext para Chrome Web Store
 
 yarn cleanup                # borra dist, build, node_modules en TODOS los packages
-yarn ext:cleanup            # solo ext
 yarn portal:cleanup         # portal + backend + frontend
 yarn shared:cleanup         # solo shared
 
@@ -70,7 +61,6 @@ yarn install                # reinstala todo después de cleanup
 | Package | Build | Aliases |
 |---------|-------|---------|
 | `packages/shared` | tsc → `dist/` | — |
-| `packages/ext` | esbuild (IIFE) | `@design-sys` → `@factory/shared/design-sys`<br>`@shared` → `@factory/shared` |
 | `packages/portal/frontend` | CRA + react-app-rewired | `@design-sys` → `@factory/shared/design-sys`<br>`@shared` → `@factory/shared` |
 | `packages/portal/backend` | tsc → `dist/` | Express + Mongoose + JWT |
 
@@ -85,7 +75,7 @@ packages/shared/src/
 │   └── organisms/       # PageLayout
 ├── config/              # Shared constants
 │   ├── plans.ts         # Plan definitions, pricing, variant IDs
-│   └── urls.ts          # Chrome Store, API, donation URLs
+│   └── urls.ts          # API URLs
 └── types/               # Shared TypeScript types
     ├── plan.ts
     └── license.ts
@@ -108,7 +98,7 @@ import { Button } from '@design-sys/atoms/Button';
 **Shared config/types** import via `@shared`:
 
 ```typescript
-import { PLANS, CHROME_STORE_URL } from '@shared/config/plans';
+import { PLANS } from '@shared/config/plans';
 import type { PlanId } from '@shared/types/plan';
 ```
 
@@ -207,10 +197,6 @@ Para construir cualquier portal de nuestra plataforma MERN SaaS, solo necesitas 
 - Source language: `es`. Add keys in `packages/shared/src/i18n/pages/<domain>/<page>.ts`.
 - **Estructura y Herencia Dialéctica**: Las variantes regionales (`es-MX`, `es-ES`, `en-US`, `en-GB`) heredan automáticamente de las bases de idioma común (`es` y `en`). Sus carpetas locales solo deben almacenar archivos `index.ts` vacíos (`export const pages = {}; export default pages;`) a menos que requieran sobreescrituras (overrides) regionales explícitas.
 - Sync auto-translates to 7 locales. Always add text in `es` first.
-- **Sync & Limit check**:
-  - To sync, run: `node packages/ext/dev-tools/zenithnexus-translation-system/bin/zn.js sync` (parado en `dev-tools/` para cargar la configuración correcta).
-  - Always verify the translation output files in `locales/` after sync. If translations in other languages are a carbon copy of `es` (identical strings), the translation service has run out of credits. Revert the sync and warn the user.
-  - Verify that translated text in languages requiring escaped characters (e.g. French/Italian apostrophes/quotes) are correctly formatted and do not break TypeScript/JS compilation.
 - In React: `{t('pages.page.key')}` (MANDATORIO: nunca uses fallbacks con `|| "texto"` ya que silencia errores de claves i18n inexistentes).
 ### i18n rule: icons never in translations
 
@@ -239,9 +225,7 @@ demoTTS: '🎤 Prueba de Lectura'  // ← NO
 
 Excepción: keys con sufijo `Icon` (`sectionIdiomasNoteIcon`) cuyo único propósito es proveer el carácter del ícono. Esas sí pueden tener emoji.
 
-### Límite de caracteres en descripciones de extensión
 
-La clave `"extDesc"` en todos los archivos `packages/ext/_locales/<lang>/messages.json` **NUNCA** debe superar los **132 caracteres** de longitud total, ya que es el límite estricto impuesto por la Chrome Web Store para descripciones cortas.
 
 ## Versioning
 
@@ -249,7 +233,6 @@ Per-environment SEMVER. Bump by plan phase, not by commit.
 
 | File | Field |
 |------|-------|
-| `packages/ext/manifest.json` | `version` |
 | `packages/portal/package.json` | `version` |
 | `packages/portal/backend/package.json` | `version` |
 | `packages/portal/frontend/package.json` | `version` |
@@ -260,8 +243,7 @@ See `PLAN_DE_TRABAJO_UNIFICADO.md` → "Tabla de Versiones por Fase".
 
 - Ante **cualquier** cambio, corrección o nueva funcionalidad implementada en un package del monorepo, el agente **debe obligatoriamente** incrementar la versión correspondiente en su archivo de configuración (`package.json` o `manifest.json`).
 - **Límite de incrementos**: El incremento del versionado se realiza **una única vez por branch** de desarrollo (es decir, por fase o tarea del plan). No se deben iterar o acumular incrementos de versión en commits sucesivos dentro de la misma rama.
-- **Aplica solo a packages modificados**: Solo se debe incrementar la versión de los packages del monorepo que hayan recibido modificaciones reales en su código o archivos de configuración. Si un package (por ejemplo, `backend`) no sufre cambios en la rama actual, no se debe actualizar su versión.
-- Si los cambios impactan la extensión de Chrome (`packages/ext`), se debe incrementar la versión de `manifest.json`.
+- Solo se debe incrementar la versión de los packages del monorepo que hayan recibido modificaciones reales en su código o archivos de configuración. Si un package (por ejemplo, `backend`) no sufre cambios en la rama actual, no se debe actualizar su versión.
 - Si los cambios impactan al portal web (`packages/portal` o sus sub-packages `frontend` / `backend`), se deben incrementar las versiones únicamente en los `package.json` de aquellos packages específicos que hayan percibido modificaciones.
 - Los incrementos deben seguir el versionado semántico (SEMVER), comúnmente aumentando el dígito de "patch" (ej. de `x.y.z` a `x.y.z+1`) para correcciones o mejoras menores dentro de la fase actual.
 

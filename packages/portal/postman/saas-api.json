@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-    "name": "ZenithNexus API",
-    "description": "Colección completa de Postman para la API de ZenithNexus. Incluye Auth (email+código + bridge), Identity, License y User.",
+    "name": "SaaS Boilerplate API",
+    "description": "Colección completa de Postman para la API de SaaS Boilerplate. Incluye Auth (email+código + bridge), Identity, License y User.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [

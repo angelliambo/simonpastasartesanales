@@ -39,13 +39,14 @@ const processIndexHtml = () => {
     .replace(/<meta property="twitter:title"\s+content=".*?"\s*\/>/s, `<meta property="twitter:title" content="${BRAND_CONFIG.seoTitle}" />`)
     .replace(/<meta property="twitter:description"\s+content=".*?"\s*\/>/s, `<meta property="twitter:description" content="${BRAND_CONFIG.seoDescription}" />`)
     // Nombres en el HTML interno (fallback estático para SEO)
-    .replace(/<h1>ZenithNexus - .*?<\/h1>/s, `<h1>${BRAND_CONFIG.seoTitle}</h1>`)
-    .replace(/<h2>La extensión de .*?<\/h2>/s, `<h2>${BRAND_CONFIG.seoDescription}</h2>`)
-    .replace(/id="portal-loader-logo">\s*ZenithNexus\s*<\/div>/s, `id="portal-loader-logo">${BRAND_CONFIG.siteName}</div>`);
+    .replace(/<h1>SaaS Boilerplate - .*?<\/h1>/s, `<h1>${BRAND_CONFIG.seoTitle}</h1>`)
+    .replace(/<h2>La estructura modular .*?<\/h2>/s, `<h2>${BRAND_CONFIG.seoDescription}</h2>`)
+    .replace(/id="portal-loader-logo">\s*SaaS Boilerplate\s*<\/div>/s, `id="portal-loader-logo">${BRAND_CONFIG.siteName}</div>`);
 
   // Reemplazo general de dominio y marca para limpiar cualquier otra ocurrencia
   content = content
     .replace(/<domain>/g, BRAND_CONFIG.domain)
+    .replace(/SaaS Boilerplate/g, BRAND_CONFIG.siteName)
     .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
 
   writeFileSync(outputPath, content, "utf8");
@@ -62,6 +63,7 @@ const processRobotsTxt = () => {
   let content = readFileSync(templatePath, "utf8");
   content = content
     .replace(/<domain>/g, BRAND_CONFIG.domain)
+    .replace(/SaaS Boilerplate/g, BRAND_CONFIG.siteName)
     .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
 
   writeFileSync(outputPath, content, "utf8");
@@ -92,9 +94,10 @@ const processManifestJson = () => {
 
   let content = readFileSync(templatePath, "utf8");
   content = content
-    .replace(/"short_name":\s*"ZenithNexus"/g, `"short_name": "${BRAND_CONFIG.siteName}"`)
+    .replace(/"short_name":\s*"SaaS Boilerplate"/g, `"short_name": "${BRAND_CONFIG.siteName}"`)
     .replace(/"name":\s*".*?"/g, `"name": "${BRAND_CONFIG.seoTitle}"`)
     .replace(/"description":\s*".*?"/g, `"description": "${BRAND_CONFIG.seoDescription}"`)
+    .replace(/SaaS Boilerplate/g, BRAND_CONFIG.siteName)
     .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
 
   writeFileSync(outputPath, content, "utf8");
@@ -110,8 +113,10 @@ const processLlmsTxt = () => {
 
   let content = readFileSync(templatePath, "utf8");
   content = content
-    .replace(/# ZenithNexus - .*?\n/g, `# ${BRAND_CONFIG.seoTitle}\n`)
+    .replace(/# SaaS Boilerplate - .*?\n/g, `# ${BRAND_CONFIG.seoTitle}\\n`)
+    .replace(/# ZenithNexus - .*?\n/g, `# ${BRAND_CONFIG.seoTitle}\\n`)
     .replace(/<domain>/g, BRAND_CONFIG.domain)
+    .replace(/SaaS Boilerplate/g, BRAND_CONFIG.siteName)
     .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
 
   writeFileSync(outputPath, content, "utf8");

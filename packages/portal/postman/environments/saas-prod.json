@@ -1,10 +1,10 @@
 {
-  "id": "cb1c7df7-7170-4f51-872f-57125ee1c9ba",
-  "name": "ZenithNexus - Dev",
+  "id": "e93816e8-2321-4f9e-bc43-2287f3d53b21",
+  "name": "SaaS Boilerplate - Prod",
   "values": [
     {
       "key": "baseUrl",
-      "value": "http://localhost:5000/api",
+      "value": "https://porfolio-landing-1.fly.dev/api",
       "type": "default",
       "enabled": true
     },
@@ -16,7 +16,7 @@
     },
     {
       "key": "userId",
-      "value": "6a10e3676bc9a4272ed3f186",
+      "value": "",
       "type": "default",
       "enabled": true
     },

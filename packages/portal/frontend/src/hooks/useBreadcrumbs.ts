@@ -121,12 +121,11 @@ export const usePageSEO = () => {
     const translatedDescription = t(`pages.${pageKey}.seoDescription`);
     const translatedKeywords = t(`pages.${pageKey}.seoKeywords`);
 
-    // Fallbacks si no existen en i18n
-    const title = translatedTitle || (routeInfo ? `${routeInfo.name} | ${BRAND_CONFIG.siteName}` : `${BRAND_CONFIG.siteName} - Dictado por Voz y Accesibilidad Web`);
-    const description = translatedDescription || "Comunicación en su punto máximo. Dictado por voz, texto a voz y herramientas de accesibilidad para la web.";
+    const title = translatedTitle || (routeInfo ? `${routeInfo.name} | ${BRAND_CONFIG.siteName}` : `${BRAND_CONFIG.siteName} - Tu Plataforma Lista para Despegar`);
+    const description = translatedDescription || BRAND_CONFIG.seoDescription || "La estructura modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte.";
     const keywords = translatedKeywords
       ? translatedKeywords.split(",").map(k => k.trim())
-      : ["dictado por voz", "texto a voz", "lector pdf audio", "accesibilidad web", "extension chrome productividad"];
+      : (BRAND_CONFIG.seoKeywords ? BRAND_CONFIG.seoKeywords.split(",").map(k => k.trim()) : ["portal saas", "boilerplate", "panel de control web", "base para startup", "desarrollo modular", "login google", "soporte integrado"]);
 
     return {
       title,

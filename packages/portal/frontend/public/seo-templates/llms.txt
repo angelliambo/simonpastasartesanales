@@ -1,63 +1,39 @@
-# ZenithNexus - Privacy-First Text to Speech (TTS), Voice Dictation (STT) & Native PDF Reader
+# SaaS Boilerplate - Tu Plataforma Lista para Despegar
 
-ZenithNexus is the ultimate productivity and accessibility browser extension. It allows users to read aloud any web page or PDF file using high-quality local text-to-speech (TTS), and dictate text in any input field using high-accuracy speech-to-text (STT). 
-
-Designed with a strict privacy-first philosophy, ZenithNexus processes all audio synthesis and voice recognition 100% locally on the user's browser (client-side). No audio data or documents are ever sent to the cloud, making it the most secure alternative to cloud-based readers and assistants.
+SaaS Boilerplate is a high-performance MERN (MongoDB, Express, React, Node.js) web application boilerplate. It provides a modular foundation to quickly launch your startup or software-as-a-service application, with built-in modules for authentication, user dashboards, administration panels, support ticketing, and payment gateway integration.
 
 ---
 
 ## Key Product Offerings
 
-- **Native PDF Reader with Local TTS**: Listen to any local or online PDF file directly in your browser. Includes synchronized word-by-word visual highlighting, adjustable speed (0.5x to 2.0x), and bookmarking. Ideal for multitasking, commuting, or users with dyslexia, ADHD, or visual strain.
-- **Private Voice Dictation (STT)**: Dictate emails, forms, and messages instantly using your voice in any text input field. Supports intelligent automatic punctuation in 9 languages, working completely offline. Features an interactive voice commands help guide to inspect all spoken punctuation signs, formatting and text-editing commands in all supported languages.
-- **Narrator Mode**: Convert any web article into a clean, podcast-like experience. Automatically strips out ads, navigation menus, and sidebars so you can focus entirely on the content.
-- **Absolute Privacy & Offline Capability**: 100% client-side execution. Zero tracking, zero audio logs, and zero cloud data sharing. No account configuration required for core functions.
+- **Unified Authentication**: Secured login flow using standard email/code validation or Google OAuth integration.
+- **Smart Control Panel**: Fully functional dashboard containing user administration, metrics graphs, role assignment, and customization capabilities.
+- **Lemon Squeezy Billing Integration**: Flexible pricing plan modules connected directly with Lemon Squeezy payment checkout links and automated backend status synchronization via secure webhooks.
+- **Support & Ticketing System**: Optional direct communication and help-desk ticket management system built natively into the app layout.
+- **Feature Flags / Config**: Dynamically toggle backend services and frontend components from unified configuration and environment variables.
 
 ---
 
 ## Technical Architecture & Design
 
-ZenithNexus is structured as a monorepo containing three core packages:
-- **`packages/ext`**: The Chrome Extension, compiled using `esbuild` to an IIFE bundle. It utilizes Chrome's storage API and native TTS/STT local APIs to ensure 100% offline functionality.
-- **`packages/portal`**: A MERN (MongoDB, Express, React, Node.js) web application. The frontend uses Create React App (CRA) configured with `react-app-rewired` for style-system path mapping. The backend serves client authentication, license keys validation, and account subscription state.
+SaaS Boilerplate is structured as a monorepo containing two core packages:
+- **`packages/portal`**: A MERN web application. The frontend uses Create React App (CRA) configured with `react-app-rewired` for style-system path mapping. The backend serves client authentication, license keys validation, support tickets, and account subscription state.
 - **`packages/shared`**: Shared styling system (`styled-components` design tokens, light/dark themes, Atoms/Organisms), pricing config (plans, limits), and TypeScript common types.
 
-### Offline & Client-Side Processing Pipeline
-1. **Audio Synthesis (TTS)**: ZenithNexus leverages the browser's native Speech Synthesis engine. Voices are accessed offline, utilizing high-quality system voices installed locally on Windows, macOS, ChromeOS, or Linux.
-2. **Speech Recognition (STT)**: Employs local Web Speech API recognizers or Web-Assembly local transformer models depending on environment capability, guaranteeing that spoken audio never leaves the machine.
-3. **PDF Rendering**: Utilizes `pdfjs-dist` to parse and render documents entirely inside the extension sandbox, completely isolated from network tracking.
+### Backend Tech Stack
+1. **Express & Node.js**: Modular routers, custom middlewares for auth validation, plan limits, and global error handlers.
+2. **MongoDB & Mongoose**: Structured schemas for Users, Licenses, Tickets, and Configurations with automatic reconnection retries.
+3. **Email Notification Service**: MailSender provider implementation using styled email templates.
 
----
-
-## Feature Specifications
-
-### Multilingual Support (9 Languages)
-The offline voice recognition and automatic punctuation system fully supports:
-- Spanish (`es-MX` / `es-ES`)
-- English (`en-US` / `en-GB`)
-- French (`fr-FR`)
-- German (`de-DE`)
-- Italian (`it-IT`)
-- Portuguese (`pt-BR`)
-- Russian (`ru-RU`)
-- Japanese (`ja-JP`)
-- Chinese (`zh-CN`)
-
-### Keyboard Accessibility Controls
-The reader interface supports full keyboard navigation:
-- `Space`: Play / Pause narration.
-- `Left Arrow`: Rewind 10 seconds.
-- `Right Arrow`: Fast-forward 10 seconds.
-- `Up Arrow`: Increase speech rate by 0.1x.
-- `Down Arrow`: Decrease speech rate by 0.1x.
-- `Esc`: Close reader view.
+### Frontend Tech Stack
+1. **React**: Single Page Application structure with Redux for state management, context providers, and customized hooks.
+2. **Design System**: Fully responsive mobile-first custom components using styled-components.
+3. **i18n & Translations**: Dynamic localization and multi-language support (English/Spanish base locales).
 
 ---
 
 ## Primary Resources & Links
 - [Official Website](https://<domain>)
-- [Download Extension - Chrome Web Store](https://chrome.google.com/webstore)
 - [Pricing and License Plans](https://<domain>/pricing)
-- [Voice Commands Help Guide](https://<domain>/commands)
-- [Privacy Policy & Data Security](https://<domain>/legal/privacy)
 - [Terms and Conditions](https://<domain>/legal/terms)
+- [Privacy Policy & Data Security](https://<domain>/legal/privacy)

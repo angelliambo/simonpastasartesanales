@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "893d56b0-9b43-4672-88f1-4df23b23c9ff",
-    "name": "ZenithNexus License API",
-    "description": "Colección de Postman para validar el sistema de licencias de ZenithNexus (BFF + LemonSqueezy Integration). Permite comprobar estados de licencia, generar checkouts seguros, reclamar tokens y simular webhooks de pagos.",
+    "name": "SaaS License API",
+    "description": "Colección de Postman para validar el sistema de licencias de SaaS Boilerplate (BFF + LemonSqueezy Integration). Permite comprobar estados de licencia, generar checkouts seguros, reclamar tokens y simular webhooks de pagos.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [

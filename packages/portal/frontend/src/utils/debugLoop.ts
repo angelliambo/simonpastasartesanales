@@ -5,7 +5,7 @@
  * cuando un useEffect se ejecuta demasiadas veces, lo que puede indicar
  * un loop infinito.
  *
- * @author ZenithNexus Team
+ * @author SaaS Boilerplate Team
  * @version 1.0.0
  */
 

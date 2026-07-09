@@ -1,4 +1,4 @@
-// Paleta de colores armoniosa y profesional para ZenithNexus
+// Paleta de colores armoniosa y profesional para SaaS Boilerplate
 export const colorPalette = {
   // Colores principales - Cyan suave y armonioso
   primary: {
