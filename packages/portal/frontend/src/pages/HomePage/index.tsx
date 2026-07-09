@@ -16,6 +16,7 @@ import {
 
 import { RootState } from "../../store/store";
 import AppFooter from "../../components/AppFooter";
+import TrackedClick from "../../components/TrackedClick";
 import { SUPPORTED_LOCALES } from "../../i18n";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
@@ -333,34 +334,44 @@ const HomePage: React.FC = () => {
       if (loggedInUser) {
         return (
           <>
-            <HeroPrimaryButton onClick={() => navigate("/dashboard")} variant="primary">
-              {t("pages.home.heroDashboardButton")}
-            </HeroPrimaryButton>
+            <TrackedClick label="Hero - Ir al Dashboard" action="click_cta" category="marketing">
+              <HeroPrimaryButton onClick={() => navigate("/dashboard")} variant="primary">
+                {t("pages.home.heroDashboardButton")}
+              </HeroPrimaryButton>
+            </TrackedClick>
             {FEATURES.ENABLE_BILLING_LEMON && (
-              <HeroOutlinedButton onClick={handlePricing} variant="secondary">
-                {t("pages.home.pricingButton")}
-              </HeroOutlinedButton>
+              <TrackedClick label="Hero - Planes Premium" action="click_pricing" category="marketing">
+                <HeroOutlinedButton onClick={handlePricing} variant="secondary">
+                  {t("pages.home.pricingButton")}
+                </HeroOutlinedButton>
+              </TrackedClick>
             )}
           </>
         );
       } else {
         return (
           <>
-            <HeroPrimaryButton onClick={handleLogin} variant="primary">
-              {t("pages.home.ctaButton")}
-            </HeroPrimaryButton>
+            <TrackedClick label="Hero - Comenzar Gratis" action="click_cta" category="marketing">
+              <HeroPrimaryButton onClick={handleLogin} variant="primary">
+                {t("pages.home.ctaButton")}
+              </HeroPrimaryButton>
+            </TrackedClick>
             {FEATURES.ENABLE_GOOGLE_AUTH && G_ID && (
               <HeroGoogleButtonWrapper>
                 <GoogleSignInButton size="large" text="continue_with" width="240px" oneTap={true} />
               </HeroGoogleButtonWrapper>
             )}
-            <HeroOutlinedButton onClick={handleLogin} variant="secondary">
-              <ZnIcon icon={KeyOutlined} /> {t("pages.home.heroEmailLoginButton")}
-            </HeroOutlinedButton>
-            {FEATURES.ENABLE_BILLING_LEMON && (
-              <HeroOutlinedButton onClick={handlePricing} variant="secondary">
-                {t("pages.home.pricingButton")}
+            <TrackedClick label="Hero - Ingresar con Correo" action="click_login" category="marketing">
+              <HeroOutlinedButton onClick={handleLogin} variant="secondary">
+                <ZnIcon icon={KeyOutlined} /> {t("pages.home.heroEmailLoginButton")}
               </HeroOutlinedButton>
+            </TrackedClick>
+            {FEATURES.ENABLE_BILLING_LEMON && (
+              <TrackedClick label="Hero - Planes Premium" action="click_pricing" category="marketing">
+                <HeroOutlinedButton onClick={handlePricing} variant="secondary">
+                  {t("pages.home.pricingButton")}
+                </HeroOutlinedButton>
+              </TrackedClick>
             )}
           </>
         );
@@ -369,18 +380,24 @@ const HomePage: React.FC = () => {
       return (
         <>
           {BRAND_CONFIG.whatsappUrl ? (
-            <HeroPrimaryButton onClick={() => window.open(BRAND_CONFIG.whatsappUrl, "_blank", "noopener,noreferrer")} variant="primary">
-              {t("pages.home.whatsappContactButton")}
-            </HeroPrimaryButton>
+            <TrackedClick label="Hero - Contacto WhatsApp" action="click_whatsapp" category="marketing">
+              <HeroPrimaryButton onClick={() => window.open(BRAND_CONFIG.whatsappUrl, "_blank", "noopener,noreferrer")} variant="primary">
+                {t("pages.home.whatsappContactButton")}
+              </HeroPrimaryButton>
+            </TrackedClick>
           ) : (
-            <HeroPrimaryButton onClick={() => scrollTo("features")} variant="primary">
-              {t("pages.home.seeFeaturesButton")}
-            </HeroPrimaryButton>
+            <TrackedClick label="Hero - Ver Funciones" action="click_features" category="marketing">
+              <HeroPrimaryButton onClick={() => scrollTo("features")} variant="primary">
+                {t("pages.home.seeFeaturesButton")}
+              </HeroPrimaryButton>
+            </TrackedClick>
           )}
           {FEATURES.ENABLE_BILLING_LEMON && (
-            <HeroOutlinedButton onClick={handlePricing} variant="secondary">
-              {t("pages.home.pricingButton")}
-            </HeroOutlinedButton>
+            <TrackedClick label="Hero - Planes Premium" action="click_pricing" category="marketing">
+              <HeroOutlinedButton onClick={handlePricing} variant="secondary">
+                {t("pages.home.pricingButton")}
+              </HeroOutlinedButton>
+            </TrackedClick>
           )}
         </>
       );
@@ -719,12 +736,14 @@ const HomePage: React.FC = () => {
           <CtaSubtitle>
             {ctaSubtitle}
           </CtaSubtitle>
-          <CtaButton
-            variant="primary"
-            onClick={ctaConfig.onClick}
-          >
-            {ctaConfig.label}
-          </CtaButton>
+          <TrackedClick label={`Bottom CTA - ${ctaConfig.label}`} action="click_cta" category="marketing">
+            <CtaButton
+              variant="primary"
+              onClick={ctaConfig.onClick}
+            >
+              {ctaConfig.label}
+            </CtaButton>
+          </TrackedClick>
         </Container>
       </VhSection>
 
