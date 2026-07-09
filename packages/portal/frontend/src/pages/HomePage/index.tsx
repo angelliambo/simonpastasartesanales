@@ -98,6 +98,8 @@ function useAutoScroll(
   setActiveSection: (id: string) => void,
 ) {
   const sectionIndexRef = useRef(0);
+  const stepCountRef = useRef(0);
+  const maxSteps = sectionIds.length * 2; // 2 vueltas completas
 
   useEffect(() => {
     const idx = sectionIds.indexOf(activeSection);
@@ -110,6 +112,7 @@ function useAutoScroll(
     const onUserScroll = () => {
       try {
         userInteracted.current = true;
+        clearTimeout(timerRef.current);
       } catch { }
     };
 
@@ -117,25 +120,46 @@ function useAutoScroll(
     window.addEventListener("touchstart", onUserScroll, { passive: true });
     window.addEventListener("keydown", onUserScroll);
 
+    const scrollToNext = () => {
+      if (userInteracted.current || document.hidden) return;
+      if (stepCountRef.current >= maxSteps) {
+        // Detener permanentemente la animación por inactividad prolongada
+        return;
+      }
+      stepCountRef.current += 1;
+      sectionIndexRef.current =
+        (sectionIndexRef.current + 1) % sectionIds.length;
+      const id = sectionIds[sectionIndexRef.current];
+      setActiveSection(id);
+      
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+      timerRef.current = setTimeout(scrollToNext, 4000);
+    };
+
     const startAutoScroll = () => {
-      if (userInteracted.current) return;
-
-      const scrollToNext = () => {
-        if (userInteracted.current) return;
-
-        sectionIndexRef.current =
-          (sectionIndexRef.current + 1) % sectionIds.length;
-        const id = sectionIds[sectionIndexRef.current];
-        setActiveSection(id);
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-
-        timerRef.current = setTimeout(scrollToNext, 4000);
-      };
-
+      if (userInteracted.current || document.hidden) return;
       timerRef.current = setTimeout(scrollToNext, 4000);
     };
 
     const idleTimer = setTimeout(startAutoScroll, 3000);
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Detener inmediatamente si la pestaña está oculta
+        clearTimeout(timerRef.current);
+      } else {
+        // Reanudar si no ha interactuado y no superó el límite
+        if (!userInteracted.current && stepCountRef.current < maxSteps) {
+          clearTimeout(timerRef.current);
+          timerRef.current = setTimeout(scrollToNext, 2000);
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       clearTimeout(idleTimer);
@@ -143,8 +167,9 @@ function useAutoScroll(
       window.removeEventListener("wheel", onUserScroll);
       window.removeEventListener("touchstart", onUserScroll);
       window.removeEventListener("keydown", onUserScroll);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [sectionIds, userInteracted, timerRef, setActiveSection]);
+  }, [sectionIds, userInteracted, timerRef, setActiveSection, maxSteps]);
 }
 
 const HomePage: React.FC = () => {
