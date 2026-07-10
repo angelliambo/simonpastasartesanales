@@ -4,7 +4,7 @@ import { SHOW_SOCIAL_LINKS, SOCIAL_X_URL, SOCIAL_INSTAGRAM_URL } from '@shared/c
 import { BRAND_CONFIG } from '@factory/shared/config/brand';
 
 export interface StructuredDataConfig {
-  type: 'WebSite' | 'WebPage' | 'SoftwareApplication' | 'Organization' | 'BreadcrumbList' | 'FAQPage';
+  type: 'WebSite' | 'WebPage' | 'SoftwareApplication' | 'Organization' | 'BreadcrumbList' | 'FAQPage' | 'LocalBusiness' | 'PastasShop';
   name?: string;
   description?: string;
   url?: string;
@@ -153,6 +153,98 @@ export const useStructuredData = (config: StructuredDataConfig) => {
           }))
         };
 
+      case 'LocalBusiness':
+      case 'PastasShop':
+        return {
+          "@context": "https://schema.org",
+          "@type": ["LocalBusiness", "FoodEstablishment", "WholesaleStore"],
+          "@id": `${baseUrl}/#localbusiness`,
+          "name": BRAND_CONFIG.siteName,
+          "image": `${baseUrl}/assets/images/logo.png`,
+          "description": BRAND_CONFIG.seoDescription,
+          "url": baseUrl,
+          "telephone": "+541141921222",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "San Luis 1263",
+            "addressLocality": "Bernal",
+            "addressRegion": "Provincia de Buenos Aires",
+            "postalCode": "B1876",
+            "addressCountry": "AR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -34.706110,
+            "longitude": -58.281110
+          },
+          "areaServed": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Bernal"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Quilmes"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Zona Sur"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Buenos Aires"
+            }
+          ],
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+              "opens": "08:00",
+              "closes": "18:00"
+            }
+          ],
+          "hasMenu": {
+            "@type": "Menu",
+            "name": "Catálogo de Pastas Congeladas",
+            "hasMenuSection": [
+              {
+                "@type": "MenuSection",
+                "name": "Pastas Rellenas Artesanales",
+                "description": "Elaboradas con ingredientes seleccionados y congeladas en origen en prácticas cajas.",
+                "hasMenuItem": [
+                  {
+                    "@type": "MenuItem",
+                    "name": "Sorrentinos",
+                    "description": "Pastas rellenas redondas de producción artesanal."
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Ravioles",
+                    "description": "Clásicos ravioles caseros con rellenos seleccionados."
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Panzottis",
+                    "description": "Pastas rellenas de formato premium y gran tamaño."
+                  }
+                ]
+              },
+              {
+                "@type": "MenuSection",
+                "name": "Especialidades Rellenas",
+                "hasMenuItem": [
+                  {
+                    "@type": "MenuItem",
+                    "name": "Empanadas de Bondiola",
+                    "description": "Empanadas gourmet congeladas rellenas de bondiola desmechada."
+                  }
+                ]
+              }
+            ]
+          }
+        };
+
       default:
         return null;
     }
@@ -190,3 +282,11 @@ export const useFAQStructuredData = (faqs: Array<{ question: string; answer: str
     faqs
   });
 };
+
+// Hook específico para LocalBusiness (Pastas Simón)
+export const useLocalBusinessStructuredData = () => {
+  return useStructuredData({
+    type: 'LocalBusiness'
+  });
+};
+

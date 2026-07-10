@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { FEATURES } from "@factory/shared/config/features";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
+import SEO from "../../components/SEO";
+import { useLocalBusinessStructuredData } from "../../hooks/useStructuredData";
 import { Container } from '@design-sys/atoms/Container';
 import { SocialFeedGrid } from "@design-sys/atoms/SocialFeed";
 import { useGetInstagramFeedQuery } from "../../services/api/socialFeedService";
@@ -175,6 +177,7 @@ function useAutoScroll(
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
+  const localBusinessStructuredData = useLocalBusinessStructuredData();
   const loggedInUser = useSelector((state: RootState) => state.auth.user) as {
     email?: string;
   } | null;
@@ -406,6 +409,7 @@ const HomePage: React.FC = () => {
 
   return (
     <>
+      <SEO structuredData={localBusinessStructuredData} />
       <ScrollNav>
         {SECTIONS.map((s) => (
           <ScrollDotWrapper key={s}>

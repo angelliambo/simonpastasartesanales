@@ -1,5 +1,5 @@
-# Simón Pastas Artesanales | Fábrica de Pastas Caseras y Empanadas\n
-Simón pastas artesanales is a high-performance MERN (MongoDB, Express, React, Node.js) web application boilerplate. It provides a modular foundation to quickly launch your startup or software-as-a-service application, with built-in modules for authentication, user dashboards, administration panels, support ticketing, and payment gateway integration.
+# Fábrica de Pastas Simón | Pastas Artesanales Congeladas en Bernal\n
+Fábrica de Pastas Simón is a high-performance MERN (MongoDB, Express, React, Node.js) web application boilerplate. It provides a modular foundation to quickly launch your startup or software-as-a-service application, with built-in modules for authentication, user dashboards, administration panels, support ticketing, and payment gateway integration.
 
 ---
 
@@ -15,7 +15,7 @@ Simón pastas artesanales is a high-performance MERN (MongoDB, Express, React, N
 
 ## Technical Architecture & Design
 
-Simón pastas artesanales is structured as a monorepo containing two core packages:
+Fábrica de Pastas Simón is structured as a monorepo containing two core packages:
 - **`packages/portal`**: A MERN web application. The frontend uses Create React App (CRA) configured with `react-app-rewired` for style-system path mapping. The backend serves client authentication, license keys validation, support tickets, and account subscription state.
 - **`packages/shared`**: Shared styling system (`styled-components` design tokens, light/dark themes, Atoms/Organisms), pricing config (plans, limits), and TypeScript common types.
 
