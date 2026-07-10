@@ -1,13 +1,13 @@
-const DOMAIN = 'porfolio-landing-1.fly.dev';
+const DOMAIN = 'simonpastasartesanales.com.ar';
 
 export const BRAND_CONFIG = {
-  siteName: 'SaaS Boilerplate',
+  siteName: 'Fábrica de Pastas Simón',
   domain: DOMAIN,
   logoUrl: '/assets/images/logo.png',
-  supportEmail: `support@${DOMAIN}`,
-  whatsappUrl: 'https://wa.me/1234567890',
-  seoTitle: 'SaaS Boilerplate - Tu Plataforma Lista para Despegar',
-  seoDescription: 'La estructura modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte.',
-  seoKeywords: 'portal saas, boilerplate, panel de control web, base para startup, desarrollo modular, login google, soporte integrado'
+  supportEmail: `info@${DOMAIN}`,
+  whatsappUrl: 'https://wa.me/5491123456789',
+  seoTitle: 'Fábrica de Pastas Simón | Pastas Artesanales Congeladas en Bernal',
+  seoDescription: 'Fábrica de pastas frescas congeladas en Bernal, Quilmes y Zona Sur. Sorrentinos, ravioles, panzottis y empanadas artesanales para venta minorista y distribución mayorista. Rápida entrega.',
+  seoKeywords: 'fabrica de pastas bernal, pastas por mayor zona sur, sorrentinos congelados quilmes, pastas artesanales por mayor, empanadas de bondiola bernal, pastas congeladas en caja'
 };
 

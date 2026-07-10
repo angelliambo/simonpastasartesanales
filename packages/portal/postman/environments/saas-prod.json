@@ -1,16 +1,16 @@
 {
   "id": "e93816e8-2321-4f9e-bc43-2287f3d53b21",
-  "name": "SaaS Boilerplate - Prod",
+  "name": "Simón Pastas - Prod",
   "values": [
     {
       "key": "baseUrl",
-      "value": "https://porfolio-landing-1.fly.dev/api",
+      "value": "https://simonpastasartesanales.com.ar/api",
       "type": "default",
       "enabled": true
     },
     {
       "key": "email",
-      "value": "info@<domain>",
+      "value": "info@simonpastasartesanales.com.ar",
       "type": "default",
       "enabled": true
     },
