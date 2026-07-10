@@ -50,7 +50,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
             "name": BRAND_CONFIG.siteName,
             "logo": {
               "@type": "ImageObject",
-              "url": `${baseUrl}/logo.png`
+              "url": `${baseUrl}/assets/images/logo.png`
             }
           }
         };
@@ -73,7 +73,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
             "name": BRAND_CONFIG.siteName,
             "logo": {
               "@type": "ImageObject",
-              "url": `${baseUrl}/logo.png`
+              "url": `${baseUrl}/assets/images/logo.png`
             }
           },
           "mainEntity": {
@@ -111,7 +111,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
           "name": BRAND_CONFIG.siteName,
           "description": BRAND_CONFIG.seoDescription || "Plataforma SaaS premium modular con paneles de administración, facturación y soporte.",
           "url": baseUrl,
-          "logo": `${baseUrl}/logo.png`,
+          "logo": `${baseUrl}/assets/images/logo.png`,
           "image": `${baseUrl}/og-image.png`,
           "address": {
             "@type": "PostalAddress",

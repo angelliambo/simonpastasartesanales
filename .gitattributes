@@ -26,3 +26,15 @@ packages/portal/frontend/src/styles/colorPalette.ts merge=ours
 packages/portal/frontend/src/styles/themes/localTheme.ts merge=ours
 packages/shared/src/design-sys/theme/light.ts merge=ours
 packages/shared/src/design-sys/theme/dark.ts merge=ours
+
+# Proteger recursos gráficos locales de marca (PNG / ICO)
+packages/portal/frontend/public/assets/images/logo.png merge=ours
+packages/portal/frontend/public/favicon.ico merge=ours
+packages/portal/frontend/public/favicon-16x16.png merge=ours
+packages/portal/frontend/public/favicon-32x32.png merge=ours
+packages/portal/frontend/public/apple-touch-icon.png merge=ours
+packages/portal/frontend/public/logo192.png merge=ours
+packages/portal/frontend/public/logo512.png merge=ours
+packages/portal/frontend/public/logo.png merge=ours
+packages/portal/frontend/public/og-image.png merge=ours
+

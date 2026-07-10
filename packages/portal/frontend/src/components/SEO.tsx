@@ -28,8 +28,8 @@ const SEO: React.FC<SEOProps> = ({
   ogImage = "/og-image.png",
   ogType = "website",
   twitterCard = "summary_large_image",
-  twitterSite = "@factory",
-  twitterCreator = "@factory",
+  twitterSite = "@simonpastas",
+  twitterCreator = "@simonpastas",
   structuredData,
   noIndex = false,
   noFollow = false,
@@ -118,9 +118,9 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={currentUrl} />
       <meta property="og:image" content={absoluteOgImage} />
-      <meta property="og:image:type" content={ogImage === "/og-image.png" ? "image/jpeg" : "image/png"} />
-      <meta property="og:image:width" content={ogImage === "/og-image.png" ? "1024" : "1200"} />
-      <meta property="og:image:height" content={ogImage === "/og-image.png" ? "1024" : "630"} />
+      <meta property="og:image:type" content={ogImage.endsWith(".png") ? "image/png" : "image/jpeg"} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={finalTitle} />
       <meta property="og:site_name" content={BRAND_CONFIG.siteName} />
       <meta property="og:locale" content={finalLocale} />
