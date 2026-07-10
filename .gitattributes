@@ -1,0 +1,28 @@
+# Proteger archivos específicos del portal hijo (Simon Pastas Artesanales) frente al boilerplate
+packages/portal/frontend/public/seo-templates/index.html merge=ours
+packages/portal/frontend/public/index.html merge=ours
+packages/portal/frontend/public/seo-templates/llms.txt merge=ours
+packages/portal/frontend/public/llms.txt merge=ours
+packages/portal/frontend/public/seo-templates/robots.txt merge=ours
+packages/portal/frontend/public/robots.txt merge=ours
+packages/portal/frontend/public/seo-templates/manifest.json merge=ours
+packages/portal/frontend/public/manifest.json merge=ours
+
+# Proteger lógica, componentes y hooks de SEO e identidad
+packages/portal/frontend/scripts/update-seo.ts merge=ours
+packages/portal/frontend/src/components/SEO.tsx merge=ours
+packages/portal/frontend/src/hooks/useStructuredData.ts merge=ours
+packages/portal/frontend/src/hooks/useBreadcrumbs.ts merge=ours
+
+# Proteger la maquetación y hook de autoscroll de la HomePage
+packages/portal/frontend/src/pages/HomePage/index.tsx merge=ours
+
+# Proteger configuración de marca y estilos corporativos locales
+packages/shared/src/config/brand.ts merge=ours
+packages/shared/src/config/contact.ts merge=ours
+packages/shared/src/config/urls.ts merge=ours
+packages/shared/src/config/features.ts merge=ours
+packages/portal/frontend/src/styles/colorPalette.ts merge=ours
+packages/portal/frontend/src/styles/themes/localTheme.ts merge=ours
+packages/shared/src/design-sys/theme/light.ts merge=ours
+packages/shared/src/design-sys/theme/dark.ts merge=ours
