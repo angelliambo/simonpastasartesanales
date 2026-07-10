@@ -1,5 +1,5 @@
-# SaaS Boilerplate - Tu Plataforma Lista para Despegar\n
-SaaS Boilerplate is a high-performance MERN (MongoDB, Express, React, Node.js) web application boilerplate. It provides a modular foundation to quickly launch your startup or software-as-a-service application, with built-in modules for authentication, user dashboards, administration panels, support ticketing, and payment gateway integration.
+# Simón Pastas Artesanales | Fábrica de Pastas Caseras y Empanadas\n
+Simón pastas artesanales is a high-performance MERN (MongoDB, Express, React, Node.js) web application boilerplate. It provides a modular foundation to quickly launch your startup or software-as-a-service application, with built-in modules for authentication, user dashboards, administration panels, support ticketing, and payment gateway integration.
 
 ---
 
@@ -15,7 +15,7 @@ SaaS Boilerplate is a high-performance MERN (MongoDB, Express, React, Node.js) w
 
 ## Technical Architecture & Design
 
-SaaS Boilerplate is structured as a monorepo containing two core packages:
+Simón pastas artesanales is structured as a monorepo containing two core packages:
 - **`packages/portal`**: A MERN web application. The frontend uses Create React App (CRA) configured with `react-app-rewired` for style-system path mapping. The backend serves client authentication, license keys validation, support tickets, and account subscription state.
 - **`packages/shared`**: Shared styling system (`styled-components` design tokens, light/dark themes, Atoms/Organisms), pricing config (plans, limits), and TypeScript common types.
 
@@ -32,7 +32,7 @@ SaaS Boilerplate is structured as a monorepo containing two core packages:
 ---
 
 ## Primary Resources & Links
-- [Official Website](https://porfolio-landing-1.fly.dev)
-- [Pricing and License Plans](https://porfolio-landing-1.fly.dev/pricing)
-- [Terms and Conditions](https://porfolio-landing-1.fly.dev/legal/terms)
-- [Privacy Policy & Data Security](https://porfolio-landing-1.fly.dev/legal/privacy)
+- [Official Website](https://simonpastasartesanales.com.ar)
+- [Pricing and License Plans](https://simonpastasartesanales.com.ar/pricing)
+- [Terms and Conditions](https://simonpastasartesanales.com.ar/legal/terms)
+- [Privacy Policy & Data Security](https://simonpastasartesanales.com.ar/legal/privacy)
