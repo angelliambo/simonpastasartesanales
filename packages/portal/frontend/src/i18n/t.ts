@@ -24,7 +24,16 @@ export function translate(
   fallbackLang: string,
   params: Record<string, string> = {},
 ): string {
-  const mergedParams = { siteName: BRAND_CONFIG.siteName, ...params };
+  const mergedParams = {
+    siteName: BRAND_CONFIG.siteName,
+    domain: BRAND_CONFIG.domain,
+    supportEmail: BRAND_CONFIG.supportEmail,
+    whatsappUrl: BRAND_CONFIG.whatsappUrl,
+    seoTitle: BRAND_CONFIG.seoTitle,
+    seoDescription: BRAND_CONFIG.seoDescription,
+    seoKeywords: BRAND_CONFIG.seoKeywords,
+    ...params
+  };
   const currentBase = currentLang.split('-')[0];
   const fallbackBase = fallbackLang.split('-')[0];
 

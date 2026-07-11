@@ -1,80 +1,80 @@
 export const home = {
   // SEO Metadata
-  seoTitle: 'Portal Web SaaS Boilerplate | {{siteName}}',
-  seoDescription: 'Base modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte.',
-  seoKeywords: 'portal saas boilerplate, panel de control web, base para startup, desarrollo modular, login google, soporte integrado',
+  seoTitle: '{{seoTitle}}',
+  seoDescription: '{{seoDescription}}',
+  seoKeywords: '{{seoKeywords}}',
 
   // Hero Section
-  heroTitle: 'Tu Plataforma SaaS Lista para Despegar',
-  heroSubtitle: 'La estructura modular definitiva para tu próximo proyecto web. Activa autenticación, soporte o facturación de Lemon Squeezy en segundos con Feature Flags.',
+  heroTitle: '{{siteName}}',
+  heroSubtitle: 'Pastas artesanales frescas congeladas de alta calidad, elaboradas con ingredientes seleccionados. Prácticas, envasadas en cajas y listas para cocinar.',
   loginButton: 'Iniciar Sesión',
   pricingButton: 'Planes Premium',
   licenseButton: 'Mi Licencia',
   ctaButton: 'Comenzar Gratis',
 
   // Core Features - H2 Titles
-  ttsCoreTitle: 'Módulos Listos: Todo lo que necesitas para tu negocio',
-  sttCoreTitle: 'Fácil Configuración: Configura y despliega al instante',
+  ttsCoreTitle: 'El sabor tradicional con la practicidad de hoy',
+  sttCoreTitle: 'Frescura congelada en origen: Calidad asegurada',
 
   // Feature Items
-  features: 'Características principales',
+  features: 'Nuestras Características',
   
-  dictadoTitle: 'Autenticación Unificada',
-  dictadoDesc: 'Login por correo o Google integrado y seguro para tus usuarios, listo para usar con variables de entorno.',
+  dictadoTitle: 'Calidad Artesanal',
+  dictadoDesc: 'Elaboramos nuestras pastas con ingredientes seleccionados bajo recetas familiares para conservar el auténtico sabor casero.',
   
-  ttsTitle: 'Panel de Control Inteligente',
-  ttsDesc: 'Dashboard interactivo de administración y métricas para tus usuarios y administradores.',
+  ttsTitle: 'Venta Minorista y Mayorista',
+  ttsDesc: 'Abastecemos de forma directa al público general en Bernal y proveemos soluciones mayoristas a comercios gastronómicos en toda Zona Sur.',
   
-  pdfTitle: 'Pasarela de Pagos Flexible',
-  pdfDesc: 'Facturación nativa y suscripciones integradas mediante webhooks de Lemon Squeezy.',
+  pdfTitle: 'Formato Práctico en Cajas',
+  pdfDesc: 'Nuestras pastas congeladas se entregan en cajas prácticas y compactas, ideales para organizar tu stock y conservar la textura original.',
   
-  pipTitle: 'Soporte y Ticketing',
-  pipDesc: 'Sistema opcional de mensajería y tickets de ayuda integrado directamente en el portal.',
+  pipTitle: 'Conservación de Frescura',
+  pipDesc: 'El congelado rápido en origen mantiene intactos el sabor, la humedad y los nutrientes de la pasta fresca sin necesidad de conservantes.',
   
-  subsTitle: 'Diseño Premium Sensible',
-  subsDesc: 'Interfaz premium optimizada para dispositivos móviles con transiciones fluidas y temas personalizables.',
+  subsTitle: 'Servicio a Empresas',
+  subsDesc: 'Una propuesta mayorista a la medida de restaurantes, rotiserías, hoteles, comedores y empresas de catering.',
   
-  shortcutsTitle: 'Arquitectura Escalable',
-  shortcutsDesc: 'Monorepo limpio y ordenado con separación estricta de responsabilidades entre el frontend, el backend y el config compartido.',
+  shortcutsTitle: 'Rápida Entrega',
+  shortcutsDesc: 'Despachamos tus pedidos de forma veloz directamente a tu negocio o domicilio en Bernal, Quilmes y alrededores.',
 
   // Stats Section
-  statsIdiomas: 'Despliegue Global',
-  statsIdiomasOthers: 'Múltiples Locales e i18n listos',
-  statsLocal: 'Base de Datos Segura',
-  statsPrivacidadItem1: 'Persistencia en MongoDB',
-  statsPrivacidadItem2: 'Conexión dinámica modular',
-  statsPrivacidadItem3: 'Validación estricta de esquemas',
-  statsCompatibilidad: 'Compatibilidad Total',
+  statsIdiomas: 'Envasado en Origen',
+  statsIdiomasOthers: 'Conserva frescura, sabor y textura intactos',
+  statsLocal: 'Recetas Exclusivas',
+  statsPrivacidadItem1: 'Sorrentinos Gourmet',
+  statsPrivacidadItem2: 'Ravioles (Rabioles) Tradicionales',
+  statsPrivacidadItem3: 'Panzottis (Panzotis) y Empanadas de Bondiola',
+  statsCompatibilidad: 'Distribución en Zona Sur',
 
   // Social Proof & Trust
-  testimonialsTitle: 'Optimizado para acelerar tu desarrollo',
-  testimonialsSubtitle: 'Miles de horas de configuración básica de proyectos SaaS solucionadas en un solo template.',
+  testimonialsTitle: 'La opinión de quienes nos eligen',
+  testimonialsSubtitle: 'Gastronómicos y particulares confían en la calidad artesanal y la atención minorista y mayorista de Pastas Simón.',
 
   // Testimonials
-  testimonial1: 'Este boilerplate nos ahorró al menos 3 semanas de configuración de pasarelas de pago y autenticación. El sistema de Feature Flags es súper intuitivo.',
-  testimonialName1: 'Carlos Mendoza',
-  testimonialRole1: 'CTO en Startup X',
+  testimonial1: 'Las pastas congeladas en caja de Simón optimizaron el servicio en nuestras cocinas. Los sorrentinos son espectaculares y no se rompen al cocinar.',
+  testimonialName1: 'Mariano Gómez',
+  testimonialRole1: 'Chef Ejecutivo en Eventos Quilmes',
   
-  testimonial2: 'La arquitectura en monorepo de este template es increíblemente limpia. El diseño responde al tema al instante y es facilísimo de personalizar.',
-  testimonialName2: 'Sofia Rossi',
-  testimonialRole2: 'Desarrolladora Fullstack',
+  testimonial2: 'La calidad y el sabor casero son increíbles. Los ravioles y las empanadas de bondiola son los favoritos de nuestra carta. Las entregas son súper puntuales.',
+  testimonialName2: 'Laura Rodríguez',
+  testimonialRole2: 'Dueña de Bodegón Bernal',
   
-  testimonial3: 'Suscripciones integradas con Lemon Squeezy funcionando el primer día. Excelente soporte y estructura modular impecable.',
-  testimonialName3: 'Javier Domínguez',
-  testimonialRole3: 'Fundador de SaaS Flow',
+  testimonial3: 'Excelente opción mayorista para Zona Sur. Distribuimos sus pastas congeladas y la aceptación de los clientes ha sido inmediata por su gran calidad.',
+  testimonialName3: 'Daniel Fernández',
+  testimonialRole3: 'Socio de Alimentos Bernal',
 
   // CTA Section
-  ctaTitle: 'Comienza Hoy',
+  ctaTitle: 'Hacé tu pedido hoy',
   ctaTitleLogged: 'Bienvenido de vuelta',
-  ctaSubtitle: 'Regístrate ahora para comenzar a utilizar todos nuestros servicios web.',
+  ctaSubtitle: 'Ponete en contacto con nosotros para coordinar tu entrega de pastas congeladas minorista o compras al por mayor.',
   ctaSubtitleLogged: 'Ya eres parte de {{siteName}}. Accede a tu panel de control.',
-  ctaSubtitleDefault: 'Descubre cómo nuestro servicio puede optimizar el rendimiento de tu negocio.',
+  ctaSubtitleDefault: 'Descubre el verdadero sabor artesanal de las pastas frescas congeladas en cajas.',
 
   // Action Buttons
   heroDashboardButton: 'Ir al Dashboard',
   heroEmailLoginButton: 'Ingresar con Correo',
   whatsappContactButton: 'Contacto por WhatsApp',
-  seeFeaturesButton: 'Ver Funciones',
+  seeFeaturesButton: 'Ver Especialidades',
 };
 
 export default home;

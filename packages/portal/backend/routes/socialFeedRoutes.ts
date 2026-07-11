@@ -12,7 +12,7 @@ const router = express.Router();
 router.get("/instagram", async (req: Request, res: Response) => {
   try {
     // Definir username por defecto
-    const defaultUsername = process.env.INSTAGRAM_DEFAULT_USERNAME || "sogasalejandro";
+    const defaultUsername = process.env.INSTAGRAM_DEFAULT_USERNAME || "simonpastasartesanales";
     
     // Validar query param opcional para admin/desarrollo
     const queryUsername = req.query.username as string;

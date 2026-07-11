@@ -67,8 +67,14 @@ export class SocialFeedService {
 
       const posts = this.normalizeRapidApiResponse(rawData);
 
+      // Asignar el username consultado como fallback en cada post si viene vacío
+      const postsWithUsername = posts.map(p => ({
+        ...p,
+        username: p.username || username
+      }));
+
       // Ordenar explícitamente por fecha descendente (lo más reciente primero)
-      const sortedPosts = posts.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+      const sortedPosts = postsWithUsername.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
       // Limitar cantidad de posts según variable de entorno (por defecto 6)
       const postsLimit = parseInt(process.env.INSTAGRAM_POSTS_LIMIT || '6', 10);
@@ -187,7 +193,8 @@ export class SocialFeedService {
         timestamp,
         likesCount,
         commentsCount,
-        comments
+        comments,
+        username: item.user?.username || item.owner?.username || item.username || ""
       };
     });
   }
@@ -196,58 +203,62 @@ export class SocialFeedService {
    * Genera un feed de prueba local (Mock) estético para no romper el desarrollo
    */
   private static getMockFeed(username: string): SocialPost[] {
+    const cleanUsername = username.replace(/^@/, '');
     return [
       {
         id: "mock_post_1",
-        mediaUrl: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=600&q=80",
-        permalink: "https://instagram.com",
-        caption: "🚀 ¡Habilitamos el feed en tiempo real para todos los sitios! El contacto con el mundo real y el feedback dinámico impulsan los testimoniales. #MERN #SaaS #Boilerplate",
+        mediaUrl: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=600&q=80",
+        permalink: `https://instagram.com/${cleanUsername}`,
+        caption: "🥟 ¡Recién salidos! Elaboramos nuestros sorrentinos artesanales con ingredientes de primera selección. Pedí los tuyos para este fin de semana en Bernal y Zona Sur. #PastasArtesanales #PastasSimon #Bernal",
         mediaType: "IMAGE",
         timestamp: new Date(Date.now() - 3600000 * 2).toISOString(),
         likesCount: 154,
         commentsCount: 12,
+        username: cleanUsername,
         comments: [
           {
             id: "mc1",
-            text: "¡Excelente arquitectura! Se ve súper fluido.",
-            username: "dev_junior",
+            text: "¡Los de jamón y queso con masa de espinaca son de otro planeta! Excelente calidad.",
+            username: "laura_gourmet",
             timestamp: new Date(Date.now() - 3600000 * 1.5).toISOString()
           },
           {
             id: "mc2",
-            text: "La velocidad de carga no se ve afectada con el Intersection Observer.",
-            username: "performance_guy",
+            text: "Los mejores sorrentinos de toda la Zona Sur, recomendadísimos.",
+            username: "carlos_foodie",
             timestamp: new Date(Date.now() - 3600000 * 1).toISOString()
           }
         ]
       },
       {
         id: "mock_post_2",
-        mediaUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80",
-        permalink: "https://instagram.com",
-        caption: "Diseño elegante adaptado al responsive y tema oscuro de la plataforma. La red de seguridad inteligente muestra testimonios default si hay demoras.",
+        mediaUrl: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80",
+        permalink: `https://instagram.com/${cleanUsername}`,
+        caption: "📦 Calidad y frescura directa a tu mesa. Envasamos nuestras pastas frescas congeladas en prácticas cajas para que conserven todo su sabor y textura original. ¡Ideales para restaurantes, rotiserías y caterings! #ServicioMayorista #PastasCongeladas",
         mediaType: "IMAGE",
         timestamp: new Date(Date.now() - 3600000 * 24).toISOString(),
         likesCount: 98,
         commentsCount: 4,
+        username: cleanUsername,
         comments: [
           {
             id: "mc3",
-            text: "¡El dark mode del grid quedó genial!",
-            username: "css_ninja",
+            text: "Excelente presentación de las cajas y la entrega súper rápida en Quilmes.",
+            username: "bodegon_bernal",
             timestamp: new Date(Date.now() - 3600000 * 20).toISOString()
           }
         ]
       },
       {
         id: "mock_post_3",
-        mediaUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80",
-        permalink: "https://instagram.com",
-        caption: "Optimizando la cuota de RapidAPI con una caché de 6 horas configurada por variables de entorno. Escalable, barato y eficiente. ⚙️",
+        mediaUrl: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80",
+        permalink: `https://instagram.com/${cleanUsername}`,
+        caption: "🇮🇹 Tradición artesanal en cada preparación. ¿Ya probaste nuestros ravioles caseros y panzottis? Hacé tu pedido por WhatsApp y disfrutá del verdadero sabor casero. 🛵 #RecetasFamiliares #SimonPastas",
         mediaType: "IMAGE",
         timestamp: new Date(Date.now() - 3600000 * 48).toISOString(),
         likesCount: 210,
         commentsCount: 8,
+        username: cleanUsername,
         comments: []
       }
     ];

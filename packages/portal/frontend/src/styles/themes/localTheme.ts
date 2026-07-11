@@ -7,86 +7,86 @@ import type { ThemeOverride } from '@factory/shared/design-sys/theme/types';
  * El tipado es 'ThemeOverride' (DeepPartial de DefaultTheme).
  */
 export const localThemeOverride: ThemeOverride = {
-  // 🎨 PALETA DE COLORES Y FONDOS (Identidad Minimalista Clara: Off-White & Charcoal Steel)
+  // 🎨 PALETA DE COLORES Y FONDOS (Identidad Pastas Simón: Verde Pino Forestal, Dorado Ocre & Fondo Crema)
   colors: {
-    // 1. Colores primarios (Azul Acero Moderno)
+    // 1. Colores primarios (Verde Pino Forestal)
     primary: {
-      50: '#eff6ff',
-      100: '#dbeafe',
-      200: '#bfdbfe',
-      300: '#93c5fd',
-      400: '#60a5fa',
-      500: '#3b82f6',
-      600: '#2563eb',
-      700: '#1d4ed8',
-      800: '#1e40af',
-      900: '#1e3a8a',
+      50: '#f3f6f4',
+      100: '#e0eae2',
+      200: '#c2d6c6',
+      300: '#99b8a0',
+      400: '#6c9374',
+      500: '#193220',
+      600: '#14291a',
+      700: '#102015',
+      800: '#0c1810',
+      900: '#08100a',
     },
 
-    // 2. Colores secundarios (Verde Menta Suave)
+    // 2. Colores secundarios (Dorado Ocre Terroso)
     secondary: {
-      50: '#ecfdf5',
-      100: '#d1fae5',
-      200: '#a7f3d0',
-      300: '#6ee7b7',
-      400: '#34d399',
-      500: '#10b981',
-      600: '#059669',
-      700: '#047857',
-      800: '#065f46',
-      900: '#064e3b',
+      50: '#fbf5ed',
+      100: '#f5e7d5',
+      200: '#eccda9',
+      300: '#e1ae78',
+      400: '#d48f48',
+      500: '#ad7231',
+      600: '#905d27',
+      700: '#73481e',
+      800: '#573415',
+      900: '#3f230d',
     },
 
-    // 3. Colores terciarios (Violeta Minimalista)
+    // 3. Colores terciarios (Crema / Beige Cálido)
     tertiary: {
-      50: '#faf5ff',
-      100: '#f3e8ff',
-      200: '#e9d5ff',
-      300: '#d8b4fe',
-      400: '#c084fc',
-      500: '#a855f7',
-      600: '#9333ea',
-      700: '#7c3aed',
-      800: '#6b21a8',
-      900: '#581c87',
+      50: '#fdfcfb',
+      100: '#faf7f2',
+      200: '#f5f2eb',
+      300: '#ede7db',
+      400: '#dfd7c5',
+      500: '#d0c3aa',
+      600: '#baaa8b',
+      700: '#a39170',
+      800: '#8a7857',
+      900: '#6b5c40',
     },
 
-    // 4. Colores de la aplicación (Fondo Premium Claro, Limpio y Altamente Legible)
+    // 4. Colores de la aplicación (Fondo Crema Cálido de Pastas Simón)
     background: {
-      primary: '#f8f9fa',
+      primary: '#fdfbf7',
       secondary: '#ffffff',
-      tertiary: '#f1f3f5',
+      tertiary: '#f5f2eb',
       surface: '#ffffff',
       card: '#ffffff',
     },
 
     // 5. Paleta de textos con contraste perfecto sobre fondos claros
     text: {
-      primary: '#111827',
-      secondary: '#4b5563',
-      tertiary: '#9ca3af',
+      primary: '#112215',
+      secondary: '#3c4740',
+      tertiary: '#7b8780',
       inverse: '#ffffff',
     },
 
-    // 6. Bordes limpios y discretos
+    // 6. Bordes limpios y discretos a tono
     border: {
-      light: '#e9ecef',
-      normal: '#dee2e6',
-      dark: '#ced4da',
+      light: '#edeae3',
+      normal: '#dfdcd5',
+      dark: '#b5b2ab',
     },
 
     // 7. Colores semánticos (Estados)
-    success: { 50: '#ecfdf5', 500: '#10b981', 600: '#059669', 700: '#047857' },
-    warning: { 50: '#fffbeb', 500: '#f59e0b', 600: '#d97706', 700: '#b45309' },
-    error: { 50: '#fff5f5', 500: '#ef4444', 600: '#dc2626', 700: '#b91c1c' },
-    info: { 50: '#eff6ff', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' },
+    success: { 50: '#f0fdf4', 500: '#16a34a', 600: '#15803d', 700: '#166534' },
+    warning: { 50: '#fffbeb', 500: '#d97706', 600: '#b45309', 700: '#92400e' },
+    error: { 50: '#fef2f2', 500: '#dc2626', 600: '#b91c1c', 700: '#991b1b' },
+    info: { 50: '#f0f9ff', 500: '#0284c7', 600: '#0369a1', 700: '#075985' },
   },
 
   // ✍️ TIPOGRAFÍA Y FUENTES
   typography: {
     fontFamily: {
       primary: '"Inter", sans-serif',
-      secondary: '"Outfit", sans-serif',
+      secondary: '"Playfair Display", "Lora", serif',
       mono: 'monospace',
     },
     fontSize: {
@@ -122,7 +122,7 @@ export const localThemeOverride: ThemeOverride = {
     xxl: '48px',
   },
 
-  // 🔲 RADIOS DE BORDE (Redondeo de esquinas)
+  // 🔲 RADIOS DE BORDE
   borderRadius: {
     sm: '4px',
     md: '8px',
@@ -130,18 +130,18 @@ export const localThemeOverride: ThemeOverride = {
     xl: '16px',
   },
 
-  // 👥 SOMBRAS (Resaltan los elementos sobre el fondo claro)
+  // 👥 SOMBRAS
   shadows: {
-    light: '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03)',
-    medium: '0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04)',
-    heavy: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+    light: '0 1px 3px rgba(25, 50, 32, 0.05), 0 1px 2px rgba(25, 50, 32, 0.03)',
+    medium: '0 4px 6px -1px rgba(25, 50, 32, 0.08), 0 2px 4px -1px rgba(25, 50, 32, 0.04)',
+    heavy: '0 10px 15px -3px rgba(25, 50, 32, 0.1), 0 4px 6px -2px rgba(25, 50, 32, 0.05)',
   },
 
-  // 🌌 EFECTOS VISUALES (Glassmorphism sutil adaptado a temas claros)
+  // 🌌 EFECTOS VISUALES
   effects: {
-    glassBackground: 'rgba(255, 255, 255, 0.85)',
-    glassBorder: 'rgba(0, 0, 0, 0.05)',
-    glassShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.04)',
+    glassBackground: 'rgba(253, 251, 247, 0.85)',
+    glassBorder: 'rgba(25, 50, 32, 0.05)',
+    glassShadow: '0 8px 32px 0 rgba(25, 50, 32, 0.04)',
     blur: {
       subtle: 'blur(4px)',
       glass: 'blur(16px)',
@@ -150,11 +150,11 @@ export const localThemeOverride: ThemeOverride = {
     },
   },
 
-  // 🌈 GRADIENTES (Modernos y sutiles)
+  // 🌈 GRADIENTES (Verde forestal institucional a dorado ocre)
   gradients: {
-    brand: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #10b981 100%)',
-    premium: 'linear-gradient(135deg, #1f2937 0%, #111827 100%)',
-    highlight: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-    glass: 'linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%)',
+    brand: 'linear-gradient(135deg, #193220 0%, #ad7231 100%)',
+    premium: 'linear-gradient(135deg, #193220 0%, #112215 100%)',
+    highlight: 'linear-gradient(135deg, #ad7231 0%, #82521c 100%)',
+    glass: 'linear-gradient(135deg, rgba(253, 251, 247, 0.85) 0%, rgba(253, 251, 247, 0.45) 100%)',
   }
 };

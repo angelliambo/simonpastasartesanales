@@ -71,52 +71,52 @@ export const LogoWrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 180px;
-    height: 180px;
+    width: 340px;
+    height: 340px;
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(96, 165, 250, 0.45) 0%,
-      rgba(167, 139, 250, 0.3) 40%,
-      rgba(244, 114, 182, 0.15) 75%,
+      rgba(173, 114, 49, 0.25) 0%,
+      rgba(245, 242, 235, 0.15) 60%,
       transparent 100%
     );
-    filter: blur(16px);
+    filter: blur(24px);
     z-index: 0;
     pointer-events: none;
 
     @media (max-height: 800px) {
-      width: 120px;
-      height: 120px;
+      width: 260px;
+      height: 260px;
     }
 
     @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      width: 100px;
-      height: 100px;
-      filter: blur(12px);
+      width: 220px;
+      height: 220px;
+      filter: blur(16px);
     }
   }
 `;
 
 export const Logo = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 280px;
+  height: 280px;
   position: relative;
   z-index: 1;
-  border-radius: 12px;
+  border-radius: 0;
+  object-fit: contain;
 
   @media (max-height: 800px) {
-    width: 60px;
-    height: 60px;
+    width: 220px;
+    height: 220px;
   }
   @media (max-height: 700px) {
-    width: 50px;
-    height: 50px;
+    width: 180px;
+    height: 180px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    width: 72px;
-    height: 72px;
+    width: 200px;
+    height: 200px;
   }
 `;
 
