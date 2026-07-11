@@ -430,7 +430,7 @@ export const ProductGrid = styled.div`
 
 export const ProductCard = styled.div`
   background: ${({ theme }) => theme.colors.background.secondary || "#f5f2eb"};
-  border: 1px solid ${({ theme }) => theme.colors.effects?.glassBorder || "rgba(0, 0, 0, 0.05)"};
+  border: 1px solid ${({ theme }) => theme.effects?.glassBorder || "rgba(0, 0, 0, 0.05)"};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   overflow: hidden;
   display: flex;
@@ -470,7 +470,7 @@ export const ProductTitle = styled.h3`
   font-family: 'Playfair Display', 'Lora', serif;
   font-size: 18px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.primary || "#193220"};
+  color: ${({ theme }) => theme.colors.primary?.[500] || "#193220"};
   margin-bottom: ${({ theme }) => theme.spacing.xs};
 `;
 
@@ -499,10 +499,7 @@ export const OrderButton = styled.a`
   line-height: 1;
 
   &:hover {
-    background: ${({ theme }) => {
-    const sec = theme.colors?.secondary;
-    return (typeof sec === 'string' ? sec : sec?.[700]) || "#16a34a";
-  }};
+    background: ${({ theme }) => theme.colors.primary?.[600] || "#14291a"};
     color: #fff !important;
   }
 
