@@ -3,7 +3,7 @@
  * Permite inicializar el script de tracking de forma dinámica y registrar pageviews y eventos (CTAs).
  */
 
-const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
+const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID || 'G-CSZZEJ6KG5';
 
 // Extender la interfaz global de Window para TypeScript
 declare global {
