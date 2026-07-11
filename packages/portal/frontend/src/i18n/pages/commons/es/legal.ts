@@ -8,9 +8,9 @@ export const legal = {
   seccion1Texto: 'Al acceder o utilizar {{siteName}}, usted ("el Usuario") acepta estar vinculado por estos Términos y Condiciones de Uso. Si no está de acuerdo con alguno de estos términos, debe cesar el uso de la plataforma inmediatamente.',
 
   seccion2Titulo: '2. Naturaleza del Servicio',
-  seccion2Texto1: '{{siteName}} es una plataforma web modular que proporciona herramientas SaaS configurables según las preferencias de su suscripción o uso.',
-  seccion2Texto2: 'La versión estándar de la plataforma se ofrece de acuerdo a los planes especificados. El Proveedor se reserva el derecho de modificar los accesos en base al plan de suscripción contratado.',
-
+  seccion2Texto1: '{{siteName}} es una plataforma digital cuya infraestructura tecnológica y mantenimiento de software son provistos por desarrolladores independientes externos (el "Proveedor Tecnológico"). La plataforma funciona como un catálogo interactivo de exhibición y contacto comercial para los alimentos elaborados por Fábrica de Pastas Simón.',
+  seccion2Texto2: 'Todas las operaciones, pedidos, ventas y entregas de productos alimenticios son coordinados, facturados y despachados exclusivamente de forma bilateral por Fábrica de Pastas Simón y constituyen una relación de consumo directa con el adquirente final.',
+  
   seccion3Titulo: '3. Uso de Servicios de Terceros',
   seccion3Texto1: '{{siteName}} utiliza servicios de terceros para proporcionar sus funcionalidades principales:',
   seccion3Item1: 'Pasarelas de Pago: Para el procesamiento seguro de transacciones.',
@@ -24,7 +24,7 @@ export const legal = {
   seccion4Texto3: 'Usted puede solicitar la eliminación completa de su cuenta y sus datos asociados desde su panel de control en cualquier momento.',
 
   seccion5Titulo: '5. Limitación de Responsabilidad',
-  seccion5Texto1: 'El Equipo de {{siteName}} NO será responsable bajo ninguna circunstancia por:',
+  seccion5Texto1: 'El Proveedor Tecnológico y el Equipo de {{siteName}} NO serán responsables bajo ninguna circunstancia por:',
   seccion5Item1: 'Daños directos, indirectos, incidentales o consecuenciales derivados de la imposibilidad de usar el portal.',
   seccion5Item2: 'Errores, inexactitudes u omisiones en el contenido cargado por los usuarios.',
   seccion5Item3: 'Interrupciones temporales del servicio debidas a tareas de mantenimiento o fallas de red externas.',
@@ -32,6 +32,8 @@ export const legal = {
   seccion5Item5: 'El uso que el Usuario haga de las herramientas proporcionadas por la plataforma.',
   seccion5Item6: 'Incompatibilidades temporales con navegadores web obsoletos o no soportados oficialmente.',
   seccion5Item7: 'La indisponibilidad o fallas en servicios de terceros contratados para procesamiento y notificaciones.',
+  seccion5Item8: 'Transacciones y Relación de Consumo: El Proveedor Tecnológico actúa únicamente como prestador de servicios de software y soporte técnico. No forma parte de la relación comercial entre Fábrica de Pastas Simón y sus clientes, quedando exento de cualquier reclamo legal, civil, mercantil o de consumo.',
+  seccion5Item9: 'Responsabilidad Alimentaria y Sanitaria: El Proveedor Tecnológico no participa de la elaboración, manipulación, envasado, control de calidad, almacenamiento ni distribución de los alimentos comercializados, correspondiendo dicha responsabilidad de forma total y exclusiva a Fábrica de Pastas Simón.',
 
   seccion6Titulo: '6. Propiedad Intelectual',
   seccion6Texto1: '{{siteName}} y todo su contenido, código fuente, diseño y documentación son propiedad intelectual exclusiva de su Proveedor.',
