@@ -72,7 +72,7 @@ export function renderTemplate(titulo: string, contenido: string, locale?: strin
     .replace(/\{\{slogan\}\}/g, slogan)
     .replace(/\{\{terminosLabel\}\}/g, terminosLabel)
     .replace(/\{\{privacidadLabel\}\}/g, privacidadLabel)
-    .replace(/<domain>/g, BRAND_CONFIG.domain);
+    .replace(/simonpastasartesanales.com.ar/g, BRAND_CONFIG.domain);
 }
 
 function buildTicketContent(ticketId: string, message: string, userId?: string, locale?: string): string {
@@ -244,7 +244,7 @@ export async function sendAdminTicketNotification(
   userId?: string,
   isNewTicket: boolean = true
 ): Promise<void> {
-  const adminEmail = config.CONTACT_EMAIL || "info@<domain>";
+  const adminEmail = config.CONTACT_EMAIL || "info@simonpastasartesanales.com.ar";
   await sendEmail({
     to: adminEmail,
     subject: `[Soporte] ${isNewTicket ? "Nuevo Ticket" : "Respuesta de Usuario"} ${ticketId} - ${subject}`,

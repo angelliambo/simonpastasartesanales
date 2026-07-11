@@ -40,4 +40,4 @@ Disallow: /login
 Disallow: /api/
 
 # Enlace al Sitemap del portal
-Sitemap: https://<domain>/sitemap.xml
+Sitemap: https://simonpastasartesanales.com.ar/sitemap.xml

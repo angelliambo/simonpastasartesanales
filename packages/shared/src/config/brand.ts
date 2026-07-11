@@ -1,6 +1,6 @@
 const DOMAIN = 'simonpastasartesanales.com.ar';
 
-export const ASSET_VERSION = '1.3.6';
+export const ASSET_VERSION = '1.3.7';
 
 export const BRAND_CONFIG = {
   siteName: 'Fábrica de Pastas Simón',

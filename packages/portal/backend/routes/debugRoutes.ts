@@ -592,7 +592,7 @@ router.post("/tickets/:ticketId/comments", async (req: Request, res: Response) =
 
     const comment = {
       authorId: (req as any).user?.userId,
-      authorEmail: (req as any).user?.email || "support@<domain>",
+      authorEmail: (req as any).user?.email || "support@simonpastasartesanales.com.ar",
       authorRole: "admin" as const,
       message: message.trim(),
       createdAt: new Date(),

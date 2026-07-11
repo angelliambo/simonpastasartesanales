@@ -45,7 +45,7 @@ const processIndexHtml = () => {
 
   // Reemplazo general de dominio y marca para limpiar cualquier otra ocurrencia
   content = content
-    .replace(/<domain>/g, BRAND_CONFIG.domain)
+    .replace(/simonpastasartesanales.com.ar/g, BRAND_CONFIG.domain)
     .replace(/SaaS Boilerplate/g, BRAND_CONFIG.siteName)
     .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
 
@@ -62,7 +62,7 @@ const processRobotsTxt = () => {
 
   let content = readFileSync(templatePath, "utf8");
   content = content
-    .replace(/<domain>/g, BRAND_CONFIG.domain)
+    .replace(/simonpastasartesanales.com.ar/g, BRAND_CONFIG.domain)
     .replace(/SaaS Boilerplate/g, BRAND_CONFIG.siteName)
     .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
 
@@ -79,7 +79,7 @@ const processSitemapXml = () => {
 
   let content = readFileSync(templatePath, "utf8");
   content = content
-    .replace(/<domain>/g, BRAND_CONFIG.domain);
+    .replace(/simonpastasartesanales.com.ar/g, BRAND_CONFIG.domain);
 
   writeFileSync(outputPath, content, "utf8");
   console.log(`✅ [SEO-UPDATE] sitemap.xml actualizado físicamente.`);
@@ -115,7 +115,7 @@ const processLlmsTxt = () => {
   content = content
     .replace(/# SaaS Boilerplate - .*?\n/g, `# ${BRAND_CONFIG.seoTitle}\\n`)
     .replace(/# ZenithNexus - .*?\n/g, `# ${BRAND_CONFIG.seoTitle}\\n`)
-    .replace(/<domain>/g, BRAND_CONFIG.domain)
+    .replace(/simonpastasartesanales.com.ar/g, BRAND_CONFIG.domain)
     .replace(/SaaS Boilerplate/g, BRAND_CONFIG.siteName)
     .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
 
