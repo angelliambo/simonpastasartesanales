@@ -36,4 +36,5 @@ export const dashboard = {
   seoKeywords: 'dashboard {{siteName}}, cuenta {{siteName}}, licencia {{siteName}}, suscripcion premium',
 };
 
-export default {};
+const defaultExport = {};
+export default defaultExport;

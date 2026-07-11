@@ -44,4 +44,5 @@ export const privacy = {
   seoKeywords: 'privacy {{siteName}}, data security, secure SaaS, GDPR {{siteName}}',
 };
 
-export default {};
+const defaultExport = {};
+export default defaultExport;

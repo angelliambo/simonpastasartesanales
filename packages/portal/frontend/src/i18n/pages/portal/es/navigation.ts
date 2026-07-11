@@ -10,4 +10,5 @@ export const navigation = {
   ariaOpen: 'Abrir navegación',
 };
 
-export default {};
+const defaultExport = {};
+export default defaultExport;

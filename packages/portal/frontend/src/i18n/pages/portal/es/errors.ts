@@ -42,4 +42,5 @@ export const errors = {
   errApi501: 'Fallo de verificación en la cuenta de Google.',
 };
 
-export default {};
+const defaultExport = {};
+export default defaultExport;

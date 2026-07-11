@@ -42,4 +42,5 @@ export const errors = {
   errApi501: 'Google account verification failure.',
 };
 
-export default {};
+const defaultExport = {};
+export default defaultExport;

@@ -33,4 +33,5 @@ export const emails = {
   },
 };
 
-export default {};
+const defaultExport = {};
+export default defaultExport;

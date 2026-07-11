@@ -18,4 +18,5 @@ export const cookie = {
   acceptButton: 'Accept Cookies',
 };
 
-export default {};
+const defaultExport = {};
+export default defaultExport;

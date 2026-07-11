@@ -91,4 +91,5 @@ export const legal = {
   seoKeywords: 'terms {{siteName}}, conditions of use, license {{siteName}}, legal {{siteName}}',
 };
 
-export default {};
+const defaultExport = {};
+export default defaultExport;

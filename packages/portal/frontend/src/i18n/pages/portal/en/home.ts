@@ -37,14 +37,16 @@ export const home = {
   shortcutsTitle: 'Escalable Architecture',
   shortcutsDesc: 'Clean and organized monorepo with strict separation of concerns between frontend, backend, and shared config.',
 
-  // Stats Section
-  statsIdiomas: 'Global Deployment',
-  statsIdiomasOthers: 'Multiple locales and i18n ready',
-  statsLocal: 'Secure Database',
-  statsPrivacidadItem1: 'MongoDB persistence',
-  statsPrivacidadItem2: 'Modular dynamic connection',
-  statsPrivacidadItem3: 'Strict schema validation',
-  statsCompatibilidad: 'Total Compatibility',
+  // Product Catalog
+  productSorrentinosTitle: 'Gourmet Sorrentinos',
+  productSorrentinosDesc: 'Hand-made with rich fillings and tender dough. Try our ham & cheese, spinach, or ricotta varieties.',
+  productRaviolesTitle: 'Homemade Ravioli',
+  productRaviolesDesc: 'Traditional family recipe. Classic ravioli stuffed with beef, spinach, or chicken, ready to boil and enjoy.',
+  productFideosTitle: 'Fresh Pasta Noodles',
+  productFideosDesc: 'Egg noodles kneaded daily with premium durum wheat semolina. Incomparable texture and authentic taste.',
+  productEmpanadasTitle: 'Bondiola Empanadas',
+  productEmpanadasDesc: 'Our house specialty. Empanadas filled with slow-cooked shredded pork shoulder in craft beer, ready to bake.',
+  productOrderBtn: 'Place your order',
 
   // Social Proof & Trust
   testimonialsTitle: 'Optimized to accelerate your development',
