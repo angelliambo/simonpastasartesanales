@@ -1,4 +1,4 @@
-export const privacy = {
+const privacy = {
   headerTitulo: '{{siteName}}',
   headerSlogan: 'Your privacy is our priority.',
   titulo: 'Privacy Policy',
@@ -44,4 +44,4 @@ export const privacy = {
   seoKeywords: 'privacy {{siteName}}, data security, secure SaaS, GDPR {{siteName}}',
 };
 
-export default {};
+export default privacy;

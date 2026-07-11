@@ -1,80 +1,82 @@
-export const home = {
+const home = {
   // SEO Metadata
-  seoTitle: 'SaaS Boilerplate Web Portal | {{siteName}}',
-  seoDescription: 'High-performance modular base for your business or startup with admin panels, billing, and support.',
-  seoKeywords: 'saas boilerplate portal, web dashboard, startup base, modular development, google login, integrated support',
+  seoTitle: '{{seoTitle}}',
+  seoDescription: '{{seoDescription}}',
+  seoKeywords: '{{seoKeywords}}',
 
   // Hero Section
-  heroTitle: 'Your SaaS Platform Ready to Take Off',
-  heroSubtitle: 'The ultimate modular structure for your next web project. Enable authentication, support, or Lemon Squeezy billing in seconds with Feature Flags.',
+  heroTitle: '{{siteName}}',
+  heroSubtitle: 'High-quality fresh-frozen artisanal pasta, made with selected ingredients. Practical, packaged in boxes, and ready to cook.',
   loginButton: 'Log In',
   pricingButton: 'Premium Plans',
   licenseButton: 'My License',
   ctaButton: 'Start Free',
 
   // Core Features - H2 Titles
-  ttsCoreTitle: 'Ready Modules: Everything you need for your business',
-  sttCoreTitle: 'Easy Setup: Configure and deploy instantly',
+  ttsCoreTitle: 'Traditional flavor with today\'s convenience',
+  sttCoreTitle: 'Frozen at origin: Guaranteed quality',
 
   // Feature Items
-  features: 'Core Features',
-  
-  dictadoTitle: 'Unified Authentication',
-  dictadoDesc: 'Integrated and secure email or Google login for your users, ready to use with environment variables.',
-  
-  ttsTitle: 'Smart Control Panel',
-  ttsDesc: 'Interactive admin and metrics dashboard for your users and administrators.',
-  
-  pdfTitle: 'Flexible Payment Gateway',
-  pdfDesc: 'Native billing and subscriptions integrated via Lemon Squeezy webhooks.',
-  
-  pipTitle: 'Support and Ticketing',
-  pipDesc: 'Optional messaging and help desk ticketing system integrated directly into the portal.',
-  
-  subsTitle: 'Premium Responsive Design',
-  subsDesc: 'Premium interface optimized for mobile devices with smooth transitions and customizable themes.',
-  
-  shortcutsTitle: 'Escalable Architecture',
-  shortcutsDesc: 'Clean and organized monorepo with strict separation of concerns between frontend, backend, and shared config.',
+  features: 'Our Features',
 
-  // Stats Section
-  statsIdiomas: 'Global Deployment',
-  statsIdiomasOthers: 'Multiple locales and i18n ready',
-  statsLocal: 'Secure Database',
-  statsPrivacidadItem1: 'MongoDB persistence',
-  statsPrivacidadItem2: 'Modular dynamic connection',
-  statsPrivacidadItem3: 'Strict schema validation',
-  statsCompatibilidad: 'Total Compatibility',
+  dictadoTitle: 'Artisanal Quality',
+  dictadoDesc: 'We make our pasta with selected ingredients using family recipes to preserve the authentic homemade flavor.',
+
+  ttsTitle: 'Retail and Wholesale',
+  ttsDesc: 'We directly supply the general public in Bernal and provide wholesale solutions to gastronomic businesses throughout Zona Sur.',
+
+  pdfTitle: 'Practical Box Format',
+  pdfDesc: 'Our frozen pasta is delivered in practical and compact boxes, ideal for organizing your stock and preserving the original texture.',
+
+  pipTitle: 'Preserving Freshness',
+  pipDesc: 'Quick freezing at origin keeps the flavor, moisture, and nutrients of fresh pasta intact without the need for preservatives.',
+
+  subsTitle: 'Business Services',
+  subsDesc: 'A wholesale proposal tailored to restaurants, deli stores, hotels, dining rooms, and catering companies.',
+
+  shortcutsTitle: 'Fast Delivery',
+  shortcutsDesc: 'We dispatch your orders quickly directly to your business or home in Bernal, Quilmes, and surrounding areas.',
+
+  // Product Catalog
+  productSorrentinosTitle: 'Sorrentinos',
+  productSorrentinosDesc: 'Handcrafted with generous fillings and tender dough. Try our ham & cheese, spinach, or ricotta varieties.',
+  productRaviolesTitle: 'Ravioli',
+  productRaviolesDesc: 'Grandma\'s recipe on your table. Traditional beef, spinach, or chicken ravioli, ready to boil and enjoy with family.',
+  productFideosTitle: 'Fresh Noodles',
+  productFideosDesc: 'Egg noodles and ribbons kneaded daily with premium durum wheat semolina. Incomparable texture and flavor.',
+  productEmpanadasTitle: 'Empanadas',
+  productEmpanadasDesc: 'Our house specialty. Empanadas filled with slow-cooked shredded pork shoulder in craft beer, ready to bake. A complete delight.',
+  productOrderBtn: 'Place your order',
 
   // Social Proof & Trust
-  testimonialsTitle: 'Optimized to accelerate your development',
-  testimonialsSubtitle: 'Thousands of hours of basic SaaS project setup solved in a single template.',
+  testimonialsTitle: 'What those who choose us say',
+  testimonialsSubtitle: 'Gastronomic businesses and individuals trust the artisanal quality and retail/wholesale service of Pastas Simón.',
 
   // Testimonials
-  testimonial1: 'This boilerplate saved us at least 3 weeks of setting up payment gateways and authentication. The Feature Flags system is super intuitive.',
-  testimonialName1: 'Carlos Mendoza',
-  testimonialRole1: 'CTO at Startup X',
-  
-  testimonial2: 'The monorepo architecture of this template is incredibly clean. The design responds to the theme instantly and is extremely easy to customize.',
-  testimonialName2: 'Sofia Rossi',
-  testimonialRole2: 'Fullstack Developer',
-  
-  testimonial3: 'Integrated subscriptions with Lemon Squeezy working on day one. Excellent support and flawless modular structure.',
-  testimonialName3: 'Javier Domínguez',
-  testimonialRole3: 'Founder of SaaS Flow',
+  testimonial1: 'Simón\'s boxed frozen pasta optimized service in our kitchens. The sorrentinos are spectacular and do not break when cooking.',
+  testimonialName1: 'Mariano Gómez',
+  testimonialRole1: 'Executive Chef at Eventos Quilmes',
+
+  testimonial2: 'The quality and homemade flavor are incredible. The ravioli and bondiola empanadas are favorites on our menu. Deliveries are super punctual.',
+  testimonialName2: 'Laura Rodríguez',
+  testimonialRole2: 'Owner of Bodegón Bernal',
+
+  testimonial3: 'Excellent wholesale option for Zona Sur. We distribute their frozen pasta and client acceptance has been immediate due to its great quality.',
+  testimonialName3: 'Daniel Fernández',
+  testimonialRole3: 'Partner at Alimentos Bernal',
 
   // CTA Section
-  ctaTitle: 'Start Today',
+  ctaTitle: 'Place your order today',
   ctaTitleLogged: 'Welcome back',
-  ctaSubtitle: 'Register now to start using all our web services.',
-  ctaSubtitleLogged: 'You are already part of {{siteName}}. Access your control panel.',
-  ctaSubtitleDefault: 'Discover how our service can optimize your business performance.',
+  ctaSubtitle: 'Get in touch with us to coordinate your retail frozen pasta delivery or wholesale purchases.',
+  ctaSubtitleLogged: 'You are already part of {{siteName}}. Access your dashboard.',
+  ctaSubtitleDefault: 'Discover the true artisanal flavor of fresh frozen pasta in boxes.',
 
   // Action Buttons
   heroDashboardButton: 'Go to Dashboard',
   heroEmailLoginButton: 'Log In with Email',
   whatsappContactButton: 'Contact via WhatsApp',
-  seeFeaturesButton: 'View Features',
+  seeFeaturesButton: 'View Specialties',
 };
 
 export default home;

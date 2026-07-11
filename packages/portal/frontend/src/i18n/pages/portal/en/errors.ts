@@ -1,4 +1,4 @@
-export const errors = {
+const errors = {
   somethingWentWrong: 'Something went wrong',
   unexpectedError: 'An unexpected error has occurred. Please try again.',
   errorDetails: 'Error details (click to expand)',
@@ -42,4 +42,4 @@ export const errors = {
   errApi501: 'Google account verification failure.',
 };
 
-export default {};
+export default errors;

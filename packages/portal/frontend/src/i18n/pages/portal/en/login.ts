@@ -1,4 +1,4 @@
-export const login = {
+const login = {
   title: 'Authentication',
   tabLogin: 'Log In',
   tabRegister: 'Register',
@@ -15,7 +15,7 @@ export const login = {
   errorMessage: 'Error logging in',
 };
 
-export const register = {
+const register = {
   nameLabel: 'Name',
   namePlaceholder: 'First name',
   lastNameLabel: 'Last Name',
@@ -41,4 +41,4 @@ export const register = {
   errorMessage: 'Error registering',
 };
 
-export default {};
+export default { login, register };

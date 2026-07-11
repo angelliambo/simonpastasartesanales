@@ -1,4 +1,4 @@
-export const emails = {
+const emails = {
   ticket: {
     received: "We have received your query. We will get back to you as soon as possible.",
     id: "Ticket ID",
@@ -33,4 +33,4 @@ export const emails = {
   },
 };
 
-export default {};
+export default emails;

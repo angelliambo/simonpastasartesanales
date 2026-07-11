@@ -1,4 +1,4 @@
-export const navigation = {
+const navigation = {
   labelDashboard: 'Dashboard',
   labelActivities: 'Activities',
   labelGames: 'Games',
@@ -10,4 +10,4 @@ export const navigation = {
   ariaOpen: 'Open navigation',
 };
 
-export default {};
+export default navigation;

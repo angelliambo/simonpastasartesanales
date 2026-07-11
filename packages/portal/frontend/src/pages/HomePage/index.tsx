@@ -19,7 +19,7 @@ import {
 import { RootState } from "../../store/store";
 import AppFooter from "../../components/AppFooter";
 import TrackedClick from "../../components/TrackedClick";
-import { SUPPORTED_LOCALES } from "../../i18n";
+import { trackEvent } from "../../services/analytics";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
   LikeOutlined,
@@ -28,6 +28,9 @@ import {
   InboxOutlined,
   TeamOutlined,
   CarOutlined,
+  WhatsAppOutlined,
+  KeyOutlined,
+  RocketOutlined,
 } from "@ant-design/icons";
 
 import {
@@ -35,19 +38,18 @@ import {
   HeroContent,
   LogoWrapper,
   Logo,
-  HeroTitle,
   HeroSubtitle,
   HeroActions,
   HeroOutlinedButton,
   HeroPrimaryButton,
   FeaturesInner,
-  StatsRow,
-  StatCol,
-  StatItem,
-  StatNumber,
-  StatLabel,
-  StatList,
-  StatListItem,
+  ProductGrid,
+  ProductCard,
+  ProductImage,
+  ProductContent,
+  ProductTitle,
+  ProductDescription,
+  OrderButton,
   TestimonialsRow,
   TestimonialCol,
   TestimonialCard,
@@ -84,7 +86,7 @@ const SECTIONS = [
 
 const SECTION_LABELS: Record<string, string> = {
   features: "Funciones",
-  stats: "Estadísticas",
+  stats: "Productos",
   testimonials: "Opiniones",
   cta: "Comenzar",
 };
@@ -132,7 +134,7 @@ function useAutoScroll(
         (sectionIndexRef.current + 1) % sectionIds.length;
       const id = sectionIds[sectionIndexRef.current];
       setActiveSection(id);
-      
+
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
@@ -179,24 +181,11 @@ const HomePage: React.FC = () => {
   const loggedInUser = useSelector((state: RootState) => state.auth.user) as {
     email?: string;
   } | null;
-  const { t, lang } = useTranslation();
+  const { t } = useTranslation();
 
   const { data: socialFeedData, isLoading: isLoadingFeed } = useGetInstagramFeedQuery(undefined, {
     skip: !FEATURES.ENABLE_SOCIAL_FEEDS,
   });
-
-  const LANG_FLAGS: Record<string, { flag: string; name: string }> = {
-    "es": { flag: "🇪🇸", name: "Español" },
-    "en": { flag: "🇺🇸", name: "English" },
-  };
-
-  const secondLang: Record<string, { flag: string; name: string }> = {
-    "es": { flag: "🇺🇸", name: "English" },
-    "en": { flag: "🇪🇸", name: "Español" },
-  };
-
-  const currentFlag = LANG_FLAGS[lang] || LANG_FLAGS["es"];
-  const secondLangItem = secondLang[lang] || secondLang["en"];
 
   const handleLogin = useCallback(() => setShowRegister(true), []);
   const handlePricing = useCallback(() => navigate("/pricing"), [navigate]);
@@ -542,53 +531,79 @@ const HomePage: React.FC = () => {
         $visible={preloadedSections.has("stats")}
       >
         <Container maxWidth="lg">
-          <StatsRow gutter={[24, 32]} justify="center">
-            <StatCol xs={24} md={8}>
-              <StatItem>
-                <StatNumber>{SUPPORTED_LOCALES.length}</StatNumber>
-                <StatLabel>{t("pages.home.statsIdiomas")}</StatLabel>
-                <StatList>
-                  <StatListItem>
-                    {currentFlag.flag} {currentFlag.name}
-                  </StatListItem>
-                  <StatListItem>
-                    {secondLangItem.flag} {secondLangItem.name}
-                  </StatListItem>
-                  <StatListItem>
-                    {t("pages.home.statsIdiomasOthers")}
-                  </StatListItem>
-                </StatList>
-              </StatItem>
-            </StatCol>
-            <StatCol xs={24} md={8}>
-              <StatItem>
-                <StatNumber>100%</StatNumber>
-                <StatLabel>{t("pages.home.statsLocal")}</StatLabel>
-                <StatList>
-                  <StatListItem>
-                    {t("pages.home.statsPrivacidadItem1")}
-                  </StatListItem>
-                  <StatListItem>
-                    {t("pages.home.statsPrivacidadItem2")}
-                  </StatListItem>
-                  <StatListItem>
-                    {t("pages.home.statsPrivacidadItem3")}
-                  </StatListItem>
-                </StatList>
-              </StatItem>
-            </StatCol>
-            <StatCol xs={24} md={8}>
-              <StatItem>
-                <StatNumber $large>∞</StatNumber>
-                <StatLabel>{t("pages.home.statsCompatibilidad")}</StatLabel>
-                <StatList>
-                  <StatListItem>📱 Móvil</StatListItem>
-                  <StatListItem>💻 Escritorio</StatListItem>
-                  <StatListItem>🌐 Navegadores</StatListItem>
-                </StatList>
-              </StatItem>
-            </StatCol>
-          </StatsRow>
+          <ProductGrid>
+            <ProductCard>
+              <ProductImage src="/assets/images/sorrentinos.webp" alt={t("pages.home.productSorrentinosTitle")} loading="lazy" />
+              <ProductContent>
+                <ProductTitle>{t("pages.home.productSorrentinosTitle")}</ProductTitle>
+                <ProductDescription>
+                  {t("pages.home.productSorrentinosDesc")}
+                </ProductDescription>
+                <OrderButton
+                  href={`${BRAND_CONFIG.whatsappUrl}?text=${encodeURIComponent(`Hola te quiero consultar sobre Sorrentinos, precio y disponibilidad`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('click_order_sorrentinos', 'catalog', 'Pedido Sorrentinos')}
+                >
+                  <ZnIcon icon={WhatsAppOutlined} /> {t("pages.home.productOrderBtn") || "Hacé tu pedido"}
+                </OrderButton>
+              </ProductContent>
+            </ProductCard>
+
+            <ProductCard>
+              <ProductImage src="/assets/images/ravioles1.webp" alt={t("pages.home.productRaviolesTitle")} loading="lazy" />
+              <ProductContent>
+                <ProductTitle>{t("pages.home.productRaviolesTitle")}</ProductTitle>
+                <ProductDescription>
+                  {t("pages.home.productRaviolesDesc")}
+                </ProductDescription>
+                <OrderButton
+                  href={`${BRAND_CONFIG.whatsappUrl}?text=${encodeURIComponent(`Hola te quiero consultar sobre Ravioles, precio y disponibilidad`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('click_order_ravioles', 'catalog', 'Pedido Ravioles')}
+                >
+                  <ZnIcon icon={WhatsAppOutlined} /> {t("pages.home.productOrderBtn") || "Hacé tu pedido"}
+                </OrderButton>
+              </ProductContent>
+            </ProductCard>
+
+            <ProductCard>
+              <ProductImage src="/assets/images/fideos.webp" alt={t("pages.home.productFideosTitle")} loading="lazy" />
+              <ProductContent>
+                <ProductTitle>{t("pages.home.productFideosTitle")}</ProductTitle>
+                <ProductDescription>
+                  {t("pages.home.productFideosDesc")}
+                </ProductDescription>
+                <OrderButton
+                  href={`${BRAND_CONFIG.whatsappUrl}?text=${encodeURIComponent(`Hola te quiero consultar sobre Fideos Frescos, precio y disponibilidad`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('click_order_fideos', 'catalog', 'Pedido Fideos')}
+                >
+                  <ZnIcon icon={WhatsAppOutlined} /> {t("pages.home.productOrderBtn") || "Hacé tu pedido"}
+                </OrderButton>
+              </ProductContent>
+            </ProductCard>
+
+            <ProductCard>
+              <ProductImage src="/assets/images/empanadas.webp" alt={t("pages.home.productEmpanadasTitle")} loading="lazy" />
+              <ProductContent>
+                <ProductTitle>{t("pages.home.productEmpanadasTitle")}</ProductTitle>
+                <ProductDescription>
+                  {t("pages.home.productEmpanadasDesc")}
+                </ProductDescription>
+                <OrderButton
+                  href={`${BRAND_CONFIG.whatsappUrl}?text=${encodeURIComponent(`Hola te quiero consultar sobre Empanadas, precio y disponibilidad`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('click_order_empanadas', 'catalog', 'Pedido Empanadas')}
+                >
+                  <ZnIcon icon={WhatsAppOutlined} /> {t("pages.home.productOrderBtn") || "Hacé tu pedido"}
+                </OrderButton>
+              </ProductContent>
+            </ProductCard>
+          </ProductGrid>
         </Container>
       </VhSection>
 

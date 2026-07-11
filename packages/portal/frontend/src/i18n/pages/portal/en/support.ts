@@ -1,4 +1,4 @@
-export const support = {
+const support = {
   title: 'Support & Contact',
   subtitle: 'Check your existing tickets or create a new one. We will get back to you as soon as possible.',
   userNumberLabel: 'Your user number: ',
