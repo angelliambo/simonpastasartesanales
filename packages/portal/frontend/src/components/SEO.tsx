@@ -25,7 +25,7 @@ const SEO: React.FC<SEOProps> = ({
   description,
   keywords,
   canonicalUrl,
-  ogImage = "/og-image.png",
+  ogImage = `/og-image.png?v=${BRAND_CONFIG.assetVersion}`,
   ogType = "website",
   twitterCard = "summary_large_image",
   twitterSite = "@simonpastas",
