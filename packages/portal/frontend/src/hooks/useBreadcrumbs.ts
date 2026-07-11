@@ -121,11 +121,11 @@ export const usePageSEO = () => {
     const translatedDescription = t(`pages.${pageKey}.seoDescription`);
     const translatedKeywords = t(`pages.${pageKey}.seoKeywords`);
 
-    const title = translatedTitle || (routeInfo ? `${routeInfo.name} | ${BRAND_CONFIG.siteName}` : `${BRAND_CONFIG.siteName} - Tu Plataforma Lista para Despegar`);
-    const description = translatedDescription || BRAND_CONFIG.seoDescription || "La estructura modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte.";
+    const title = translatedTitle || (routeInfo ? `${routeInfo.name} | ${BRAND_CONFIG.siteName}` : BRAND_CONFIG.seoTitle);
+    const description = translatedDescription || BRAND_CONFIG.seoDescription;
     const keywords = translatedKeywords
       ? translatedKeywords.split(",").map(k => k.trim())
-      : (BRAND_CONFIG.seoKeywords ? BRAND_CONFIG.seoKeywords.split(",").map(k => k.trim()) : ["portal saas", "boilerplate", "panel de control web", "base para startup", "desarrollo modular", "login google", "soporte integrado"]);
+      : (BRAND_CONFIG.seoKeywords ? BRAND_CONFIG.seoKeywords.split(",").map(k => k.trim()) : ["fabrica de pastas simon", "pastas artesanales", "pastas congeladas"]);
 
     return {
       title,

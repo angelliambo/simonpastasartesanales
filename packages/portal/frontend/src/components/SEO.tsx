@@ -41,13 +41,13 @@ const SEO: React.FC<SEOProps> = ({
   const finalLocale = locale || currentLang;
 
   // Fallbacks usando las traducciones de la Home si no se proveen metadatos específicos
-  const finalTitle = title || t('pages.home.seoTitle') || `${BRAND_CONFIG.siteName} - SaaS Platform`;
-  const finalDescription = description || t('pages.home.seoDescription') || "La estructura modular definitiva para tu próximo proyecto web.";
+  const finalTitle = title || t('pages.home.seoTitle') || BRAND_CONFIG.seoTitle;
+  const finalDescription = description || t('pages.home.seoDescription') || BRAND_CONFIG.seoDescription;
 
   const rawKeywords = keywords || t('pages.home.seoKeywords');
   const finalKeywords = Array.isArray(rawKeywords)
     ? rawKeywords.join(", ")
-    : (rawKeywords || BRAND_CONFIG.seoKeywords || "portal saas, boilerplate, panel de control web, base para startup, desarrollo modular, login google, soporte integrado");
+    : (rawKeywords || BRAND_CONFIG.seoKeywords);
 
   const fullTitle = finalTitle.includes(BRAND_CONFIG.siteName)
     ? finalTitle

@@ -15,7 +15,7 @@ async function main() {
           <p>¡Hola! Este es un correo de prueba oficial generado mediante el comando de test del monorepo.</p>
           <p>La tarjeta del contenido debería permanecer centrada y el fondo oscuro '#0b091a' extenderse por completo en la pantalla de tu cliente de correo.</p>
           <div style="text-align:center;margin:24px 0;">
-            <a href="https://<domain>" target="_blank" style="display:inline-block;padding:12px 24px;background-color:#6366f1;color:#ffffff;border-radius:12px;font-weight:600;text-decoration:none;">Ir a ${BRAND_CONFIG.siteName}</a>
+            <a href="https://simonpastasartesanales.com.ar" target="_blank" style="display:inline-block;padding:12px 24px;background-color:#6366f1;color:#ffffff;border-radius:12px;font-weight:600;text-decoration:none;">Ir a ${BRAND_CONFIG.siteName}</a>
           </div>
         `
       }

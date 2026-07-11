@@ -33,7 +33,7 @@ SaaS Boilerplate is structured as a monorepo containing two core packages:
 ---
 
 ## Primary Resources & Links
-- [Official Website](https://<domain>)
-- [Pricing and License Plans](https://<domain>/pricing)
-- [Terms and Conditions](https://<domain>/legal/terms)
-- [Privacy Policy & Data Security](https://<domain>/legal/privacy)
+- [Official Website](https://simonpastasartesanales.com.ar)
+- [Pricing and License Plans](https://simonpastasartesanales.com.ar/pricing)
+- [Terms and Conditions](https://simonpastasartesanales.com.ar/legal/terms)
+- [Privacy Policy & Data Security](https://simonpastasartesanales.com.ar/legal/privacy)

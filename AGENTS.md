@@ -12,8 +12,8 @@ Para activar el login automático con Google en el portal web:
 
 1. Ir a <https://console.cloud.google.com> → APIs & Services → Credentials
 2. Crear OAuth 2.0 Client ID (tipo "Web application")
-3. Agregar origen: `http://localhost:3000` y `https://<domain>`
-4. Agregar redirect URI: `http://localhost:3000` y `https://<domain>`
+3. Agregar origen: `http://localhost:3000` y `https://simonpastasartesanales.com.ar`
+4. Agregar redirect URI: `http://localhost:3000` y `https://simonpastasartesanales.com.ar`
 5. Copiar el Client ID
 
 Setear en ambos `.env`:
@@ -111,12 +111,14 @@ Aquí tienes las reglas, criterios e instrucciones obligatorias para trabajar co
 ### 1. Estructura y Arquitectura de design-sys
 
 El sistema de diseño reside en `packages/shared/src/design-sys/` y se organiza así:
+
 - `theme/`: Tipos, tema claro (`light.ts`) y tema oscuro (`dark.ts`).
 - `atoms/`: Componentes básicos (`Button`, `Card`, `Badge`, etc.).
 - `mixins/`: Estilos reutilizables (efectos, botones, textos, animaciones).
 - `organisms/`: Estructuras complejas (layouts de página).
 
 #### 🚫 Sin Importaciones de Barril (Barrel Exports)
+
 Está estrictamente prohibido el uso de archivos `index.ts` que re-exporten otros archivos. Importa siempre desde la fuente:
 
 ```typescript
@@ -131,11 +133,13 @@ import { Button, lightTheme } from '@design-sys';
 ### 2. Creación de Componentes y Props
 
 Cada nuevo componente debe ir en su propia carpeta con esta estructura exacta:
+
 - `index.tsx`: Solo la estructura del componente (JSX/TSX).
 - `<Component>.styles.ts`: Todos los styled-components.
 - `<Component>.types.ts`: Interfaces y tipos de TypeScript.
 
 #### 🧬 Props Transitorias (Transient Props)
+
 Usa siempre el prefijo `$` para las props personalizadas en styled-components. Así evitamos que se filtren al HTML nativo:
 
 ```tsx
@@ -152,6 +156,7 @@ const StyledDiv = styled.div<{ $isActive?: boolean }>`
 - **Prohibido el uso de estilos en línea**: Nunca uses `style={{ ... }}` en el JSX.
 
 #### 🎨 Gestión de Colores y Tokens
+
 - **Origen de datos**: Todos los colores deben provenir estrictamente de `props.theme.colors.*`.
 - **Formato**: Los colores del tema deben estar definidos como valores hexadecimales (ej. `#FFFFFF`).
 - **Evitar RGBA**: Evita el uso de funciones `rgba()` hardcodeadas. Si necesitas opacidad, utiliza tokens de color que ya la incluyan o propiedades de CSS como `opacity`.
@@ -162,13 +167,16 @@ const StyledDiv = styled.div<{ $isActive?: boolean }>`
 Adoptamos una filosofía Mobile-First estricta. Todo se diseña pensando primero en pantallas pequeñas y se adapta a pantallas grandes mediante media-queries.
 
 #### 📐 Filosofía de Maquetación: Simple y Limpia
+
 Para construir cualquier portal de nuestra plataforma MERN SaaS, solo necesitas estas herramientas básicas. No uses soluciones complejas.
+
 - **Display Grid (`display: grid`)**: Se reserva únicamente para la estructura del Layout General de la página (la rejilla global). No lo uses dentro de tarjetas (cards), formularios ni componentes internos.
 - **Display Flex (`display: flex`)**: Es la herramienta principal para el contenido interno de las páginas y componentes. Usa `align-items` y `justify-content` para alinear.
 - **Distribución de espacio (`gap`)**: Utiliza exclusivamente la propiedad `gap` combinada con Flexbox para separar elementos hermanos.
 - **Otros Displays Permitidos**: `block`, `relative`, `absolute`, `sticky`. Son más que suficientes para resolver cualquier interfaz.
 
 #### 📏 Reglas Semánticas de Dimensiones y Espacios
+
 - **Alturas Dinámicas**: Nunca fuerces la altura de tarjetas o contenedores con un `height` estático. La altura debe estar determinada de forma natural por el contenido que lleva dentro.
 - **Márgenes Exteriores (`margin`)**: Úsalo exclusivamente para separar contenedores independientes entre sí.
 - **Espaciado Interior (`padding`)**: Úsalo exclusivamente para separar el borde interno de un contenedor y su contenido.
@@ -194,10 +202,11 @@ Para construir cualquier portal de nuestra plataforma MERN SaaS, solo necesitas 
 
 ## i18n
 
-- Source language: `es`. Add keys in `packages/shared/src/i18n/pages/<domain>/<page>.ts`.
+- Source language: `es`. Add keys in `packages/shared/src/i18n/pages/simonpastasartesanales.com.ar/<page>.ts`.
 - **Estructura y Herencia Dialéctica**: Las variantes regionales (`es-MX`, `es-ES`, `en-US`, `en-GB`) heredan automáticamente de las bases de idioma común (`es` y `en`). Sus carpetas locales solo deben almacenar archivos `index.ts` vacíos (`export const pages = {}; export default pages;`) a menos que requieran sobreescrituras (overrides) regionales explícitas.
 - Sync auto-translates to 7 locales. Always add text in `es` first.
 - In React: `{t('pages.page.key')}` (MANDATORIO: nunca uses fallbacks con `|| "texto"` ya que silencia errores de claves i18n inexistentes).
+
 ### i18n rule: icons never in translations
 
 Icons/emojis (`🎤`, `✍️`, `✅`, `❌`, etc.) → **NO** van en los values de traducción.
@@ -224,8 +233,6 @@ demoTTS: '🎤 Prueba de Lectura'  // ← NO
 ```
 
 Excepción: keys con sufijo `Icon` (`sectionIdiomasNoteIcon`) cuyo único propósito es proveer el carácter del ícono. Esas sí pueden tener emoji.
-
-
 
 ## Versioning
 
@@ -287,5 +294,3 @@ See `PLAN_DE_TRABAJO_UNIFICADO.md` → "Tabla de Versiones por Fase".
 
 - El agente DEBE comunicarse siempre con el usuario en castellano (español).
 - Todos los planes de implementación, bitácoras de tareas, reportes y walkthroughs deben estar redactados en castellano.
-
-
