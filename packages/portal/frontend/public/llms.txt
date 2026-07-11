@@ -1,4 +1,4 @@
-# Fábrica de Pastas Simón | Pastas Artesanales Congeladas en Bernal\n
+# Fábrica de Pastas Simón | Venta Minorista y Mayorista | Bernal\n
 Fábrica de Pastas Simón is a high-performance MERN (MongoDB, Express, React, Node.js) web application boilerplate. It provides a modular foundation to quickly launch your startup or software-as-a-service application, with built-in modules for authentication, user dashboards, administration panels, support ticketing, and payment gateway integration.
 
 ---

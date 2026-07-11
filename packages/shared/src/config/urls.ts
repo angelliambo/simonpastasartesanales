@@ -9,7 +9,9 @@ export const GA_COLLECT_URL = 'https://www.google-analytics.com/mp/collect';
 export const GA_DEBUG_URL = 'https://www.google-analytics.com/debug/mp/collect';
 
 // Redes Sociales
-export const SHOW_SOCIAL_LINKS = false;
+export const SHOW_SOCIAL_LINKS = true;
 export const SOCIAL_X_URL = 'https://x.com/<username>';
-export const SOCIAL_INSTAGRAM_URL = 'https://instagram.com/<username>';
+
+const instagramUser = (typeof process !== 'undefined' && (process.env.REACT_APP_INSTAGRAM_DEFAULT_USERNAME || process.env.INSTAGRAM_DEFAULT_USERNAME)) || 'simonpastasartesanales';
+export const SOCIAL_INSTAGRAM_URL = `https://instagram.com/${instagramUser}`;
 

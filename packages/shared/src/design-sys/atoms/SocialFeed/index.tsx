@@ -9,6 +9,7 @@ import {
   PlayCircleOutlined,
   CopyOutlined,
 } from "@ant-design/icons";
+import { SOCIAL_INSTAGRAM_URL } from "../../../config/urls";
 import {
   GridContainer,
   StyledPostCard,
@@ -35,11 +36,12 @@ import {
  * Tarjeta de publicación individual de Instagram
  */
 export const SocialPostCard: React.FC<SocialPostCardProps> = ({ post }) => {
+  const resolvedUsername = post.username || SOCIAL_INSTAGRAM_URL.split('/').filter(Boolean).pop() || "simonpastasartesanales";
   return (
     <StyledPostCard href={post.permalink} target="_blank" rel="noopener noreferrer">
       <CardHeader>
         <UserInfo>
-          <Username>@{post.username || "sogasalejandro"}</Username>
+          <Username>@{resolvedUsername}</Username>
         </UserInfo>
         <PlatformBadge 
           as="div"

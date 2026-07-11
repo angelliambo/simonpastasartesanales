@@ -22,14 +22,12 @@ import TrackedClick from "../../components/TrackedClick";
 import { SUPPORTED_LOCALES } from "../../i18n";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
-  AudioOutlined,
-  SoundOutlined,
-  FileTextOutlined,
-  MessageOutlined,
-  MacCommandOutlined,
-  KeyOutlined,
-  RocketOutlined,
-  DesktopOutlined,
+  LikeOutlined,
+  ShopOutlined,
+  ClockCircleOutlined,
+  InboxOutlined,
+  TeamOutlined,
+  CarOutlined,
 } from "@ant-design/icons";
 
 import {
@@ -435,7 +433,6 @@ const HomePage: React.FC = () => {
               alt={BRAND_CONFIG.siteName}
             />
           </LogoWrapper>
-          <HeroTitle>{BRAND_CONFIG.siteName}</HeroTitle>
           <HeroSubtitle>
             {t("pages.home.heroSubtitle")}
           </HeroSubtitle>
@@ -471,7 +468,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      $icon={AudioOutlined}
+                      $icon={LikeOutlined}
                       title={t("pages.home.dictadoTitle")}
                       subtitle={t("pages.home.dictadoDesc")}
                       variant="glass"
@@ -482,7 +479,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      $icon={SoundOutlined}
+                      $icon={ShopOutlined}
                       title={t("pages.home.ttsTitle")}
                       subtitle={t("pages.home.ttsDesc")}
                       variant="glass"
@@ -493,7 +490,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      $icon={DesktopOutlined}
+                      $icon={ClockCircleOutlined}
                       title={t("pages.home.pipTitle")}
                       subtitle={t("pages.home.pipDesc")}
                       variant="glass"
@@ -504,7 +501,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      $icon={FileTextOutlined}
+                      $icon={InboxOutlined}
                       title={t("pages.home.pdfTitle")}
                       subtitle={t("pages.home.pdfDesc")}
                       variant="glass"
@@ -515,7 +512,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      $icon={MessageOutlined}
+                      $icon={TeamOutlined}
                       title={t("pages.home.subsTitle")}
                       subtitle={t("pages.home.subsDesc")}
                       variant="glass"
@@ -526,7 +523,7 @@ const HomePage: React.FC = () => {
                   <CardInnerWrapper>
                     <ContentCard
                       className="content-card"
-                      $icon={MacCommandOutlined}
+                      $icon={CarOutlined}
                       title={t("pages.home.shortcutsTitle")}
                       subtitle={t("pages.home.shortcutsDesc")}
                       variant="glass"

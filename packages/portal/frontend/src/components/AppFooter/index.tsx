@@ -43,24 +43,28 @@ const AppFooter: React.FC = () => {
 
       {SHOW_SOCIAL_LINKS && (
         <SocialContainer>
-          <SocialIconLink 
-            colors={colors} 
-            href={SOCIAL_X_URL} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            aria-label="Twitter/X"
-          >
-            <ZnIcon icon={TwitterOutlined} size={20} />
-          </SocialIconLink>
-          <SocialIconLink 
-            colors={colors} 
-            href={SOCIAL_INSTAGRAM_URL} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            aria-label="Instagram"
-          >
-            <ZnIcon icon={InstagramOutlined} size={20} />
-          </SocialIconLink>
+          {SOCIAL_X_URL && !SOCIAL_X_URL.includes('<username>') && (
+            <SocialIconLink 
+              colors={colors} 
+              href={SOCIAL_X_URL} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Twitter/X"
+            >
+              <ZnIcon icon={TwitterOutlined} size={20} />
+            </SocialIconLink>
+          )}
+          {SOCIAL_INSTAGRAM_URL && !SOCIAL_INSTAGRAM_URL.includes('<username>') && (
+            <SocialIconLink 
+              colors={colors} 
+              href={SOCIAL_INSTAGRAM_URL} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Instagram"
+            >
+              <ZnIcon icon={InstagramOutlined} size={20} />
+            </SocialIconLink>
+          )}
         </SocialContainer>
       )}
 
