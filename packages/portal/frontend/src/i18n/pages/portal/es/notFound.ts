@@ -1,9 +1,8 @@
-export const notFound = {
+const notFound = {
   title: '404',
   message: 'Página no encontrada',
   description: 'La página que buscas no existe o fue movida.',
   goHomeButton: 'Volver al inicio',
 };
 
-const defaultExport = {};
-export default defaultExport;
+export default notFound;

@@ -1,4 +1,4 @@
-export const admin = {
+const admin = {
   title: 'Panel de Administración',
   subtitle: 'Gestión de usuarios del portal',
   createUser: 'Crear Usuario',
@@ -34,3 +34,5 @@ export const admin = {
   msgErrorGeneric: 'Error al',
   copyId: 'Copiar ID',
 };
+
+export default admin;

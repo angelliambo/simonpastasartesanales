@@ -1,4 +1,4 @@
-export const legal = {
+const legal = {
   headerTitulo: '{{siteName}}',
   headerSlogan: 'Tu plataforma SaaS en la nube.',
   titulo: 'Términos y Condiciones de Uso',
@@ -93,6 +93,4 @@ export const legal = {
   seoKeywords: 'terminos {{siteName}}, condiciones de uso, licencia {{siteName}}, legal {{siteName}}',
 };
 
-const defaultExport = {};
-export default defaultExport;
-
+export default legal;

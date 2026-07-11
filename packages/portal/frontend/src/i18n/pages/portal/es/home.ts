@@ -1,4 +1,4 @@
-export const home = {
+const home = {
   // SEO Metadata
   seoTitle: '{{seoTitle}}',
   seoDescription: '{{seoDescription}}',

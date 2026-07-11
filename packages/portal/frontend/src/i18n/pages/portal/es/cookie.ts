@@ -1,4 +1,4 @@
-export const cookie = {
+const cookie = {
   title: 'Política de Cookies',
   intro: 'En {{siteName}} utilizamos cookies para mejorar tu experiencia y ofrecerte funcionalidades personalizadas.',
   whyImportant: '¿Por qué son importantes las cookies?',
@@ -18,5 +18,4 @@ export const cookie = {
   acceptButton: 'Aceptar Cookies',
 };
 
-const defaultExport = {};
-export default defaultExport;
+export default cookie;

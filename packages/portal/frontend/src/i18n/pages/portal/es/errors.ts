@@ -1,4 +1,4 @@
-export const errors = {
+const errors = {
   somethingWentWrong: 'Algo salió mal',
   unexpectedError: 'Ha ocurrido un error inesperado. Por favor, intentá de nuevo.',
   errorDetails: 'Detalles del error (click para expandir)',
@@ -42,5 +42,4 @@ export const errors = {
   errApi501: 'Fallo de verificación en la cuenta de Google.',
 };
 
-const defaultExport = {};
-export default defaultExport;
+export default errors;

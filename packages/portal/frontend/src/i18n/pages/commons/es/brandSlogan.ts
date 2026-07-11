@@ -1,6 +1,5 @@
-export const brandSlogan = {
+const brandSlogan = {
   slogan: 'Comunicación en su punto máximo.',
 };
 
-const defaultExport = {};
-export default defaultExport;
+export default brandSlogan;

@@ -1,4 +1,4 @@
-export const dashboard = {
+const dashboard = {
   title: 'Dashboard',
   subtitle: 'Account Summary',
   loading: 'Loading profile...',
@@ -36,5 +36,4 @@ export const dashboard = {
   seoKeywords: 'dashboard {{siteName}}, account {{siteName}}, license {{siteName}}, premium subscription',
 };
 
-const defaultExport = {};
-export default defaultExport;
+export default dashboard;

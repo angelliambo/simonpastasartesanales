@@ -1,4 +1,4 @@
-export const login = {
+const login = {
   title: 'Autenticación',
   tabLogin: 'Iniciar Sesión',
   tabRegister: 'Registrarse',
@@ -15,7 +15,7 @@ export const login = {
   errorMessage: 'Error al iniciar sesión',
 };
 
-export const register = {
+const register = {
   nameLabel: 'Nombre',
   namePlaceholder: 'Nombre',
   lastNameLabel: 'Apellido',
@@ -41,5 +41,4 @@ export const register = {
   errorMessage: 'Error al registrarse',
 };
 
-const defaultExport = {};
-export default defaultExport;
+export default { login, register };
