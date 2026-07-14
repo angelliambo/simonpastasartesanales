@@ -115,7 +115,13 @@ export const useStructuredData = (config: StructuredDataConfig) => {
           "image": `${baseUrl}/og-image.png`,
           "address": {
             "@type": "PostalAddress",
+            "streetAddress": BRAND_CONFIG.address,
             "addressCountry": "AR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": BRAND_CONFIG.latitude,
+            "longitude": BRAND_CONFIG.longitude
           },
           "contactPoint": {
             "@type": "ContactPoint",

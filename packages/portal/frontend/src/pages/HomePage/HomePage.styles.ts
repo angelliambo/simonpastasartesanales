@@ -26,12 +26,6 @@ export const VhSection = styled.section<{
     return theme.colors.background.primary || "#ffffff";
   }};
   color: ${({ theme }) => theme.colors.text.primary};
-  opacity: ${({ $visible }) => ($visible ? 1 : 0.6)};
-  transform: translateY(${({ $visible }) => ($visible ? 0 : 20)}px);
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
-  will-change: opacity, transform;
 
   @media (max-height: 800px) {
     padding: 10px 24px;
@@ -307,109 +301,12 @@ export const CtaButtonContent = styled.span`
   gap: 6px;
 `;
 
-export const StatsRow = styled(Row)`
-  max-width: 800px;
+export const MapContainer = styled.div`
+  margin-top: ${({ theme }) => theme.spacing.xl};
   width: 100%;
-  margin: 0 auto;
-`;
-
-export const StatCol = styled(Col)`
-  display: flex;
-  justify-content: center;
-`;
-
-export const StatItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      rgba(96, 165, 250, 0.3) 0%,
-      transparent 70%
-    );
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  > * {
-    position: relative;
-    z-index: 1;
-  }
-`;
-
-export const StatNumber = styled.span<{ $large?: boolean }>`
-  font-size: 42px;
-  font-weight: 800;
-  background: ${({ theme }) =>
-    theme.gradients?.brand ||
-    "linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6)"};
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1.1;
-  margin-bottom: ${({ theme }) => theme.spacing.xs};
-  filter: drop-shadow(0 0 18px rgba(96, 165, 250, 0.4));
-  ${({ $large }) =>
-    $large &&
-    `
-    display: inline-block;
-    transform: scale(1.8);
-  `}
-
-  @media (max-height: 800px) {
-    font-size: 32px;
-  }
-  @media (max-height: 700px) {
-    font-size: 26px;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: 32px;
-    ${({ $large }) => $large && `transform: scale(1.5);`}
-  }
-`;
-
-export const StatLabel = styled.span`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.text.secondary};
-  text-transform: uppercase;
-  letter-spacing: 1px;
-
-  @media (max-height: 800px) {
-    font-size: 12px;
-  }
-`;
-
-export const StatList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  margin-top: 10px;
-
-  @media (max-height: 800px) {
-    margin-top: 4px;
-    gap: 2px;
-  }
-`;
-
-export const StatListItem = styled.span`
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.text.tertiary};
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const PricingGrid = styled.div`
@@ -985,4 +882,127 @@ export const HeroGoogleButtonWrapper = styled.div`
   display: inline-flex;
   align-self: center;
 `;
+
+export const MapFallback = styled.div`
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.colors.background.card || '#10141f'};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  border: 1px solid ${({ theme }) => theme.colors.border || 'rgba(255, 255, 255, 0.1)'};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: 16px;
+  
+  @media (max-width: 768px) {
+    aspect-ratio: 4 / 3;
+  }
+`;
+
+export const StatsRow = styled(Row)`
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+`;
+
+export const StatCol = styled(Col)`
+  display: flex;
+  justify-content: center;
+`;
+
+export const StatItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(96, 165, 250, 0.3) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+`;
+
+export const StatNumber = styled.span<{ $large?: boolean }>`
+  font-size: 42px;
+  font-weight: 800;
+  background: ${({ theme }) =>
+    theme.gradients?.brand ||
+    "linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6)"};
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
+  filter: drop-shadow(0 0 18px rgba(96, 165, 250, 0.4));
+  ${({ $large }) =>
+    $large &&
+    `
+    display: inline-block;
+    transform: scale(1.8);
+  `}
+
+  @media (max-height: 800px) {
+    font-size: 32px;
+  }
+  @media (max-height: 700px) {
+    font-size: 26px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 32px;
+    ${({ $large }) => $large && `transform: scale(1.5);`}
+  }
+`;
+
+export const StatLabel = styled.span`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  @media (max-height: 800px) {
+    font-size: 12px;
+  }
+`;
+
+export const StatList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+
+  @media (max-height: 800px) {
+    margin-top: 4px;
+    gap: 2px;
+  }
+`;
+
+export const StatListItem = styled.span`
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.text.tertiary};
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`;
+
 
