@@ -46,6 +46,10 @@ export const home = {
   statsPrivacidadItem3: 'Strict schema validation',
   statsCompatibilidad: 'Total Compatibility',
 
+  // Location Section
+  locationTitle: 'Our Location',
+  locationSubtitle: 'Visit us or get in touch at our main offices.',
+
   // Social Proof & Trust
   testimonialsTitle: 'Optimized to accelerate your development',
   testimonialsSubtitle: 'Thousands of hours of basic SaaS project setup solved in a single template.',

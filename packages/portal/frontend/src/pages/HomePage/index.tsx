@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from "../../i18n/I18nProvider";
+import { SUPPORTED_LOCALES } from "../../i18n";
 import { FEATURES } from "@factory/shared/config/features";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { Container } from '@design-sys/atoms/Container';
@@ -17,7 +18,6 @@ import {
 import { RootState } from "../../store/store";
 import AppFooter from "../../components/AppFooter";
 import TrackedClick from "../../components/TrackedClick";
-import { SUPPORTED_LOCALES } from "../../i18n";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
   AudioOutlined,
@@ -41,13 +41,8 @@ import {
   HeroOutlinedButton,
   HeroPrimaryButton,
   FeaturesInner,
-  StatsRow,
-  StatCol,
-  StatItem,
-  StatNumber,
-  StatLabel,
-  StatList,
-  StatListItem,
+  MapContainer,
+  MapFallback,
   TestimonialsRow,
   TestimonialCol,
   TestimonialCard,
@@ -70,7 +65,19 @@ import {
   FeatureCol,
   CardInnerWrapper,
   CtaButtonContent,
+  StatsRow,
+  StatCol,
+  StatItem,
+  StatNumber,
+  StatLabel,
+  StatList,
+  StatListItem,
 } from "./HomePage.styles";
+
+// Lazy loading del componente de mapa responsivo
+const Map = React.lazy(() =>
+  import("@design-sys/atoms/Map").then((module) => ({ default: module.Map }))
+);
 
 
 
@@ -79,6 +86,7 @@ const SECTIONS = [
   "features",
   "stats",
   "testimonials",
+  ...(BRAND_CONFIG.showMapSection ? ["location"] : []),
   "cta",
 ];
 
@@ -86,6 +94,7 @@ const SECTION_LABELS: Record<string, string> = {
   features: "Funciones",
   stats: "Estadísticas",
   testimonials: "Opiniones",
+  location: "Ubicación",
   cta: "Comenzar",
 };
 
@@ -180,10 +189,6 @@ const HomePage: React.FC = () => {
   } | null;
   const { t, lang } = useTranslation();
 
-  const { data: socialFeedData, isLoading: isLoadingFeed } = useGetInstagramFeedQuery(undefined, {
-    skip: !FEATURES.ENABLE_SOCIAL_FEEDS,
-  });
-
   const LANG_FLAGS: Record<string, { flag: string; name: string }> = {
     "es": { flag: "🇪🇸", name: "Español" },
     "en": { flag: "🇺🇸", name: "English" },
@@ -196,6 +201,10 @@ const HomePage: React.FC = () => {
 
   const currentFlag = LANG_FLAGS[lang] || LANG_FLAGS["es"];
   const secondLangItem = secondLang[lang] || secondLang["en"];
+
+  const { data: socialFeedData, isLoading: isLoadingFeed } = useGetInstagramFeedQuery(undefined, {
+    skip: !FEATURES.ENABLE_SOCIAL_FEEDS,
+  });
 
   const handleLogin = useCallback(() => setShowRegister(true), []);
   const handlePricing = useCallback(() => navigate("/pricing"), [navigate]);
@@ -535,7 +544,6 @@ const HomePage: React.FC = () => {
         </FeaturesInner>
       </VhSection>
 
-
       <VhSection
         id="stats"
         $visible={preloadedSections.has("stats")}
@@ -724,6 +732,34 @@ const HomePage: React.FC = () => {
           )}
         </Container>
       </VhSection>
+
+      {BRAND_CONFIG.showMapSection && (
+        <VhSection
+          id="location"
+          $visible={preloadedSections.has("location")}
+        >
+          <Container maxWidth="lg">
+            <SectionTitle>{t("pages.home.locationTitle")}</SectionTitle>
+            <SectionSubtitle>
+              {t("pages.home.locationSubtitle")}
+            </SectionSubtitle>
+            <MapContainer>
+              <React.Suspense fallback={<MapFallback>Cargando mapa...</MapFallback>}>
+                <Map
+                  $address={BRAND_CONFIG.address}
+                  $latitude={BRAND_CONFIG.latitude}
+                  $longitude={BRAND_CONFIG.longitude}
+                  $zoom={BRAND_CONFIG.mapZoom}
+                  $provider="static-image"
+                  $mapImageUrl={BRAND_CONFIG.mapImageUrl}
+                  $mapMobileImageUrl={BRAND_CONFIG.mapMobileImageUrl}
+                  $mapLinkUrl={BRAND_CONFIG.mapLinkUrl}
+                />
+              </React.Suspense>
+            </MapContainer>
+          </Container>
+        </VhSection>
+      )}
 
       <VhSection
         id="cta"
