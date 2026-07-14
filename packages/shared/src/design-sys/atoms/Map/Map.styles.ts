@@ -7,10 +7,11 @@ export const MapWrapper = styled.div`
   box-shadow: ${props => props.theme.shadows.light};
   background-color: ${props => props.theme.colors.background.card};
   border: 1px solid ${props => props.theme.colors.border || 'rgba(0, 0, 0, 0.1)'};
-  aspect-ratio: 16 / 9;
   
   @media (max-width: 768px) {
-    aspect-ratio: 4 / 3;
+    max-width: 350px;
+    height: 600px;
+    margin: 0 auto;
   }
 `;
 
@@ -101,10 +102,18 @@ export const StaticMapLink = styled.a`
 
 export const StaticMapImage = styled.img`
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
   display: block;
+  transition: transform 0.5s ease;
+
+  @media (min-width: 769px) {
+    height: auto;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    height: 100%;
+    object-fit: cover;
+  }
   
   ${StaticMapLink}:hover & {
     transform: scale(1.03);
