@@ -35,5 +35,8 @@
     "firebase:build": "yarn shared:build && yarn workspace @factory/frontend build",
     "firebase:deploy": "firebase deploy --only hosting"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "firebase-tools": "^15.24.0"
+  }
 }
