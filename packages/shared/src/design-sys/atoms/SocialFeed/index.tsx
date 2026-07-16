@@ -40,7 +40,7 @@ export const SocialPostCard: React.FC<SocialPostCardProps> = ({ post }) => {
     <StyledPostCard href={post.permalink} target="_blank" rel="noopener noreferrer">
       <CardHeader>
         <UserInfo>
-          <Username>@{post.username || "sogasalejandro"}</Username>
+          <Username>@{post.username || "__INSTAGRAM_USERNAME__"}</Username>
         </UserInfo>
         <PlatformBadge 
           as="div"

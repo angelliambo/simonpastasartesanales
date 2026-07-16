@@ -1,4 +1,4 @@
-export const PORTAL_URL = 'https://<domain>';
+export const PORTAL_URL = 'https://__DOMAIN_NAME__';
 export const LICENSE_API_URL = `${PORTAL_URL}/api`;
 export const LEGAL_TERMS_URL = `${PORTAL_URL}/legal/terms`;
 export const LEGAL_PRIVACY_URL = `${PORTAL_URL}/legal/privacy`;
