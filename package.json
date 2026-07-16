@@ -31,7 +31,9 @@
     "portal:audit-performance": "node scripts/audit-portal.js",
     "wording:audit": "node scripts/audit-wording.js",
     "gp": "node scripts/gp.js",
-    "rollout": "yarn portal:fdeploy"
+    "rollout": "yarn portal:fdeploy",
+    "firebase:build": "yarn shared:build && yarn workspace @factory/frontend build",
+    "firebase:deploy": "firebase deploy --only hosting"
   },
   "license": "MIT"
 }
