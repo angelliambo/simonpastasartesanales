@@ -8,14 +8,13 @@ node_modules/
 .pnp.js
 
 # Environment variables
-# All env files are ignored (templates should be .env.example.template)
+# All env files are ignored (templates should be .env.example)
 .env
 .env.local
 .env.development
 .env.development.local
 .env.test
 .env.test.local
-.env.example
 .env.production
 
 # Build outputs

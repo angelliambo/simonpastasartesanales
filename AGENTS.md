@@ -2,9 +2,9 @@
 
 Monorepo: `packages/portal` (MERN), `packages/shared` (config + types + design-sys).
 
-## .env files — DO NOT TOUCH
+## .env files — PERMITTED
 
-.env, .env.* files are never to be read, created, or modified by the agent. If a task requires changing an .env file, ask the user to do it.
+.env, .env.* files can be read, created, or modified by the agent as requested by the user.
 
 ## Google OAuth (GIS) — auto-login en portal
 
