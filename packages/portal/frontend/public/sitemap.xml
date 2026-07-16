@@ -45,11 +45,4 @@
     <priority>0.6</priority>
   </url>
   
-  <!-- Comandos de Voz -->
-  <url>
-    <loc>https://__DOMAIN_NAME__/commands</loc>
-    <lastmod>2026-06-29T10:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
 </urlset>
