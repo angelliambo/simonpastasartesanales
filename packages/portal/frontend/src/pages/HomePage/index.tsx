@@ -81,11 +81,11 @@ const Map = React.lazy(() =>
 
 
 
-const SECTIONS = [
+const getSections = (shouldHideInstagram: boolean) => [
   "hero",
   "features",
   "stats",
-  "testimonials",
+  ...(shouldHideInstagram ? [] : ["testimonials"]),
   ...(BRAND_CONFIG.showMapSection ? ["location"] : []),
   "cta",
 ];
@@ -206,6 +206,9 @@ const HomePage: React.FC = () => {
     skip: !FEATURES.ENABLE_SOCIAL_FEEDS,
   });
 
+  const shouldHideInstagramSection = FEATURES.ENABLE_SOCIAL_FEEDS && Boolean(socialFeedData?.quotaExceeded);
+  const activeSections = getSections(shouldHideInstagramSection);
+
   const handleLogin = useCallback(() => setShowRegister(true), []);
   const handlePricing = useCallback(() => navigate("/pricing"), [navigate]);
 
@@ -244,11 +247,11 @@ const HomePage: React.FC = () => {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (isLighthouse || prefersReducedMotion) {
-      return new Set(SECTIONS);
+      return new Set(activeSections);
     }
     return new Set(["hero"]);
   });
-  useAutoScroll(SECTIONS, activeSection, userInteracted, timerRef, setActiveSection);
+  useAutoScroll(activeSections, activeSection, userInteracted, timerRef, setActiveSection);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -272,24 +275,24 @@ const HomePage: React.FC = () => {
             }
           });
           if (best) setActiveSection(best);
-          const sorted = SECTIONS.filter((s) => visible.has(s));
+          const sorted = activeSections.filter((s) => visible.has(s));
           const last = sorted[sorted.length - 1];
-          const lastIdx = SECTIONS.indexOf(last);
+          const lastIdx = activeSections.indexOf(last);
           setPreloadedSections(
-            new Set(SECTIONS.slice(0, Math.min(lastIdx + 2, SECTIONS.length))),
+            new Set(activeSections.slice(0, Math.min(lastIdx + 2, activeSections.length))),
           );
         }
       },
       { threshold: 0.1, rootMargin: "-80px 0px 0px 0px" },
     );
 
-    SECTIONS.forEach((id) => {
+    activeSections.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [activeSections.join(",")]);
 
   // Configuración del botón CTA (al final de la página)
   const getCtaConfig = () => {
@@ -416,7 +419,7 @@ const HomePage: React.FC = () => {
   return (
     <>
       <ScrollNav>
-        {SECTIONS.map((s) => (
+        {activeSections.map((s) => (
           <ScrollDotWrapper key={s}>
             <ScrollDot
               $active={activeSection === s}
@@ -599,139 +602,141 @@ const HomePage: React.FC = () => {
         </Container>
       </VhSection>
 
-      <VhSection
-        id="testimonials"
-        $variant="alternate"
-        $visible={preloadedSections.has("testimonials")}
-      >
-        <Container maxWidth="lg">
-          <SectionTitle>{t("pages.home.testimonialsTitle")}</SectionTitle>
-          <SectionSubtitle>
-            {t("pages.home.testimonialsSubtitle")}
-          </SectionSubtitle>
-          {FEATURES.ENABLE_SOCIAL_FEEDS ? (
-            <SocialFeedGrid
-              posts={socialFeedData?.feed}
-              isLoading={isLoadingFeed}
-              fallbackComponent={
-                <TestimonialsRow gutter={[24, 24]} justify="center">
-                  <TestimonialCol xs={24} md={8}>
-                    <TestimonialCard>
-                      <TestimonialQuote>
-                        {t("pages.home.testimonial1")}
-                      </TestimonialQuote>
-                      <TestimonialAuthor>
-                        <TestimonialAvatar>S</TestimonialAvatar>
-                        <div>
-                          <TestimonialName>
-                            {t("pages.home.testimonialName1")}
-                          </TestimonialName>
-                          <TestimonialRole>
-                            {t("pages.home.testimonialRole1")}
-                          </TestimonialRole>
-                        </div>
-                      </TestimonialAuthor>
-                    </TestimonialCard>
-                  </TestimonialCol>
-                  <TestimonialCol xs={24} md={8}>
-                    <TestimonialCard>
-                      <TestimonialQuote>
-                        {t("pages.home.testimonial2")}
-                      </TestimonialQuote>
-                      <TestimonialAuthor>
-                        <TestimonialAvatar>M</TestimonialAvatar>
-                        <div>
-                          <TestimonialName>
-                            {t("pages.home.testimonialName2")}
-                          </TestimonialName>
-                          <TestimonialRole>
-                            {t("pages.home.testimonialRole2")}
-                          </TestimonialRole>
-                        </div>
-                      </TestimonialAuthor>
-                    </TestimonialCard>
-                  </TestimonialCol>
-                  <TestimonialCol xs={24} md={8}>
-                    <TestimonialCard>
-                      <TestimonialQuote>
-                        {t("pages.home.testimonial3")}
-                      </TestimonialQuote>
-                      <TestimonialAuthor>
-                        <TestimonialAvatar>Y</TestimonialAvatar>
-                        <div>
-                          <TestimonialName>
-                            {t("pages.home.testimonialName3")}
-                          </TestimonialName>
-                          <TestimonialRole>
-                            {t("pages.home.testimonialRole3")}
-                          </TestimonialRole>
-                        </div>
-                      </TestimonialAuthor>
-                    </TestimonialCard>
-                  </TestimonialCol>
-                </TestimonialsRow>
-              }
-            />
-          ) : (
-            <TestimonialsRow gutter={[24, 24]} justify="center">
-              <TestimonialCol xs={24} md={8}>
-                <TestimonialCard>
-                  <TestimonialQuote>
-                    {t("pages.home.testimonial1")}
-                  </TestimonialQuote>
-                  <TestimonialAuthor>
-                    <TestimonialAvatar>S</TestimonialAvatar>
-                    <div>
-                      <TestimonialName>
-                        {t("pages.home.testimonialName1")}
-                      </TestimonialName>
-                      <TestimonialRole>
-                        {t("pages.home.testimonialRole1")}
-                      </TestimonialRole>
-                    </div>
-                  </TestimonialAuthor>
-                </TestimonialCard>
-              </TestimonialCol>
-              <TestimonialCol xs={24} md={8}>
-                <TestimonialCard>
-                  <TestimonialQuote>
-                    {t("pages.home.testimonial2")}
-                  </TestimonialQuote>
-                  <TestimonialAuthor>
-                    <TestimonialAvatar>M</TestimonialAvatar>
-                    <div>
-                      <TestimonialName>
-                        {t("pages.home.testimonialName2")}
-                      </TestimonialName>
-                      <TestimonialRole>
-                        {t("pages.home.testimonialRole2")}
-                      </TestimonialRole>
-                    </div>
-                  </TestimonialAuthor>
-                </TestimonialCard>
-              </TestimonialCol>
-              <TestimonialCol xs={24} md={8}>
-                <TestimonialCard>
-                  <TestimonialQuote>
-                    {t("pages.home.testimonial3")}
-                  </TestimonialQuote>
-                  <TestimonialAuthor>
-                    <TestimonialAvatar>Y</TestimonialAvatar>
-                    <div>
-                      <TestimonialName>
-                        {t("pages.home.testimonialName3")}
-                      </TestimonialName>
-                      <TestimonialRole>
-                        {t("pages.home.testimonialRole3")}
-                      </TestimonialRole>
-                    </div>
-                  </TestimonialAuthor>
-                </TestimonialCard>
-              </TestimonialCol>
-            </TestimonialsRow>
-          )}
-        </Container>
-      </VhSection>
+      {!shouldHideInstagramSection && (
+        <VhSection
+          id="testimonials"
+          $variant="alternate"
+          $visible={preloadedSections.has("testimonials")}
+        >
+          <Container maxWidth="lg">
+            <SectionTitle>{t("pages.home.testimonialsTitle")}</SectionTitle>
+            <SectionSubtitle>
+              {t("pages.home.testimonialsSubtitle")}
+            </SectionSubtitle>
+            {FEATURES.ENABLE_SOCIAL_FEEDS ? (
+              <SocialFeedGrid
+                posts={socialFeedData?.feed}
+                isLoading={isLoadingFeed}
+                fallbackComponent={
+                  <TestimonialsRow gutter={[24, 24]} justify="center">
+                    <TestimonialCol xs={24} md={8}>
+                      <TestimonialCard>
+                        <TestimonialQuote>
+                          {t("pages.home.testimonial1")}
+                        </TestimonialQuote>
+                        <TestimonialAuthor>
+                          <TestimonialAvatar>S</TestimonialAvatar>
+                          <div>
+                            <TestimonialName>
+                              {t("pages.home.testimonialName1")}
+                            </TestimonialName>
+                            <TestimonialRole>
+                              {t("pages.home.testimonialRole1")}
+                            </TestimonialRole>
+                          </div>
+                        </TestimonialAuthor>
+                      </TestimonialCard>
+                    </TestimonialCol>
+                    <TestimonialCol xs={24} md={8}>
+                      <TestimonialCard>
+                        <TestimonialQuote>
+                          {t("pages.home.testimonial2")}
+                        </TestimonialQuote>
+                        <TestimonialAuthor>
+                          <TestimonialAvatar>M</TestimonialAvatar>
+                          <div>
+                            <TestimonialName>
+                              {t("pages.home.testimonialName2")}
+                            </TestimonialName>
+                            <TestimonialRole>
+                              {t("pages.home.testimonialRole2")}
+                            </TestimonialRole>
+                          </div>
+                        </TestimonialAuthor>
+                      </TestimonialCard>
+                    </TestimonialCol>
+                    <TestimonialCol xs={24} md={8}>
+                      <TestimonialCard>
+                        <TestimonialQuote>
+                          {t("pages.home.testimonial3")}
+                        </TestimonialQuote>
+                        <TestimonialAuthor>
+                          <TestimonialAvatar>Y</TestimonialAvatar>
+                          <div>
+                            <TestimonialName>
+                              {t("pages.home.testimonialName3")}
+                            </TestimonialName>
+                            <TestimonialRole>
+                              {t("pages.home.testimonialRole3")}
+                            </TestimonialRole>
+                          </div>
+                        </TestimonialAuthor>
+                      </TestimonialCard>
+                    </TestimonialCol>
+                  </TestimonialsRow>
+                }
+              />
+            ) : (
+              <TestimonialsRow gutter={[24, 24]} justify="center">
+                <TestimonialCol xs={24} md={8}>
+                  <TestimonialCard>
+                    <TestimonialQuote>
+                      {t("pages.home.testimonial1")}
+                    </TestimonialQuote>
+                    <TestimonialAuthor>
+                      <TestimonialAvatar>S</TestimonialAvatar>
+                      <div>
+                        <TestimonialName>
+                          {t("pages.home.testimonialName1")}
+                        </TestimonialName>
+                        <TestimonialRole>
+                          {t("pages.home.testimonialRole1")}
+                        </TestimonialRole>
+                      </div>
+                    </TestimonialAuthor>
+                  </TestimonialCard>
+                </TestimonialCol>
+                <TestimonialCol xs={24} md={8}>
+                  <TestimonialCard>
+                    <TestimonialQuote>
+                      {t("pages.home.testimonial2")}
+                    </TestimonialQuote>
+                    <TestimonialAuthor>
+                      <TestimonialAvatar>M</TestimonialAvatar>
+                      <div>
+                        <TestimonialName>
+                          {t("pages.home.testimonialName2")}
+                        </TestimonialName>
+                        <TestimonialRole>
+                          {t("pages.home.testimonialRole2")}
+                        </TestimonialRole>
+                      </div>
+                    </TestimonialAuthor>
+                  </TestimonialCard>
+                </TestimonialCol>
+                <TestimonialCol xs={24} md={8}>
+                  <TestimonialCard>
+                    <TestimonialQuote>
+                      {t("pages.home.testimonial3")}
+                    </TestimonialQuote>
+                    <TestimonialAuthor>
+                      <TestimonialAvatar>Y</TestimonialAvatar>
+                      <div>
+                        <TestimonialName>
+                          {t("pages.home.testimonialName3")}
+                        </TestimonialName>
+                        <TestimonialRole>
+                          {t("pages.home.testimonialRole3")}
+                        </TestimonialRole>
+                      </div>
+                    </TestimonialAuthor>
+                  </TestimonialCard>
+                </TestimonialCol>
+              </TestimonialsRow>
+            )}
+          </Container>
+        </VhSection>
+      )}
 
       {BRAND_CONFIG.showMapSection && (
         <VhSection

@@ -31,18 +31,23 @@ router.get("/instagram", async (req: Request, res: Response) => {
       }
     }
 
-    const feed = await SocialFeedService.getInstagramFeed(usernameToFetch);
+    const result = await SocialFeedService.getInstagramFeed(usernameToFetch);
 
     return res.status(200).json({
-      success: true,
+      success: !result.quotaExceeded && !result.error,
       username: usernameToFetch,
-      count: feed.length,
-      feed
+      count: result.feed.length,
+      feed: result.feed,
+      quotaExceeded: result.quotaExceeded,
+      fromCache: result.fromCache,
+      error: result.error
     });
   } catch (error: any) {
     logger.error(`[SOCIAL-FEED] Error en endpoint /instagram: ${error.message}`);
-    return res.status(500).json({
+    return res.status(200).json({
       success: false,
+      feed: [],
+      quotaExceeded: false,
       error: "Ocurrió un error al intentar traer la actividad de Instagram."
     });
   }

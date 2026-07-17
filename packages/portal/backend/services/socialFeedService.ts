@@ -1,34 +1,135 @@
+import fs from "fs";
+import path from "path";
 import { SocialPost, SocialComment } from "@factory/shared/types/socialFeed";
 import { memoryCache } from "../utils/cache";
 import { FEATURES } from "@factory/shared/config/features";
 
+export interface InstagramFeedResponse {
+  feed: SocialPost[];
+  quotaExceeded: boolean;
+  fromCache: boolean;
+  error?: string;
+}
+
+interface DiskCacheEntry {
+  username: string;
+  posts: SocialPost[];
+  cachedAt: number;
+  expiresAt: number;
+  quotaExceeded: boolean;
+}
+
 /**
  * Servicio para obtener y cachear el feed de Instagram desde RapidAPI
+ * Aplica regla de 1 consulta cada 10 días, persistida en disco para sobrevivir reinicios,
+ * limitando a las 3 publicaciones más recientes para no exceder 30 sol/mes.
  */
 export class SocialFeedService {
-  /**
-   * Obtener las publicaciones más recientes del usuario de Instagram
-   */
-  static async getInstagramFeed(username: string): Promise<SocialPost[]> {
-    const cacheKey = `social_feed:instagram:${username}`;
-    const cachedData = memoryCache.get<SocialPost[]>(cacheKey);
+  private static getCacheFilePath(): string {
+    const dir = path.join(__dirname, "../data");
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    return path.join(dir, "instagram_cache.json");
+  }
 
-    if (cachedData) {
-      console.log(`[SOCIAL-FEED] Sirviendo feed de @${username} desde el caché en memoria`);
-      return cachedData;
+  private static readDiskCache(username: string): DiskCacheEntry | null {
+    try {
+      const filePath = this.getCacheFilePath();
+      if (!fs.existsSync(filePath)) return null;
+
+      const fileContent = fs.readFileSync(filePath, "utf-8");
+      const diskEntry: DiskCacheEntry = JSON.parse(fileContent);
+
+      if (diskEntry.username === username) {
+        return diskEntry;
+      }
+      return null;
+    } catch (err) {
+      console.warn("[SOCIAL-FEED] No se pudo leer el archivo de caché en disco:", err);
+      return null;
+    }
+  }
+
+  private static writeDiskCache(entry: DiskCacheEntry): void {
+    try {
+      const filePath = this.getCacheFilePath();
+      fs.writeFileSync(filePath, JSON.stringify(entry, null, 2), "utf-8");
+    } catch (err) {
+      console.error("[SOCIAL-FEED] Error guardando el caché de Instagram en disco:", err);
+    }
+  }
+
+  /**
+   * Obtener las publicaciones más recientes del usuario de Instagram (máx 3, caché 10 días)
+   */
+  static async getInstagramFeed(username: string): Promise<InstagramFeedResponse> {
+    const cacheKey = `social_feed:instagram:${username}`;
+    const tenDaysInSeconds = 10 * 24 * 60 * 60; // 864000s = 10 días
+    const ttlMs = parseInt(process.env.SOCIAL_FEED_CACHE_TTL || String(tenDaysInSeconds * 1000), 10);
+    const ttlSeconds = Math.max(60, Math.floor(ttlMs / 1000));
+    const postsLimit = parseInt(process.env.INSTAGRAM_POSTS_LIMIT || '3', 10);
+
+    // 1. Revisar caché en memoria primero
+    const cachedMemory = memoryCache.get<InstagramFeedResponse>(cacheKey);
+    if (cachedMemory) {
+      console.log(`[SOCIAL-FEED] Sirviendo feed de @${username} desde el caché en memoria (10 días)`);
+      return cachedMemory;
     }
 
+    // 2. Revisar caché en disco (para sobrevivir a reinicios del backend)
+    const diskCache = this.readDiskCache(username);
+    const now = Date.now();
+
+    if (diskCache) {
+      // Si el caché en disco registraba quotaExceeded y fue grabado hace menos de 24 hs
+      if (diskCache.quotaExceeded && (now - diskCache.cachedAt < 24 * 60 * 60 * 1000)) {
+        console.warn(`[SOCIAL-FEED] Cuota excedida previamente registrada en disco para @${username}. Se omite consulta a RapidAPI.`);
+        const quotaResponse: InstagramFeedResponse = {
+          feed: [],
+          quotaExceeded: true,
+          fromCache: true,
+          error: "Cuota mensual de RapidAPI excedida."
+        };
+        memoryCache.set(cacheKey, quotaResponse, 3600); // 1 hora en memoria
+        return quotaResponse;
+      }
+
+      // Si el caché en disco sigue vigente (dentro de los 10 días)
+      if (now < diskCache.expiresAt && Array.isArray(diskCache.posts) && diskCache.posts.length > 0) {
+        console.log(`[SOCIAL-FEED] Restaurando caché vigente de 10 días desde disco para @${username}`);
+        const validResponse: InstagramFeedResponse = {
+          feed: diskCache.posts.slice(0, postsLimit),
+          quotaExceeded: false,
+          fromCache: true
+        };
+        const remainingSeconds = Math.max(60, Math.floor((diskCache.expiresAt - now) / 1000));
+        memoryCache.set(cacheKey, validResponse, remainingSeconds);
+        return validResponse;
+      }
+    }
+
+    // 3. Si no hay caché válido, consultar a RapidAPI
     const apiKey = process.env.RAPIDAPI_KEY;
     const host = process.env.RAPIDAPI_HOST;
 
-    // Si no están configuradas las credenciales de RapidAPI, usar Mock Provider para evitar romper el boilerplate
     if (!apiKey || !host) {
       console.warn("[SOCIAL-FEED] RapidAPI no configurada. Usando Mock Social Provider para desarrollo local.");
-      const mockFeed = this.getMockFeed(username);
-
-      // Guardar el mock en cache por 10 minutos para dev local rápido
-      memoryCache.set(cacheKey, mockFeed, 600);
-      return mockFeed;
+      const mockFeed = this.getMockFeed(username).slice(0, postsLimit);
+      const mockResponse: InstagramFeedResponse = {
+        feed: mockFeed,
+        quotaExceeded: false,
+        fromCache: false
+      };
+      memoryCache.set(cacheKey, mockResponse, ttlSeconds);
+      this.writeDiskCache({
+        username,
+        posts: mockFeed,
+        cachedAt: now,
+        expiresAt: now + ttlSeconds * 1000,
+        quotaExceeded: false
+      });
+      return mockResponse;
     }
 
     try {
@@ -54,47 +155,108 @@ export class SocialFeedService {
         }
       });
 
+      // Detectar códigos de status de cuota o restricción (429, 403, 402, 304, etc.)
+      const isQuotaStatus = [429, 403, 402, 304].includes(response.status);
+      if (isQuotaStatus) {
+        console.error(`[SOCIAL-FEED] RapidAPI devolvió status ${response.status} de límite de cuota/créditos.`);
+        return this.handleQuotaExceeded(username, cacheKey, `HTTP ${response.status} - Límite de cuota excedido`);
+      }
+
       if (!response.ok) {
         throw new Error(`HTTP ${response.status} (${response.statusText}) al llamar a la URL: ${url}`);
       }
 
       const rawData = await response.json();
 
-      // Validar errores de negocio en el payload de la API (evita cachear respuestas de error/parámetros inválidos)
+      // Validar mensajes de error de cuota o negocio en el payload
+      const rawMsg = String(rawData?.message || rawData?.error || rawData?.status || "").toLowerCase();
+      if (rawMsg.includes("quota") || rawMsg.includes("rate limit") || rawMsg.includes("exceeded") || rawMsg.includes("credit") || rawMsg.includes("subscription")) {
+        console.error(`[SOCIAL-FEED] RapidAPI reportó error de cuota en el payload: ${rawMsg}`);
+        return this.handleQuotaExceeded(username, cacheKey, rawData?.message || rawData?.error || "Cuota de API agotada");
+      }
+
       if (rawData && (rawData.message === "Missing or invalid user parameter" || rawData.error || rawData.status === "fail" || rawData.status === "error")) {
         throw new Error(rawData.message || rawData.error || "La API externa reportó un error de negocio.");
       }
 
       const posts = this.normalizeRapidApiResponse(rawData);
 
-      // Ordenar explícitamente por fecha descendente (lo más reciente primero)
+      // Ordenar por fecha descendente
       const sortedPosts = posts.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
-      // Limitar cantidad de posts según variable de entorno (por defecto 6)
-      const postsLimit = parseInt(process.env.INSTAGRAM_POSTS_LIMIT || '6', 10);
+      // Tomar estrictamente los 3 posts más nuevos (o la cantidad en INSTAGRAM_POSTS_LIMIT)
       const finalPosts = sortedPosts.slice(0, postsLimit);
 
-      // Cachear por el tiempo configurado (por defecto 6 horas)
-      const ttlMs = parseInt(process.env.SOCIAL_FEED_CACHE_TTL || '21600000', 10);
-      const ttlSeconds = Math.max(60, Math.floor(ttlMs / 1000)); // Mínimo 1 minuto de cacheo de seguridad
+      const successResponse: InstagramFeedResponse = {
+        feed: finalPosts,
+        quotaExceeded: false,
+        fromCache: false
+      };
 
-      memoryCache.set(cacheKey, finalPosts, ttlSeconds);
-      return finalPosts;
+      // Guardar en caché en memoria y disco por 10 días
+      memoryCache.set(cacheKey, successResponse, ttlSeconds);
+      this.writeDiskCache({
+        username,
+        posts: finalPosts,
+        cachedAt: now,
+        expiresAt: now + ttlSeconds * 1000,
+        quotaExceeded: false
+      });
+
+      return successResponse;
     } catch (error: any) {
-      console.error(`[SOCIAL-FEED] Falló la consulta externa para @${username}. Se activa Fallback de Seguridad (Mock Feed). Detalle del error: ${error.message}`);
-      const mockFeed = this.getMockFeed(username);
+      console.error(`[SOCIAL-FEED] Error en consulta para @${username}: ${error.message}`);
+      
+      // Si tenemos publicaciones cacheadas en disco previas (aunque hayan caducado), las usamos de respaldo
+      if (diskCache && Array.isArray(diskCache.posts) && diskCache.posts.length > 0 && !diskCache.quotaExceeded) {
+        console.warn("[SOCIAL-FEED] Usando respaldo de disco previo tras fallo de consulta externa.");
+        return {
+          feed: diskCache.posts.slice(0, postsLimit),
+          quotaExceeded: false,
+          fromCache: true
+        };
+      }
 
-      // Cachear el mock por 5 minutos para evitar inundar los logs de re-intentos de error
-      memoryCache.set(cacheKey, mockFeed, 300);
-      return mockFeed;
+      // Si no hay datos, retornar error
+      return {
+        feed: [],
+        quotaExceeded: false,
+        fromCache: false,
+        error: error.message
+      };
     }
+  }
+
+  /**
+   * Manejador centralizado para cuota excedida
+   */
+  private static handleQuotaExceeded(username: string, cacheKey: string, errorMsg: string): InstagramFeedResponse {
+    const now = Date.now();
+    const quotaResponse: InstagramFeedResponse = {
+      feed: [],
+      quotaExceeded: true,
+      fromCache: false,
+      error: errorMsg
+    };
+
+    // Guardar estado de cuota excedida en disco (por 24 horas)
+    this.writeDiskCache({
+      username,
+      posts: [],
+      cachedAt: now,
+      expiresAt: now + 24 * 60 * 60 * 1000,
+      quotaExceeded: true
+    });
+
+    // Guardar en memoria
+    memoryCache.set(cacheKey, quotaResponse, 3600);
+    return quotaResponse;
   }
 
   /**
    * Normaliza las diferentes variantes de payloads que devuelven los scrapers de RapidAPI
    */
   private static normalizeRapidApiResponse(rawData: any): SocialPost[] {
-    // Buscar el array de publicaciones en el payload
     let rawPosts: any[] = [];
 
     if (Array.isArray(rawData)) {
@@ -108,7 +270,6 @@ export class SocialFeedService {
     } else if (rawData && rawData.items && Array.isArray(rawData.items)) {
       rawPosts = rawData.items;
     } else if (rawData && typeof rawData === 'object') {
-      // Intento desesperado: buscar cualquier propiedad que sea un array
       for (const key of Object.keys(rawData)) {
         if (Array.isArray(rawData[key])) {
           rawPosts = rawData[key];
@@ -123,27 +284,21 @@ export class SocialFeedService {
     }
 
     return rawPosts.map((raw: any) => {
-      // Si viene envuelto en edges de graphql
       const item = raw.node || raw;
-
       const id = item.id || item.pk || String(Math.random());
 
-      // Extraer media_url
       let mediaUrl = item.media_url || item.display_url || item.image_versions2?.candidates?.[0]?.url || "";
       if (Array.isArray(item.carousel_media) && item.carousel_media.length > 0) {
         mediaUrl = item.carousel_media[0].media_url || item.carousel_media[0].display_url || mediaUrl;
       }
 
-      // Extraer permalink
       const code = item.code || item.shortcode;
       const permalink = item.permalink || (code ? `https://instagram.com/p/${code}` : `https://instagram.com`);
 
-      // Extraer caption (evitamos usar el accessibility_caption porque suele autogenerarse por IA en el idioma del proxy del scraper, ej: ruso)
       const caption = typeof item.caption === 'string'
         ? item.caption
         : (item.caption?.text || "");
 
-      // Extraer media_type
       let mediaType: SocialPost['mediaType'] = 'IMAGE';
       const rawType = String(item.media_type || item.type || '').toUpperCase();
       if (rawType.includes('VIDEO') || rawType === '2') {
@@ -152,15 +307,12 @@ export class SocialFeedService {
         mediaType = 'CAROUSEL_ALBUM';
       }
 
-      // Extraer timestamp (taken_at es UNIX timestamp, convertir a ISOString)
       const takenAt = item.taken_at || item.timestamp || item.created_time || Date.now() / 1000;
       const timestamp = new Date(takenAt * (takenAt < 10000000000 ? 1000 : 1)).toISOString();
 
-      // Likes y comentarios
       const likesCount = item.like_count || item.likes_count || item.edge_media_preview_like?.count || 0;
       const commentsCount = item.comment_count || item.comments_count || item.edge_media_to_comment?.count || 0;
 
-      // Extraer y normalizar comentarios respetando el límite configurable
       const envLimit = process.env.INSTAGRAM_COMMENTS_LIMIT;
       const commentsLimit = envLimit ? parseInt(envLimit, 10) : FEATURES.INSTAGRAM_COMMENTS_LIMIT;
 

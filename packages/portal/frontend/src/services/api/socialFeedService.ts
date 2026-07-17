@@ -3,7 +3,7 @@ import { SocialPost } from "@factory/shared/types/socialFeed";
 
 export const socialFeedApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getInstagramFeed: builder.query<{ success: boolean; feed: SocialPost[] }, void>({
+    getInstagramFeed: builder.query<{ success: boolean; feed: SocialPost[]; quotaExceeded?: boolean; fromCache?: boolean; error?: string }, void>({
       query: () => "/social-feed/instagram",
     }),
   }),
