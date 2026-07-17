@@ -15,21 +15,12 @@ const ROUTE_CONFIG: Record<
   { name: string; icon: string; parent?: string }
 > = {
   dashboard: { name: "Dashboard", icon: "📊" },
-  juegos: { name: "Juegos Educativos", icon: "🎮" },
-  abcencastra: { name: "ABC Encastra", icon: "🔤", parent: "juegos" },
-  "pizarra-magica": { name: "Pizarra Mágica", icon: "🖍️", parent: "juegos" },
-  puzzle: { name: "Puzzle Interactivo", icon: "🧩", parent: "juegos" },
-  rutinas: { name: "Juego de Rutinas", icon: "⏰", parent: "juegos" },
-  emotions: { name: "Gestión de Emociones", icon: "😊", parent: "juegos" },
-  memory: { name: "Juego de Memoria", icon: "🧠", parent: "juegos" },
-  canciones: { name: "Canciones Infantiles", icon: "🎵" },
-  acciones: { name: "Acciones y Comandos", icon: "🎯" },
-  settings: { name: "Configuración", icon: "⚙️" },
-  personalization: { name: "Personalización", icon: "🎨" },
-  progress: { name: "Progreso", icon: "📈" },
-  communication: { name: "Comunicación", icon: "💬" },
-  accessibility: { name: "Accesibilidad", icon: "♿" },
-  notifications: { name: "Notificaciones", icon: "🔔" },
+  support: { name: "Soporte", icon: "💬" },
+  admin: { name: "Administración", icon: "🛡️" },
+  wellcome: { name: "Bienvenida", icon: "👋" },
+  legal: { name: "Legal", icon: "📄" },
+  terms: { name: "Términos y Condiciones", icon: "⚖️", parent: "legal" },
+  privacy: { name: "Política de Privacidad", icon: "🔒", parent: "legal" },
 };
 
 export const useBreadcrumbs = () => {

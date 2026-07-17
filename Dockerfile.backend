@@ -1,0 +1,39 @@
+FROM node:20-alpine AS base-dependencies
+WORKDIR /app
+COPY package.json yarn.lock* ./
+COPY packages/shared/package*.json ./packages/shared/
+COPY packages/portal/backend/package*.json ./packages/portal/backend/
+RUN yarn config set network-timeout 600000 && \
+    for i in 1 2 3 4 5; do \
+        yarn install --frozen-lockfile && break; \
+        if [ $i -eq 5 ]; then exit 1; fi; \
+        sleep 10; \
+    done
+
+FROM base-dependencies AS shared-builder
+WORKDIR /app
+COPY packages/shared ./packages/shared
+RUN yarn workspace @factory/shared build
+
+FROM shared-builder AS backend-builder
+WORKDIR /app
+COPY packages/portal/backend ./packages/portal/backend
+RUN yarn workspace @factory/backend build
+
+FROM node:20-alpine
+WORKDIR /app
+COPY package.json yarn.lock* ./
+COPY packages/shared/package*.json ./packages/shared/
+COPY packages/portal/backend/package*.json ./packages/portal/backend/
+COPY --from=shared-builder /app/packages/shared /app/packages/shared
+RUN yarn config set network-timeout 600000 && \
+    for i in 1 2 3 4 5; do \
+        yarn install --production --frozen-lockfile && break; \
+        if [ $i -eq 5 ]; then exit 1; fi; \
+        sleep 10; \
+    done
+COPY --from=backend-builder /app/packages/portal/backend/dist ./packages/portal/backend/dist
+
+EXPOSE 5000
+ENV NODE_ENV=production
+CMD ["node", "packages/portal/backend/dist/server.js"]

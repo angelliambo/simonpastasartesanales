@@ -39,15 +39,14 @@ const processIndexHtml = () => {
     .replace(/<meta property="twitter:title"\s+content=".*?"\s*\/>/s, `<meta property="twitter:title" content="${BRAND_CONFIG.seoTitle}" />`)
     .replace(/<meta property="twitter:description"\s+content=".*?"\s*\/>/s, `<meta property="twitter:description" content="${BRAND_CONFIG.seoDescription}" />`)
     // Nombres en el HTML interno (fallback estático para SEO)
-    .replace(/<h1>SaaS Boilerplate - .*?<\/h1>/s, `<h1>${BRAND_CONFIG.seoTitle}</h1>`)
+    .replace(/<h1>__BRAND_NAME__ - .*?<\/h1>/s, `<h1>${BRAND_CONFIG.seoTitle}</h1>`)
     .replace(/<h2>La estructura modular .*?<\/h2>/s, `<h2>${BRAND_CONFIG.seoDescription}</h2>`)
-    .replace(/id="portal-loader-logo">\s*SaaS Boilerplate\s*<\/div>/s, `id="portal-loader-logo">${BRAND_CONFIG.siteName}</div>`);
+    .replace(/id="portal-loader-logo">\s*__BRAND_NAME__\s*<\/div>/s, `id="portal-loader-logo">${BRAND_CONFIG.siteName}</div>`);
 
   // Reemplazo general de dominio y marca para limpiar cualquier otra ocurrencia
   content = content
-    .replace(/<domain>/g, BRAND_CONFIG.domain)
-    .replace(/SaaS Boilerplate/g, BRAND_CONFIG.siteName)
-    .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
+    .replace(/__DOMAIN_NAME__/g, BRAND_CONFIG.domain)
+    .replace(/__BRAND_NAME__/g, BRAND_CONFIG.siteName);
 
   writeFileSync(outputPath, content, "utf8");
   console.log(`✅ [SEO-UPDATE] index.html actualizado físicamente.`);
@@ -62,9 +61,8 @@ const processRobotsTxt = () => {
 
   let content = readFileSync(templatePath, "utf8");
   content = content
-    .replace(/<domain>/g, BRAND_CONFIG.domain)
-    .replace(/SaaS Boilerplate/g, BRAND_CONFIG.siteName)
-    .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
+    .replace(/__DOMAIN_NAME__/g, BRAND_CONFIG.domain)
+    .replace(/__BRAND_NAME__/g, BRAND_CONFIG.siteName);
 
   writeFileSync(outputPath, content, "utf8");
   console.log(`✅ [SEO-UPDATE] robots.txt actualizado físicamente.`);
@@ -79,7 +77,7 @@ const processSitemapXml = () => {
 
   let content = readFileSync(templatePath, "utf8");
   content = content
-    .replace(/<domain>/g, BRAND_CONFIG.domain);
+    .replace(/__DOMAIN_NAME__/g, BRAND_CONFIG.domain);
 
   writeFileSync(outputPath, content, "utf8");
   console.log(`✅ [SEO-UPDATE] sitemap.xml actualizado físicamente.`);
@@ -94,11 +92,10 @@ const processManifestJson = () => {
 
   let content = readFileSync(templatePath, "utf8");
   content = content
-    .replace(/"short_name":\s*"SaaS Boilerplate"/g, `"short_name": "${BRAND_CONFIG.siteName}"`)
+    .replace(/"short_name":\s*"__BRAND_NAME__"/g, `"short_name": "${BRAND_CONFIG.siteName}"`)
     .replace(/"name":\s*".*?"/g, `"name": "${BRAND_CONFIG.seoTitle}"`)
     .replace(/"description":\s*".*?"/g, `"description": "${BRAND_CONFIG.seoDescription}"`)
-    .replace(/SaaS Boilerplate/g, BRAND_CONFIG.siteName)
-    .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
+    .replace(/__BRAND_NAME__/g, BRAND_CONFIG.siteName);
 
   writeFileSync(outputPath, content, "utf8");
   console.log(`✅ [SEO-UPDATE] manifest.json actualizado físicamente.`);
@@ -113,11 +110,9 @@ const processLlmsTxt = () => {
 
   let content = readFileSync(templatePath, "utf8");
   content = content
-    .replace(/# SaaS Boilerplate - .*?\n/g, `# ${BRAND_CONFIG.seoTitle}\\n`)
-    .replace(/# ZenithNexus - .*?\n/g, `# ${BRAND_CONFIG.seoTitle}\\n`)
-    .replace(/<domain>/g, BRAND_CONFIG.domain)
-    .replace(/SaaS Boilerplate/g, BRAND_CONFIG.siteName)
-    .replace(/ZenithNexus/g, BRAND_CONFIG.siteName);
+    .replace(/# __BRAND_NAME__ - .*?\n/g, `# ${BRAND_CONFIG.seoTitle}\\n`)
+    .replace(/__DOMAIN_NAME__/g, BRAND_CONFIG.domain)
+    .replace(/__BRAND_NAME__/g, BRAND_CONFIG.siteName);
 
   writeFileSync(outputPath, content, "utf8");
   console.log(`✅ [SEO-UPDATE] llms.txt actualizado físicamente.`);
