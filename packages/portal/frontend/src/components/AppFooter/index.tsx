@@ -1,5 +1,8 @@
 import React from "react";
 import { useTranslation } from "../../i18n/I18nProvider";
+import { SUPPORTED_LOCALES } from "../../i18n";
+import { LanguageSelector } from "../../i18n/LanguageSelector";
+import { ThemeToggle } from "../ThemeToggle";
 import { useThemeColors } from "../../hooks/useThemeColors";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import { TwitterOutlined, InstagramOutlined } from "@ant-design/icons";
@@ -15,6 +18,7 @@ import {
   SocialContainer,
   SocialIconLink,
   CopyRightParagraph,
+  FooterLangSelectorWrapper,
 } from "./AppFooter.styles";
 
 const AppFooter: React.FC = () => {
@@ -22,21 +26,21 @@ const AppFooter: React.FC = () => {
   const colors = useThemeColors();
 
   return (
-    <FooterContainer colors={colors}>
+    <FooterContainer $colors={colors}>
       <div>
-        <FooterLink colors={colors} to="/commands">
+        <FooterLink $colors={colors} to="/commands">
           {t('pages.home.footerCommands') || 'Comandos de Voz'}
         </FooterLink>
         <Separator>|</Separator>
-        <ExternalLink colors={colors} href={`mailto:${CONTACT_EMAIL}`}>
+        <ExternalLink $colors={colors} href={`mailto:${CONTACT_EMAIL}`}>
           Contáctenos
         </ExternalLink>
         <Separator>|</Separator>
-        <FooterLink colors={colors} to="/legal/terms">
+        <FooterLink $colors={colors} to="/legal/terms">
           {t('pages.home.footerTerminos') || 'Términos'}
         </FooterLink>
         <Separator>|</Separator>
-        <FooterLink colors={colors} to="/legal/privacy">
+        <FooterLink $colors={colors} to="/legal/privacy">
           {t('pages.home.footerPrivacidad') || 'Privacidad'}
         </FooterLink>
       </div>
@@ -44,7 +48,7 @@ const AppFooter: React.FC = () => {
       {SHOW_SOCIAL_LINKS && (
         <SocialContainer>
           <SocialIconLink 
-            colors={colors} 
+            $colors={colors} 
             href={SOCIAL_X_URL} 
             target="_blank" 
             rel="noopener noreferrer" 
@@ -53,7 +57,7 @@ const AppFooter: React.FC = () => {
             <ZnIcon icon={TwitterOutlined} size={20} />
           </SocialIconLink>
           <SocialIconLink 
-            colors={colors} 
+            $colors={colors} 
             href={SOCIAL_INSTAGRAM_URL} 
             target="_blank" 
             rel="noopener noreferrer" 
@@ -64,9 +68,16 @@ const AppFooter: React.FC = () => {
         </SocialContainer>
       )}
 
+      <FooterLangSelectorWrapper>
+        <ThemeToggle variant="icon" />
+        {SUPPORTED_LOCALES.length > 1 && (
+          <LanguageSelector dropUp={true} />
+        )}
+      </FooterLangSelectorWrapper>
+
       <CopyRightParagraph>
         &copy; {new Date().getFullYear()}{" "}
-        <ExternalLink colors={colors} href={PORTAL_URL}>{BRAND_CONFIG.siteName}</ExternalLink>.{" "}
+        <ExternalLink $colors={colors} href={PORTAL_URL}>{BRAND_CONFIG.siteName}</ExternalLink>.{" "}
         {t('pages.home.footerRights') || 'Todos los derechos reservados.'}
         {" "}&mdash;{" "}
         {t('pages.home.versionLabel') || 'Versión'} {pkg.version}
