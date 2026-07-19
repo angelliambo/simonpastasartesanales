@@ -7,9 +7,22 @@ interface UIState {
   sidebarOpen: boolean;
 }
 
+const getSavedTheme = (): "light" | "dark" | "auto" => {
+  try {
+    const saved = localStorage.getItem("zn-portal-user-theme");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed?.theme === "dark" || parsed?.theme === "light") {
+        return parsed.theme;
+      }
+    }
+  } catch { /* ignore */ }
+  return "light";
+};
+
 const initialState: UIState = {
   locale: "es-MX",
-  theme: "auto",
+  theme: getSavedTheme(),
   globalLoading: false,
   sidebarOpen: false,
 };

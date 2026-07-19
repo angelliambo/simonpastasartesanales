@@ -1,7 +1,9 @@
-import React, { createContext, useContext, useState, useEffect, useMemo, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback, ReactNode } from "react";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import { useDispatch } from "react-redux";
 import { getCombinedTheme } from "./themes";
 import type { DefaultTheme } from "styled-components";
+import { setTheme as setReduxTheme } from "../store/slices/uiSlice";
 
 export type Theme = "light" | "dark";
 export type AccessibilityTheme = "default" | "high-contrast" | "protanopia" | "deuteranopia" | "tritanopia";
@@ -47,17 +49,14 @@ function loadConfig(): ThemeConfig {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved) as ThemeConfig;
-      if (parsed.autoDetect !== false) {
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        return { ...parsed, theme: prefersDark ? "dark" : "light" };
+      if (parsed && (parsed.theme === "light" || parsed.theme === "dark")) {
+        return { ...parsed, autoDetect: false };
       }
-      return parsed;
     }
   } catch {
     /* ignore */
   }
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  return { theme: prefersDark ? "dark" : "light", accessibility: "default", autoDetect: true };
+  return { theme: "light", accessibility: "default", autoDetect: false };
 }
 
 function saveConfig(config: ThemeConfig) {
@@ -73,43 +72,63 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+  const dispatch = useDispatch();
   const [themeConfig, setThemeConfigState] = useState<ThemeConfig>(loadConfig);
 
-  const updateConfig = (updates: Partial<ThemeConfig>) => {
+  const currentTheme = useMemo(() => {
+    try {
+      const theme = getCombinedTheme(themeConfig.theme, themeConfig.accessibility, themeConfig.customColors);
+      if (!theme || !theme.colors || !theme.typography) {
+        return getCombinedTheme("light", "default");
+      }
+      return theme;
+    } catch {
+      return getCombinedTheme("light", "default");
+    }
+  }, [themeConfig.theme, themeConfig.accessibility, themeConfig.customColors]);
+
+  const updateConfig = useCallback((updates: Partial<ThemeConfig>) => {
     setThemeConfigState((prev) => {
       const next: ThemeConfig = { ...prev, ...updates };
       saveConfig(next);
       return next;
     });
-  };
+  }, []);
 
-  const setTheme = (theme: Theme) => updateConfig({ theme });
-  const setAccessibility = (accessibility: AccessibilityTheme) => updateConfig({ accessibility });
+  const setTheme = useCallback((theme: Theme) => {
+    updateConfig({ theme, autoDetect: false });
+    dispatch(setReduxTheme(theme));
+  }, [updateConfig, dispatch]);
 
-  const toggleTheme = () => {
-    setThemeConfigState((prev) => {
-      const next: ThemeConfig = { ...prev, theme: prev.theme === "light" ? "dark" : "light" };
-      saveConfig(next);
-      return next;
-    });
-  };
+  const toggleTheme = useCallback(() => {
+    const newTheme: Theme = themeConfig.theme === "light" ? "dark" : "light";
+    updateConfig({ theme: newTheme, autoDetect: false });
+    dispatch(setReduxTheme(newTheme));
+  }, [themeConfig.theme, updateConfig, dispatch]);
 
-  const setCustomColors = (customColors: CustomColors | undefined) => updateConfig({ customColors });
-  const clearCustomColors = () => updateConfig({ customColors: undefined, customThemeName: undefined });
+  const setAccessibility = useCallback((accessibility: AccessibilityTheme) => {
+    updateConfig({ accessibility });
+  }, [updateConfig]);
 
-  const setAutoDetect = (autoDetect: boolean) => {
-    setThemeConfigState((prev) => {
-      const next: ThemeConfig = { ...prev, autoDetect };
-      saveConfig(next);
-      return next;
-    });
+  const setCustomColors = useCallback((customColors: CustomColors | undefined) => {
+    updateConfig({ customColors });
+  }, [updateConfig]);
+
+  const clearCustomColors = useCallback(() => {
+    updateConfig({ customColors: undefined, customThemeName: undefined });
+  }, [updateConfig]);
+
+  const setAutoDetect = useCallback((autoDetect: boolean) => {
+    updateConfig({ autoDetect });
     if (autoDetect) {
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setTheme(prefersDark ? "dark" : "light");
+      const newTheme: Theme = prefersDark ? "dark" : "light";
+      updateConfig({ theme: newTheme, autoDetect: true });
+      dispatch(setReduxTheme(newTheme));
     }
-  };
+  }, [updateConfig, dispatch]);
 
-  const saveCustomTheme = (name: string, colors: CustomColors) => {
+  const saveCustomTheme = useCallback((name: string, colors: CustomColors) => {
     try {
       const savedThemes = JSON.parse(localStorage.getItem(THEMES_KEY) || "[]") as Array<{ name: string; colors: CustomColors }>;
       const existingIndex = savedThemes.findIndex((t) => t.name === name);
@@ -118,31 +137,63 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       localStorage.setItem(THEMES_KEY, JSON.stringify(savedThemes));
     } catch { /* ignore */ }
     updateConfig({ customColors: colors, customThemeName: name });
-  };
+  }, [updateConfig]);
 
-  const loadCustomTheme = (name: string): CustomColors | null => {
+  const loadCustomTheme = useCallback((name: string): CustomColors | null => {
     try {
       const savedThemes = JSON.parse(localStorage.getItem(THEMES_KEY) || "[]") as Array<{ name: string; colors: CustomColors }>;
-      const theme = savedThemes.find((t) => t.name === name);
-      if (theme) {
-        updateConfig({ customColors: theme.colors, customThemeName: name });
-        return theme.colors;
+      const found = savedThemes.find((t) => t.name === name);
+      if (found) {
+        updateConfig({ customColors: found.colors, customThemeName: name });
+        return found.colors;
       }
     } catch { /* ignore */ }
     return null;
-  };
+  }, [updateConfig]);
 
-  const getSavedThemes = (): Array<{ name: string; colors: CustomColors }> => {
+  const getSavedThemes = useCallback((): Array<{ name: string; colors: CustomColors }> => {
     try {
       return JSON.parse(localStorage.getItem(THEMES_KEY) || "[]");
     } catch { return []; }
-  };
+  }, []);
 
   useEffect(() => {
     if (typeof document === "undefined" || !document.documentElement) return;
+    const isDark = themeConfig.theme === "dark";
+    const colors = currentTheme?.colors;
+
     document.documentElement.setAttribute("data-theme", themeConfig.theme);
     document.documentElement.setAttribute("data-accessibility", themeConfig.accessibility);
-  }, [themeConfig.theme, themeConfig.accessibility]);
+
+    if (isDark) {
+      document.documentElement.classList.add("dark-mode");
+      document.body?.classList.add("dark-mode");
+    } else {
+      document.documentElement.classList.remove("dark-mode");
+      document.body?.classList.remove("dark-mode");
+    }
+
+    if (colors && colors.background) {
+      document.documentElement.style.setProperty("--color-background-primary", colors.background.primary);
+      document.documentElement.style.setProperty("--color-background-secondary", colors.background.secondary);
+      document.documentElement.style.setProperty("--color-background-card", colors.background.card);
+      document.documentElement.style.setProperty("--color-background-surface", colors.background.surface);
+      document.documentElement.style.setProperty("--color-text-primary", colors.text.primary);
+      document.documentElement.style.setProperty("--color-text-secondary", colors.text.secondary);
+      document.documentElement.style.setProperty("--color-border-light", colors.border.light);
+
+      document.documentElement.style.removeProperty("--color-bg-primary");
+      document.documentElement.style.removeProperty("--color-bg-secondary");
+      document.documentElement.style.removeProperty("--color-bg-card");
+
+      // Actualizar dinámicamente el fondo de HTML y Body para sobreescribir el estilo inyectado en la carga
+      document.documentElement.style.backgroundColor = colors.background.primary;
+      if (document.body) {
+        document.body.style.backgroundColor = colors.background.primary;
+        document.body.style.color = colors.text.primary;
+      }
+    }
+  }, [themeConfig.theme, themeConfig.accessibility, currentTheme]);
 
   useEffect(() => {
     if (themeConfig.autoDetect !== false) {
@@ -159,18 +210,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       return () => mq.removeEventListener("change", handler);
     }
   }, [themeConfig.autoDetect]);
-
-  const currentTheme = useMemo(() => {
-    try {
-      const theme = getCombinedTheme(themeConfig.theme, themeConfig.accessibility, themeConfig.customColors);
-      if (!theme || !theme.colors || !theme.typography) {
-        return getCombinedTheme("light", "default");
-      }
-      return theme;
-    } catch {
-      return getCombinedTheme("light", "default");
-    }
-  }, [themeConfig.theme, themeConfig.accessibility, themeConfig.customColors]);
 
   const contextValue = useMemo<ThemeContextType>(
     () => ({

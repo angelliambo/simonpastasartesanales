@@ -97,12 +97,15 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
   html {
     width: 100%;
     overflow-x: hidden;
+    background-color: ${(props) => props.theme.colors.background.primary};
+    color: ${(props) => props.theme.colors.text.primary};
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   /* Estilos globales del body */
   body {
-    background-color: var(--color-background-primary);
-    color: var(--color-text-primary);
+    background-color: ${(props) => props.theme.colors.background.primary};
+    color: ${(props) => props.theme.colors.text.primary};
     font-family: ${(props) => props.theme.typography.fontFamily.primary};
     transition: background-color 0.3s ease, color 0.3s ease;
     margin: 0;

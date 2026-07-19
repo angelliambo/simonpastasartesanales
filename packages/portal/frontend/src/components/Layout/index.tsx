@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container } from '@design-sys/atoms/Container';
 import { usePersonalization } from '@design-sys/contexts/PersonalizationContext';
 import { LanguageSelector } from "../../i18n/LanguageSelector";
+import { ThemeToggle } from "../ThemeToggle";
 import { RootState } from "../../store/store";
 import { logout } from "../../store/slices/authSlice";
 import RegisterModal from "../RegisterModal";
@@ -39,44 +40,38 @@ import {
   AccessBtnWrapper,
   MobileActionsWrapper,
   MobileUserRow,
-  MobileLangSelectorWrapper,
+  MobileHeaderActions,
+  PreferencesSection,
+  PreferenceRow,
 } from "./Layout.styles";
 
 const Layout: React.FC = React.memo(() => {
   usePageTracking();
-  const { accessibility } = usePersonalization();
-  const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.auth.token);
-  const user = useSelector((state: RootState) => state.auth.user);
   const location = useLocation();
-  const [showRegister, setShowRegister] = useState<'email' | 'code' | false>(false);
+  const dispatch = useDispatch();
+  const { user, token } = useSelector((state: RootState) => state.auth);
+  const [showRegister, setShowRegister] = useState<false | "email" | "code">(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const accessibilityClasses = useMemo(() => {
-    const classes = [];
-    if (accessibility.highContrast) classes.push("high-contrast");
-    if (accessibility.increasedSpacing) classes.push("increased-spacing");
-    if (accessibility.reduceMotion) classes.push("reduce-motion");
-    if (accessibility.disableAnimations) classes.push("no-animations");
-    if (accessibility.dyslexiaSupport) classes.push("dyslexia-support");
-    if (accessibility.readingGuide) classes.push("reading-guide");
-    if (accessibility.focusIndicator) classes.push("focus-indicator");
-    if (accessibility.keyboardNavigation) classes.push("keyboard-navigation");
-    if (accessibility.textToSpeech) classes.push("text-to-speech");
-    if (accessibility.colorBlindSupport && accessibility.colorBlindType) {
-      classes.push(`colorblind-${accessibility.colorBlindType}`);
-    }
-    return classes.join(" ");
-  }, [accessibility]);
+  const isPortalView = useMemo(
+    () => location.pathname !== "/" && location.pathname !== "/welcome",
+    [location.pathname]
+  );
 
   return (
-    <div className={accessibilityClasses}>
+    <Container style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <TopBar>
-        <LogoLink to="/" onClick={() => setIsMobileMenuOpen(false)}>
+        <LogoLink to="/">
           {BRAND_CONFIG.siteName}
         </LogoLink>
 
-        {location.pathname !== "/wellcome" && (
+        {isPortalView ? (
+          <NavLinks>
+            <NavLink to="/" $active={location.pathname === "/"}>
+              Inicio
+            </NavLink>
+          </NavLinks>
+        ) : (
           <>
             <NavLinks>
               <NavLink to="/" $active={location.pathname === "/"}>
@@ -109,6 +104,7 @@ const Layout: React.FC = React.memo(() => {
             </NavLinks>
 
             <DesktopRight>
+              <ThemeToggle variant="icon" />
               {FEATURES.ENABLE_GOOGLE_AUTH && (
                 token && user ? (
                   <>
@@ -131,9 +127,12 @@ const Layout: React.FC = React.memo(() => {
               {SUPPORTED_LOCALES.length > 1 && <LanguageSelector />}
             </DesktopRight>
 
-            <HamburgerButton onClick={() => setIsMobileMenuOpen(true)}>
-              <ZnIcon icon={MenuOutlined} />
-            </HamburgerButton>
+            <MobileHeaderActions>
+              <ThemeToggle variant="icon" />
+              <HamburgerButton onClick={() => setIsMobileMenuOpen(true)}>
+                <ZnIcon icon={MenuOutlined} />
+              </HamburgerButton>
+            </MobileHeaderActions>
           </>
         )}
       </TopBar>
@@ -197,11 +196,19 @@ const Layout: React.FC = React.memo(() => {
             )
           )}
 
-          {SUPPORTED_LOCALES.length > 1 && (
-            <MobileLangSelectorWrapper>
-              <LanguageSelector />
-            </MobileLangSelectorWrapper>
-          )}
+          <PreferencesSection>
+            <PreferenceRow>
+              <span>Tema</span>
+              <ThemeToggle variant="row" />
+            </PreferenceRow>
+
+            {SUPPORTED_LOCALES.length > 1 && (
+              <PreferenceRow>
+                <span>Idioma</span>
+                <LanguageSelector dropUp={true} />
+              </PreferenceRow>
+            )}
+          </PreferencesSection>
         </MobileActionsWrapper>
       </MobileSidebar>
 
@@ -212,7 +219,7 @@ const Layout: React.FC = React.memo(() => {
           <Outlet />
         </Container>
       </MainContent>
-    </div>
+    </Container>
   );
 });
 

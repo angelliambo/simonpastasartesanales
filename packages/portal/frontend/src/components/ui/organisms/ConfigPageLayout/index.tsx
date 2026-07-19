@@ -62,7 +62,7 @@ const ConfigPageLayout = memo<PageLayoutProps>(({
     <LayoutOuter
       id={finalId}
       className={`config-page-layout ${className}`}
-      colors={colors}
+      $colors={colors}
       $isMobile={isMobile}
       $paddingTop={30 + getSpacingNumber(spacing.md)}
       style={style}
@@ -76,14 +76,14 @@ const ConfigPageLayout = memo<PageLayoutProps>(({
           <HeroCard
             variant="elevated"
             size="lg"
-            colors={colors}
+            $colors={colors}
             $isMobile={isMobile}
             $gradient={heroGradient}
             $marginBottom={spacing.md}
           >
             {icon && (
               <HeroIcon
-                colors={colors}
+                $colors={colors}
                 $isMobile={isMobile}
                 $marginBottom={spacing.lg}
               >
@@ -92,7 +92,7 @@ const ConfigPageLayout = memo<PageLayoutProps>(({
             )}
             {title && (
               <HeroTitle
-                colors={colors}
+                $colors={colors}
                 $isMobile={isMobile}
                 $marginBottom={spacing.lg}
               >
@@ -101,7 +101,7 @@ const ConfigPageLayout = memo<PageLayoutProps>(({
             )}
             {subtitle && (
               <HeroSubtitle
-                colors={colors}
+                $colors={colors}
                 $isMobile={isMobile}
                 $marginBottom={spacing.lg}
               >
@@ -153,7 +153,7 @@ export const ContentSection = memo<{
     >
       {title && (
         <SectionTitle
-          colors={colors}
+          $colors={colors}
           $isMobile={isMobile}
           $marginBottom={titleMarginBottom}
         >
@@ -199,7 +199,7 @@ export const ContentCard = memo<{
 
   return (
     <CardWrapper
-      variant={variant}
+      $variant={variant}
       size="lg"
       onClick={onClick}
       className={className}
@@ -214,7 +214,7 @@ export const ContentCard = memo<{
       <TextWrapper>
         {title && (
           <CardTitle
-            colors={colors}
+            $colors={colors}
             $marginBottom={spacing.xs}
           >
             {title}
@@ -222,7 +222,7 @@ export const ContentCard = memo<{
         )}
         {subtitle && (
           <CardSubtitle
-            colors={colors}
+            $colors={colors}
             $marginBottom={spacing.xs}
           >
             {subtitle}
