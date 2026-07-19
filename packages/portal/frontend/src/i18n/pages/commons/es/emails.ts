@@ -33,4 +33,4 @@ export const emails = {
   },
 };
 
-export default {};
+export default emails;

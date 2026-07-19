@@ -3,7 +3,7 @@ const DOMAIN = '__DOMAIN_NAME__';
 export const BRAND_CONFIG = {
   siteName: '__BRAND_NAME__',
   domain: DOMAIN,
-  logoUrl: '/assets/images/logo.png',
+  logoUrl: '/assets/images/logo.png?v=2',
   supportEmail: `support@${DOMAIN}`,
   whatsappUrl: 'https://wa.me/1234567890',
   seoTitle: '__BRAND_NAME__ - Tu Plataforma Lista para Despegar',

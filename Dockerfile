@@ -1,5 +1,5 @@
 # 1. Instalar dependencias del monorepo en la raíz
-FROM node:20-alpine AS base-dependencies
+FROM node:22-alpine AS base-dependencies
 WORKDIR /app
 COPY package.json yarn.lock* ./
 COPY packages/shared/package*.json ./packages/shared/

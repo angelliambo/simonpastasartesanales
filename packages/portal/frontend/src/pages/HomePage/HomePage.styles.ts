@@ -47,17 +47,13 @@ export const HeroContent = styled.div`
 `;
 
 export const LogoWrapper = styled.div`
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
-
-  @media (max-height: 800px) {
-    margin-bottom: ${({ theme }) => theme.spacing.sm};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    margin-bottom: ${({ theme }) => theme.spacing.lg};
-  }
+  margin: 0 auto ${({ theme }) => theme.spacing.xxl};
+  width: 100%;
+  max-width: 380px;
 
   &::before {
     content: "";
@@ -65,53 +61,34 @@ export const LogoWrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 180px;
-    height: 180px;
+    width: calc(100% + 140px);
+    height: calc(100% + 140px);
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(96, 165, 250, 0.45) 0%,
-      rgba(167, 139, 250, 0.3) 40%,
-      rgba(244, 114, 182, 0.15) 75%,
-      transparent 100%
+      ${({ theme }) => theme.colors.primary[500] || "rgba(96, 165, 250, 0.55)"} 0%,
+      ${({ theme }) => `${theme.colors.primary[500]}66` || "rgba(96, 165, 250, 0.25)"} 45%,
+      transparent 75%
     );
-    filter: blur(16px);
+    filter: blur(32px);
     z-index: 0;
     pointer-events: none;
 
-    @media (max-height: 800px) {
-      width: 120px;
-      height: 120px;
-    }
-
     @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      width: 100px;
-      height: 100px;
-      filter: blur(12px);
+      width: calc(100% + 100px);
+      height: calc(100% + 100px);
+      filter: blur(24px);
     }
   }
 `;
 
 export const Logo = styled.img`
-  width: 100px;
-  height: 100px;
   position: relative;
   z-index: 1;
-  border-radius: 12px;
-
-  @media (max-height: 800px) {
-    width: 60px;
-    height: 60px;
-  }
-  @media (max-height: 700px) {
-    width: 50px;
-    height: 50px;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    width: 72px;
-    height: 72px;
-  }
+  border-radius: 100px;
+  width: 100%;
+  height: auto;
+  display: block;
 `;
 
 export const HeroTitle = styled.h1`
