@@ -7,6 +7,8 @@ import { FEATURES } from "@factory/shared/config/features";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { Container } from '@design-sys/atoms/Container';
 import { SocialFeedGrid } from "@design-sys/atoms/SocialFeed";
+import { ImageWithSkeleton } from "@design-sys/atoms/ImageWithSkeleton";
+import { Skeleton } from "@design-sys/atoms/Skeleton";
 import { useGetInstagramFeedQuery } from "../../services/api/socialFeedService";
 import RegisterModal from "../../components/RegisterModal";
 import GoogleSignInButton from "../../components/GoogleSignInButton";
@@ -202,8 +204,30 @@ const HomePage: React.FC = () => {
   const currentFlag = LANG_FLAGS[lang] || LANG_FLAGS["es"];
   const secondLangItem = secondLang[lang] || secondLang["en"];
 
+  const [testimonialsInViewport, setTestimonialsInViewport] = useState(false);
+
+  useEffect(() => {
+    if (!FEATURES.ENABLE_SOCIAL_FEEDS) return;
+    const target = document.getElementById("testimonials");
+    if (!target) {
+      setTestimonialsInViewport(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTestimonialsInViewport(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" }
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, []);
+
   const { data: socialFeedData, isLoading: isLoadingFeed } = useGetInstagramFeedQuery(undefined, {
-    skip: !FEATURES.ENABLE_SOCIAL_FEEDS,
+    skip: !FEATURES.ENABLE_SOCIAL_FEEDS || !testimonialsInViewport,
   });
 
   const shouldHideInstagramSection = FEATURES.ENABLE_SOCIAL_FEEDS && Boolean(socialFeedData?.quotaExceeded);
@@ -438,9 +462,12 @@ const HomePage: React.FC = () => {
       >
         <HeroContent>
           <LogoWrapper>
-            <Logo
+            <ImageWithSkeleton
               src={BRAND_CONFIG.logoUrl || `${process.env.PUBLIC_URL}/assets/images/logo.png`}
               alt={BRAND_CONFIG.siteName}
+              width="100%"
+              style={{ borderRadius: "100px", display: "block" }}
+              loading="eager"
             />
           </LogoWrapper>
           <HeroTitle>{BRAND_CONFIG.siteName}</HeroTitle>
@@ -749,7 +776,7 @@ const HomePage: React.FC = () => {
               {t("pages.home.locationSubtitle")}
             </SectionSubtitle>
             <MapContainer>
-              <React.Suspense fallback={<MapFallback>Cargando mapa...</MapFallback>}>
+              <React.Suspense fallback={<Skeleton.Image style={{ width: "100%", height: "380px", borderRadius: "16px" }} active animation="wave" />}>
                 <Map
                   $address={BRAND_CONFIG.address}
                   $latitude={BRAND_CONFIG.latitude}

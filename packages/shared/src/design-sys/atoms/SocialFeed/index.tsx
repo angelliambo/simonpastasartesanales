@@ -32,6 +32,9 @@ import {
   FeedPlaceholder,
 } from "./SocialFeed.styles";
 
+import { ImageWithSkeleton } from "../ImageWithSkeleton";
+import { SocialFeedSkeleton } from "../Skeleton/SkeletonCard";
+
 /**
  * Tarjeta de publicación individual de Instagram
  */
@@ -51,7 +54,13 @@ export const SocialPostCard: React.FC<SocialPostCardProps> = ({ post }) => {
       </CardHeader>
 
       <CardMediaWrapper>
-        <CardMedia src={post.mediaUrl} alt={post.caption || "Publicación de Instagram"} loading="lazy" referrerPolicy="no-referrer" />
+        <ImageWithSkeleton
+          src={post.mediaUrl}
+          alt={post.caption || "Publicación de Instagram"}
+          loading="lazy"
+          aspectRatio="1 / 1"
+          style={{ borderRadius: "8px" }}
+        />
         {post.mediaType === "VIDEO" && (
           <MediaTypeIcon title="Video">
             <ZnIcon icon={PlayCircleOutlined} />
@@ -129,20 +138,9 @@ export const SocialFeedGrid: React.FC<SocialFeedGridProps> = ({
   // Si está cargando, renderizar Skeletons de forma responsiva
   if (isLoading) {
     return (
-      <GridContainer ref={containerRef}>
-        {[1, 2, 3].map((key) => (
-          <SkeletonCard key={key}>
-            <CardHeader>
-              <SkeletonLine $width="120px" $height="16px" />
-              <SkeletonLine $width="20px" $height="20px" />
-            </CardHeader>
-            <SkeletonMedia />
-            <SkeletonLine $width="90%" $height="12px" />
-            <SkeletonLine $width="80%" $height="12px" />
-            <SkeletonLine $width="40%" $height="16px" />
-          </SkeletonCard>
-        ))}
-      </GridContainer>
+      <div ref={containerRef} style={{ width: "100%" }}>
+        <SocialFeedSkeleton count={3} />
+      </div>
     );
   }
 
