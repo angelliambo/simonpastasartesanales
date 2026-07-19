@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Container } from '@design-sys/atoms/Container';
-import { usePersonalization } from '@design-sys/contexts/PersonalizationContext';
+import AppFooter from "../AppFooter";
 import { LanguageSelector } from "../../i18n/LanguageSelector";
 import { ThemeToggle } from "../ThemeToggle";
 import { RootState } from "../../store/store";
@@ -53,10 +53,6 @@ const Layout: React.FC = React.memo(() => {
   const [showRegister, setShowRegister] = useState<false | "email" | "code">(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const isPortalView = useMemo(
-    () => location.pathname !== "/" && location.pathname !== "/welcome",
-    [location.pathname]
-  );
 
   return (
     <Container style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
@@ -65,76 +61,66 @@ const Layout: React.FC = React.memo(() => {
           {BRAND_CONFIG.siteName}
         </LogoLink>
 
-        {isPortalView ? (
-          <NavLinks>
-            <NavLink to="/" $active={location.pathname === "/"}>
-              Inicio
+        <NavLinks>
+          <NavLink to="/" $active={location.pathname === "/"}>
+            Inicio
+          </NavLink>
+
+          {FEATURES.ENABLE_BILLING_LEMON && (
+            <NavLink to="/pricing" $active={location.pathname === "/pricing"}>
+              Planes
             </NavLink>
-          </NavLinks>
-        ) : (
-          <>
-            <NavLinks>
-              <NavLink to="/" $active={location.pathname === "/"}>
-                Inicio
-              </NavLink>
+          )}
 
-              {FEATURES.ENABLE_BILLING_LEMON && (
-                <NavLink to="/pricing" $active={location.pathname === "/pricing"}>
-                  Planes
-                </NavLink>
-              )}
+          {FEATURES.ENABLE_TICKETING_SYSTEM && (
+            <NavLink to="/support" $active={location.pathname === "/support"}>
+              Ayuda
+            </NavLink>
+          )}
 
-              {FEATURES.ENABLE_TICKETING_SYSTEM && (
-                <NavLink to="/support" $active={location.pathname === "/support"}>
-                  Ayuda
-                </NavLink>
-              )}
+          {FEATURES.ENABLE_GOOGLE_AUTH && token && (
+            <NavLink to="/dashboard" $active={location.pathname === "/dashboard"}>
+              Dashboard
+            </NavLink>
+          )}
 
-              {FEATURES.ENABLE_GOOGLE_AUTH && token && (
-                <NavLink to="/dashboard" $active={location.pathname === "/dashboard"}>
-                  Dashboard
-                </NavLink>
-              )}
+          {FEATURES.ENABLE_GOOGLE_AUTH && (user?.isAdmin || user?.role === "admin") && (
+            <NavLink to="/admin" $active={location.pathname === "/admin"}>
+              <ZnIcon icon={SafetyOutlined} /> Admin
+            </NavLink>
+          )}
+        </NavLinks>
 
-              {FEATURES.ENABLE_GOOGLE_AUTH && (user?.isAdmin || user?.role === "admin") && (
-                <NavLink to="/admin" $active={location.pathname === "/admin"}>
-                  <ZnIcon icon={SafetyOutlined} /> Admin
-                </NavLink>
-              )}
-            </NavLinks>
+        <DesktopRight>
+          <ThemeToggle variant="icon" />
+          {FEATURES.ENABLE_GOOGLE_AUTH && (
+            token && user ? (
+              <>
+                <UserBadge to="/dashboard">
+                  <ZnIcon icon={UserOutlined} /> {user.email?.split('@')[0] || 'User'}
+                </UserBadge>
+                <LogoutBtn onClick={() => dispatch(logout())}>
+                  <ZnIcon icon={LogoutOutlined} />
+                </LogoutBtn>
+              </>
+            ) : (
+              <AccessBtnWrapper>
+                <AccessBtn size="sm" onClick={() => setShowRegister('email')}>
+                  Ingresar
+                </AccessBtn>
+              </AccessBtnWrapper>
+            )
+          )}
 
-            <DesktopRight>
-              <ThemeToggle variant="icon" />
-              {FEATURES.ENABLE_GOOGLE_AUTH && (
-                token && user ? (
-                  <>
-                    <UserBadge to="/dashboard">
-                      <ZnIcon icon={UserOutlined} /> {user.email?.split('@')[0] || 'User'}
-                    </UserBadge>
-                    <LogoutBtn onClick={() => dispatch(logout())}>
-                      <ZnIcon icon={LogoutOutlined} />
-                    </LogoutBtn>
-                  </>
-                ) : (
-                  <AccessBtnWrapper>
-                    <AccessBtn size="sm" onClick={() => setShowRegister('email')}>
-                      Ingresar
-                    </AccessBtn>
-                  </AccessBtnWrapper>
-                )
-              )}
+          {SUPPORTED_LOCALES.length > 1 && <LanguageSelector />}
+        </DesktopRight>
 
-              {SUPPORTED_LOCALES.length > 1 && <LanguageSelector />}
-            </DesktopRight>
-
-            <MobileHeaderActions>
-              <ThemeToggle variant="icon" />
-              <HamburgerButton onClick={() => setIsMobileMenuOpen(true)}>
-                <ZnIcon icon={MenuOutlined} />
-              </HamburgerButton>
-            </MobileHeaderActions>
-          </>
-        )}
+        <MobileHeaderActions>
+          <ThemeToggle variant="icon" />
+          <HamburgerButton onClick={() => setIsMobileMenuOpen(true)}>
+            <ZnIcon icon={MenuOutlined} />
+          </HamburgerButton>
+        </MobileHeaderActions>
       </TopBar>
 
       <SidebarOverlay $open={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(false)} />
@@ -219,6 +205,8 @@ const Layout: React.FC = React.memo(() => {
           <Outlet />
         </Container>
       </MainContent>
+
+      <AppFooter />
     </Container>
   );
 });

@@ -18,7 +18,7 @@ import {
 } from "../../components/ui/organisms/ConfigPageLayout";
 
 import { RootState } from "../../store/store";
-import AppFooter from "../../components/AppFooter";
+
 import TrackedClick from "../../components/TrackedClick";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
@@ -816,7 +816,7 @@ const HomePage: React.FC = () => {
         </Container>
       </VhSection>
 
-      <AppFooter />
+
     </>
   );
 };
