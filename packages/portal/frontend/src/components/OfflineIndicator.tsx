@@ -26,7 +26,7 @@ const IndicatorContainer = styled.div<{
   border-radius: 12px;
   font-size: 12px;
   font-weight: 500;
-  box-shadow: 0 2px 8px ${({ theme }) => theme.colors.shadow.medium};
+  box-shadow: ${({ theme }) => theme?.shadows?.medium || "0 4px 6px rgba(0, 0, 0, 0.1)"};
   transition: all 0.3s ease-in-out;
   opacity: ${({ $isVisible, $showSyncMessage }) => ($isVisible || $showSyncMessage ? 1 : 0)};
   transform: ${({ $isVisible, $showSyncMessage }) =>
@@ -35,7 +35,11 @@ const IndicatorContainer = styled.div<{
       : "translateX(-50%) translateY(-20px)"};
   
   background: ${({ $isOffline, $showSyncMessage, theme }) =>
-    $isOffline ? theme.colors.error[500] : ($showSyncMessage ? theme.colors.success[500] : "transparent")};
+    $isOffline
+      ? theme?.colors?.error?.[500] || "#ef4444"
+      : $showSyncMessage
+      ? theme?.colors?.success?.[500] || "#22c55e"
+      : "transparent"};
   color: white;
   top: ${({ $position }) => ($position === "top" ? "80px" : "auto")};
   bottom: ${({ $position }) => ($position === "bottom" ? "20px" : "auto")};

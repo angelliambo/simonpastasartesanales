@@ -39,9 +39,9 @@ export const variantStyles: Record<TextVariant, ReturnType<typeof css>> = {
     color: ${({ theme }) => theme.colors.text.tertiary};
   `,
   label: css`
-    font-size: ${({ theme }) => theme.typography.fontSize.sm};
-    font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-    line-height: ${({ theme }) => theme.typography.lineHeight.normal};
+    font-size: ${({ theme }) => theme?.typography?.fontSize?.sm || "14px"};
+    font-weight: ${({ theme }) => theme?.typography?.fontWeight?.medium || 500};
+    line-height: ${({ theme }) => theme?.typography?.lineHeight?.normal || 1.5};
   `,
 };
 

@@ -43,20 +43,20 @@ interface SnackbarProps {
 // Styled component base
 const StyledSnackbar = styled.div<SnackbarProps>`
   position: fixed;
-  top: calc(${({ theme }) => theme.spacing.lg} + 30px);
-  right: ${({ theme }) => theme.spacing.lg};
+  top: calc(${({ theme }) => theme?.spacing?.lg || "24px"} + 30px);
+  right: ${({ theme }) => theme?.spacing?.lg || "24px"};
   z-index: 9999;
   min-width: 300px;
   max-width: 500px;
-  padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  box-shadow: ${({ theme }) => theme.shadows.heavy};
+  padding: ${({ theme }) => theme?.spacing?.md || "16px"} ${({ theme }) => theme?.spacing?.lg || "24px"};
+  border-radius: ${({ theme }) => theme?.borderRadius?.md || "8px"};
+  box-shadow: ${({ theme }) => theme?.shadows?.heavy || "0 10px 15px rgba(0, 0, 0, 0.1)"};
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing.md};
-  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  gap: ${({ theme }) => theme?.spacing?.md || "16px"};
+  font-family: ${({ theme }) => theme?.typography?.fontFamily?.primary || "sans-serif"};
+  font-weight: ${({ theme }) => theme?.typography?.fontWeight?.medium || 500};
+  font-size: ${({ theme }) => theme?.typography?.fontSize?.sm || "14px"};
   animation: ${slideIn} 0.3s ease-out;
 
   // Tipos de snackbar
