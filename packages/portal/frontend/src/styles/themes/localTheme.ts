@@ -51,31 +51,7 @@ export const localThemeOverride: ThemeOverride = {
       900: '#581c87',
     },
 
-    // 4. Colores de la aplicación (Fondo Premium Claro, Limpio y Altamente Legible)
-    background: {
-      primary: '#f8f9fa',
-      secondary: '#ffffff',
-      tertiary: '#f1f3f5',
-      surface: '#ffffff',
-      card: '#ffffff',
-    },
-
-    // 5. Paleta de textos con contraste perfecto sobre fondos claros
-    text: {
-      primary: '#111827',
-      secondary: '#4b5563',
-      tertiary: '#9ca3af',
-      inverse: '#ffffff',
-    },
-
-    // 6. Bordes limpios y discretos
-    border: {
-      light: '#e9ecef',
-      normal: '#dee2e6',
-      dark: '#ced4da',
-    },
-
-    // 7. Colores semánticos (Estados)
+    // 4. Colores semánticos (Estados)
     success: { 50: '#ecfdf5', 500: '#10b981', 600: '#059669', 700: '#047857' },
     warning: { 50: '#fffbeb', 500: '#f59e0b', 600: '#d97706', 700: '#b45309' },
     error: { 50: '#fff5f5', 500: '#ef4444', 600: '#dc2626', 700: '#b91c1c' },

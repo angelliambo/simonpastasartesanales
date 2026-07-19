@@ -14,8 +14,16 @@ const firebaseConfig = {
 let app: FirebaseApp | null = null;
 let analytics: Analytics | null = null;
 
-// Inicializar de forma condicional para mantener el boilerplate neutro
-if (firebaseConfig.apiKey && firebaseConfig.projectId) {
+// Inicializar únicamente en PRODUCCIÓN y con credenciales válidas
+const isProduction = process.env.NODE_ENV === "production";
+const isValidKey = Boolean(
+  firebaseConfig.apiKey &&
+  firebaseConfig.apiKey !== "undefined" &&
+  !firebaseConfig.apiKey.includes("YOUR_") &&
+  firebaseConfig.projectId
+);
+
+if (isProduction && isValidKey) {
   try {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
     if (typeof window !== "undefined" && firebaseConfig.measurementId) {

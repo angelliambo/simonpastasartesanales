@@ -1,8 +1,10 @@
 import React from "react";
 import { DefaultTheme } from "styled-components";
+import { useSelector } from "react-redux";
 import { useTheme } from "../styles/ThemeProvider";
 import { useAccessibilityRedux } from "./useAccessibilityRedux";
 import { getCombinedTheme, lightTheme } from "../styles/themes";
+import { RootState } from "../store/store";
 
 const createFallbackTheme = (): DefaultTheme => {
   try {
@@ -19,6 +21,7 @@ const createFallbackTheme = (): DefaultTheme => {
 
 export const useThemeColors = () => {
   const { currentTheme } = useTheme();
+  const reduxTheme = useSelector((state: RootState) => state.ui.theme);
   const { preferences, lastUpdated } = useAccessibilityRedux();
   const fallbackThemeRef = React.useRef<DefaultTheme | null>(null);
   if (!fallbackThemeRef.current) {
@@ -34,7 +37,7 @@ export const useThemeColors = () => {
       return currentTheme as DefaultTheme;
     }
     return fallbackThemeRef.current!;
-  }, [currentTheme]);
+  }, [currentTheme, reduxTheme]);
 
   // Forzar re-render cuando cambien las preferencias de accesibilidad
   // Esto asegura que todos los componentes se actualicen automáticamente
@@ -60,61 +63,9 @@ export const useThemeColors = () => {
   };
 
   return {
-    // Colores principales - usar variables CSS de accesibilidad si están disponibles
-    primary: {
-      50: getCSSVariable("--color-primary", resolvedTheme.colors.primary[50]),
-      100: getCSSVariable("--color-primary", resolvedTheme.colors.primary[50]),
-      200: getCSSVariable("--color-primary", resolvedTheme.colors.primary[200]),
-      300: getCSSVariable("--color-primary", resolvedTheme.colors.primary[300]),
-      400: getCSSVariable("--color-primary", resolvedTheme.colors.primary[400]),
-      500: getCSSVariable("--color-primary", resolvedTheme.colors.primary[500]),
-      600: getCSSVariable("--color-primary", resolvedTheme.colors.primary[600]),
-      700: getCSSVariable("--color-primary", resolvedTheme.colors.primary[700]),
-      800: getCSSVariable("--color-primary", resolvedTheme.colors.primary[800]),
-      900: getCSSVariable("--color-primary", resolvedTheme.colors.primary[900]),
-    },
-    secondary: {
-      50: getCSSVariable(
-        "--color-secondary",
-        resolvedTheme.colors.secondary[50]
-      ),
-      100: getCSSVariable(
-        "--color-secondary",
-        resolvedTheme.colors.secondary[100]
-      ),
-      200: getCSSVariable(
-        "--color-secondary",
-        resolvedTheme.colors.secondary[200]
-      ),
-      300: getCSSVariable(
-        "--color-secondary",
-        resolvedTheme.colors.secondary[300]
-      ),
-      400: getCSSVariable(
-        "--color-secondary",
-        resolvedTheme.colors.secondary[400]
-      ),
-      500: getCSSVariable(
-        "--color-secondary",
-        resolvedTheme.colors.secondary[500]
-      ),
-      600: getCSSVariable(
-        "--color-secondary",
-        resolvedTheme.colors.secondary[600]
-      ),
-      700: getCSSVariable(
-        "--color-secondary",
-        resolvedTheme.colors.secondary[700]
-      ),
-      800: getCSSVariable(
-        "--color-secondary",
-        resolvedTheme.colors.secondary[800]
-      ),
-      900: getCSSVariable(
-        "--color-secondary",
-        resolvedTheme.colors.secondary[900]
-      ),
-    },
+    // Colores principales y secundarios del tema activo
+    primary: resolvedTheme.colors.primary,
+    secondary: resolvedTheme.colors.secondary,
     tertiary: resolvedTheme.colors.tertiary,
 
     // Colores de fondo - usar el tema combinado directamente

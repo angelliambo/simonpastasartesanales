@@ -79,6 +79,13 @@ export const home = {
   heroEmailLoginButton: 'Log In with Email',
   whatsappContactButton: 'Contact via WhatsApp',
   seeFeaturesButton: 'View Features',
+
+  // Footer Links & Labels
+  footerCommands: 'Voice Commands',
+  footerTerminos: 'Terms and Conditions',
+  footerPrivacidad: 'Privacy Policy',
+  footerRights: 'All rights reserved.',
+  versionLabel: 'Version',
 };
 
 export default home;

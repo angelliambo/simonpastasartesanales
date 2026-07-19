@@ -816,8 +816,13 @@ export const ScrollDot = styled.button<{ $active?: boolean }>`
   height: 12px;
   border-radius: 50%;
   border: 2px solid
-    ${({ $active, theme }) =>
-    $active ? theme.colors.primary[500] : "rgba(0,0,0,0.25)"};
+    ${({ $active, theme }) => {
+      if ($active) return theme.colors.primary[500];
+      const bg = theme.colors?.background?.primary || "";
+      const text = theme.colors?.text?.primary || "";
+      const isDark = bg === "#111214" || bg === "#171717" || bg === "#0f172a" || text === "#fafafa" || text === "#ffffff" || text === "#f8fafc";
+      return isDark ? "rgba(255, 255, 255, 0.4)" : "rgba(0,0,0,0.25)";
+    }};
   background: ${({ $active, theme }) =>
     $active ? theme.colors.primary[500] : "transparent"};
   cursor: pointer;
@@ -830,10 +835,20 @@ export const ScrollDot = styled.button<{ $active?: boolean }>`
       : "none"};
 
   &:hover {
-    background: ${({ $active, theme }) =>
-    $active ? theme.colors.primary[500] : "rgba(0,0,0,0.08)"};
-    border-color: ${({ $active, theme }) =>
-    $active ? theme.colors.primary[500] : "rgba(0,0,0,0.4)"};
+    background: ${({ $active, theme }) => {
+      if ($active) return theme.colors.primary[500];
+      const bg = theme.colors?.background?.primary || "";
+      const text = theme.colors?.text?.primary || "";
+      const isDark = bg === "#111214" || bg === "#171717" || bg === "#0f172a" || text === "#fafafa" || text === "#ffffff" || text === "#f8fafc";
+      return isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(0,0,0,0.08)";
+    }};
+    border-color: ${({ $active, theme }) => {
+      if ($active) return theme.colors.primary[500];
+      const bg = theme.colors?.background?.primary || "";
+      const text = theme.colors?.text?.primary || "";
+      const isDark = bg === "#111214" || bg === "#171717" || bg === "#0f172a" || text === "#fafafa" || text === "#ffffff" || text === "#f8fafc";
+      return isDark ? "rgba(255, 255, 255, 0.7)" : "rgba(0,0,0,0.4)";
+    }};
   }
 `;
 
