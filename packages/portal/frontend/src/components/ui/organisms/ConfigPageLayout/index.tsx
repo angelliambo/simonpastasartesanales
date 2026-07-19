@@ -15,7 +15,6 @@ import {
   SectionOuter,
   SectionTitle,
   CardWrapper,
-  CardIcon,
   CardTitle,
   CardSubtitle,
   TextWrapper,

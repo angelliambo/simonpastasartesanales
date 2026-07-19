@@ -41,4 +41,4 @@ export const register = {
   errorMessage: 'Error registering',
 };
 
-export default {};
+export default login;

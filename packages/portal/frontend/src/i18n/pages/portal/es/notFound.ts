@@ -5,4 +5,4 @@ export const notFound = {
   goHomeButton: 'Volver al inicio',
 };
 
-export default {};
+export default notFound;

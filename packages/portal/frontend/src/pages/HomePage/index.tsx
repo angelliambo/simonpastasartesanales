@@ -463,6 +463,7 @@ const HomePage: React.FC = () => {
         <HeroContent>
           <LogoWrapper>
             <ImageWithSkeleton
+              as={Logo}
               src={BRAND_CONFIG.logoUrl || `${process.env.PUBLIC_URL}/assets/images/logo.png`}
               alt={BRAND_CONFIG.siteName}
               width="100%"
@@ -776,7 +777,7 @@ const HomePage: React.FC = () => {
               {t("pages.home.locationSubtitle")}
             </SectionSubtitle>
             <MapContainer>
-              <React.Suspense fallback={<Skeleton.Image style={{ width: "100%", height: "380px", borderRadius: "16px" }} active animation="wave" />}>
+              <React.Suspense fallback={<MapFallback><Skeleton.Image style={{ width: "100%", height: "380px", borderRadius: "16px" }} active animation="wave" /></MapFallback>}>
                 <Map
                   $address={BRAND_CONFIG.address}
                   $latitude={BRAND_CONFIG.latitude}
