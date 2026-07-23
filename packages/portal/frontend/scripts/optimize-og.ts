@@ -78,10 +78,9 @@ async function optimizeImage() {
     console.log(`   - Dimensiones finales: ${TARGET_WIDTH}x${TARGET_HEIGHT}`);
     console.log(`   - Peso final: ${sizeKB.toFixed(2)} KB (Calidad: ${quality}%)`);
 
-    // Eliminar el PNG original si es necesario
+    // Conservar el PNG original para mantener la imagen de marca
     if (shouldDeletePng && existsSync(PNG_PATH)) {
-      unlinkSync(PNG_PATH);
-      console.log("🗑️ [OG-OPTIMIZE] Archivo og-image.png original eliminado con éxito.");
+      console.log("📌 [OG-OPTIMIZE] Se conserva og-image.png original.");
     }
   } catch (error) {
     console.error("❌ [OG-OPTIMIZE] Error procesando la imagen:", error);

@@ -27,7 +27,33 @@ packages/portal/frontend/src/styles/themes/localTheme.ts merge=ours
 packages/shared/src/design-sys/theme/light.ts merge=ours
 packages/shared/src/design-sys/theme/dark.ts merge=ours
 
-# Proteger recursos gráficos locales de marca (PNG / ICO)
+# Proteger sitemaps y plantillas de SEO
+packages/portal/frontend/public/seo-templates/sitemap.xml merge=ours
+packages/portal/frontend/public/sitemap.xml merge=ours
+
+# Proteger la maquetación, estilos y vistas principales
+packages/portal/frontend/src/pages/HomePage/HomePage.styles.ts merge=ours
+packages/portal/frontend/src/pages/WelcomePage/index.tsx merge=ours
+packages/portal/frontend/src/components/AppFooter/index.tsx merge=ours
+packages/portal/backend/routes/socialFeedRoutes.ts merge=ours
+
+# Proteger configuraciones de infraestructura y Postman
+packages/portal/fly.toml merge=ours
+packages/portal/postman/environments/saas-prod.json merge=ours
+
+# Proteger traducciones locales (i18n)
+packages/portal/frontend/src/i18n/pages/portal/es/home.ts merge=ours
+packages/portal/frontend/src/i18n/pages/portal/en/home.ts merge=ours
+packages/portal/frontend/src/i18n/pages/portal/es/login.ts merge=ours
+packages/portal/frontend/src/i18n/pages/portal/en/login.ts merge=ours
+packages/portal/frontend/src/i18n/pages/commons/es/legal.ts merge=ours
+packages/portal/frontend/src/i18n/pages/commons/es/privacy.ts merge=ours
+packages/portal/frontend/src/i18n/pages/commons/es/brandSlogan.ts merge=ours
+packages/portal/frontend/src/i18n/pages/commons/en/brandSlogan.ts merge=ours
+packages/portal/frontend/src/i18n/pages/commons/es/emails.ts merge=ours
+packages/portal/frontend/src/i18n/pages/commons/en/emails.ts merge=ours
+
+# Proteger recursos gráficos locales de marca (PNG / ICO / JPG)
 packages/portal/frontend/public/assets/images/logo.png merge=ours
 packages/portal/frontend/public/favicon.ico merge=ours
 packages/portal/frontend/public/favicon-16x16.png merge=ours
@@ -37,4 +63,5 @@ packages/portal/frontend/public/logo192.png merge=ours
 packages/portal/frontend/public/logo512.png merge=ours
 packages/portal/frontend/public/logo.png merge=ours
 packages/portal/frontend/public/og-image.png merge=ours
+packages/portal/frontend/public/og-image.jpg merge=ours
 
