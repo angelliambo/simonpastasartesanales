@@ -18,10 +18,8 @@ const TriggerButton = styled.button<{ $fullWidth?: boolean }>`
   width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
   min-width: 180px;
   padding: 8px 12px;
-  background: ${({ theme }) => theme.effects.glassBackground};
-  backdrop-filter: blur(${({ theme }) => theme.effects.blur.subtle || '4px'});
-  -webkit-backdrop-filter: blur(${({ theme }) => theme.effects.blur.subtle || '4px'});
-  border: 1px solid ${({ theme }) => theme.effects.glassBorder};
+  background: ${({ theme }) => theme.colors.background.card};
+  border: 1px solid ${({ theme }) => theme.colors.border.normal};
   border-radius: ${({ theme }) => theme.borderRadius?.md || '6px'};
   color: ${({ theme }) => theme.colors.text.primary};
   font-size: 13px;
@@ -31,13 +29,13 @@ const TriggerButton = styled.button<{ $fullWidth?: boolean }>`
 
   &:hover {
     background: ${({ theme }) => theme.colors.background.secondary};
-    border-color: ${({ theme }) => theme.colors.border.normal};
+    border-color: ${({ theme }) => theme.colors.primary[500]};
   }
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.primary[500]};
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.highlight.glow};
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.highlight?.glow || 'rgba(82, 183, 136, 0.4)'};
   }
 `;
 

@@ -46,12 +46,18 @@ const THEMES_KEY = "zn-portal-custom-themes";
 
 function loadConfig(): ThemeConfig {
   try {
+    // 1. Intentar cargar desde localStorage
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved) as ThemeConfig;
       if (parsed && (parsed.theme === "light" || parsed.theme === "dark")) {
         return { ...parsed, autoDetect: false };
       }
+    }
+    // 2. Fallback: intentar cargar desde cookie
+    const cookieMatch = document.cookie.match(new RegExp("(?:^|; )" + STORAGE_KEY + "=([^;]*)"));
+    if (cookieMatch && (cookieMatch[1] === "light" || cookieMatch[1] === "dark")) {
+      return { theme: cookieMatch[1] as Theme, accessibility: "default", autoDetect: false };
     }
   } catch {
     /* ignore */
@@ -62,8 +68,9 @@ function loadConfig(): ThemeConfig {
 function saveConfig(config: ThemeConfig) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+    document.cookie = `${STORAGE_KEY}=${config.theme}; path=/; max-age=31536000; SameSite=Lax`;
   } catch {
-    /* localStorage may be unavailable */
+    /* localStorage or cookies may be unavailable */
   }
 }
 
@@ -96,13 +103,13 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   }, []);
 
   const setTheme = useCallback((theme: Theme) => {
-    updateConfig({ theme, autoDetect: false });
+    updateConfig({ theme, autoDetect: false, customColors: undefined });
     dispatch(setReduxTheme(theme));
   }, [updateConfig, dispatch]);
 
   const toggleTheme = useCallback(() => {
     const newTheme: Theme = themeConfig.theme === "light" ? "dark" : "light";
-    updateConfig({ theme: newTheme, autoDetect: false });
+    updateConfig({ theme: newTheme, autoDetect: false, customColors: undefined });
     dispatch(setReduxTheme(newTheme));
   }, [themeConfig.theme, updateConfig, dispatch]);
 

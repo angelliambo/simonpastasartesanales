@@ -52,10 +52,8 @@ const Layout: React.FC = React.memo(() => {
   const { user, token } = useSelector((state: RootState) => state.auth);
   const [showRegister, setShowRegister] = useState<false | "email" | "code">(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-
   return (
-    <Container style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <Container maxWidth="full" padding="none" style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <TopBar>
         <LogoLink to="/">
           {BRAND_CONFIG.siteName}

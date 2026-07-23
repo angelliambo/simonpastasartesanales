@@ -52,8 +52,7 @@ export const LogoWrapper = styled.div`
   align-items: center;
   position: relative;
   margin: 0 auto ${({ theme }) => theme.spacing.xxl};
-  width: 100%;
-  max-width: 380px;
+  max-width: 100%;
 
   &::before {
     content: "";
@@ -61,53 +60,36 @@ export const LogoWrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 340px;
-    height: 340px;
+    width: calc(100% + 140px);
+    height: calc(100% + 140px);
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(173, 114, 49, 0.25) 0%,
-      rgba(245, 242, 235, 0.15) 60%,
-      transparent 100%
+      ${({ theme }) => theme.colors.primary[500] || "rgba(249, 115, 22, 0.55)"} 0%,
+      ${({ theme }) => `${theme.colors.primary[500]}66` || "rgba(249, 115, 22, 0.25)"} 45%,
+      transparent 75%
     );
-    filter: blur(24px);
+    filter: blur(32px);
     z-index: 0;
     pointer-events: none;
 
-    @media (max-height: 800px) {
-      width: 260px;
-      height: 260px;
-    }
-
     @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      width: 220px;
-      height: 220px;
-      filter: blur(16px);
+      width: calc(100% + 100px);
+      height: calc(100% + 100px);
+      filter: blur(24px);
     }
   }
 `;
 
 export const Logo = styled.img`
-  width: 280px;
-  height: 280px;
   position: relative;
   z-index: 1;
-  border-radius: 0;
-  object-fit: contain;
+  border-radius: 100px;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  display: block;
 
-  @media (max-height: 800px) {
-    width: 220px;
-    height: 220px;
-  }
-  @media (max-height: 700px) {
-    width: 180px;
-    height: 180px;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    width: 200px;
-    height: 200px;
-  }
 `;
 
 export const HeroTitle = styled.h1`
@@ -932,12 +914,12 @@ export const ScrollDot = styled.button<{ $active?: boolean }>`
   border-radius: 50%;
   border: 2px solid
     ${({ $active, theme }) => {
-      if ($active) return theme.colors.primary[500];
-      const bg = theme.colors?.background?.primary || "";
-      const text = theme.colors?.text?.primary || "";
-      const isDark = bg === "#111214" || bg === "#171717" || bg === "#0f172a" || text === "#fafafa" || text === "#ffffff" || text === "#f8fafc";
-      return isDark ? "rgba(255, 255, 255, 0.4)" : "rgba(0,0,0,0.25)";
-    }};
+    if ($active) return theme.colors.primary[500];
+    const bg = theme.colors?.background?.primary || "";
+    const text = theme.colors?.text?.primary || "";
+    const isDark = bg === "#111214" || bg === "#171717" || bg === "#0f172a" || text === "#fafafa" || text === "#ffffff" || text === "#f8fafc";
+    return isDark ? "rgba(255, 255, 255, 0.4)" : "rgba(0,0,0,0.25)";
+  }};
   background: ${({ $active, theme }) =>
     $active ? theme.colors.primary[500] : "transparent"};
   cursor: pointer;
@@ -951,19 +933,19 @@ export const ScrollDot = styled.button<{ $active?: boolean }>`
 
   &:hover {
     background: ${({ $active, theme }) => {
-      if ($active) return theme.colors.primary[500];
-      const bg = theme.colors?.background?.primary || "";
-      const text = theme.colors?.text?.primary || "";
-      const isDark = bg === "#111214" || bg === "#171717" || bg === "#0f172a" || text === "#fafafa" || text === "#ffffff" || text === "#f8fafc";
-      return isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(0,0,0,0.08)";
-    }};
+    if ($active) return theme.colors.primary[500];
+    const bg = theme.colors?.background?.primary || "";
+    const text = theme.colors?.text?.primary || "";
+    const isDark = bg === "#111214" || bg === "#171717" || bg === "#0f172a" || text === "#fafafa" || text === "#ffffff" || text === "#f8fafc";
+    return isDark ? "rgba(255, 255, 255, 0.15)" : "rgba(0,0,0,0.08)";
+  }};
     border-color: ${({ $active, theme }) => {
-      if ($active) return theme.colors.primary[500];
-      const bg = theme.colors?.background?.primary || "";
-      const text = theme.colors?.text?.primary || "";
-      const isDark = bg === "#111214" || bg === "#171717" || bg === "#0f172a" || text === "#fafafa" || text === "#ffffff" || text === "#f8fafc";
-      return isDark ? "rgba(255, 255, 255, 0.7)" : "rgba(0,0,0,0.4)";
-    }};
+    if ($active) return theme.colors.primary[500];
+    const bg = theme.colors?.background?.primary || "";
+    const text = theme.colors?.text?.primary || "";
+    const isDark = bg === "#111214" || bg === "#171717" || bg === "#0f172a" || text === "#fafafa" || text === "#ffffff" || text === "#f8fafc";
+    return isDark ? "rgba(255, 255, 255, 0.7)" : "rgba(0,0,0,0.4)";
+  }};
   }
 `;
 

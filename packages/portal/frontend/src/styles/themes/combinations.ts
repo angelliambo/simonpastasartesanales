@@ -186,6 +186,7 @@ export const darkTritanopiaTheme = combineThemes(
  */
 function applyCustomColors(
   theme: DefaultTheme,
+  isDark: boolean,
   customColors?: {
     primary?: string;
     secondary?: string;
@@ -217,7 +218,7 @@ function applyCustomColors(
     } as any;
   }
 
-  if (customColors.background) {
+  if (customColors.background && !isDark) {
     customTheme.colors.background = {
       ...theme.colors.background,
       primary: customColors.background,
@@ -225,7 +226,7 @@ function applyCustomColors(
     } as any;
   }
 
-  if (customColors.text) {
+  if (customColors.text && !isDark) {
     customTheme.colors.text = {
       ...theme.colors.text,
       primary: customColors.text,
@@ -343,40 +344,25 @@ export function getCombinedTheme(
       return lightTheme;
     }
 
-    // Aplicar colores personalizados dinámicos si están definidos
-    let finalTheme = applyCustomColors(theme, customColors);
+    // Aplicar colores personalizados dinámicos si están definidos (respetando isDark)
+    let finalTheme = applyCustomColors(theme, safeBaseTheme === "dark", customColors);
 
-  // Aplicar sobreescrituras semánticas del tema local
-  finalTheme = deepMerge(finalTheme, localThemeOverride);
+    // En modo claro aplicamos el override completo local. En modo oscuro, preservamos los colores, fondos, textos y gradientes oscuros.
+    if (safeBaseTheme === "light") {
+      finalTheme = deepMerge(finalTheme, localThemeOverride);
+    } else {
+      const { colors, background, text, border, gradients, effects, ...darkBrandOverrides } = localThemeOverride as any;
+      finalTheme = deepMerge(finalTheme, darkBrandOverrides);
+    }
 
-  // Re-calcular dinámicamente gradientes y brillos basados en los colores finales resultantes
-  if (finalTheme.colors && finalTheme.colors.primary && finalTheme.colors.secondary && finalTheme.colors.tertiary) {
-    finalTheme.gradients = {
-      ...finalTheme.gradients,
-      brand: `linear-gradient(135deg, ${finalTheme.colors.primary[400] || '#60a5fa'} 0%, ${finalTheme.colors.tertiary[300] || '#d8b4fe'} 50%, ${finalTheme.colors.secondary[400] || '#4ade80'} 100%)`,
-      premium: `linear-gradient(135deg, ${finalTheme.colors.primary[500] || '#3b82f6'} 0%, ${finalTheme.colors.tertiary[500] || '#a855f7'} 50%, ${finalTheme.colors.tertiary[700] || '#7c3aed'} 100%)`,
-      highlight: `linear-gradient(135deg, ${finalTheme.colors.primary[500] || '#3b82f6'} 0%, ${finalTheme.colors.primary[700] || '#1d4ed8'} 100%)`,
-    };
-
-    if (finalTheme.effects) {
-      finalTheme.effects = {
-        ...finalTheme.effects,
-        glow: {
-          primary: `0 4px 12px ${(finalTheme.colors.primary[500] || '#3b82f6')}66`,
-          premium: `0 4px 12px ${(finalTheme.colors.tertiary[500] || '#a855f7')}66`,
-          success: `0 4px 12px ${(finalTheme.colors.success[500] || '#22c55e')}66`,
-        }
+    if (safeBaseTheme === "light" && finalTheme.colors && finalTheme.colors.primary && finalTheme.colors.secondary) {
+      finalTheme.gradients = {
+        ...finalTheme.gradients,
+        brand: "linear-gradient(135deg, #193220 0%, #166534 45%, #ad7231 100%)",
+        premium: "linear-gradient(135deg, #193220 0%, #2d6a4f 50%, #ad7231 100%)",
+        highlight: "linear-gradient(135deg, #ad7231 0%, #905d27 100%)",
       };
     }
-  }
-
-  // Respetar gradientes declarados explícitamente en el override local
-  if (localThemeOverride.gradients) {
-    finalTheme.gradients = {
-      ...finalTheme.gradients,
-      ...localThemeOverride.gradients
-    };
-  }
 
   // Respetar efectos declarados explícitamente en el override local (incluyendo glow)
   if (localThemeOverride.effects) {
