@@ -5,14 +5,12 @@
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico?v=1.3.7" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#3b82f6" />
+  <meta name="theme-color" content="#193220" />
   <link rel="canonical" href="https://simonpastasartesanales.com.ar/" />
 
   <!-- Meta tags básicos para SEO -->
-  <meta name="description"
-    content="Fábrica de pastas frescas congeladas en Bernal, Quilmes y Zona Sur. Sorrentinos, ravioles, panzottis y empanadas artesanales. Venta minorista para particulares y distribución mayorista para gastronomía." />
-  <meta name="keywords"
-    content="pastas simon, fabrica de pastas simon, fabrica de pastas bernal, venta minorista y mayorista, rabioles bernal, rabioles quilmes, panzotis bernal, sorrentinos en bernal, empanadas de bondiola quilmes, pastas por mayor zona sur, fabrica de pastas zona sur, pastas artesanales congeladas" />
+  <meta name="description" content="Fábrica de pastas frescas congeladas en Bernal, Quilmes y Zona Sur. Sorrentinos, ravioles, panzottis y empanadas artesanales. Venta minorista para particulares y distribución mayorista para gastronomía." />
+  <meta name="keywords" content="pastas simon, fabrica de pastas simon, fabrica de pastas bernal, venta minorista y mayorista, rabioles bernal, rabioles quilmes, panzotis bernal, sorrentinos en bernal, empanadas de bondiola quilmes, pastas por mayor zona sur, fabrica de pastas zona sur, pastas artesanales congeladas" />
   <meta name="author" content="Fábrica de Pastas Simón" />
   <meta name="robots" content="index, follow" />
   <meta name="language" content="es-ES" />
@@ -24,8 +22,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://simonpastasartesanales.com.ar/" />
   <meta property="og:title" content="Fábrica de Pastas Simón | Venta Minorista y Mayorista | Bernal" />
-  <meta property="og:description"
-    content="Fábrica de pastas frescas congeladas en Bernal, Quilmes y Zona Sur. Sorrentinos, ravioles, panzottis y empanadas artesanales. Venta minorista para particulares y distribución mayorista para gastronomía." />
+  <meta property="og:description" content="Fábrica de pastas frescas congeladas en Bernal, Quilmes y Zona Sur. Sorrentinos, ravioles, panzottis y empanadas artesanales. Venta minorista para particulares y distribución mayorista para gastronomía." />
   <meta property="og:image" content="https://simonpastasartesanales.com.ar/og-image.png?v=1.3.7" />
   <meta property="og:image:secure_url" content="https://simonpastasartesanales.com.ar/og-image.png?v=1.3.7" />
   <meta property="og:image:type" content="image/png" />
@@ -38,8 +35,7 @@
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://simonpastasartesanales.com.ar/" />
   <meta property="twitter:title" content="Fábrica de Pastas Simón | Venta Minorista y Mayorista | Bernal" />
-  <meta property="twitter:description"
-    content="Fábrica de pastas frescas congeladas en Bernal, Quilmes y Zona Sur. Sorrentinos, ravioles, panzottis y empanadas artesanales. Venta minorista para particulares y distribución mayorista para gastronomía." />
+  <meta property="twitter:description" content="Fábrica de pastas frescas congeladas en Bernal, Quilmes y Zona Sur. Sorrentinos, ravioles, panzottis y empanadas artesanales. Venta minorista para particulares y distribución mayorista para gastronomía." />
   <meta property="twitter:image" content="https://simonpastasartesanales.com.ar/og-image.png?v=1.3.7" />
   <meta property="twitter:image:alt" content="Fábrica de Pastas Simón — Pastas Artesanales" />
   <meta property="twitter:site" content="@simonpastas" />
@@ -86,7 +82,7 @@
   <!-- Google Identity Services - Carga lazy solo cuando se necesita (LoginPage/RegisterPage) -->
   <!-- Script removido de aquí para lazy load - ahorra ~74KB en carga inicial -->
 
-  <title>SaaS Boilerplate - Tu Plataforma Lista para Despegar</title>
+  <title>Fábrica de Pastas Simón | Venta Minorista y Mayorista | Bernal</title>
 
   <!-- DESHABILITAR SERVICE WORKER TEMPORALMENTE -->
   <script>
@@ -141,18 +137,18 @@
 
         // Aplicar color de fondo según tema para evitar parpadeo
         if (theme === 'dark') {
-          document.documentElement.style.backgroundColor = '#1a1a1a';
+          document.documentElement.style.backgroundColor = '#0d1510';
         } else {
-          document.documentElement.style.backgroundColor = '#ffffff';
+          document.documentElement.style.backgroundColor = '#fdfbf7';
         }
 
         // Aplicar al body solo si existe (puede no existir aún en el head)
         if (document.body) {
           document.body.className = 'theme-' + theme + ' accessibility-default';
           if (theme === 'dark') {
-            document.body.style.backgroundColor = '#1a1a1a';
+            document.body.style.backgroundColor = '#0d1510';
           } else {
-            document.body.style.backgroundColor = '#ffffff';
+            document.body.style.backgroundColor = '#fdfbf7';
           }
         } else {
           // Si body no existe aún, esperar a que esté disponible
@@ -160,9 +156,9 @@
             if (document.body) {
               document.body.className = 'theme-' + theme + ' accessibility-default';
               if (theme === 'dark') {
-                document.body.style.backgroundColor = '#1a1a1a';
+                document.body.style.backgroundColor = '#0d1510';
               } else {
-                document.body.style.backgroundColor = '#ffffff';
+                document.body.style.backgroundColor = '#fdfbf7';
               }
             } else {
               // Reintentar en el siguiente tick
@@ -180,11 +176,11 @@
         // Si hay error, usar tema light por defecto
         if (document.documentElement) {
           document.documentElement.setAttribute('data-theme', 'light');
-          document.documentElement.style.backgroundColor = '#ffffff';
+          document.documentElement.style.backgroundColor = '#fdfbf7';
         }
         if (document.body) {
           document.body.className = 'theme-light accessibility-default';
-          document.body.style.backgroundColor = '#ffffff';
+          document.body.style.backgroundColor = '#fdfbf7';
         }
       }
     })();
@@ -233,9 +229,9 @@
     <div
       style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: fixed; inset: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; transition: background-color 0.2s;">
       <div
-        style="width: 48px; height: 48px; border: 4px solid rgba(156, 163, 175, 0.15); border-top: 4px solid #3b82f6; border-radius: 50%; animation: portal-spin 1s linear infinite; margin-bottom: 24px;">
+        style="width: 48px; height: 48px; border: 4px solid rgba(156, 163, 175, 0.15); border-top: 4px solid #193220; border-radius: 50%; animation: portal-spin 1s linear infinite; margin-bottom: 24px;">
       </div>
-      <div style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: #3b82f6;" id="portal-loader-logo">
+      <div style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: #193220;" id="portal-loader-logo">
         Fábrica de Pastas Simón</div>
       <div style="font-size: 13px; color: #9ca3af; margin-top: 8px;" id="portal-loader-text">Cargando aplicación...
       </div>
@@ -246,10 +242,10 @@
         const logoEl = document.getElementById('portal-loader-logo');
         const textEl = document.getElementById('portal-loader-text');
         if (theme === 'dark') {
-          if (logoEl) logoEl.style.color = '#60a5fa';
+          if (logoEl) logoEl.style.color = '#52b788';
           if (textEl) textEl.style.color = '#9ca3af';
         } else {
-          if (logoEl) logoEl.style.color = '#2563eb';
+          if (logoEl) logoEl.style.color = '#193220';
           if (textEl) textEl.style.color = '#4b5563';
         }
       })();

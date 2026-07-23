@@ -1,38 +1,31 @@
-# Fábrica de Pastas Simón | Venta Minorista y Mayorista | Bernal\n
-Fábrica de Pastas Simón is a high-performance MERN (MongoDB, Express, React, Node.js) web application boilerplate. It provides a modular foundation to quickly launch your startup or software-as-a-service application, with built-in modules for authentication, user dashboards, administration panels, support ticketing, and payment gateway integration.
+# Fábrica de Pastas Simón | Pastas Artesanales Congeladas | Bernal & Zona Sur
+
+Fábrica de Pastas Simón es una fábrica argentina de pastas frescas congeladas envasadas en caja, ubicada en San Luis 1263, Bernal, Quilmes, Zona Sur, Buenos Aires. Elaboramos productos gourmet de alta calidad para consumo familiar minorista y distribución mayorista directa a restaurantes, bodegones, hoteles, catering y comercios gastronómicos.
 
 ---
 
-## Key Product Offerings
+## Catálogo Principal de Especialidades
 
-- **Unified Authentication**: Secured login flow using standard email/code validation or Google OAuth integration.
-- **Smart Control Panel**: Fully functional dashboard containing user administration, metrics graphs, role assignment, and customization capabilities.
-- **Lemon Squeezy Billing Integration**: Flexible pricing plan modules connected directly with Lemon Squeezy payment checkout links and automated backend status synchronization via secure webhooks.
-- **Support & Ticketing System**: Optional direct communication and help-desk ticket management system built natively into the app layout.
-- **Feature Flags / Config**: Dynamically toggle backend services and frontend components from unified configuration and environment variables.
-
----
-
-## Technical Architecture & Design
-
-Fábrica de Pastas Simón is structured as a monorepo containing two core packages:
-- **`packages/portal`**: A MERN web application. The frontend uses Create React App (CRA) configured with `react-app-rewired` for style-system path mapping. The backend serves client authentication, license keys validation, support tickets, and account subscription state.
-- **`packages/shared`**: Shared styling system (`styled-components` design tokens, light/dark themes, Atoms/Organisms), pricing config (plans, limits), and TypeScript common types.
-
-### Backend Tech Stack
-1. **Express & Node.js**: Modular routers, custom middlewares for auth validation, plan limits, and global error handlers.
-2. **MongoDB & Mongoose**: Structured schemas for Users, Licenses, Tickets, and Configurations with automatic reconnection retries.
-3. **Email Notification Service**: MailSender provider implementation using styled email templates.
-
-### Frontend Tech Stack
-1. **React**: Single Page Application structure with Redux for state management, context providers, and customized hooks.
-2. **Design System**: Fully responsive mobile-first custom components using styled-components.
-3. **i18n & Translations**: Dynamic localization and multi-language support (English/Spanish base locales).
+- **Sorrentinos Caseros Congelados**: Sorrentinos de jamón y queso, verdura y ricota, panceta y muzzarella. Elaborados con rellenos abundantes y masa artesanal.
+- **Ravioles Tradicionales**: Ravioles al huevo en caja congelados en origen para conservar la frescura y la textura perfecta al hervir.
+- **Panzottis Premium**: Panzottis de gran tamaño con combinaciones de rellenos gourmet.
+- **Empanadas Gourmet**: Empanadas artesanales destacadas, como nuestras empanadas de bondiola braseada a la cerveza desmechada.
+- **Fideos Frescos**: Tallarines y cintas amasadas con sémola de trigo candeal de primera calidad.
 
 ---
 
-## Primary Resources & Links
-- [Official Website](https://simonpastasartesanales.com.ar)
-- [Pricing and License Plans](https://simonpastasartesanales.com.ar/pricing)
-- [Terms and Conditions](https://simonpastasartesanales.com.ar/legal/terms)
-- [Privacy Policy & Data Security](https://simonpastasartesanales.com.ar/legal/privacy)
+## Servicios y Modalidades de Venta
+
+- **Venta Minorista**: Venta al público en mostrador y pedidos directos por WhatsApp para particulares en Bernal, Quilmes y alrededores.
+- **Distribución Mayorista (B2B)**: Suministro gastronómico en formato caja congelada para restaurantes, comedores, salones de eventos y distribuidores en toda Zona Sur y Gran Buenos Aires.
+- **Congelado Rápido en Origen**: Mantiene intacto el sabor, la humedad y el valor nutricional sin necesidad de conservantes ni aditivos químicos.
+
+---
+
+## Información de Contacto y Ubicación
+
+- **Sitio Web Oficial**: https://simonpastasartesanales.com.ar
+- **Dirección**: San Luis 1263, Bernal (B1876), Quilmes, Provincia de Buenos Aires, Argentina
+- **Teléfono / WhatsApp de Pedidos**: +54 9 11 4192-1222
+- **Email de Contacto**: info@simonpastasartesanales.com.ar
+- **Área de Cobertura**: Bernal, Quilmes, Avellaneda, Berazategui, Lanús y todo Zona Sur GBA.
