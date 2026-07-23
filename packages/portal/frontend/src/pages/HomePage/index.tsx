@@ -15,9 +15,7 @@ import {
   ContentSection,
   ContentCard,
 } from "../../components/ui/organisms/ConfigPageLayout";
-
 import { RootState } from "../../store/store";
-import AppFooter from "../../components/AppFooter";
 import TrackedClick from "../../components/TrackedClick";
 import { trackEvent } from "../../services/analytics";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
@@ -762,8 +760,6 @@ const HomePage: React.FC = () => {
           </TrackedClick>
         </Container>
       </VhSection>
-
-      <AppFooter />
     </>
   );
 };

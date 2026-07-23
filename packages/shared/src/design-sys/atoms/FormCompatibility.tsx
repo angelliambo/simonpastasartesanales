@@ -125,12 +125,12 @@ interface LabelProps {
 }
 
 const StyledLabel = styled.label<LabelProps>`
-  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  font-size: ${({ theme }) => theme.typography.fontSize.sm};
-  color: ${({ theme }) => theme.colors.text.primary};
+  font-family: ${({ theme }) => theme?.typography?.fontFamily?.primary || "sans-serif"};
+  font-weight: ${({ theme }) => theme?.typography?.fontWeight?.medium || 500};
+  font-size: ${({ theme }) => theme?.typography?.fontSize?.sm || "14px"};
+  color: ${({ theme }) => theme?.colors?.text?.primary || "#212529"};
   display: block;
-  margin-bottom: ${({ theme }) => theme.spacing.xs};
+  margin-bottom: ${({ theme }) => theme?.spacing?.xs || "4px"};
 
   ${({ required }) =>
     required &&

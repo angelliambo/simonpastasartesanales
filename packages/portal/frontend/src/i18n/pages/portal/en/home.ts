@@ -48,6 +48,10 @@ const home = {
   productEmpanadasDesc: 'Our house specialty. Empanadas filled with slow-cooked shredded pork shoulder in craft beer, ready to bake. A complete delight.',
   productOrderBtn: 'Place your order',
 
+  // Location Section
+  locationTitle: 'Our Location',
+  locationSubtitle: 'Visit us or get in touch at our main offices.',
+
   // Social Proof & Trust
   testimonialsTitle: 'What those who choose us say',
   testimonialsSubtitle: 'Gastronomic businesses and individuals trust the artisanal quality and retail/wholesale service of Pastas Simón.',
@@ -77,6 +81,13 @@ const home = {
   heroEmailLoginButton: 'Log In with Email',
   whatsappContactButton: 'Contact via WhatsApp',
   seeFeaturesButton: 'View Specialties',
+
+  // Footer Links & Labels
+  footerCommands: 'Voice Commands',
+  footerTerminos: 'Terms and Conditions',
+  footerPrivacidad: 'Privacy Policy',
+  footerRights: 'All rights reserved.',
+  versionLabel: 'Version',
 };
 
 export default home;

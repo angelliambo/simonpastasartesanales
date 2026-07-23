@@ -12,9 +12,9 @@ node_modules/
 .env
 .env.local
 .env.*.local
-env.development
-env.production
-env.example
+.env.development
+.env.production
+.env.example
 
 # Build outputs
 dist/
@@ -52,4 +52,8 @@ Thumbs.db
 *.pid
 *.seed
 *.pid.lock
+
+# Data cache / Local DB Cache
+data/
+
 

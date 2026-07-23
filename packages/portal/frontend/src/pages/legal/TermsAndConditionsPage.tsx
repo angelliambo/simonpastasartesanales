@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Typography } from "antd";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { useThemeColors } from "../../hooks/useThemeColors";
-import AppFooter from "../../components/AppFooter";
+
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -112,7 +112,6 @@ const TermsAndConditionsPage: React.FC = () => {
   const colors = useThemeColors();
 
   return (
-    <>
       <PageWrapper colors={colors}>
         <Container colors={colors}>
           <StyledMainTitle colors={colors} level={1}>{t('pages.legal.titulo')}</StyledMainTitle>
@@ -227,9 +226,6 @@ const TermsAndConditionsPage: React.FC = () => {
           <StyledFooterText colors={colors}>{t('pages.legal.footerCopy')}</StyledFooterText>
         </Container>
       </PageWrapper>
-
-      <AppFooter />
-    </>
   );
 };
 

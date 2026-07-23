@@ -8,3 +8,4 @@ export { default as PageLayout } from "./PageLayout";
 export { default as Loading } from "./loading";
 export { default as ErrorBoundary } from "./ErrorBoundary";
 export { default as AnimatedBackground } from "./AnimatedBackground";
+export { default as ThemeToggle } from "./ThemeToggle";

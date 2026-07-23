@@ -1,8 +1,8 @@
-# MERN SaaS Factory Framework
+# Fábrica de Pastas Simón (Portal Web MERN)
 
-¡Bienvenido al **MERN SaaS Factory Framework**! Este monorepo modular de alto rendimiento está diseñado para servir como boilerplate/plantilla base para crear múltiples proyectos derivados ("hijitos") de manera ágil, limpia y extensible. 
+¡Bienvenido al portal web oficial de **Fábrica de Pastas Simón**! Este proyecto contiene la plataforma web de venta minorista y mayorista de pastas frescas congeladas en Bernal, Quilmes y Zona Sur.
 
-Incluye autenticación unificada (correo/código y Google OAuth), panel de control para administración y usuarios, sistema de soporte por tickets, facturación nativa mediante Lemon Squeezy y control dinámico mediante Feature Flags.
+Incluye autenticación de usuarios, catálogo digital de especialidades artesanas, sistema de solicitudes mayoristas, integración con redes sociales y un sistema de diseño modular.
 
 ---
 

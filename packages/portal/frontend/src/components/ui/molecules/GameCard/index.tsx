@@ -83,7 +83,9 @@ const GameCard: React.FC<GameCardProps> = ({
         border: isRecommended
           ? `3px solid ${colors.primary[500]}`
           : `1px solid ${colors.border.normal}`,
-        boxShadow: isRecommended ? colors.shadow.heavy : colors.shadow.medium,
+        boxShadow: isRecommended
+          ? colors?.shadow?.heavy || "0 10px 15px rgba(0, 0, 0, 0.1)"
+          : colors?.shadow?.medium || "0 4px 6px rgba(0, 0, 0, 0.1)",
         height: "100%",
         background: isRecommended ? getGradient("card") : colors.gradients.card,
         cursor: onClick ? "pointer" : "default",
@@ -115,7 +117,7 @@ const GameCard: React.FC<GameCardProps> = ({
               fontSize: "16px",
               fontWeight: "bold",
               zIndex: 1,
-              boxShadow: colors.shadow.medium,
+              boxShadow: colors?.shadow?.medium || "0 4px 6px rgba(0, 0, 0, 0.1)",
             }}
           >
             ⭐

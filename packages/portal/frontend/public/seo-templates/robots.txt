@@ -6,7 +6,7 @@
 User-agent: Googlebot
 User-agent: Bingbot
 User-agent: DuckDuckBot
-Allow: /$
+Allow: /
 Allow: /assets/
 Disallow: /admin/
 Disallow: /dashboard/
@@ -24,7 +24,7 @@ User-agent: Applebot-Extended   # Apple Intelligence
 User-agent: Google-Extended     # Google Gemini
 User-agent: Meta-ExternalAgent  # Meta AI
 User-agent: cohere-ai           # Cohere
-Allow: /$
+Allow: /
 Allow: /assets/
 Disallow: /admin/
 Disallow: /dashboard/
@@ -33,7 +33,7 @@ Disallow: /api/
 
 # 3. Reglas Generales
 User-agent: *
-Allow: /$
+Allow: /
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /login

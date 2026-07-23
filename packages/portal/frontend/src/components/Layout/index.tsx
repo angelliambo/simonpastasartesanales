@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Container } from '@design-sys/atoms/Container';
-import { usePersonalization } from '@design-sys/contexts/PersonalizationContext';
+import AppFooter from "../AppFooter";
 import { LanguageSelector } from "../../i18n/LanguageSelector";
+import { ThemeToggle } from "../ThemeToggle";
 import { RootState } from "../../store/store";
 import { logout } from "../../store/slices/authSlice";
 import RegisterModal from "../RegisterModal";
@@ -39,103 +40,85 @@ import {
   AccessBtnWrapper,
   MobileActionsWrapper,
   MobileUserRow,
-  MobileLangSelectorWrapper,
+  MobileHeaderActions,
+  PreferencesSection,
+  PreferenceRow,
 } from "./Layout.styles";
 
 const Layout: React.FC = React.memo(() => {
   usePageTracking();
-  const { accessibility } = usePersonalization();
-  const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.auth.token);
-  const user = useSelector((state: RootState) => state.auth.user);
   const location = useLocation();
-  const [showRegister, setShowRegister] = useState<'email' | 'code' | false>(false);
+  const dispatch = useDispatch();
+  const { user, token } = useSelector((state: RootState) => state.auth);
+  const [showRegister, setShowRegister] = useState<false | "email" | "code">(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const accessibilityClasses = useMemo(() => {
-    const classes = [];
-    if (accessibility.highContrast) classes.push("high-contrast");
-    if (accessibility.increasedSpacing) classes.push("increased-spacing");
-    if (accessibility.reduceMotion) classes.push("reduce-motion");
-    if (accessibility.disableAnimations) classes.push("no-animations");
-    if (accessibility.dyslexiaSupport) classes.push("dyslexia-support");
-    if (accessibility.readingGuide) classes.push("reading-guide");
-    if (accessibility.focusIndicator) classes.push("focus-indicator");
-    if (accessibility.keyboardNavigation) classes.push("keyboard-navigation");
-    if (accessibility.textToSpeech) classes.push("text-to-speech");
-    if (accessibility.colorBlindSupport && accessibility.colorBlindType) {
-      classes.push(`colorblind-${accessibility.colorBlindType}`);
-    }
-    return classes.join(" ");
-  }, [accessibility]);
-
   return (
-    <div className={accessibilityClasses}>
+    <Container maxWidth="full" padding="none" style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <TopBar>
-        <LogoLink to="/" onClick={() => setIsMobileMenuOpen(false)}>
+        <LogoLink to="/">
           {BRAND_CONFIG.siteName}
         </LogoLink>
 
-        {location.pathname !== "/wellcome" && (
-          <>
-            <NavLinks>
-              <NavLink to="/" $active={location.pathname === "/"}>
-                Inicio
-              </NavLink>
+        <NavLinks>
+          <NavLink to="/" $active={location.pathname === "/"}>
+            Inicio
+          </NavLink>
 
-              {FEATURES.ENABLE_BILLING_LEMON && (
-                <NavLink to="/pricing" $active={location.pathname === "/pricing"}>
-                  Planes
-                </NavLink>
-              )}
+          {FEATURES.ENABLE_BILLING_LEMON && (
+            <NavLink to="/pricing" $active={location.pathname === "/pricing"}>
+              Planes
+            </NavLink>
+          )}
 
-              {FEATURES.ENABLE_TICKETING_SYSTEM && (
-                <NavLink to="/support" $active={location.pathname === "/support"}>
-                  Ayuda
-                </NavLink>
-              )}
+          {FEATURES.ENABLE_TICKETING_SYSTEM && (
+            <NavLink to="/support" $active={location.pathname === "/support"}>
+              Ayuda
+            </NavLink>
+          )}
 
-              {FEATURES.ENABLE_GOOGLE_AUTH && token && (
-                <NavLink to="/dashboard" $active={location.pathname === "/dashboard"}>
-                  Dashboard
-                </NavLink>
-              )}
+          {FEATURES.ENABLE_GOOGLE_AUTH && token && (
+            <NavLink to="/dashboard" $active={location.pathname === "/dashboard"}>
+              Dashboard
+            </NavLink>
+          )}
 
-              {FEATURES.ENABLE_GOOGLE_AUTH && (user?.isAdmin || user?.role === "admin") && (
-                <NavLink to="/admin" $active={location.pathname === "/admin"}>
-                  <ZnIcon icon={SafetyOutlined} /> Admin
-                </NavLink>
-              )}
-            </NavLinks>
+          {FEATURES.ENABLE_GOOGLE_AUTH && (user?.isAdmin || user?.role === "admin") && (
+            <NavLink to="/admin" $active={location.pathname === "/admin"}>
+              <ZnIcon icon={SafetyOutlined} /> Admin
+            </NavLink>
+          )}
+        </NavLinks>
 
-            <DesktopRight>
-              {FEATURES.ENABLE_GOOGLE_AUTH && (
-                token && user ? (
-                  <>
-                    <UserBadge to="/dashboard">
-                      <ZnIcon icon={UserOutlined} /> {user.email?.split('@')[0] || 'User'}
-                    </UserBadge>
-                    <LogoutBtn onClick={() => dispatch(logout())}>
-                      <ZnIcon icon={LogoutOutlined} />
-                    </LogoutBtn>
-                  </>
-                ) : (
-                  <AccessBtnWrapper>
-                    <AccessBtn size="sm" onClick={() => setShowRegister('email')}>
-                      Ingresar
-                    </AccessBtn>
-                  </AccessBtnWrapper>
-                )
-              )}
+        <DesktopRight>
+          <ThemeToggle variant="icon" />
+          {FEATURES.ENABLE_GOOGLE_AUTH && (
+            token && user ? (
+              <>
+                <UserBadge to="/dashboard">
+                  <ZnIcon icon={UserOutlined} /> {user.email?.split('@')[0] || 'User'}
+                </UserBadge>
+                <LogoutBtn onClick={() => dispatch(logout())}>
+                  <ZnIcon icon={LogoutOutlined} />
+                </LogoutBtn>
+              </>
+            ) : (
+              <AccessBtnWrapper>
+                <AccessBtn size="sm" onClick={() => setShowRegister('email')}>
+                  Ingresar
+                </AccessBtn>
+              </AccessBtnWrapper>
+            )
+          )}
 
-              {SUPPORTED_LOCALES.length > 1 && <LanguageSelector />}
-            </DesktopRight>
+          {SUPPORTED_LOCALES.length > 1 && <LanguageSelector />}
+        </DesktopRight>
 
-            <HamburgerButton onClick={() => setIsMobileMenuOpen(true)}>
-              <ZnIcon icon={MenuOutlined} />
-            </HamburgerButton>
-          </>
-        )}
+        <MobileHeaderActions>
+          <ThemeToggle variant="icon" />
+          <HamburgerButton onClick={() => setIsMobileMenuOpen(true)}>
+            <ZnIcon icon={MenuOutlined} />
+          </HamburgerButton>
+        </MobileHeaderActions>
       </TopBar>
 
       <SidebarOverlay $open={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(false)} />
@@ -197,11 +180,19 @@ const Layout: React.FC = React.memo(() => {
             )
           )}
 
-          {SUPPORTED_LOCALES.length > 1 && (
-            <MobileLangSelectorWrapper>
-              <LanguageSelector />
-            </MobileLangSelectorWrapper>
-          )}
+          <PreferencesSection>
+            <PreferenceRow>
+              <span>Tema</span>
+              <ThemeToggle variant="row" />
+            </PreferenceRow>
+
+            {SUPPORTED_LOCALES.length > 1 && (
+              <PreferenceRow>
+                <span>Idioma</span>
+                <LanguageSelector dropUp={true} />
+              </PreferenceRow>
+            )}
+          </PreferencesSection>
         </MobileActionsWrapper>
       </MobileSidebar>
 
@@ -212,7 +203,9 @@ const Layout: React.FC = React.memo(() => {
           <Outlet />
         </Container>
       </MainContent>
-    </div>
+
+      <AppFooter />
+    </Container>
   );
 });
 

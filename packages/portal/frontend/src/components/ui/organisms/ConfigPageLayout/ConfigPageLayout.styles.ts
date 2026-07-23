@@ -2,8 +2,8 @@ import styled, { css } from "styled-components";
 import Card from '@design-sys/atoms/Card';
 import { Container } from '@design-sys/atoms/Container';
 
-export const LayoutOuter = styled.div<{ colors: any; $isMobile: boolean; $paddingTop: number }>`
-  background: ${({ colors }) => colors.background.secondary};
+export const LayoutOuter = styled.div<{ $colors: any; $isMobile: boolean; $paddingTop: number }>`
+  background: ${({ $colors }) => $colors.background.secondary};
   min-height: 100vh;
   padding-top: ${({ $isMobile, $paddingTop }) => ($isMobile ? `${$paddingTop}px` : "0px")};
   ${({ $isMobile }) =>
@@ -33,15 +33,15 @@ export const LayoutInner = styled(Container) <{ $isMobile: boolean }>`
     `}
 `;
 
-export const HeroCard = styled(Card) <{ colors: any; $isMobile: boolean; $gradient: string; $marginBottom: string }>`
+export const HeroCard = styled(Card) <{ $colors: any; $isMobile: boolean; $gradient: string; $marginBottom: string }>`
   background: ${({ $gradient }) => $gradient};
   margin-top: 0;
   margin-bottom: ${({ $isMobile, $marginBottom }) => ($isMobile ? $marginBottom : "48px")};
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  color: ${({ colors }) => colors.text.inverse};
-  border: 2px solid ${({ colors }) => colors.border.normal};
+  color: ${({ $colors }) => $colors.text.inverse};
+  border: 2px solid ${({ $colors }) => $colors.border.normal};
   ${({ $isMobile }) =>
     $isMobile
       ? css`
@@ -55,15 +55,15 @@ export const HeroCard = styled(Card) <{ colors: any; $isMobile: boolean; $gradie
         `}
 `;
 
-export const HeroIcon = styled.div<{ colors: any; $isMobile: boolean; $marginBottom: string }>`
+export const HeroIcon = styled.div<{ $colors: any; $isMobile: boolean; $marginBottom: string }>`
   font-size: ${({ $isMobile }) => ($isMobile ? "48px" : "64px")};
   margin-bottom: ${({ $isMobile, $marginBottom }) => ($isMobile ? $marginBottom : "16px")};
-  color: ${({ colors }) => colors.text.inverse};
+  color: ${({ $colors }) => $colors.text.inverse};
   line-height: 1;
 `;
 
-export const HeroTitle = styled.h1<{ colors: any; $isMobile: boolean; $marginBottom: string }>`
-  color: ${({ colors }) => colors.text.inverse};
+export const HeroTitle = styled.h1<{ $colors: any; $isMobile: boolean; $marginBottom: string }>`
+  color: ${({ $colors }) => $colors.text.inverse};
   margin-bottom: ${({ $isMobile, $marginBottom }) => ($isMobile ? $marginBottom : "16px")};
   font-size: ${({ $isMobile }) => ($isMobile ? "28px" : "36px")};
   font-weight: 700;
@@ -72,8 +72,8 @@ export const HeroTitle = styled.h1<{ colors: any; $isMobile: boolean; $marginBot
   ${({ $isMobile }) => $isMobile && css`min-height: 34px;`}
 `;
 
-export const HeroSubtitle = styled.p<{ colors: any; $isMobile: boolean; $marginBottom: string }>`
-  color: ${({ colors }) => colors.text.inverse};
+export const HeroSubtitle = styled.p<{ $colors: any; $isMobile: boolean; $marginBottom: string }>`
+  color: ${({ $colors }) => $colors.text.inverse};
   font-size: ${({ $isMobile }) => ($isMobile ? "16px" : "18px")};
   opacity: 0.9;
   max-width: 600px;
@@ -96,16 +96,16 @@ export const SectionOuter = styled.div<{ $isMobile: boolean; $marginBottom: numb
     `}
 `;
 
-export const SectionTitle = styled.h2<{ colors: any; $isMobile: boolean; $marginBottom: number }>`
+export const SectionTitle = styled.h2<{ $colors: any; $isMobile: boolean; $marginBottom: number }>`
   text-align: center;
   margin-bottom: ${({ $marginBottom }) => `${$marginBottom}px`};
-  color: ${({ colors }) => colors.text.primary};
+  color: ${({ $colors }) => $colors.text.primary};
   font-size: ${({ $isMobile }) => ($isMobile ? "22px" : "28px")};
 `;
 
-export const CardWrapper = styled.div<{ $hasClick: boolean }>`
-border: 1px solid ${({ theme }) => theme.colors.border.normal};
-border-radius: ${({ theme }) => theme.borderRadius.sm};
+export const CardWrapper = styled.div<{ $variant?: string; $hasClick: boolean }>`
+  border: 1px solid ${({ theme }) => theme.colors.border.normal};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   cursor: ${({ $hasClick }) => ($hasClick ? "pointer" : "default")};
   display: flex;
   box-sizing: border-box;
@@ -118,7 +118,7 @@ border-radius: ${({ theme }) => theme.borderRadius.sm};
   padding: 16px;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-  border-radius: ${({ theme }) => theme.borderRadius.md};
+    border-radius: ${({ theme }) => theme.borderRadius.md};
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -140,14 +140,14 @@ export const IconWrapper = styled.div<{ $marginBottom: string }>`
   flex-shrink: 0;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-  justify-content: center;
+    justify-content: center;
     margin-bottom: ${({ $marginBottom }) => $marginBottom};
   }
 `;
 
-export const CardIcon = styled.div<{ colors: any; $marginBottom: string }>`
+export const CardIcon = styled.div<{ $colors: any; $marginBottom: string }>`
   font-size: 22px;
-  color: ${({ colors }) => colors.text.primary};
+  color: ${({ $colors }) => $colors.text.primary};
   margin-bottom: ${({ $marginBottom }) => $marginBottom};
   display: flex;
   justify-content: center;
@@ -185,10 +185,10 @@ export const TextWrapper = styled.div`
   }
 `;
 
-export const CardTitle = styled.h3<{ colors: any; $marginBottom: string }>`
+export const CardTitle = styled.h3<{ $colors: any; $marginBottom: string }>`
   margin-top: 0;
   margin-bottom: 6px;
-  color: ${({ colors }) => colors.text.primary};
+  color: ${({ $colors }) => $colors.text.primary};
   font-size: 15px;
   font-weight: 600;
   line-height: 1.2;
@@ -206,9 +206,9 @@ export const CardTitle = styled.h3<{ colors: any; $marginBottom: string }>`
   }
 `;
 
-export const CardSubtitle = styled.p<{ colors: any; $marginBottom: string }>`
+export const CardSubtitle = styled.p<{ $colors: any; $marginBottom: string }>`
   margin: 0;
-  color: ${({ colors }) => colors.text.secondary};
+  color: ${({ $colors }) => $colors.text.secondary};
   font-size: 12px;
   line-height: 1.4;
 

@@ -58,16 +58,42 @@ const SEO: React.FC<SEOProps> = ({
 
   const defaultStructuredData = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+    "@type": ["FoodEstablishment", "LocalBusiness", "WholesaleStore"],
     "name": BRAND_CONFIG.siteName,
-    "operatingSystem": "Windows, macOS, Linux, ChromeOS",
-    "applicationCategory": "AccessibilityApplication, ProductivityApplication",
     "description": finalDescription,
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
+    "url": "https://simonpastasartesanales.com.ar/",
+    "telephone": "+541141921222",
+    "email": BRAND_CONFIG.supportEmail,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "San Luis 1263",
+      "addressLocality": "Bernal",
+      "addressRegion": "Buenos Aires",
+      "postalCode": "B1876",
+      "addressCountry": "AR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -34.7083,
+      "longitude": -58.2833
+    },
+    "areaServed": [
+      { "@type": "AdministrativeArea", "name": "Bernal" },
+      { "@type": "AdministrativeArea", "name": "Quilmes" },
+      { "@type": "AdministrativeArea", "name": "Zona Sur" },
+      { "@type": "AdministrativeArea", "name": "Buenos Aires" }
+    ],
+    "servesCuisine": "Pastas Artesanales, Sorrentinos, Ravioles, Panzottis, Empanadas",
+    "priceRange": "$$",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "08:00",
+        "closes": "19:00"
+      }
+    ],
+    "image": absoluteOgImage
   };
 
   const finalStructuredData = structuredData || defaultStructuredData;
@@ -152,8 +178,8 @@ const SEO: React.FC<SEOProps> = ({
       )}
 
       {/* Meta tags adicionales para SEO */}
-      <meta name="theme-color" content="#0f0f2d" />
-      <meta name="msapplication-TileColor" content="#0f0f2d" />
+      <meta name="theme-color" content="#193220" />
+      <meta name="msapplication-TileColor" content="#193220" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       <meta

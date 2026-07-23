@@ -18,10 +18,8 @@ const TriggerButton = styled.button<{ $fullWidth?: boolean }>`
   width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
   min-width: 180px;
   padding: 8px 12px;
-  background: ${({ theme }) => theme.effects.glassBackground};
-  backdrop-filter: blur(${({ theme }) => theme.effects.blur.subtle || '4px'});
-  -webkit-backdrop-filter: blur(${({ theme }) => theme.effects.blur.subtle || '4px'});
-  border: 1px solid ${({ theme }) => theme.effects.glassBorder};
+  background: ${({ theme }) => theme.colors.background.card};
+  border: 1px solid ${({ theme }) => theme.colors.border.normal};
   border-radius: ${({ theme }) => theme.borderRadius?.md || '6px'};
   color: ${({ theme }) => theme.colors.text.primary};
   font-size: 13px;
@@ -31,13 +29,13 @@ const TriggerButton = styled.button<{ $fullWidth?: boolean }>`
 
   &:hover {
     background: ${({ theme }) => theme.colors.background.secondary};
-    border-color: ${({ theme }) => theme.colors.border.normal};
+    border-color: ${({ theme }) => theme.colors.primary[500]};
   }
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.primary[500]};
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.highlight.glow};
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.highlight?.glow || 'rgba(82, 183, 136, 0.4)'};
   }
 `;
 
@@ -61,11 +59,11 @@ const ArrowIcon = styled(ZnIcon)`
   opacity: 0.6;
 `;
 
-const DropdownMenu = styled.div`
+const DropdownMenu = styled.div<{ $dropUp?: boolean }>`
   position: absolute;
-  top: calc(100% + 6px);
+  ${({ $dropUp }) => ($dropUp ? "bottom: calc(100% + 6px);" : "top: calc(100% + 6px);")}
   right: 0;
-  min-width: 200px;
+  min-width: 180px;
   background: ${({ theme }) => theme.colors.background.card};
   backdrop-filter: blur(${({ theme }) => theme.effects.blur.glass || '12px'});
   -webkit-backdrop-filter: blur(${({ theme }) => theme.effects.blur.glass || '12px'});
@@ -77,7 +75,7 @@ const DropdownMenu = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
-  max-height: 124px;
+  max-height: 140px;
   overflow-y: auto;
 
   /* Custom Scrollbar */
@@ -126,12 +124,16 @@ const MenuItem = styled.div<{ $active: boolean }>`
 
 interface LanguageSelectorProps {
   fullWidth?: boolean;
+  dropUp?: boolean;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   fullWidth,
+  dropUp = false,
   className,
+  style,
 }) => {
   const { lang, setLanguage, languages } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -170,13 +172,13 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   };
 
   return (
-    <SelectorContainer ref={containerRef} $fullWidth={fullWidth} className={className}>
+    <SelectorContainer ref={containerRef} $fullWidth={fullWidth} className={className} style={style}>
       <TriggerButton
-        $fullWidth={fullWidth}
         onClick={() => setIsOpen(!isOpen)}
-        type="button"
-        aria-haspopup="listbox"
+        $fullWidth={fullWidth}
         aria-expanded={isOpen}
+        aria-haspopup="listbox"
+        aria-label="Seleccionar idioma"
       >
         <TriggerContent>
           <FlagImg
@@ -190,7 +192,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       </TriggerButton>
 
       {isOpen && (
-        <DropdownMenu role="listbox">
+        <DropdownMenu $dropUp={dropUp} role="listbox">
           {languages.map((l) => {
             const isActive = l.code === lang;
             return (

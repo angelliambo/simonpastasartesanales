@@ -3,6 +3,9 @@
  * Permite inicializar el script de tracking de forma dinámica y registrar pageviews y eventos (CTAs).
  */
 
+import { logEvent } from "firebase/analytics";
+import { analytics } from "./firebase";
+
 const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID || 'G-CSZZEJ6KG5';
 
 // Extender la interfaz global de Window para TypeScript
@@ -18,7 +21,16 @@ declare global {
  * Solo se ejecuta si el REACT_APP_GA_MEASUREMENT_ID está configurado en las variables de entorno.
  */
 export const initGA = (): void => {
-  if (typeof window === 'undefined' || !GA_MEASUREMENT_ID) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  // Si Firebase Analytics está activo, informamos en la consola en modo desarrollo
+  if (analytics && process.env.NODE_ENV === 'development') {
+    console.info("📊 [ANALYTICS] Firebase Analytics inicializado correctamente.");
+  }
+
+  if (!GA_MEASUREMENT_ID) {
     return;
   }
 
@@ -53,14 +65,29 @@ export const initGA = (): void => {
  * @param title Título de la página (ej: 'Planes')
  */
 export const trackPageView = (path: string, title?: string): void => {
-  if (typeof window === 'undefined' || !window.gtag || !GA_MEASUREMENT_ID) {
+  if (typeof window === 'undefined') {
     return;
   }
 
-  window.gtag('config', GA_MEASUREMENT_ID, {
-    page_path: path,
-    page_title: title || document.title,
-  });
+  // Registrar en Firebase Analytics si está disponible
+  if (analytics) {
+    try {
+      logEvent(analytics, "page_view", {
+        page_path: path,
+        page_title: title || document.title,
+      });
+    } catch (err) {
+      console.warn("⚠️ [ANALYTICS] Error al registrar pageview en Firebase:", err);
+    }
+  }
+
+  // Registrar en GA4 tradicional via gtag.js
+  if (window.gtag && GA_MEASUREMENT_ID) {
+    window.gtag('config', GA_MEASUREMENT_ID, {
+      page_path: path,
+      page_title: title || document.title,
+    });
+  }
 };
 
 /**
@@ -76,13 +103,29 @@ export const trackEvent = (
   label?: string,
   value?: number
 ): void => {
-  if (typeof window === 'undefined' || !window.gtag) {
+  if (typeof window === 'undefined') {
     return;
   }
 
-  window.gtag('event', action, {
-    event_category: category,
-    event_label: label,
-    value: value,
-  });
+  // Registrar en Firebase Analytics si está disponible
+  if (analytics) {
+    try {
+      logEvent(analytics, action, {
+        event_category: category,
+        event_label: label,
+        value: value,
+      });
+    } catch (err) {
+      console.warn("⚠️ [ANALYTICS] Error al registrar evento en Firebase:", err);
+    }
+  }
+
+  // Registrar en GA4 tradicional via gtag.js
+  if (window.gtag) {
+    window.gtag('event', action, {
+      event_category: category,
+      event_label: label,
+      value: value,
+    });
+  }
 };
