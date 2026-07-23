@@ -78,73 +78,78 @@ export const getFontSize = (theme: DefaultTheme, size?: string): string => {
 
 // Helper para obtener pesos de fuente
 export const getFontWeight = (theme: DefaultTheme, weight?: string): number => {
-  if (!weight) return theme.typography.fontWeight.normal;
+  const weights = theme?.typography?.fontWeight;
+  if (!weight) return weights?.normal || 400;
   
-  const weightMap: Record<string, number> = {
-    light: theme.typography.fontWeight.light,
-    normal: theme.typography.fontWeight.normal,
-    medium: theme.typography.fontWeight.medium,
-    semibold: theme.typography.fontWeight.semibold,
-    bold: theme.typography.fontWeight.bold,
+  const weightMap: Record<string, number | undefined> = {
+    light: weights?.light || 300,
+    normal: weights?.normal || 400,
+    medium: weights?.medium || 500,
+    semibold: weights?.semibold || 600,
+    bold: weights?.bold || 700,
   };
   
-  return weightMap[weight] || theme.typography.fontWeight.normal;
+  return weightMap[weight] || weights?.normal || 400;
 };
 
 // Helper para obtener alturas de línea
 export const getLineHeight = (theme: DefaultTheme, lineHeight?: string): number => {
-  if (!lineHeight) return theme.typography.lineHeight.normal;
+  const lineHeights = theme?.typography?.lineHeight;
+  if (!lineHeight) return lineHeights?.normal || 1.5;
   
-  const lineHeightMap: Record<string, number> = {
-    tight: theme.typography.lineHeight.tight,
-    normal: theme.typography.lineHeight.normal,
-    relaxed: theme.typography.lineHeight.relaxed,
+  const lineHeightMap: Record<string, number | undefined> = {
+    tight: lineHeights?.tight || 1.25,
+    normal: lineHeights?.normal || 1.5,
+    relaxed: lineHeights?.relaxed || 1.75,
   };
   
-  return lineHeightMap[lineHeight] || theme.typography.lineHeight.normal;
+  return lineHeightMap[lineHeight] || lineHeights?.normal || 1.5;
 };
 
 // Helper para obtener espaciado
 export const getSpacing = (theme: DefaultTheme, spacing?: string): string => {
-  if (!spacing) return theme.spacing.md;
+  const spacings = theme?.spacing;
+  if (!spacing) return spacings?.md || "16px";
   
-  const spacingMap: Record<string, string> = {
-    xs: theme.spacing.xs,
-    sm: theme.spacing.sm,
-    md: theme.spacing.md,
-    lg: theme.spacing.lg,
-    xl: theme.spacing.xl,
-    xxl: theme.spacing.xxl,
+  const spacingMap: Record<string, string | undefined> = {
+    xs: spacings?.xs || "4px",
+    sm: spacings?.sm || "8px",
+    md: spacings?.md || "16px",
+    lg: spacings?.lg || "24px",
+    xl: spacings?.xl || "32px",
+    xxl: spacings?.xxl || "48px",
   };
   
-  return spacingMap[spacing] || theme.spacing.md;
+  return spacingMap[spacing] || spacings?.md || "16px";
 };
 
 // Helper para obtener border radius
 export const getBorderRadius = (theme: DefaultTheme, borderRadius?: string): string => {
-  if (!borderRadius) return theme.borderRadius.md;
+  const radiuses = theme?.borderRadius;
+  if (!borderRadius) return radiuses?.md || "8px";
   
-  const borderRadiusMap: Record<string, string> = {
-    sm: theme.borderRadius.sm,
-    md: theme.borderRadius.md,
-    lg: theme.borderRadius.lg,
-    xl: theme.borderRadius.xl,
+  const borderRadiusMap: Record<string, string | undefined> = {
+    sm: radiuses?.sm || "4px",
+    md: radiuses?.md || "8px",
+    lg: radiuses?.lg || "12px",
+    xl: radiuses?.xl || "16px",
   };
   
-  return borderRadiusMap[borderRadius] || theme.borderRadius.md;
+  return borderRadiusMap[borderRadius] || radiuses?.md || "8px";
 };
 
 // Helper para obtener sombras
 export const getShadow = (theme: DefaultTheme, shadow?: string): string => {
   if (!shadow || shadow === 'none') return 'none';
+  const shadows = theme?.shadows;
   
-  const shadowMap: Record<string, string> = {
-    light: theme.shadows.light,
-    medium: theme.shadows.medium,
-    heavy: theme.shadows.heavy,
+  const shadowMap: Record<string, string | undefined> = {
+    light: shadows?.light || "0 1px 3px rgba(0, 0, 0, 0.1)",
+    medium: shadows?.medium || "0 4px 6px rgba(0, 0, 0, 0.1)",
+    heavy: shadows?.heavy || "0 10px 15px rgba(0, 0, 0, 0.1)",
   };
   
-  return shadowMap[shadow] || theme.shadows.medium;
+  return shadowMap[shadow] || shadows?.medium || "0 4px 6px rgba(0, 0, 0, 0.1)";
 };
 
 // Helper para obtener colores de botón

@@ -80,7 +80,7 @@ export const NavLinks = styled.nav`
   align-items: center;
   gap: 8px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints?.md || '768px'}) {
     display: none;
   }
 `;
@@ -89,6 +89,10 @@ export const DesktopRight = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints?.md || '768px'}) {
+    display: none;
+  }
 `;
 
 export const HamburgerButton = styled.button`
@@ -108,7 +112,7 @@ export const HamburgerButton = styled.button`
     background: ${({ theme }) => `${theme.colors.text.primary}10`};
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints?.md || '768px'}) {
     display: inline-flex;
   }
 `;
@@ -247,6 +251,33 @@ export const MobileUserRow = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+`;
+
+export const MobileHeaderActions = styled.div`
+  display: none;
+  align-items: center;
+  gap: 8px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints?.md || '768px'}) {
+    display: flex;
+  }
+`;
+
+export const PreferencesSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid ${({ theme }) => theme.colors.border.light};
+`;
+
+export const PreferenceRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: ${({ theme }) => theme.colors.text.secondary};
 `;
 
 export const MobileLangSelectorWrapper = styled.div`

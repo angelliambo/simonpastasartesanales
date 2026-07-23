@@ -48,6 +48,10 @@ const home = {
   productEmpanadasDesc: 'Nuestra especialidad de la casa. Empanadas de bondiola desmechada braseada a la cerveza, listas para hornear. Una delicia total.',
   productOrderBtn: 'Hacé tu pedido',
 
+  // Location Section
+  locationTitle: 'Nuestra Ubicación',
+  locationSubtitle: 'Visítanos o ponte en contacto con nosotros en nuestras oficinas principales.',
+
   // Social Proof & Trust
   testimonialsTitle: 'La opinión de quienes nos eligen',
   testimonialsSubtitle: 'Gastronómicos y particulares confían en la calidad artesanal y la atención minorista y mayorista de Pastas Simón.',
@@ -77,6 +81,13 @@ const home = {
   heroEmailLoginButton: 'Ingresar con Correo',
   whatsappContactButton: 'Contacto por WhatsApp',
   seeFeaturesButton: 'Ver Especialidades',
+
+  // Footer Links & Labels
+  footerCommands: 'Comandos de Voz',
+  footerTerminos: 'Términos y Condiciones',
+  footerPrivacidad: 'Política de Privacidad',
+  footerRights: 'Todos los derechos reservados.',
+  versionLabel: 'Versión',
 };
 
 export default home;

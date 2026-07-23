@@ -1,6 +1,6 @@
 {
-  "short_name": "SaaS Boilerplate",
-  "name": "SaaS Boilerplate - Tu Plataforma Lista para Despegar",
+  "short_name": "__BRAND_NAME__",
+  "name": "__BRAND_NAME__ - Tu Plataforma Lista para Despegar",
   "description": "La estructura modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte.",
   "icons": [
     {

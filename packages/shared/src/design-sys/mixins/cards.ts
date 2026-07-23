@@ -1,16 +1,16 @@
 import { css } from 'styled-components';
 
 export const cardMixin = css`
-  background: ${({ theme }) => theme.colors.background.card};
-  border-radius: ${({ theme }) => theme.borderRadius.lg};
-  border: 1px solid ${({ theme }) => theme.colors.border.normal};
-  padding: ${({ theme }) => theme.spacing.lg};
-  box-shadow: ${({ theme }) => theme.shadows.light};
-  transition: box-shadow ${({ theme }) => theme.transitions.normal},
-              transform ${({ theme }) => theme.transitions.normal};
+  background: ${({ theme }) => theme?.colors?.background?.card || "#ffffff"};
+  border-radius: ${({ theme }) => theme?.borderRadius?.lg || "12px"};
+  border: 1px solid ${({ theme }) => theme?.colors?.border?.normal || "#e5e7eb"};
+  padding: ${({ theme }) => theme?.spacing?.lg || "24px"};
+  box-shadow: ${({ theme }) => theme?.shadows?.light || "0 1px 3px rgba(0, 0, 0, 0.1)"};
+  transition: box-shadow ${({ theme }) => theme?.transitions?.normal || "0.3s ease"},
+              transform ${({ theme }) => theme?.transitions?.normal || "0.3s ease"};
 
   &:hover {
-    box-shadow: ${({ theme }) => theme.shadows.medium};
+    box-shadow: ${({ theme }) => theme?.shadows?.medium || "0 4px 6px rgba(0, 0, 0, 0.1)"};
     transform: translateY(-2px);
   }
 `;

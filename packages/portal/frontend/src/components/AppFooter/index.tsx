@@ -1,6 +1,8 @@
 import React from "react";
 import { useTranslation } from "../../i18n/I18nProvider";
-import { useThemeColors } from "../../hooks/useThemeColors";
+import { SUPPORTED_LOCALES } from "../../i18n";
+import { LanguageSelector } from "../../i18n/LanguageSelector";
+import { ThemeToggle } from "../ThemeToggle";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import { TwitterOutlined, InstagramOutlined, FacebookOutlined, MessageOutlined } from "@ant-design/icons";
 import { CONTACT_EMAIL } from "@shared/config/contact";
@@ -22,24 +24,24 @@ import {
   SocialContainer,
   SocialIconLink,
   CopyRightParagraph,
+  FooterLangSelectorWrapper,
 } from "./AppFooter.styles";
 
 const AppFooter: React.FC = () => {
   const { t } = useTranslation();
-  const colors = useThemeColors();
 
   return (
-    <FooterContainer colors={colors}>
+    <FooterContainer>
       <div>
-        <ExternalLink colors={colors} href={`mailto:${CONTACT_EMAIL}`}>
+        <ExternalLink href={`mailto:${CONTACT_EMAIL}`}>
           Contáctenos
         </ExternalLink>
         <Separator>|</Separator>
-        <FooterLink colors={colors} to="/legal/terms">
+        <FooterLink to="/legal/terms">
           {t('pages.home.footerTerminos') || 'Términos'}
         </FooterLink>
         <Separator>|</Separator>
-        <FooterLink colors={colors} to="/legal/privacy">
+        <FooterLink to="/legal/privacy">
           {t('pages.home.footerPrivacidad') || 'Privacidad'}
         </FooterLink>
       </div>
@@ -48,7 +50,6 @@ const AppFooter: React.FC = () => {
         <SocialContainer>
           {SOCIAL_FACEBOOK_URL && !SOCIAL_FACEBOOK_URL.includes('<username>') && (
             <SocialIconLink 
-              colors={colors} 
               href={SOCIAL_FACEBOOK_URL} 
               target="_blank" 
               rel="noopener noreferrer" 
@@ -59,7 +60,6 @@ const AppFooter: React.FC = () => {
           )}
           {SOCIAL_INSTAGRAM_URL && !SOCIAL_INSTAGRAM_URL.includes('<username>') && (
             <SocialIconLink 
-              colors={colors} 
               href={SOCIAL_INSTAGRAM_URL} 
               target="_blank" 
               rel="noopener noreferrer" 
@@ -70,7 +70,6 @@ const AppFooter: React.FC = () => {
           )}
           {SOCIAL_THREADS_URL && !SOCIAL_THREADS_URL.includes('<username>') && (
             <SocialIconLink 
-              colors={colors} 
               href={SOCIAL_THREADS_URL} 
               target="_blank" 
               rel="noopener noreferrer" 
@@ -81,7 +80,6 @@ const AppFooter: React.FC = () => {
           )}
           {SOCIAL_X_URL && !SOCIAL_X_URL.includes('<username>') && (
             <SocialIconLink 
-              colors={colors} 
               href={SOCIAL_X_URL} 
               target="_blank" 
               rel="noopener noreferrer" 
@@ -93,9 +91,16 @@ const AppFooter: React.FC = () => {
         </SocialContainer>
       )}
 
+      <FooterLangSelectorWrapper>
+        <ThemeToggle variant="icon" />
+        {SUPPORTED_LOCALES.length > 1 && (
+          <LanguageSelector dropUp={true} />
+        )}
+      </FooterLangSelectorWrapper>
+
       <CopyRightParagraph>
         &copy; {new Date().getFullYear()}{" "}
-        <ExternalLink colors={colors} href={PORTAL_URL}>{BRAND_CONFIG.siteName}</ExternalLink>.{" "}
+        <ExternalLink href={PORTAL_URL}>{BRAND_CONFIG.siteName}</ExternalLink>.{" "}
         {t('pages.home.footerRights') || 'Todos los derechos reservados.'}
         {" "}&mdash;{" "}
         {t('pages.home.versionLabel') || 'Versión'} {pkg.version}

@@ -361,12 +361,16 @@ export const SkeletonImage: React.FC<SkeletonImageProps> = ({
   );
 };
 
+import { SkeletonCard, SocialFeedSkeleton } from "./SkeletonCard";
+
 // Agregar métodos estáticos al componente principal
 (Skeleton as any).Button = SkeletonButton;
 (Skeleton as any).Input = SkeletonInput;
 (Skeleton as any).Avatar = SkeletonAvatar;
 (Skeleton as any).Image = SkeletonImage;
+(Skeleton as any).Card = SkeletonCard;
+(Skeleton as any).SocialFeed = SocialFeedSkeleton;
 
-// Export por defecto
+export { SkeletonCard, SocialFeedSkeleton };
 export default Skeleton;
 

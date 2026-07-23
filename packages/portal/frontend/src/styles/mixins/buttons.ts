@@ -28,13 +28,13 @@ export const Button = styled.button<ButtonProps>`
     border: none;
     outline: none;
     cursor: pointer;
-    font-family: ${theme.typography.fontFamily.primary};
-    font-weight: ${theme.typography.fontWeight.medium};
+    font-family: ${theme?.typography?.fontFamily?.primary || "sans-serif"};
+    font-weight: ${theme?.typography?.fontWeight?.medium || 500};
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: ${theme.spacing.xs};
+    gap: ${theme?.spacing?.xs || "4px"};
     transition: all 0.2s ease-in-out;
     position: relative;
     overflow: hidden;

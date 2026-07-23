@@ -61,11 +61,11 @@ const ArrowIcon = styled(ZnIcon)`
   opacity: 0.6;
 `;
 
-const DropdownMenu = styled.div`
+const DropdownMenu = styled.div<{ $dropUp?: boolean }>`
   position: absolute;
-  top: calc(100% + 6px);
+  ${({ $dropUp }) => ($dropUp ? "bottom: calc(100% + 6px);" : "top: calc(100% + 6px);")}
   right: 0;
-  min-width: 200px;
+  min-width: 180px;
   background: ${({ theme }) => theme.colors.background.card};
   backdrop-filter: blur(${({ theme }) => theme.effects.blur.glass || '12px'});
   -webkit-backdrop-filter: blur(${({ theme }) => theme.effects.blur.glass || '12px'});
@@ -77,7 +77,7 @@ const DropdownMenu = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
-  max-height: 124px;
+  max-height: 140px;
   overflow-y: auto;
 
   /* Custom Scrollbar */
@@ -126,12 +126,16 @@ const MenuItem = styled.div<{ $active: boolean }>`
 
 interface LanguageSelectorProps {
   fullWidth?: boolean;
+  dropUp?: boolean;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   fullWidth,
+  dropUp = false,
   className,
+  style,
 }) => {
   const { lang, setLanguage, languages } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -170,13 +174,13 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   };
 
   return (
-    <SelectorContainer ref={containerRef} $fullWidth={fullWidth} className={className}>
+    <SelectorContainer ref={containerRef} $fullWidth={fullWidth} className={className} style={style}>
       <TriggerButton
-        $fullWidth={fullWidth}
         onClick={() => setIsOpen(!isOpen)}
-        type="button"
-        aria-haspopup="listbox"
+        $fullWidth={fullWidth}
         aria-expanded={isOpen}
+        aria-haspopup="listbox"
+        aria-label="Seleccionar idioma"
       >
         <TriggerContent>
           <FlagImg
@@ -190,7 +194,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       </TriggerButton>
 
       {isOpen && (
-        <DropdownMenu role="listbox">
+        <DropdownMenu $dropUp={dropUp} role="listbox">
           {languages.map((l) => {
             const isActive = l.code === lang;
             return (

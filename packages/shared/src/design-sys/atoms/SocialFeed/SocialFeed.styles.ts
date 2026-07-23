@@ -206,3 +206,10 @@ export const SkeletonLine = styled.div<{ $width?: string; $height?: string }>`
   background-size: 200% 100%;
   animation: ${shimmer} 1.5s infinite;
 `;
+
+export const FeedPlaceholder = styled.div`
+  width: 100%;
+  min-height: 350px;
+  background: transparent;
+`;
+
