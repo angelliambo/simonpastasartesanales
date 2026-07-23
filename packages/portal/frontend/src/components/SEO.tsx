@@ -56,6 +56,10 @@ const SEO: React.FC<SEOProps> = ({
   const currentUrl =
     canonicalUrl || (typeof window !== "undefined" ? window.location.origin + window.location.pathname + window.location.search : "");
 
+  const absoluteOgImage = ogImage.startsWith('http')
+    ? ogImage
+    : (typeof window !== 'undefined' ? `${window.location.origin}${ogImage}` : ogImage);
+
   const defaultStructuredData = {
     "@context": "https://schema.org",
     "@type": ["FoodEstablishment", "LocalBusiness", "WholesaleStore"],
@@ -113,10 +117,6 @@ const SEO: React.FC<SEOProps> = ({
       };
     });
   }
-
-  const absoluteOgImage = ogImage.startsWith('http')
-    ? ogImage
-    : (typeof window !== 'undefined' ? `${window.location.origin}${ogImage}` : ogImage);
 
   return (
     <Helmet>
