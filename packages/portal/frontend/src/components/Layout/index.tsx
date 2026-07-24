@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Container } from '@design-sys/atoms/Container';
 import AppFooter from "../AppFooter";
+import FloatingWhatsAppCTA from "../FloatingWhatsAppCTA";
 import { LanguageSelector } from "../../i18n/LanguageSelector";
 import { ThemeToggle } from "../ThemeToggle";
 import { RootState } from "../../store/store";
@@ -205,6 +206,7 @@ const Layout: React.FC = React.memo(() => {
       </MainContent>
 
       <AppFooter />
+      <FloatingWhatsAppCTA />
     </Container>
   );
 });
