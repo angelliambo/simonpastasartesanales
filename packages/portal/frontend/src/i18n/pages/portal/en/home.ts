@@ -78,6 +78,8 @@ export const home = {
   heroDashboardButton: 'Go to Dashboard',
   heroEmailLoginButton: 'Log In with Email',
   whatsappContactButton: 'Contact via WhatsApp',
+  whatsappFloatingBadge: 'Contact Us',
+  whatsappDefaultMessage: 'Hello! I am contacting you from the website, I am interested in your products.',
   seeFeaturesButton: 'View Features',
 
   // Footer Links & Labels
