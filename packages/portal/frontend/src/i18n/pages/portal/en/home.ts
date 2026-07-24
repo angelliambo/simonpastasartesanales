@@ -80,6 +80,8 @@ const home = {
   heroDashboardButton: 'Go to Dashboard',
   heroEmailLoginButton: 'Log In with Email',
   whatsappContactButton: 'Contact via WhatsApp',
+  whatsappFloatingBadge: 'Questions or orders? Chat with us!',
+  whatsappDefaultMessage: 'Hello Pastas Simón, I would like to inquire about pasta orders.',
   seeFeaturesButton: 'View Specialties',
 
   // Footer Links & Labels
