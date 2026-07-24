@@ -112,11 +112,23 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('lang') !== lang) {
-        params.set('lang', lang);
-        const newSearch = params.toString();
-        const newUrl = `${window.location.pathname}?${newSearch}${window.location.hash}`;
-        window.history.replaceState({}, '', newUrl);
+      const currentParam = params.get('lang');
+
+      if (lang === DEFAULT_LANG) {
+        if (currentParam !== null) {
+          params.delete('lang');
+          const newSearch = params.toString();
+          const searchPrefix = newSearch ? `?${newSearch}` : '';
+          const newUrl = `${window.location.pathname}${searchPrefix}${window.location.hash}`;
+          window.history.replaceState({}, '', newUrl);
+        }
+      } else {
+        if (currentParam !== lang) {
+          params.set('lang', lang);
+          const newSearch = params.toString();
+          const newUrl = `${window.location.pathname}?${newSearch}${window.location.hash}`;
+          window.history.replaceState({}, '', newUrl);
+        }
       }
     }
   }, [lang]);

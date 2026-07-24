@@ -80,10 +80,16 @@ const SEO: React.FC<SEOProps> = ({
 
     finalAlternateLanguages = LANGUAGES.map(l => {
       const params = new URLSearchParams(window.location.search);
-      params.set('lang', l.code);
+      if (l.code === 'es') {
+        params.delete('lang');
+      } else {
+        params.set('lang', l.code);
+      }
+      const searchStr = params.toString();
+      const searchPrefix = searchStr ? `?${searchStr}` : '';
       return {
         hreflang: l.code,
-        href: `${currentOrigin}${currentPath}?${params.toString()}`
+        href: `${currentOrigin}${currentPath}${searchPrefix}`
       };
     });
   }
