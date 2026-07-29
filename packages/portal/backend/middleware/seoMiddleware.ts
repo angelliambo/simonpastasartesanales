@@ -47,12 +47,16 @@ export async function serveReactWithSEO(req: Request, res: Response, next: NextF
 
     let html = fs.readFileSync(indexPath, "utf8");
 
+    // Construir la URL absoluta para la imagen por defecto
+    const protocol = req.secure || req.headers["x-forwarded-proto"] === "https" ? "https" : "http";
+    const defaultOgImage = `${protocol}://${host}/og-image.png?v=${BRAND_CONFIG.assetVersion}`;
+
     // Resolver valores SEO
     const seoTitle = tenant?.seo?.title || BRAND_CONFIG.seoTitle;
     const seoDescription = tenant?.seo?.description || BRAND_CONFIG.seoDescription;
     const seoKeywords = tenant?.seo?.keywords || BRAND_CONFIG.seoKeywords;
-    const seoImage = tenant?.seo?.image || BRAND_CONFIG.mapImageUrl; // fallback a la imagen de marca por defecto
-    const themeColor = tenant?.theme?.primaryColor || "#1890ff";
+    const seoImage = tenant?.seo?.image || defaultOgImage;
+    const themeColor = tenant?.theme?.primaryColor || "#193220";
 
     // Reemplazar title y metas. Usar expresiones regulares flexibles que toleren variaciones de tags
     html = html
@@ -84,8 +88,8 @@ export async function serveReactWithSEO(req: Request, res: Response, next: NextF
         domain: BRAND_CONFIG.domain,
         supportEmail: BRAND_CONFIG.supportEmail,
         theme: {
-          primaryColor: "#1890ff",
-          secondaryColor: "#52c41a",
+          primaryColor: "#193220",
+          secondaryColor: "#ad7231",
           darkMode: false,
         }
       }
