@@ -45,18 +45,42 @@ const STORAGE_KEY = "zn-portal-user-theme";
 const THEMES_KEY = "zn-portal-custom-themes";
 
 function loadConfig(): ThemeConfig {
+  let initialTheme: Theme = "light";
+  let customColors: CustomColors | undefined = undefined;
+
+  // Cargar configuración de Tenant inyectada
+  if (typeof window !== "undefined" && window.__INITIAL_STATE__?.tenant) {
+    const tenant = window.__INITIAL_STATE__.tenant;
+    if (tenant.theme) {
+      initialTheme = tenant.theme.darkMode ? "dark" : "light";
+      customColors = {
+        primary: tenant.theme.primaryColor,
+        secondary: tenant.theme.secondaryColor,
+      };
+    }
+  }
+
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved) as ThemeConfig;
       if (parsed && (parsed.theme === "light" || parsed.theme === "dark")) {
-        return { ...parsed, autoDetect: false };
+        return { 
+          ...parsed, 
+          autoDetect: false,
+          customColors: customColors || parsed.customColors
+        };
       }
     }
   } catch {
     /* ignore */
   }
-  return { theme: "light", accessibility: "default", autoDetect: false };
+  return { 
+    theme: initialTheme, 
+    accessibility: "default", 
+    autoDetect: false, 
+    customColors 
+  };
 }
 
 function saveConfig(config: ThemeConfig) {
