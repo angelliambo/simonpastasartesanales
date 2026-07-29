@@ -11,6 +11,7 @@ import rateLimit from "express-rate-limit";
 import { checkFeature } from "./middleware/checkFeature";
 import { FEATURES } from "@factory/shared/config/features";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
+import { serveReactWithSEO } from "./middleware/seoMiddleware";
 
 const app = express();
 
@@ -66,6 +67,9 @@ app.use(
 logger.info("🔧 [SERVER] Middleware configurado");
 
 app.use("/api", apiLimiter, apiRoutes);
+
+// Servir la SPA con inyección dinámica de SEO y configuración de Tenant
+app.use(serveReactWithSEO);
 
 app.get("/", (_req: Request, res: Response) => {
   logger.debug("🏥 [SERVER] Health check solicitado");
