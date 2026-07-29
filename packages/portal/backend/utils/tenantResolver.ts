@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Tenant from "../models/Tenant";
 import { memoryCache } from "./cache";
 
@@ -27,6 +28,12 @@ export interface ResolvedTenant {
  * Resuelve el Tenant a partir del header Host
  */
 export async function resolveTenant(host: string): Promise<ResolvedTenant | null> {
+  // Si la conexión a la base de datos no está activa (por ejemplo, si se omitió en server.ts),
+  // no intentamos consultar y retornamos null para usar el fallback de marca por defecto.
+  if (mongoose.connection.readyState !== 1) {
+    return null;
+  }
+
   if (!host) return null;
 
   // Limpiar puerto del Host si existe (ej. localhost:5000 -> localhost)
@@ -61,14 +68,19 @@ export async function resolveTenant(host: string): Promise<ResolvedTenant | null
 
   let tenantDoc: any = null;
 
-  // 1. Buscar primero por dominio propio si no estamos en localhost con subdominio
-  if (domainToSearch && domainToSearch !== "localhost") {
-    tenantDoc = await Tenant.findOne({ domain: domainToSearch, isActive: true }).lean();
-  }
+  try {
+    // 1. Buscar primero por dominio propio si no estamos en localhost con subdominio
+    if (domainToSearch && domainToSearch !== "localhost") {
+      tenantDoc = await Tenant.findOne({ domain: domainToSearch, isActive: true }).lean();
+    }
 
-  // 2. Si no se encontró por dominio, o si detectamos subdominio, buscar por subdominio
-  if (!tenantDoc && subdomainToSearch) {
-    tenantDoc = await Tenant.findOne({ subdomain: subdomainToSearch, isActive: true }).lean();
+    // 2. Si no se encontró por dominio, o si detectamos subdominio, buscar por subdominio
+    if (!tenantDoc && subdomainToSearch) {
+      tenantDoc = await Tenant.findOne({ subdomain: subdomainToSearch, isActive: true }).lean();
+    }
+  } catch (dbError) {
+    console.error("⚠️ [resolveTenant] Error querying database, falling back to brand defaults:", dbError);
+    return null;
   }
 
   if (!tenantDoc) {
