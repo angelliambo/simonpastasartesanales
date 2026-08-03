@@ -54,7 +54,7 @@ const SEO: React.FC<SEOProps> = ({
     : `${finalTitle} | ${BRAND_CONFIG.siteName}`;
 
   const currentUrl =
-    canonicalUrl || (typeof window !== "undefined" ? window.location.origin + window.location.pathname + window.location.search : "");
+    canonicalUrl || (typeof window !== "undefined" ? window.location.origin + window.location.pathname : "");
 
   const absoluteOgImage = ogImage.startsWith('http')
     ? ogImage
@@ -87,7 +87,7 @@ const SEO: React.FC<SEOProps> = ({
       { "@type": "AdministrativeArea", "name": "Zona Sur" },
       { "@type": "AdministrativeArea", "name": "Buenos Aires" }
     ],
-    "servesCuisine": "Pastas Artesanales, Sorrentinos, Ravioles, Panzottis, Empanadas",
+    "servesCuisine": ["Pastas Artesanales", "Sorrentinos", "Ravioles", "Panzottis", "Empanadas"],
     "priceRange": "$$",
     "openingHoursSpecification": [
       {
@@ -97,23 +97,51 @@ const SEO: React.FC<SEOProps> = ({
         "closes": "19:00"
       }
     ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Catálogo de Pastas Artesanales",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Sorrentinos Artesanales",
+            "description": "Sorrentinos caseros variados de elaboración propia en Bernal."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Ravioles y Panzottis",
+            "description": "Pastas frescas congeladas con rellenos seleccionados."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Empanadas de Bondiola y Variadas",
+            "description": "Empanadas artesanales de masa casera y rellenos gourmet."
+          }
+        }
+      ]
+    },
     "image": absoluteOgImage
   };
 
   const finalStructuredData = structuredData || defaultStructuredData;
 
-  // Generar dinámicamente links rel="alternate" para indexación multiidioma si no se pasan explícitamente
+  // Generar dinámicamente links rel="alternate" para indexación multiidioma
   let finalAlternateLanguages = alternateLanguages;
   if (alternateLanguages.length === 0 && typeof window !== "undefined") {
     const currentPath = window.location.pathname;
     const currentOrigin = window.location.origin;
 
     finalAlternateLanguages = LANGUAGES.map(l => {
-      const params = new URLSearchParams(window.location.search);
-      params.set('lang', l.code);
       return {
         hreflang: l.code,
-        href: `${currentOrigin}${currentPath}?${params.toString()}`
+        href: `${currentOrigin}${currentPath}`
       };
     });
   }
