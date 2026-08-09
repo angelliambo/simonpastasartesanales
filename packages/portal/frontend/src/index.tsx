@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./services/firebase";
+import { initMetricsSuite } from "./utils/metrics";
 
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 
@@ -21,6 +22,9 @@ if (process.env.NODE_ENV === 'production') {
   };
 }
 
+// Inicializar Suite de Métricas, Tráfico y Auditoría SEO
+initMetricsSuite();
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -32,3 +36,4 @@ root.render(
 );
 
 reportWebVitals();
+
