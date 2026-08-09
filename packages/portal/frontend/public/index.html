@@ -41,6 +41,112 @@
   <meta property="twitter:site" content="@simonpastas" />
   <meta property="twitter:creator" content="@simonpastas" />
 
+  <!-- Schema.org JSON-LD (Datos Estructurados para Rich Snippets en Google Search) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FoodEstablishment",
+    "name": "Fábrica de Pastas Simón",
+    "image": "https://simonpastasartesanales.com.ar/og-image.png",
+    "@id": "https://simonpastasartesanales.com.ar",
+    "url": "https://simonpastasartesanales.com.ar",
+    "telephone": "+541141921222",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "San Luis 1263",
+      "addressLocality": "Bernal",
+      "addressRegion": "Buenos Aires",
+      "postalCode": "B1876",
+      "addressCountry": "AR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -34.7083,
+      "longitude": -58.2831
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "09:00",
+      "closes": "19:00"
+    },
+    "servesCuisine": "Pastas Artesanales",
+    "sameAs": [
+      "https://wa.me/5491141921222"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Catálogo de Pastas Artesanales",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Product",
+          "name": "Sorrentinos Artesanales",
+          "description": "Sorrentinos caseros congelados en origen con variedad de rellenos premium.",
+          "brand": {
+            "@type": "Brand",
+            "name": "Fábrica de Pastas Simón"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Product",
+          "name": "Ravioles Tradicionales",
+          "description": "Ravioles frescos y congelados en caja, sabor casero tradicional.",
+          "brand": {
+            "@type": "Brand",
+            "name": "Fábrica de Pastas Simón"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Product",
+          "name": "Panzottis Gourmet",
+          "description": "Panzottis artesanales con rellenos gourmet abundantes.",
+          "brand": {
+            "@type": "Brand",
+            "name": "Fábrica de Pastas Simón"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "Product",
+          "name": "Empanadas de Bondiola Desmechada",
+          "description": "Empanadas artesanales congeladas en caja con relleno de bondiola sazonada.",
+          "brand": {
+            "@type": "Brand",
+            "name": "Fábrica de Pastas Simón"
+          }
+        }
+      }
+    ]
+  }
+  </script>
+
   <!-- Favicons -->
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=1.3.7">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=1.3.7">
@@ -48,11 +154,11 @@
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png?v=1.3.7" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-  <!-- Preconnect para mejorar performance (conectar temprano a recursos externos) -->
+  <!-- Preconnect para mejorar performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Fuentes optimizadas: carga diferida con font-display swap para evitar render blocking -->
+  <!-- Fuentes optimizadas -->
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
     rel="stylesheet" media="print" onload="this.media='all'">
@@ -63,30 +169,19 @@
   </noscript>
 
   <!-- Preload de imágenes críticas para LCP -->
-  <!-- Logo crítico para LCP - se carga con alta prioridad (todos los dispositivos) -->
   <link rel="preload" href="%PUBLIC_URL%/logo192.png?v=1.3.7" as="image" fetchpriority="high">
-
-  <!-- og-image - LCP candidate en mobile, preload condicional con media query -->
   <link rel="preload" href="%PUBLIC_URL%/og-image.png?v=1.3.7" as="image" fetchpriority="high"
     media="(max-width: 768px)">
 
-  <!-- Preload de recursos críticos para mejorar LCP -->
-  <!-- CSS crítico: Solo en producción (en desarrollo se inyecta dinámicamente) -->
-  <!-- El preload del CSS se maneja automáticamente por webpack en desarrollo -->
-
-  <!-- DNS prefetch para recursos externos (mejora conexión temprana) -->
+  <!-- DNS prefetch para recursos externos -->
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="dns-prefetch" href="https://accounts.google.com">
-
-  <!-- Google Identity Services - Carga lazy solo cuando se necesita (LoginPage/RegisterPage) -->
-  <!-- Script removido de aquí para lazy load - ahorra ~74KB en carga inicial -->
 
   <title>Fábrica de Pastas Simón | Pastas Artesanales en Bernal & Quilmes</title>
 
   <!-- DESHABILITAR SERVICE WORKER TEMPORALMENTE -->
   <script>
-    // Deshabilitar Service Worker completamente
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(function (registrations) {
         for (let registration of registrations) {
@@ -100,49 +195,40 @@
   <script>
     (function () {
       try {
-        // Esperar a que document.body esté disponible
         if (typeof document === 'undefined' || !document.documentElement) {
           return;
         }
 
-        // Leer tema del localStorage
         const savedConfig = localStorage.getItem('zn-portal-user-theme');
         let theme = 'light';
 
         if (savedConfig) {
           try {
             const parsed = JSON.parse(savedConfig);
-            // Verificar si tiene autoDetect habilitado
             if (parsed.autoDetect !== false) {
-              // Detectar preferencia del sistema
               const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
               theme = prefersDark ? 'dark' : 'light';
             } else {
               theme = parsed.theme || 'light';
             }
           } catch (e) {
-            // Si hay error, detectar preferencia del sistema
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             theme = prefersDark ? 'dark' : 'light';
           }
         } else {
-          // Si no hay configuración guardada, detectar preferencia del sistema
           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
           theme = prefersDark ? 'dark' : 'light';
         }
 
-        // Aplicar tema inmediatamente al HTML
         document.documentElement.setAttribute('data-theme', theme);
         document.documentElement.setAttribute('data-accessibility', 'default');
 
-        // Aplicar color de fondo según tema para evitar parpadeo
         if (theme === 'dark') {
           document.documentElement.style.backgroundColor = '#0d1510';
         } else {
           document.documentElement.style.backgroundColor = '#fdfbf7';
         }
 
-        // Aplicar al body solo si existe (puede no existir aún en el head)
         if (document.body) {
           document.body.className = 'theme-' + theme + ' accessibility-default';
           if (theme === 'dark') {
@@ -151,7 +237,6 @@
             document.body.style.backgroundColor = '#fdfbf7';
           }
         } else {
-          // Si body no existe aún, esperar a que esté disponible
           const applyToBody = function () {
             if (document.body) {
               document.body.className = 'theme-' + theme + ' accessibility-default';
@@ -161,11 +246,9 @@
                 document.body.style.backgroundColor = '#fdfbf7';
               }
             } else {
-              // Reintentar en el siguiente tick
               setTimeout(applyToBody, 0);
             }
           };
-          // Intentar aplicar cuando el DOM esté listo
           if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', applyToBody);
           } else {
@@ -173,7 +256,6 @@
           }
         }
       } catch (e) {
-        // Si hay error, usar tema light por defecto
         if (document.documentElement) {
           document.documentElement.setAttribute('data-theme', 'light');
           document.documentElement.style.backgroundColor = '#fdfbf7';
@@ -189,43 +271,23 @@
 </head>
 
 <body>
-  <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
-  <div id="root">
-    <!-- Contenido semántico estructurado de marketing para SEO y Agentes de IA (reemplazado por React al inicializar la SPA) -->
-    <div style="display: none;">
+  <noscript>
+    <div style="padding: 24px; font-family: sans-serif; background-color: #fdfbf7; color: #193220;">
       <h1>Fábrica de Pastas Simón - Pastas Artesanales Congeladas en Bernal</h1>
-      <h2>Elaboración de pastas frescas congeladas en caja con ingredientes seleccionados. Venta minorista y
-        distribución mayorista en Bernal, Quilmes y todo Zona Sur.</h2>
-      <p>
-        En Fábrica de Pastas Simón elaboramos de manera artesanal pastas de alta calidad envasadas en origen y
-        congeladas para conservar al máximo su frescura, sabor y textura. Nuestro formato en cajas prácticas listas para
-        cocinar ofrece una excelente vida útil, ideal para hogares y exigentes cocinas de restaurantes, hoteles,
-        caterings y comercios gastronómicos.
-      </p>
-
-      <h3>Nuestro Catálogo de Especialidades Artesanales</h3>
+      <h2>Elaboración de pastas frescas congeladas en caja con ingredientes seleccionados. Venta minorista y distribución mayorista en Bernal, Quilmes y Zona Sur.</h2>
+      <p>En Fábrica de Pastas Simón elaboramos de manera artesanal pastas de alta calidad envasadas en origen y congeladas para conservar al máximo su frescura, sabor y textura.</p>
+      <h3>Catálogo de Especialidades Artesanales</h3>
       <ul>
-        <li><strong>Sorrentinos Caseros:</strong> Pastas rellenas de forma redonda elaboradas con rellenos premium
-          seleccionados.</li>
-        <li><strong>Ravioles Tradicionales:</strong> Ravioles de elaboración artesanal con ingredientes frescos y sabor
-          casero.</li>
-        <li><strong>Panzottis Premium:</strong> Exquisitos panzottis de gran tamaño con rellenos abundantes y
-          deliciosos.</li>
-        <li><strong>Empanadas Gourmet:</strong> Variedades artesanales destacadas, como nuestras empanadas de bondiola
-          desmechada y sazonada.</li>
+        <li><strong>Sorrentinos Caseros:</strong> Pastas rellenas caseras en caja de variedad de sabores.</li>
+        <li><strong>Ravioles Tradicionales:</strong> Ravioles de elaboración artesanal con ingredientes seleccionados.</li>
+        <li><strong>Panzottis Gourmet:</strong> Panzottis con rellenos gourmet abundantes.</li>
+        <li><strong>Empanadas Gourmet:</strong> Empanadas congeladas de bondiola desmechada.</li>
       </ul>
-
-      <h3>Servicios y Canales de Venta (Minorista y B2B)</h3>
-      <p>
-        Ofrecemos venta al público minorista y distribución mayorista directa a empresas del sector gastronómico y de
-        eventos en Zona Sur, Provincia de Buenos Aires. Nuestro compromiso se centra en la excelencia de las materias
-        primas y una rápida entrega para cumplir con los estándares de tu cocina.
-      </p>
-      <p>
-        Contacto y Pedidos: Teléfono 11 4192-1222. Dirección: San Luis 1263, Bernal, Buenos Aires, Argentina.
-      </p>
+      <p>Contacto y Pedidos WhatsApp: +54 9 11 4192-1222. Dirección: San Luis 1263, Bernal, Buenos Aires.</p>
     </div>
+  </noscript>
 
+  <div id="root">
     <div
       style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: fixed; inset: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; transition: background-color 0.2s;">
       <div
