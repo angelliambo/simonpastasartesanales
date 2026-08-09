@@ -1,6 +1,6 @@
 {
   "name": "@factory/frontend",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
@@ -47,9 +47,10 @@
   "scripts": {
     "update-seo": "npx tsx scripts/update-seo.ts",
     "optimize-og": "npx tsx scripts/optimize-og.ts",
+    "prerender": "npx tsx scripts/prerender.ts",
     "clean": "rm -rf build node_modules",
     "start": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-app-rewired start",
-    "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-app-rewired build",
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 react-app-rewired build && npm run prerender",
     "analyze": "cross-env NODE_OPTIONS=--max-old-space-size=6144 ANALYZE=true react-app-rewired build",
     "test": "cross-env CI=true react-app-rewired test --watch=false --runInBand",
     "test:ci": "cross-env CI=true react-app-rewired test --watch=false --runInBand",
