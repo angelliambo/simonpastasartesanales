@@ -129,3 +129,25 @@ export const trackEvent = (
     });
   }
 };
+
+/**
+ * Registra impresiones de anuncios publicitaros.
+ */
+export const trackAdImpression = (slot: string, location: string): void => {
+  trackEvent("ad_impression_logged", "monetization", `${slot}:${location}`);
+};
+
+/**
+ * Registra clics en anuncios publicitarios.
+ */
+export const trackAdClick = (slot: string, location: string): void => {
+  trackEvent("ad_clicked_logged", "monetization", `${slot}:${location}`);
+};
+
+/**
+ * Registra la presencia de bloqueadores de anuncios (AdBlockers).
+ */
+export const trackAdBlocked = (slot: string, location: string): void => {
+  trackEvent("ad_blocked_detected", "monetization", `${slot}:${location}`);
+};
+

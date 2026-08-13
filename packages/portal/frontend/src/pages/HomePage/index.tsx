@@ -7,6 +7,8 @@ import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import SEO from "../../components/SEO";
 import { useLocalBusinessStructuredData } from "../../hooks/useStructuredData";
 import { Container } from '@design-sys/atoms/Container';
+import GoogleAdUnit from "../../components/ads/GoogleAdUnit";
+import { ADSENSE_SLOTS } from "@factory/shared/config/ads";
 import { SocialFeedGrid } from "@design-sys/atoms/SocialFeed";
 import { useGetInstagramFeedQuery } from "../../services/api/socialFeedService";
 import RegisterModal from "../../components/RegisterModal";
@@ -429,6 +431,10 @@ const HomePage: React.FC = () => {
         </HeroContent>
       </VhSection>
 
+      <Container maxWidth="lg">
+        <GoogleAdUnit slot={ADSENSE_SLOTS.PORTAL_HOME_SUBHERO} />
+      </Container>
+
       {showRegister && (
         <RegisterModal
           onClose={() => setShowRegister(false)}
@@ -738,6 +744,10 @@ const HomePage: React.FC = () => {
           )}
         </Container>
       </VhSection>
+
+      <Container maxWidth="lg">
+        <GoogleAdUnit slot={ADSENSE_SLOTS.PORTAL_HOME_FOOTER} />
+      </Container>
 
       <VhSection
         id="cta"
