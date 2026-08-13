@@ -1,6 +1,6 @@
 {
   "name": "@factory/shared",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "description": "MERN SaaS Factory Framework — shared core, white-label config and design system",
   "exports": {
     "./design-sys/theme/*": {
@@ -14,6 +14,10 @@
     "./design-sys/hooks/*": {
       "types": "./dist/design-sys/hooks/*.d.ts",
       "default": "./dist/design-sys/hooks/*.js"
+    },
+    "./hooks/*": {
+      "types": "./dist/hooks/*.d.ts",
+      "default": "./dist/hooks/*.js"
     },
     "./design-sys/atoms/*": {
       "types": "./dist/design-sys/atoms/*/index.d.ts",
