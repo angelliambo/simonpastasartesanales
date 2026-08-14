@@ -31,7 +31,9 @@ import {
   WhatsAppOutlined,
   KeyOutlined,
   RocketOutlined,
+  UnorderedListOutlined,
 } from "@ant-design/icons";
+
 
 import {
   VhSection,
@@ -382,6 +384,11 @@ const HomePage: React.FC = () => {
               </HeroPrimaryButton>
             </TrackedClick>
           )}
+          <TrackedClick label="Hero - Ver Lista de Precios" action="click_precios" category="marketing">
+            <HeroPrimaryButton onClick={() => navigate("/precios")} variant="primary">
+              <ZnIcon icon={UnorderedListOutlined} /> Ver Lista de Precios
+            </HeroPrimaryButton>
+          </TrackedClick>
           {FEATURES.ENABLE_BILLING_LEMON && (
             <TrackedClick label="Hero - Planes Premium" action="click_pricing" category="marketing">
               <HeroOutlinedButton onClick={handlePricing} variant="secondary">
@@ -390,6 +397,8 @@ const HomePage: React.FC = () => {
             </TrackedClick>
           )}
         </>
+
+
       );
     }
   };
