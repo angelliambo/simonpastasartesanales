@@ -5,7 +5,7 @@ import type { Product } from "@factory/shared/types/products";
 
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
-import { LockOutlined, WhatsAppOutlined, ZoomInOutlined, CloseOutlined } from "@ant-design/icons";
+import { LockOutlined, WhatsAppOutlined, ZoomInOutlined, CloseOutlined, InfoCircleOutlined } from "@ant-design/icons";
 
 
 
@@ -310,6 +310,42 @@ const LoadingText = styled.div`
   color: ${props => props.theme.colors.text.secondary};
 `;
 
+const LegalDisclaimerCard = styled.div`
+  margin-top: ${props => props.theme.spacing.xl};
+  padding: ${props => props.theme.spacing.lg};
+  background-color: ${props => props.theme.colors.background.card};
+  border: 1px solid ${props => props.theme.colors.border.normal};
+  border-radius: ${props => props.theme.borderRadius.lg};
+  box-shadow: ${props => props.theme.shadows.small};
+`;
+
+const LegalDisclaimerTitle = styled.h4`
+  font-size: 0.95rem;
+  font-weight: ${props => props.theme.typography.fontWeight.semibold};
+  color: ${props => props.theme.colors.text.primary};
+  margin-bottom: ${props => props.theme.spacing.xs};
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const LegalDisclaimerText = styled.p`
+  font-size: 0.825rem;
+  color: ${props => props.theme.colors.text.secondary};
+  line-height: 1.6;
+  margin: 0;
+`;
+
+const LegalLink = styled.a`
+  color: ${props => props.theme.colors.primary[500]};
+  text-decoration: underline;
+  margin-left: 4px;
+  font-weight: 500;
+  &:hover {
+    color: ${props => props.theme.colors.primary[700]};
+  }
+`;
+
 
 export const PreciosPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -360,9 +396,9 @@ export const PreciosPage: React.FC = () => {
   return (
     <PageContainer>
       <SEO
-        title={`Lista de Precios Oficial | ${BRAND_CONFIG.siteName}`}
-        description="Consulte el catálogo actualizado de precios y productos artesanales de Simón Pastas. Sorrentinos, ravioles, ñoquis, panzottis y tallarines frescos."
-        keywords={["lista de precios pastas", "precios sorrentinos", "ravioles bernal precios", "fabrica de pastas quilmes", "comprar pastas artesanales"]}
+        title={`Lista de Precios de Pastas Frescas y Mayorista | Sorrentinos, Ravioles & Empanadas | ${BRAND_CONFIG.siteName}`}
+        description="Catálogo oficial y lista de precios de fábrica de pastas artesanales. Sorrentinos caseros, ravioles, ñoquis del 29, panzottis, fideos al huevo y empanadas. Venta minorista, delivery y distribución al por mayor para restaurantes en Zona Sur."
+        keywords={["lista de precios pastas", "precios sorrentinos", "ravioles bernal precios", "venta de pastas al por mayor", "proveedor de pastas para restaurantes", "fábrica de pastas quilmes", "comprar pastas artesanales", "delivery de pastas frescas", "ñoquis del 29"]}
         structuredData={structuredCatalogData}
       />
 
@@ -428,7 +464,7 @@ export const PreciosPage: React.FC = () => {
                   </ProductHeader>
                   <ProductDescription>{product.descripcion}</ProductDescription>
                   <ProductFooter>
-                    <PriceTag>${product.precio.toLocaleString("es-AR")}</PriceTag>
+                    <PriceTag>${product.precio.toLocaleString("es-AR")}*</PriceTag>
                     <WhatsAppBtn href={waLink} target="_blank" rel="noopener noreferrer">
                       <ZnIcon icon={WhatsAppOutlined} /> Pedir
                     </WhatsAppBtn>
@@ -439,6 +475,16 @@ export const PreciosPage: React.FC = () => {
           })}
         </ProductsGrid>
       )}
+
+      {/* Tarjeta de Aviso Legal y Exención de Responsabilidad de Precios */}
+      <LegalDisclaimerCard>
+        <LegalDisclaimerTitle>
+          <ZnIcon icon={InfoCircleOutlined} /> * Aviso Legal y Variación de Precios
+        </LegalDisclaimerTitle>
+        <LegalDisclaimerText>
+          Los precios, presentaciones, promociones y disponibilidad de productos exhibidos en esta lista oficial están sujetos a modificaciones y ajustes sin previo aviso debido a variaciones de costos de insumos y mercado. Fábrica de Pastas Simón y la administración de la plataforma quedan exentas de toda responsabilidad civil, comercial o legal por eventuales errores tipográficos, desactualizaciones temporales o imponderables de stock. Para confirmar valores vigentes, cotizaciones especiales o pedidos mayoristas, consulte vía WhatsApp antes de concretar su compra. Consulte nuestros <LegalLink href="/legal/terms">Términos y Condiciones</LegalLink>.
+        </LegalDisclaimerText>
+      </LegalDisclaimerCard>
 
       {/* Modal Lightbox para ver la imagen en pantalla completa */}
       {selectedImage && (
