@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Helmet } from "react-helmet-async";
+import SEO from "../../components/SEO";
 import type { Product } from "@factory/shared/types/products";
+
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
-import { LockOutlined, WhatsAppOutlined } from "@ant-design/icons";
+import { LockOutlined, WhatsAppOutlined, ZoomInOutlined, CloseOutlined } from "@ant-design/icons";
+
 
 
 const PageContainer = styled.div`
@@ -109,19 +111,124 @@ const ProductCard = styled.div`
   }
 `;
 
-const ImageWrapper = styled.div`
-  width: 100%;
-  height: 200px;
-  background-color: ${props => props.theme.colors.background.secondary};
+const ImageContainer = styled.div`
   position: relative;
+  width: 100%;
+  height: 240px;
+  background-color: ${props => props.theme.colors.background.secondary};
   overflow: hidden;
+  border-top-left-radius: ${props => props.theme.borderRadius.lg};
+  border-top-right-radius: ${props => props.theme.borderRadius.lg};
+  cursor: pointer;
 `;
 
 const ProductImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.4s ease-in-out;
+
+  @media (min-width: 769px) {
+    ${ImageContainer}:hover & {
+      transform: scale(1.6);
+      transform-origin: center center;
+    }
+  }
 `;
+
+const ZoomIconButton = styled.button`
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+  z-index: 2;
+
+  &:hover {
+    background-color: ${props => props.theme.colors.primary[500]};
+    transform: scale(1.1);
+  }
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: ${props => props.theme.spacing.md};
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.2s ease-in-out;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+`;
+
+const ModalContent = styled.div`
+  position: relative;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ModalImage = styled.img`
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: ${props => props.theme.borderRadius.lg};
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+`;
+
+const ModalCloseButton = styled.button`
+  position: absolute;
+  top: -45px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: ${props => props.theme.colors.error[500]};
+    border-color: ${props => props.theme.colors.error[500]};
+  }
+`;
+
+const ModalTitle = styled.h3`
+  color: #ffffff;
+  margin-top: ${props => props.theme.spacing.md};
+  font-size: 1.2rem;
+  text-align: center;
+`;
+
 
 const CardContent = styled.div`
   padding: ${props => props.theme.spacing.md};
@@ -208,6 +315,7 @@ export const PreciosPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<{ url: string; title: string } | null>(null);
 
   useEffect(() => {
     fetch("/api/products")
@@ -228,15 +336,36 @@ export const PreciosPage: React.FC = () => {
         p.descripcion.toLowerCase().includes(search.toLowerCase()))
   );
 
+  const structuredCatalogData = {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    "name": "Lista Oficial de Precios - Simón Pastas Artesanales",
+    "url": "https://simonpastasartesanales.com.ar/precios",
+    "numberOfItems": products.length,
+    "itemListElement": products.map((prod, idx) => ({
+      "@type": "Offer",
+      "position": idx + 1,
+      "price": prod.precio,
+      "priceCurrency": "ARS",
+      "availability": prod.disponible !== false ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      "itemOffered": {
+        "@type": "Product",
+        "name": prod.titulo,
+        "description": prod.descripcion,
+        "image": prod.imagen
+      }
+    }))
+  };
+
   return (
     <PageContainer>
-      <Helmet>
-        <title>Lista de Precios | {BRAND_CONFIG.siteName}</title>
-        <meta
-          name="description"
-          content="Consulte la lista oficial de precios y productos artesanales de Simón Pastas. Sorrentinos, ravioles, ñoquis y tallarines frescos."
-        />
-      </Helmet>
+      <SEO
+        title={`Lista de Precios Oficial | ${BRAND_CONFIG.siteName}`}
+        description="Consulte el catálogo actualizado de precios y productos artesanales de Simón Pastas. Sorrentinos, ravioles, ñoquis, panzottis y tallarines frescos."
+        keywords={["lista de precios pastas", "precios sorrentinos", "ravioles bernal precios", "fabrica de pastas quilmes", "comprar pastas artesanales"]}
+        structuredData={structuredCatalogData}
+      />
+
 
       <HeroSection>
         <Title>Lista de Precios Oficial</Title>
@@ -245,13 +374,10 @@ export const PreciosPage: React.FC = () => {
         </Subtitle>
         <div style={{ marginTop: 20 }}>
           <AdminBadgeLink href="/admin/precios">
-            <ZnIcon icon={LockOutlined} /> Acceso Administrador (Editar Precios / Fotos)
+            <ZnIcon icon={LockOutlined} /> Administrador
           </AdminBadgeLink>
         </div>
-
       </HeroSection>
-
-
 
       <SearchContainer>
         <SearchInput
@@ -273,17 +399,28 @@ export const PreciosPage: React.FC = () => {
               `Hola! Quisiera consultar/encargar: ${product.titulo} (${product.presentacion})`
             );
             const waLink = `${BRAND_CONFIG.whatsappUrl}?text=${waMessage}`;
-
+            const imageUrl = product.imagen || "https://res.cloudinary.com/ptgboslf/image/upload/v1700000000/simonpastas/default.jpg";
 
             return (
               <ProductCard key={product.id}>
-                <ImageWrapper>
+                <ImageContainer onClick={() => setSelectedImage({ url: imageUrl, title: product.titulo })}>
                   <ProductImage
-                    src={product.imagen || "https://res.cloudinary.com/ptgboslf/image/upload/v1700000000/simonpastas/default.jpg"}
+                    src={imageUrl}
                     alt={product.titulo}
                     loading="lazy"
                   />
-                </ImageWrapper>
+                  <ZoomIconButton
+                    type="button"
+                    aria-label="Ver imagen ampliada"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedImage({ url: imageUrl, title: product.titulo });
+                    }}
+                  >
+                    <ZnIcon icon={ZoomInOutlined} />
+                  </ZoomIconButton>
+                </ImageContainer>
+
                 <CardContent>
                   <ProductHeader>
                     <ProductTitle>{product.titulo}</ProductTitle>
@@ -295,7 +432,6 @@ export const PreciosPage: React.FC = () => {
                     <WhatsAppBtn href={waLink} target="_blank" rel="noopener noreferrer">
                       <ZnIcon icon={WhatsAppOutlined} /> Pedir
                     </WhatsAppBtn>
-
                   </ProductFooter>
                 </CardContent>
               </ProductCard>
@@ -303,8 +439,22 @@ export const PreciosPage: React.FC = () => {
           })}
         </ProductsGrid>
       )}
+
+      {/* Modal Lightbox para ver la imagen en pantalla completa */}
+      {selectedImage && (
+        <ModalOverlay onClick={() => setSelectedImage(null)}>
+          <ModalContent onClick={(e) => e.stopPropagation()}>
+            <ModalCloseButton type="button" onClick={() => setSelectedImage(null)}>
+              <ZnIcon icon={CloseOutlined} />
+            </ModalCloseButton>
+            <ModalImage src={selectedImage.url} alt={selectedImage.title} />
+            <ModalTitle>{selectedImage.title}</ModalTitle>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </PageContainer>
   );
 };
 
 export default PreciosPage;
+

@@ -18,7 +18,9 @@ Fábrica de Pastas Simón es una fábrica argentina de pastas frescas congeladas
 
 - **Venta Minorista**: Venta al público en mostrador y pedidos directos por WhatsApp para particulares en Bernal, Quilmes y alrededores.
 - **Distribución Mayorista (B2B)**: Suministro gastronómico en formato caja congelada para restaurantes, comedores, salones de eventos y distribuidores en toda Zona Sur y Gran Buenos Aires.
+- **Lista de Precios Oficial**: Consulte el catálogo con precios actualizados y pedidos directos en https://simonpastasartesanales.com.ar/precios
 - **Congelado Rápido en Origen**: Mantiene intacto el sabor, la humedad y el valor nutricional sin necesidad de conservantes ni aditivos químicos.
+
 
 ---
 
