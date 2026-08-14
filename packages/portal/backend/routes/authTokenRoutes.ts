@@ -23,35 +23,24 @@ function generateJwt(user: any, email: string): string {
 router.post("/send-token", async (req: Request, res: Response) => {
   try {
     const { email } = req.body as { email?: string };
-    console.log("\n========== [AUTH] send-token ==========");
-    console.log("INPUT:", JSON.stringify({ email }));
-    
     const cleanEmail = email?.trim().toLowerCase();
     if (!cleanEmail) {
-      console.log("FAIL: email vacío");
       res.status(400).json({ success: false, error: "email requerido" });
       return;
     }
 
     const emailHash = hashEmail(cleanEmail);
-    console.log("COMPUTED: emailHash=" + emailHash);
-
     const existingUser = await User.findOne({ emailHash });
-    console.log("MONGO: findOne({ emailHash })");
-    console.log("RESULT: usuario=", existingUser ? { _id: existingUser._id, plan: existingUser.plan, role: existingUser.role } : "NO EXISTE");
-
     const code = generateCode();
     const expiry = new Date(Date.now() + EXPIRY_MINUTES * 60 * 1000);
-    console.log("INFO: code generated | expires:", expiry.toISOString());
 
     if (existingUser) {
       await User.updateOne(
         { emailHash },
         { $set: { authCode: code, authCodeExpiry: expiry } }
       );
-      console.log("MONGO: updateOne({ emailHash }) SET authCode OK");
     } else {
-      console.log("MONGO: usuario no existe, creando inactivo con authCode");
+
       const name = cleanEmail.split("@")[0];
       let nameEncrypted, emailEncrypted;
       try {

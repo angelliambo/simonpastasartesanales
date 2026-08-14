@@ -66,7 +66,6 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, initialStep = 'e
   }, [email, code, verifyToken, dispatch, showSuccess, showInfo, onClose]);
 
   const renderGoogleButton = () => {
-    console.log("🚀 ~ renderGoogleButton ~ G_ID:", G_ID)
     if (G_ID) {
       return (
         <GoogleButtonContainer>

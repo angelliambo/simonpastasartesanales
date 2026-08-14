@@ -17,6 +17,8 @@ const PrivacyPolicyPage = lazy(
   () => import("./pages/legal/PrivacyPolicyPage")
 );
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
+const PreciosPage = lazy(() => import("./pages/PreciosPage"));
+const AdminPreciosPage = lazy(() => import("./pages/AdminPreciosPage"));
 
 const AppRoutes = () => {
   return (
@@ -25,6 +27,8 @@ const AppRoutes = () => {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/precios" element={<PreciosPage />} />
+            <Route path="/admin/precios" element={<AdminPreciosPage />} />
 
             {/* Rutas de Autenticación / Panel (Dashboard) */}
             {FEATURES.ENABLE_GOOGLE_AUTH ? (
@@ -63,5 +67,6 @@ const AppRoutes = () => {
     </BrowserRouter>
   );
 };
+
 
 export default AppRoutes;

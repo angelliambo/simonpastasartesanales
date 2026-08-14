@@ -16,7 +16,20 @@
     </image:image>
   </url>
 
+  <!-- Página Oficial de Lista de Precios -->
+  <url>
+    <loc>https://simonpastasartesanales.com.ar/precios</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://simonpastasartesanales.com.ar/og-image.png</image:loc>
+      <image:title>Lista de Precios Oficial - Simón Pastas Artesanales</image:title>
+    </image:image>
+  </url>
+
   <!-- Sección Catálogo de Productos y Sorrentinos -->
+
   <url>
     <loc>https://simonpastasartesanales.com.ar/#productos</loc>
     <lastmod>2026-08-08</lastmod>

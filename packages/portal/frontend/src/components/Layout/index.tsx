@@ -65,6 +65,11 @@ const Layout: React.FC = React.memo(() => {
             Inicio
           </NavLink>
 
+          <NavLink to="/precios" $active={location.pathname === "/precios"}>
+            Precios
+          </NavLink>
+
+
           {FEATURES.ENABLE_BILLING_LEMON && (
             <NavLink to="/pricing" $active={location.pathname === "/pricing"}>
               Planes
@@ -138,6 +143,11 @@ const Layout: React.FC = React.memo(() => {
             Inicio
           </SidebarNavLink>
 
+          <SidebarNavLink to="/precios" $active={location.pathname === "/precios"} onClick={() => setIsMobileMenuOpen(false)}>
+            Precios
+          </SidebarNavLink>
+
+
           {FEATURES.ENABLE_BILLING_LEMON && (
             <SidebarNavLink to="/pricing" $active={location.pathname === "/pricing"} onClick={() => setIsMobileMenuOpen(false)}>
               Planes
@@ -206,10 +216,11 @@ const Layout: React.FC = React.memo(() => {
       </MainContent>
 
       <AppFooter />
-      <FloatingWhatsAppCTA />
+      {location.pathname !== "/precios" && <FloatingWhatsAppCTA />}
     </Container>
   );
 });
+
 
 Layout.displayName = "Layout";
 
