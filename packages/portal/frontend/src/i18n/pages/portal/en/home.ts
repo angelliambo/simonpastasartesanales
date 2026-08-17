@@ -90,6 +90,52 @@ const home = {
   footerPrivacidad: 'Privacy Policy',
   footerRights: 'All rights reserved.',
   versionLabel: 'Version',
+
+  // Guided Tour CTA (Guided Tour)
+  tourBadgeTitle: 'Guided Tour',
+  guidedTourBadge: 'Guided Tour',
+  tourBadgeSubtitle: 'Discover Simón Pastas',
+  tourHeaderTitle: 'Simón Pastas Guided Tour',
+  tourStepCounter: 'Step {{current}} of {{total}}',
+  guidedTourStepCount: 'Step {{current}} of {{total}}',
+  tourBtnPlay: 'Listen',
+  guidedTourPlay: 'Listen',
+  tourBtnPause: 'Pause',
+  guidedTourPause: 'Pause',
+  tourBtnMute: 'Mute',
+  guidedTourMute: 'Mute',
+  tourBtnUnmute: 'Unmute',
+  guidedTourUnmute: 'Unmute',
+  tourBtnNext: 'Next',
+  guidedTourNext: 'Next',
+  tourBtnPrev: 'Previous',
+  guidedTourPrev: 'Previous',
+  tourBtnClose: 'Close',
+  guidedTourClose: 'Close',
+  tourBtnStart: 'Start Guided Tour',
+  tourWhatsAppBtn: 'Inquire via WhatsApp',
+  guidedTourWhatsAppBtn: 'Inquire via WhatsApp',
+
+  // Tour Steps Scripts & Titles
+  tourStep1Title: '1. Traditional Flavor & Artisanal Quality',
+  tourStep1Script: 'Hello! Welcome to Simón Pastas Artesanales. With years of experience and passion in Bernal and Zona Sur, we craft top-quality artisanal pasta using selected ingredients and authentic family recipes.',
+  guidedTourStep1Text: 'Hello! Welcome to Simón Pastas Artesanales. With years of experience and passion in Bernal and Zona Sur, we craft top-quality artisanal pasta using selected ingredients and authentic family recipes.',
+
+  tourStep2Title: '2. Easy Solution for Meals & Gatherings',
+  tourStep2Script: 'Got unexpected guests, a family dinner, or want to enjoy a delicious meal without spending hours cooking? Our boxed frozen pasta cooks in minutes and makes you look like a chef for any occasion.',
+  guidedTourStep2Text: 'Got unexpected guests, a family dinner, or want to enjoy a delicious meal without spending hours cooking? Our boxed frozen pasta cooks in minutes and makes you look like a chef for any occasion.',
+
+  tourStep3Title: '3. Wholesale & Resale Opportunities',
+  tourStep3Script: 'Attention restaurant owners and entrepreneurs! In addition to retail sales, we offer wholesale distribution and resale opportunities with our own delivery logistics for restaurants, delis, and businesses.',
+  guidedTourStep3Text: 'Attention restaurant owners and entrepreneurs! In addition to retail sales, we offer wholesale distribution and resale opportunities with our own delivery logistics for restaurants, delis, and businesses.',
+
+  tourStep4Title: '4. Full Catalog & Price List',
+  tourStep4Script: 'We invite you to explore our full catalog of sorrentinos, ravioli, fresh noodles, and pork empanadas. You can view our updated price list anytime directly on our website.',
+  guidedTourStep4Text: 'We invite you to explore our full catalog of sorrentinos, ravioli, fresh noodles, and pork empanadas. You can view our updated price list anytime directly on our website.',
+
+  tourStep5Title: '5. Personalized Attention via WhatsApp',
+  tourStep5Script: 'At Simón Pastas, customer service is 100% personalized. Want to place an order or inquire about wholesale purchases? Click the WhatsApp button to chat directly with us. We\'re here to help!',
+  guidedTourStep5Text: 'At Simón Pastas, customer service is 100% personalized. Want to place an order or inquire about wholesale purchases? Click the WhatsApp button to chat directly with us. We\'re here to help!',
 };
 
 export default home;

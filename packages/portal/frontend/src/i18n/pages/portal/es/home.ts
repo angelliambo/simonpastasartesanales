@@ -90,6 +90,52 @@ const home = {
   footerPrivacidad: 'Política de Privacidad',
   footerRights: 'Todos los derechos reservados.',
   versionLabel: 'Versión',
+
+  // Guided Tour CTA (Visita Guiada)
+  tourBadgeTitle: 'Visita Guiada',
+  guidedTourBadge: 'Visita Guiada',
+  tourBadgeSubtitle: 'Conocé Simón Pastas',
+  tourHeaderTitle: 'Visita Guiada Simón Pastas',
+  tourStepCounter: 'Paso {{current}} de {{total}}',
+  guidedTourStepCount: 'Paso {{current}} de {{total}}',
+  tourBtnPlay: 'Escuchar',
+  guidedTourPlay: 'Escuchar',
+  tourBtnPause: 'Pausar',
+  guidedTourPause: 'Pausar',
+  tourBtnMute: 'Silenciar',
+  guidedTourMute: 'Silenciar',
+  tourBtnUnmute: 'Activar sonido',
+  guidedTourUnmute: 'Activar sonido',
+  tourBtnNext: 'Siguiente',
+  guidedTourNext: 'Siguiente',
+  tourBtnPrev: 'Anterior',
+  guidedTourPrev: 'Anterior',
+  tourBtnClose: 'Cerrar',
+  guidedTourClose: 'Cerrar',
+  tourBtnStart: 'Iniciar Visita Guiada',
+  tourWhatsAppBtn: 'Consulta por WhatsApp',
+  guidedTourWhatsAppBtn: 'Consulta por WhatsApp',
+
+  // Tour Steps Scripts & Titles
+  tourStep1Title: '1. Sabor Tradicional y Calidad Artesanal',
+  tourStep1Script: '¡Hola! Te damos la bienvenida a Simón Pastas Artesanales. Con años de trayectoria y pasión en Bernal y Zona Sur, elaboramos pastas de altísima calidad con ingredientes seleccionados y recetas caseras familiares.',
+  guidedTourStep1Text: '¡Hola! Te damos la bienvenida a Simón Pastas Artesanales. Con años de trayectoria y pasión en Bernal y Zona Sur, elaboramos pastas de altísima calidad con ingredientes seleccionados y recetas caseras familiares.',
+
+  tourStep2Title: '2. Solución para tus Comidas y Reuniones',
+  tourStep2Script: '¿Tenés una visita inesperada, una cena familiar o querés resolver la comida sin cocinar ni estresarte? Nuestras pastas congeladas en caja se preparan en pocos minutos y te hacen quedar como un chef en cualquier ocasión.',
+  guidedTourStep2Text: '¿Tenés una visita inesperada, una cena familiar o querés resolver la comida sin cocinar ni estresarte? Nuestras pastas congeladas en caja se preparan en pocos minutos y te hacen quedar como un chef en cualquier ocasión.',
+
+  tourStep3Title: '3. Reventa y Ventas Mayoristas',
+  tourStep3Script: '¡Atención gastronómicos y emprendedores! Además de nuestras ventas minoristas, ofrecemos reventa y distribución mayorista con logística propia para restaurantes, rotiserías, comedores y comercios.',
+  guidedTourStep3Text: '¡Atención gastronómicos y emprendedores! Además de nuestras ventas minoristas, ofrecemos reventa y distribución mayorista con logística propia para restaurantes, rotiserías, comedores y comercios.',
+
+  tourStep4Title: '4. Catálogo y Lista de Precios',
+  tourStep4Script: 'Te invitamos a explorar nuestro catálogo completo de sorrentinos, ravioles, fideos frescos y empanadas de bondiola. Podés consultar siempre nuestra lista de precios actualizada directamente en nuestra web.',
+  guidedTourStep4Text: 'Te invitamos a explorar nuestro catálogo completo de sorrentinos, ravioles, fideos frescos y empanadas de bondiola. Podés consultar siempre nuestra lista de precios actualizada directamente en nuestra web.',
+
+  tourStep5Title: '5. Atención Personalizada por WhatsApp',
+  tourStep5Script: 'En Simón Pastas la atención es 100% personalizada. ¿Querés hacer un pedido o consultar por ventas mayoristas? Hacé clic en el botón de WhatsApp y conversá directamente con nosotros. ¡Te esperamos!',
+  guidedTourStep5Text: 'En Simón Pastas la atención es 100% personalizada. ¿Querés hacer un pedido o consultar por ventas mayoristas? Hacé clic en el botón de WhatsApp y conversá directamente con nosotros. ¡Te esperamos!',
 };
 
 export default home;

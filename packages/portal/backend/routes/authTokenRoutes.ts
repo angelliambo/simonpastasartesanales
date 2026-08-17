@@ -77,13 +77,11 @@ router.post("/send-token", async (req: Request, res: Response) => {
           acceptedDocuments: { terms: true, privacy: true, cookies: false },
         },
       });
-      console.log("MONGO: User.create() inactivo OK");
     }
 
     try {
       const locale = req.body.locale || (typeof req.headers["accept-language"] === "string" ? req.headers["accept-language"] : undefined);
       await sendDeletionCode(cleanEmail, code, locale);
-      console.log("EMAIL: enviado a", cleanEmail);
       res.json({ success: true, message: "Código enviado al email" });
     } catch (e) {
       console.warn("EMAIL: falló envío a", cleanEmail, e);
@@ -103,41 +101,30 @@ router.post("/send-token", async (req: Request, res: Response) => {
 router.post("/verify-token", async (req: Request, res: Response) => {
   try {
     const { email, code } = req.body as { email?: string; code?: string };
-    console.log("\n========== [AUTH] verify-token ==========");
-    console.log("INPUT:", JSON.stringify({ email, code: code ? "[HIDDEN]" : "MISSING" }));
 
     const cleanEmail = email?.trim().toLowerCase();
     const cleanCode = code?.trim();
 
     if (!cleanEmail || !cleanCode) {
-      console.log("FAIL: email o code vacío");
       res.status(400).json({ success: false, error: "email y code requeridos" });
       return;
     }
 
     const emailHash = hashEmail(cleanEmail);
-    console.log("COMPUTED: emailHash=" + emailHash);
 
     let isNewUser = false;
     let user = await User.findOne({ emailHash });
-    console.log("MONGO: findOne({ emailHash })");
 
     if (!user || user.deletedAt) {
-      console.log("FAIL: usuario no existe o está eliminado");
       res.status(400).json({ success: false, error: "Usuario no registrado. Solicitá un código primero." });
       return;
     }
 
-    console.log("FLOW: validando código");
-    console.log("DEBUG: DB authCode present:", !!user.authCode, "| expiry:", user.authCodeExpiry);
-    
     if (!user.authCode || user.authCode !== cleanCode) {
-      console.log("FAIL: código incorrecto. Input length:", cleanCode.length, "DB length:", user.authCode ? user.authCode.length : 0);
       res.status(400).json({ success: false, error: "Código incorrecto" });
       return;
     }
     if (user.authCodeExpiry && user.authCodeExpiry < new Date()) {
-      console.log("FAIL: código expirado");
       res.status(400).json({ success: false, error: "Código expirado. Solicitá uno nuevo." });
       return;
     }
@@ -160,7 +147,6 @@ router.post("/verify-token", async (req: Request, res: Response) => {
         $push: { activityLog: { action: isNewUser ? 'email_verified' : 'login', timestamp: new Date(), metadata: { method: 'email_code' } } },
       }
     );
-    console.log("MONGO: updateOne SET authCode=null, emailVerified=true, isActive=true, lastLogin logged");
 
     const token = generateJwt(user, cleanEmail);
     const userTermsVersion = user.legalAcceptance?.termsVersion || "1.0.0";

@@ -20,14 +20,11 @@ router.post("/google", async (req: Request, res: Response) => {
       return;
     }
 
-    console.log("\n========== [AUTH] google-login ==========");
-
     // Validar token con la API de Google
     const verifyUrl = `https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`;
     const googleResponse = await fetch(verifyUrl);
 
     if (!googleResponse.ok) {
-      console.log("FAIL: Token de Google inválido o vencido");
       res.status(401).json({ success: false, error: "Token de Google inválido o vencido" });
       return;
     }
@@ -37,7 +34,6 @@ router.post("/google", async (req: Request, res: Response) => {
     // Validar que el audience coincida con nuestro Client ID si está configurado
     const clientId = process.env.GOOGLE_CLIENT_ID;
     if (clientId && payload.aud !== clientId) {
-      console.log("FAIL: Audience mismatch. Esperado:", clientId, "Recibido:", payload.aud);
       res.status(401).json({ success: false, error: "Audience mismatch" });
       return;
     }
@@ -46,19 +42,16 @@ router.post("/google", async (req: Request, res: Response) => {
     const name = payload.name || email.split("@")[0];
 
     if (!email) {
-      console.log("FAIL: Token de Google no contiene email");
       res.status(400).json({ success: false, error: "Token de Google no provee email" });
       return;
     }
 
     const emailHash = hashEmail(email);
-    console.log("GOOGLE USER:", email, "| emailHash:", emailHash);
 
     let isNewUser = false;
     let user = await User.findOne({ emailHash });
 
     if (user) {
-      console.log("FLOW: Usuario existe -> Iniciando sesión");
       // Reactivar si estaba borrado lógico
       await User.updateOne(
         { _id: user._id },
@@ -71,7 +64,6 @@ router.post("/google", async (req: Request, res: Response) => {
       const updatedUser = await User.findById(user._id);
       if (updatedUser) user = updatedUser;
     } else {
-      console.log("FLOW: Usuario no existe -> Registrando nuevo usuario con Google");
       isNewUser = true;
 
       const nameEncrypted = encrypt(name);

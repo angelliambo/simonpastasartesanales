@@ -89,7 +89,6 @@ export const useOffline = (): OfflineState & OfflineActions => {
         })
         .catch(() => {
           // Aún sin conexión
-          console.log("Sin conexión confirmada");
         });
     }
   }, []);

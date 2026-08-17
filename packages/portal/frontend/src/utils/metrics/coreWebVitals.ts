@@ -32,15 +32,6 @@ export function recordMetric(name: WebVitalsMetric['name'], value: number): WebV
     rating
   };
   metricsStore[name] = metric;
-
-  if (process.env.NODE_ENV === 'development') {
-    const color = rating === 'good' ? '#2e7d32' : rating === 'needs-improvement' ? '#ed6c02' : '#d32f2f';
-    console.log(
-      `%c[CoreWebVitals] ${name}: ${metric.value}${name === 'CLS' ? '' : 'ms'} (${rating})`,
-      `color: ${color}; font-weight: bold;`
-    );
-  }
-
   return metric;
 }
 
