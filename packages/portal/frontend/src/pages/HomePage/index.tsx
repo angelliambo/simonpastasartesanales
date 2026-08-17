@@ -95,88 +95,6 @@ const SECTION_LABELS: Record<string, string> = {
 
 const G_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || '';
 
-function useAutoScroll(
-  sectionIds: string[],
-  activeSection: string,
-  userInteracted: React.MutableRefObject<boolean>,
-  timerRef: React.MutableRefObject<ReturnType<typeof setTimeout> | undefined>,
-  setActiveSection: (id: string) => void,
-) {
-  const sectionIndexRef = useRef(0);
-  const stepCountRef = useRef(0);
-  const maxSteps = sectionIds.length * 2; // 2 vueltas completas
-
-  useEffect(() => {
-    const idx = sectionIds.indexOf(activeSection);
-    if (idx !== -1) {
-      sectionIndexRef.current = idx;
-    }
-  }, [activeSection, sectionIds]);
-
-  useEffect(() => {
-    const onUserScroll = () => {
-      try {
-        userInteracted.current = true;
-        clearTimeout(timerRef.current);
-      } catch { }
-    };
-
-    window.addEventListener("wheel", onUserScroll, { passive: true });
-    window.addEventListener("touchstart", onUserScroll, { passive: true });
-    window.addEventListener("keydown", onUserScroll);
-
-    const scrollToNext = () => {
-      if (userInteracted.current || document.hidden) return;
-      if (stepCountRef.current >= maxSteps) {
-        // Detener permanentemente la animación por inactividad prolongada
-        return;
-      }
-      stepCountRef.current += 1;
-      sectionIndexRef.current =
-        (sectionIndexRef.current + 1) % sectionIds.length;
-      const id = sectionIds[sectionIndexRef.current];
-      setActiveSection(id);
-
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-      timerRef.current = setTimeout(scrollToNext, 4000);
-    };
-
-    const startAutoScroll = () => {
-      if (userInteracted.current || document.hidden) return;
-      timerRef.current = setTimeout(scrollToNext, 4000);
-    };
-
-    const idleTimer = setTimeout(startAutoScroll, 3000);
-
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        // Detener inmediatamente si la pestaña está oculta
-        clearTimeout(timerRef.current);
-      } else {
-        // Reanudar si no ha interactuado y no superó el límite
-        if (!userInteracted.current && stepCountRef.current < maxSteps) {
-          clearTimeout(timerRef.current);
-          timerRef.current = setTimeout(scrollToNext, 2000);
-        }
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
-      clearTimeout(idleTimer);
-      clearTimeout(timerRef.current);
-      window.removeEventListener("wheel", onUserScroll);
-      window.removeEventListener("touchstart", onUserScroll);
-      window.removeEventListener("keydown", onUserScroll);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [sectionIds, userInteracted, timerRef, setActiveSection, maxSteps]);
-}
-
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const localBusinessStructuredData = useLocalBusinessStructuredData();
@@ -192,12 +110,7 @@ const HomePage: React.FC = () => {
   const handleLogin = useCallback(() => setShowRegister(true), []);
   const handlePricing = useCallback(() => navigate("/pricing"), [navigate]);
 
-  const userInteracted = useRef(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
   const scrollTo = (id: string) => {
-    userInteracted.current = true;
-    clearTimeout(timerRef.current);
     const element = document.getElementById(id);
     if (element) {
       const offset = 70;
@@ -231,7 +144,6 @@ const HomePage: React.FC = () => {
     }
     return new Set(["hero"]);
   });
-  useAutoScroll(SECTIONS, activeSection, userInteracted, timerRef, setActiveSection);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

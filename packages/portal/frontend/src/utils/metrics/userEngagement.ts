@@ -47,9 +47,6 @@ export function initEngagementTracking(onMilestone?: (event: string, data: Recor
         if (onMilestone) {
           onMilestone('scroll_depth_milestone', { milestone: `${milestone}%` });
         }
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`[Engagement] Scroll Milestone Alcanzado: ${milestone}%`);
-        }
       }
     });
   };
@@ -73,9 +70,6 @@ export function initEngagementTracking(onMilestone?: (event: string, data: Recor
       whatsappClicks += 1;
       if (onMilestone) {
         onMilestone('whatsapp_cta_click', { href, text });
-      }
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`[Engagement] Conversión: Clic en WhatsApp (${whatsappClicks})`);
       }
     }
 

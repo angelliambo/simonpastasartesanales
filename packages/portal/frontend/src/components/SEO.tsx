@@ -87,7 +87,7 @@ const SEO: React.FC<SEOProps> = ({
       { "@type": "AdministrativeArea", "name": "Zona Sur" },
       { "@type": "AdministrativeArea", "name": "Buenos Aires" }
     ],
-    "servesCuisine": ["Pastas Artesanales", "Sorrentinos", "Ravioles", "Panzottis", "Empanadas"],
+    "servesCuisine": ["Pastas Artesanales", "Sorrentinos", "Ravioles", "Panzottis", "Ñoquis del 29", "Fideos Frescos", "Empanadas Gourmet"],
     "priceRange": "$$",
     "openingHoursSpecification": [
       {
@@ -99,14 +99,14 @@ const SEO: React.FC<SEOProps> = ({
     ],
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "Catálogo de Pastas Artesanales",
+      "name": "Catálogo de Pastas Artesanales y Distribución Mayorista",
       "itemListElement": [
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Product",
             "name": "Sorrentinos Artesanales",
-            "description": "Sorrentinos caseros variados de elaboración propia en Bernal."
+            "description": "Sorrentinos caseros envasados en caja (Jamón y Queso, Calabaza y Mozzarella, Verdura y Ricota)."
           }
         },
         {
@@ -114,7 +114,23 @@ const SEO: React.FC<SEOProps> = ({
           "itemOffered": {
             "@type": "Product",
             "name": "Ravioles y Panzottis",
-            "description": "Pastas frescas congeladas con rellenos seleccionados."
+            "description": "Ravioles caseros y panzottis gourmet de elaboración artesanal congelados en origen."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Ñoquis del 29 y Fideos Frescos",
+            "description": "Ñoquis tradicionales de papa y fideos/tallarines al huevo con sémola de trigo candeal."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Venta Mayorista a Restaurantes y Rotiserías",
+            "description": "Distribución mayorista directa de pastas congeladas en caja para comercios gastronómicos y catering."
           }
         },
         {
@@ -122,7 +138,7 @@ const SEO: React.FC<SEOProps> = ({
           "itemOffered": {
             "@type": "Product",
             "name": "Empanadas de Bondiola y Variadas",
-            "description": "Empanadas artesanales de masa casera y rellenos gourmet."
+            "description": "Empanadas artesanales congeladas rellenas de bondiola desmechada braseada."
           }
         }
       ]

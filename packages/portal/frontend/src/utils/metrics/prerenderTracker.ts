@@ -14,9 +14,6 @@ export function markHydrationStart(): void {
 
 export function markHydrationComplete(): number {
   hydrationTimeMs = Date.now() - hydrationStartTime;
-  if (process.env.NODE_ENV === 'development') {
-    console.log(`[Prerender] React Hidratación completada en ${hydrationTimeMs}ms`);
-  }
   return hydrationTimeMs;
 }
 

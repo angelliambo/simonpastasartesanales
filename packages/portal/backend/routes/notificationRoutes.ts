@@ -16,9 +16,6 @@ router.post("/send", async (req: Request, res: Response) => {
   try {
     const { to, channel, template, subject, variables } = req.body as NotificationRequest;
 
-    console.log("\n========== [NOTIFICATION] send ==========");
-    console.log("INPUT:", JSON.stringify({ to, channel, template, subject, variables }));
-
     if (!to || !channel || !template) {
       res.status(400).json({ success: false, error: "to, channel y template son requeridos" });
       return;
@@ -55,9 +52,6 @@ router.post("/send", async (req: Request, res: Response) => {
       subject: resolvedSubject,
       variables: { contenido: htmlContent, tipo: template, locale, ...variables },
     });
-
-    console.log("[NOTIFICATION] ✅ Enviada");
-    console.log("=========================================\n");
 
     res.json({ success: true, message: "Notificación enviada" });
   } catch (error) {

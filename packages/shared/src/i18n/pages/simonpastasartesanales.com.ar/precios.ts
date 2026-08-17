@@ -30,6 +30,8 @@ export const precios = {
   edit: 'Editar',
   saveSuccess: '¡Listado de precios actualizado correctamente en el sitio!',
   saveError: 'Ocurrió un error al guardar los cambios.',
+  legalDisclaimerTitle: '* Aviso Legal y Modificación de Precios',
+  legalDisclaimerText: 'Los precios, promociones, presentaciones y disponibilidad de productos exhibidos en esta lista oficial están sujetos a modificaciones y ajustes sin previo aviso debido a la variabilidad de costos de materias primas y condiciones de mercado. Fábrica de Pastas Simón y la administración de la plataforma quedan exentas de toda responsabilidad civil, comercial o legal por eventuales errores tipográficos, desactualizaciones temporales o imponderables de stock. Para confirmar cotizaciones exactas o pedidos mayoristas, consulte vía WhatsApp antes de concretar su compra.',
 };
 
 export default precios;

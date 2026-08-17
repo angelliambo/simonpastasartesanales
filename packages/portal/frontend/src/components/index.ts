@@ -10,3 +10,5 @@ export { default as ErrorBoundary } from "./ErrorBoundary";
 export { default as AnimatedBackground } from "./AnimatedBackground";
 export { default as ThemeToggle } from "./ThemeToggle";
 export { default as FloatingWhatsAppCTA } from "./FloatingWhatsAppCTA";
+export { default as GuidedTourCTA } from "./GuidedTourCTA";
+

@@ -204,9 +204,11 @@ export const useStructuredData = (config: StructuredDataConfig) => {
               "closes": "18:00"
             }
           ],
+          "servesCuisine": ["Pastas Artesanales", "Sorrentinos", "Ravioles", "Panzottis", "Ñoquis del 29", "Fideos Frescos", "Empanadas Gourmet"],
+          "knowsAbout": ["Pastas al por mayor", "Distribución a restaurantes", "Delivery de pastas frescas", "Pastas congeladas en caja", "Sorrentinos caseros"],
           "hasMenu": {
             "@type": "Menu",
-            "name": "Catálogo de Pastas Congeladas",
+            "name": "Catálogo de Pastas Artesanales y Venta Mayorista",
             "hasMenuSection": [
               {
                 "@type": "MenuSection",
@@ -215,29 +217,50 @@ export const useStructuredData = (config: StructuredDataConfig) => {
                 "hasMenuItem": [
                   {
                     "@type": "MenuItem",
-                    "name": "Sorrentinos",
-                    "description": "Pastas rellenas redondas de producción artesanal."
+                    "name": "Sorrentinos Artesanales",
+                    "description": "Pastas rellenas caseras en variedad de sabores: Jamón y Queso, Calabaza y Mozzarella, Verdura y Ricota."
                   },
                   {
                     "@type": "MenuItem",
-                    "name": "Ravioles",
+                    "name": "Ravioles Caseros",
                     "description": "Clásicos ravioles caseros con rellenos seleccionados."
                   },
                   {
                     "@type": "MenuItem",
-                    "name": "Panzottis",
+                    "name": "Panzottis Gourmet",
                     "description": "Pastas rellenas de formato premium y gran tamaño."
                   }
                 ]
               },
               {
                 "@type": "MenuSection",
-                "name": "Especialidades Rellenas",
+                "name": "Pastas Tradicionales",
                 "hasMenuItem": [
                   {
                     "@type": "MenuItem",
-                    "name": "Empanadas de Bondiola",
-                    "description": "Empanadas gourmet congeladas rellenas de bondiola desmechada."
+                    "name": "Ñoquis del 29",
+                    "description": "Ñoquis caseros de papa tradicionales."
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Tallarines y Fideos Frescos",
+                    "description": "Fideos frescos al huevo amasados con sémola de trigo candeal."
+                  }
+                ]
+              },
+              {
+                "@type": "MenuSection",
+                "name": "Servicio Mayorista y Especialidades",
+                "hasMenuItem": [
+                  {
+                    "@type": "MenuItem",
+                    "name": "Venta de Pastas por Mayor",
+                    "description": "Abastecimiento a restaurantes, rotiserías, hoteles y servicios de catering."
+                  },
+                  {
+                    "@type": "MenuItem",
+                    "name": "Empanadas Gourmet de Bondiola",
+                    "description": "Empanadas congeladas rellenas de bondiola desmechada braseada."
                   }
                 ]
               }

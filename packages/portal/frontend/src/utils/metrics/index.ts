@@ -34,15 +34,8 @@ export function initMetricsSuite(): MetricsSuiteReport | null {
   initEngagementTracking();
 
   // 3. Obtener atribución de tráfico y detección de bots
-  const attribution = parseTrafficAttribution();
-  const botInfo = detectBotOrCrawler();
-
-  if (process.env.NODE_ENV === 'development') {
-    console.group('%c[MetricsSuite] Inicializada con éxito', 'color: #2e7d32; font-weight: bold; font-size: 13px;');
-    console.log('📊 Canal de Tráfico:', attribution.channel, attribution);
-    console.log('🤖 Detección de Bot/Crawler:', botInfo.isBot ? botInfo.botName : 'Usuario Humano');
-    console.groupEnd();
-  }
+  parseTrafficAttribution();
+  detectBotOrCrawler();
 
   return generateMetricsReport();
 }
