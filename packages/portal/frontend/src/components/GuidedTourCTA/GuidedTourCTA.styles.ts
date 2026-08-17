@@ -36,24 +36,24 @@ export const FloatingTourContainer = styled.div`
 export const FloatingTourButton = styled.button<{ $isActive?: boolean }>`
   display: flex;
   align-items: center;
-  gap: ${props => props.theme.spacing.xs};
+  gap: 10px;
   padding: 8px 16px;
-  background: ${props => (props.$isActive ? props.theme.colors.primary[600] : props.theme.colors.background.card)};
-  color: ${props => (props.$isActive ? "#FFFFFF" : props.theme.colors.text.primary)};
-  border: 1px solid ${props => (props.$isActive ? props.theme.colors.primary[500] : props.theme.colors.border.normal)};
+  background: ${props => (props.$isActive ? "linear-gradient(135deg, #2D323B 0%, #1A1D24 100%)" : "linear-gradient(135deg, #1E232A 0%, #111418 100%)")};
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 30px;
   font-weight: 600;
   font-size: 0.88rem;
   cursor: pointer;
-  box-shadow: ${props => props.theme.shadows.medium};
-  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
   transition: all ${props => props.theme.transitions.normal};
-  animation: ${props => (props.$isActive ? "none" : css`${pulseGlow} 2.5s infinite`)};
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${props => props.theme.shadows.large};
-    background: ${props => (props.$isActive ? props.theme.colors.primary[700] : props.theme.colors.background.cardHover)};
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    background: linear-gradient(135deg, #2A3039 0%, #181C22 100%);
+    border-color: rgba(229, 9, 20, 0.6);
   }
 
   &:active {
@@ -65,13 +65,16 @@ export const TourIconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
-  color: ${props => props.theme.colors.primary[500]};
+  font-size: 1.15rem;
+  color: #E50914;
+  flex-shrink: 0;
+  min-width: 20px;
 `;
 
 export const TourBadgeLabel = styled.span`
   letter-spacing: 0.2px;
   white-space: nowrap;
+  color: #FFFFFF;
 `;
 
 export const AudioWavesContainer = styled.div`

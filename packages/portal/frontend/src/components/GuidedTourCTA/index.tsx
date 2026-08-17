@@ -265,15 +265,7 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
             aria-label={t("pages.home.guidedTourBadge")}
           >
             <TourIconWrapper>
-              {isPlaying && !isMuted ? (
-                <AudioWavesContainer>
-                  <AudioWaveBar $delay={0} />
-                  <AudioWaveBar $delay={0.2} />
-                  <AudioWaveBar $delay={0.4} />
-                </AudioWavesContainer>
-              ) : (
-                <ZnIcon icon={CompassOutlined} />
-              )}
+              <ZnIcon icon={isPlaying ? PauseCircleOutlined : CompassOutlined} />
             </TourIconWrapper>
             <TourBadgeLabel>{t("pages.home.guidedTourBadge")}</TourBadgeLabel>
           </FloatingTourButton>
