@@ -1,6 +1,6 @@
 {
   "name": "@factory/backend",
-  "version": "1.4.0",
+  "version": "1.5.1",
   "description": "MERN SaaS Factory Framework — Scalable Express & MongoDB Backend",
   "main": "server.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "dev": "cross-env NODE_ENV=development nodemon --watch './**/*.ts' --exec tsx -r dotenv/config ./server.ts",
     "start": "cross-env NODE_ENV=production npx tsx dist/server.js",
     "seed": "tsx -r dotenv/config ./seeder/seeder.ts",
+    "seed:products": "npx tsx ./seeder/seedProducts.ts",
     "gp": "node ../../../scripts/gp.js"
   },
   "license": "MIT",

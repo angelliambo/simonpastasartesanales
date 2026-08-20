@@ -217,8 +217,8 @@ const Layout: React.FC = React.memo(() => {
       </MainContent>
 
       <AppFooter />
-      {location.pathname !== "/precios" && <FloatingWhatsAppCTA />}
-      <GuidedTourCTA />
+      {!["/precios", "/admin/precios", "/pricing"].includes(location.pathname) && <FloatingWhatsAppCTA />}
+      {!["/precios", "/admin/precios", "/pricing"].includes(location.pathname) && <GuidedTourCTA />}
     </Container>
   );
 });

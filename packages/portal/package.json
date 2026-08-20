@@ -1,6 +1,6 @@
 {
   "name": "@factory/portal",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "description": "MERN SaaS Factory Framework - Portal Orchestrator",
   "private": true,
   "scripts": {
