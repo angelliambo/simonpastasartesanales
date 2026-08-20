@@ -105,25 +105,19 @@ app.use((error: Error, _req: Request, res: Response, _next: NextFunction) => {
 
 const startServer = async () => {
   try {
-    const isDbRequired = FEATURES.ENABLE_GOOGLE_AUTH || FEATURES.ENABLE_TICKETING_SYSTEM;
+    logger.info("🗄️ [SERVER] Conectando a MongoDB...");
+    await connectDB();
 
-    if (isDbRequired) {
-      logger.info("🗄️ [SERVER] Conectando a MongoDB...");
-      await connectDB();
-
-      // Drop legacy email_1 index if present (migration from old schema)
-      try {
-        const User = (await import("./models/userModel")).default;
-        const idx = await User.collection?.indexExists("email_1");
-        if (idx) {
-          await User.collection?.dropIndex("email_1");
-          logger.info("🗑️ [DB] Índice legacy email_1 eliminado");
-        }
-      } catch {
-        /* ignorar si falla */
+    // Drop legacy email_1 index if present (migration from old schema)
+    try {
+      const User = (await import("./models/userModel")).default;
+      const idx = await User.collection?.indexExists("email_1");
+      if (idx) {
+        await User.collection?.dropIndex("email_1");
+        logger.info("🗑️ [DB] Índice legacy email_1 eliminado");
       }
-    } else {
-      logger.info("🗄️ [SERVER] Conexión a MongoDB omitida (login/registro y soporte deshabilitados en FEATURES)");
+    } catch {
+      /* ignorar si falla */
     }
 
     const server = createServer(app);
@@ -138,15 +132,11 @@ const startServer = async () => {
       const { memoryCache } = await import("./utils/cache");
       memoryCache.cleanup();
 
-      if (isDbRequired) {
-        const mongoose = await import("mongoose");
-        mongoose.default.connection.close().then(() => {
-          logger.info("✅ [SERVER] Conexión a MongoDB cerrada");
-          process.exit(0);
-        });
-      } else {
+      const mongoose = await import("mongoose");
+      mongoose.default.connection.close().then(() => {
+        logger.info("✅ [SERVER] Conexión a MongoDB cerrada");
         process.exit(0);
-      }
+      });
     };
 
     process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
