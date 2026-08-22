@@ -68,5 +68,8 @@ public/uploads/
 
 # Project-specific junk
 audits/
+**/audits/
+reports/
+**/reports/
 *.zip
 *.tar.gz
