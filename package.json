@@ -33,10 +33,16 @@
     "gp": "node scripts/gp.js",
     "rollout": "yarn portal:fdeploy",
     "firebase:build": "yarn shared:build && yarn workspace @factory/frontend build",
-    "firebase:deploy": "firebase deploy --only hosting"
+    "firebase:deploy": "firebase deploy --only hosting",
+    "analytics:extract": "tsx scripts/analytics-optimizer/index.ts",
+    "analytics:digest": "tsx scripts/analytics-optimizer/index.ts --export-format=md"
   },
   "license": "MIT",
   "devDependencies": {
-    "firebase-tools": "^15.24.0"
+    "@google-analytics/data": "^4.11.0",
+    "@types/node": "^22.10.0",
+    "firebase-tools": "^15.24.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.0"
   }
 }
