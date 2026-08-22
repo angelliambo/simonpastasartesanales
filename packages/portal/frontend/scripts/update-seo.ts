@@ -123,6 +123,18 @@ const processLlmsTxt = () => {
   console.log(`✅ [SEO-UPDATE] llms.txt actualizado físicamente.`);
 };
 
+// 6. Procesar ads.txt
+const processAdsTxt = () => {
+  const templatePath = join(TEMPLATES_DIR, "ads.txt");
+  const outputPath = join(PUBLIC_DIR, "ads.txt");
+
+  if (!existsSync(templatePath)) return;
+
+  const content = readFileSync(templatePath, "utf8");
+  writeFileSync(outputPath, content, "utf8");
+  console.log(`✅ [SEO-UPDATE] ads.txt actualizado físicamente.`);
+};
+
 // Ejecutar todos los procesadores
 try {
   processIndexHtml();
@@ -130,6 +142,7 @@ try {
   processSitemapXml();
   processManifestJson();
   processLlmsTxt();
+  processAdsTxt();
   console.log("🎉 [SEO-UPDATE] Todos los archivos estáticos de SEO se actualizaron exitosamente en /public.");
 } catch (error) {
   console.error("❌ [SEO-UPDATE] Error procesando los archivos de SEO:", error);
