@@ -288,6 +288,15 @@ function main() {
 
   const [targetArg, bumpType = 'minor'] = args;
 
+  if (targetArg === 'all') {
+    const allTargets = ['frontend', 'backend', 'portal', 'shared'];
+    console.log(`🚀 Incrementando todos los packages del monorepo (${bumpType.toUpperCase()}):`);
+    for (const tKey of allTargets) {
+      bumpTarget(tKey, bumpType);
+    }
+    return;
+  }
+
   if (targetArg === 'auto') {
     const modified = getModifiedPackages();
     if (modified.length === 0) {

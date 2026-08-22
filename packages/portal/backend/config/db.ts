@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { config, logger, hideCredentials } from "./environment";
 import User from "../models/userModel";
 
-const MAX_RETRIES = 3;
+const MAX_RETRIES = 5;
 
 export const connectDB = async (retryCount = 0): Promise<void> => {
   try {
@@ -17,6 +17,7 @@ export const connectDB = async (retryCount = 0): Promise<void> => {
       socketTimeoutMS: 45000,
       connectTimeoutMS: 10000,
       retryWrites: true,
+      retryReads: true,
     };
 
     await mongoose.connect(mongoUri, options);
@@ -30,13 +31,13 @@ export const connectDB = async (retryCount = 0): Promise<void> => {
 
     if (!mongoose.connection.listeners("disconnected").length) {
       mongoose.connection.on("disconnected", () => {
-        logger.warn("⚠️ [MONGODB] Desconectado de MongoDB");
+        logger.warn("⚠️ [MONGODB] Desconectado de MongoDB. Mongoose intentará reconectar automáticamente.");
       });
     }
 
     if (!mongoose.connection.listeners("reconnected").length) {
       mongoose.connection.on("reconnected", () => {
-        logger.info("🔄 [MONGODB] Reconectado a MongoDB");
+        logger.info("🔄 [MONGODB] Reconectado a MongoDB exitosamente");
       });
     }
   } catch (error) {
@@ -44,8 +45,9 @@ export const connectDB = async (retryCount = 0): Promise<void> => {
 
     if (!mongoose.connection.readyState) {
       if (retryCount < MAX_RETRIES) {
-        logger.error(`❌ [MONGODB] No se pudo conectar. Reintentando en 5 segundos... (Intento ${retryCount + 1}/${MAX_RETRIES})`);
-        await new Promise((resolve) => setTimeout(resolve, 5000));
+        const backoffDelay = Math.min(1000 * Math.pow(2, retryCount), 15000);
+        logger.error(`❌ [MONGODB] No se pudo conectar. Reintentando en ${Math.round(backoffDelay / 1000)}s... (Intento ${retryCount + 1}/${MAX_RETRIES})`);
+        await new Promise((resolve) => setTimeout(resolve, backoffDelay));
         return connectDB(retryCount + 1);
       }
 
