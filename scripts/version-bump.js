@@ -203,24 +203,25 @@ function getModifiedPackages() {
     }
 
     if (files.length === 0) {
-      try {
-        const diffFiles = execSync('git diff master...HEAD --name-only', { cwd: ROOT_DIR, encoding: 'utf8' });
-        const diffLines = diffFiles.split('\n').filter(Boolean);
-        for (const line of diffLines) {
-          if (line.startsWith('packages/')) {
-            files.push(line);
-          }
-        }
-      } catch {
+      const diffCmds = [
+        'git diff master...HEAD --name-only',
+        'git diff @{u}...HEAD --name-only',
+        'git diff HEAD~1 --name-only'
+      ];
+
+      for (const cmd of diffCmds) {
         try {
-          const diffFiles = execSync('git diff HEAD~1 --name-only', { cwd: ROOT_DIR, encoding: 'utf8' });
+          const diffFiles = execSync(cmd, { cwd: ROOT_DIR, encoding: 'utf8' });
           const diffLines = diffFiles.split('\n').filter(Boolean);
           for (const line of diffLines) {
             if (line.startsWith('packages/')) {
               files.push(line);
             }
           }
-        } catch { /* ignore */ }
+          if (files.length > 0) break;
+        } catch {
+          /* try next command */
+        }
       }
     }
 
