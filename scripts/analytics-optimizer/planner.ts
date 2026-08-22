@@ -17,6 +17,38 @@ export class ActionPlanner {
 
     // Transformación automática de contras y fricciones en tareas del plan de acción
     for (const con of evaluation.cons) {
+      if (con.id === 'CON_SEO_LOW_ORGANIC_TRAFFIC') {
+        productIncrements.push({
+          id: 'INC_SEO_LOCAL_STRUCTURED_DATA',
+          category: 'product_increment',
+          priority: 'P0_URGENT',
+          title: 'Implementar Marcado Semántico LocalBusiness & Schema.org para Pastas Artesanales',
+          description: 'Incorporar datos estructurados (FoodEstablishment, LocalBusiness, ItemList de Catálogo) en index.html y componentes SEO para capturar tráfico de intención de compra local en Google Search Console.',
+          targetComponent: 'portal',
+          justification: con.description,
+          estimatedImpact: 'Incremento estimado de +150% en impresiones orgánicas y mejora de posición media a Top 5.',
+          suggestedFiles: [
+            'packages/portal/frontend/public/index.html',
+            'packages/portal/frontend/src/components/SEO.tsx',
+          ],
+        });
+
+        productIncrements.push({
+          id: 'INC_SEO_KEYWORD_LANDING_OPTIMIZATION',
+          category: 'product_increment',
+          priority: 'P1_HIGH',
+          title: 'Optimización On-Page de Metatags y Palabras Clave de Catálogo/Precios',
+          description: 'Refactorizar meta títulos, descripciones y jerarquía H1-H3 para capturar términos clave como "pastas caseras por mayor", "sorrentinos artesanales" y "lista de precios".',
+          targetComponent: 'portal',
+          justification: 'Posicionamiento actual fuera de los primeros resultados (#18.4 de posición media).',
+          estimatedImpact: 'Aumento del CTR en Search Console del 6.6% al 12%+.',
+          suggestedFiles: [
+            'packages/portal/frontend/src/pages/PreciosPage/index.tsx',
+            'packages/portal/frontend/public/sitemap.xml',
+          ],
+        });
+      }
+
       if (con.id === 'CON_BACKEND_RATE_LIMITS_OR_ERRORS') {
         bugFixes.push({
           id: 'FIX_MAILSENDER_RATE_LIMIT_RETRY',

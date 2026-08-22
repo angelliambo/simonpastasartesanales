@@ -6,17 +6,17 @@ import path from 'path';
 
 export const ANALYTICS_CONFIG = {
   portal: {
-    name: 'MERN SaaS Factory Portal Web',
-    domain: process.env.PORTAL_DOMAIN || 'saas-factory-portal.app',
-    measurementId: process.env.GA4_MEASUREMENT_ID || 'G-PORTALSAAS01',
+    name: 'Simón Pastas Artesanales',
+    domain: process.env.PORTAL_DOMAIN || 'simonpastasartesanales.com.ar',
+    measurementId: process.env.GA4_MEASUREMENT_ID || process.env.REACT_APP_GA_MEASUREMENT_ID || 'G-SIMONPASTAS01',
     propertyId: process.env.GA4_PORTAL_PROPERTY_ID || process.env.GA4_PROPERTY_ID || 'properties/398271401',
   },
   backend: {
-    name: 'MERN SaaS Factory Backend API Services',
+    name: 'Simón Pastas Artesanales Backend API',
     endpoint: process.env.BACKEND_URL || 'http://localhost:5000/api',
   },
   searchConsole: {
-    siteUrl: process.env.GSC_SITE_URL || 'sc-domain:saas-factory-portal.app',
+    siteUrl: process.env.GSC_SITE_URL || 'sc-domain:simonpastasartesanales.com.ar',
   },
   benchmarks: {
     minPortalConversionPercent: 4.5,
