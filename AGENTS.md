@@ -239,13 +239,16 @@ Per-environment SEMVER. Bump by plan phase, not by commit.
 
 See `PLAN_DE_TRABAJO_UNIFICADO.md` → "Tabla de Versiones por Fase".
 
-### Regla Obligatoria de Control de Versionado por Package
+### Regla Obligatoria de Control de Versionado mediante CLI (`yarn bump`)
 
-- Ante **cualquier** cambio, corrección o nueva funcionalidad implementada en un package del monorepo, el agente **debe obligatoriamente** incrementar la versión correspondiente en su archivo de configuración (`package.json` o `manifest.json`).
-- **Límite de incrementos**: El incremento del versionado se realiza **una única vez por branch** de desarrollo (es decir, por fase o tarea del plan). No se deben iterar o acumular incrementos de versión en commits sucesivos dentro de la misma rama.
-- Solo se debe incrementar la versión de los packages del monorepo que hayan recibido modificaciones reales en su código o archivos de configuración. Si un package (por ejemplo, `backend`) no sufre cambios en la rama actual, no se debe actualizar su versión.
-- Si los cambios impactan al portal web (`packages/portal` o sus sub-packages `frontend` / `backend`), se deben incrementar las versiones únicamente en los `package.json` de aquellos packages específicos que hayan percibido modificaciones.
-- Los incrementos deben seguir el versionado semántico (SEMVER), comúnmente aumentando el dígito de "patch" (ej. de `x.y.z` a `x.y.z+1`) para correcciones o mejoras menores dentro de la fase actual.
+- **Herramienta Única Obligatoria**: A partir de ahora, **TODO** incremento o gestión de versión en cualquier paquete del monorepo debe realizarse **estrictamente** utilizando la herramienta CLI `scripts/version-bump.js` (mediante el comando `yarn bump`). Está prohibido modificar manualmente la versión en los archivos `package.json`.
+- **Comandos Principales**:
+  - `yarn bump status`: Muestra la tabla de versiones actuales y audita dependencias internas.
+  - `yarn bump auto minor`: Auto-detecta paquetes modificados en Git e incrementa la versión **MINOR** (ej. de `1.4.10` a `1.5.0`) cuando se agregan **nuevas funcionalidades, componentes, herramientas CLI o mejoras estéticas/retrocompatibles**.
+  - `yarn bump auto patch`: Auto-detecta paquetes modificados en Git e incrementa la versión **PATCH** (ej. de `1.4.9` a `1.4.10`) para **correcciones de errores (bug fixes) o parches técnicos menores**.
+  - `yarn bump <package> <patch|minor|major>`: Incrementa un paquete específico y sincroniza automáticamente las dependencias internas en todo el monorepo.
+- **Límite de incrementos**: El incremento del versionado se realiza **una única vez por rama/fase** de desarrollo. No se deben iterar o acumular incrementos de versión en commits sucesivos dentro de la misma rama.
+- **Sincronización de Dependencias Internas**: `yarn bump` garantiza que las dependencias internas `@factory/*` se mantengan sincronizadas en sus versiones exactas (sin `^` ni `~`).
 
 ## Git rules for AI agent
 
