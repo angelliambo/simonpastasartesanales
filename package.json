@@ -36,7 +36,8 @@
     "firebase:build": "yarn shared:build && yarn workspace @factory/frontend build",
     "firebase:deploy": "firebase deploy --only hosting",
     "analytics:extract": "tsx scripts/analytics-optimizer/index.ts",
-    "analytics:digest": "tsx scripts/analytics-optimizer/index.ts --export-format=md"
+    "analytics:digest": "tsx scripts/analytics-optimizer/index.ts --export-format=md",
+    "audit:seo": "npx tsx scripts/audit-seo-landings.ts"
   },
   "license": "MIT",
   "devDependencies": {

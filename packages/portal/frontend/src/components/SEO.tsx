@@ -89,6 +89,13 @@ const SEO: React.FC<SEOProps> = ({
     ],
     "servesCuisine": ["Pastas Artesanales", "Sorrentinos", "Ravioles", "Panzottis", "Ñoquis del 29", "Fideos Frescos", "Empanadas Gourmet"],
     "priceRange": "$$",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "128",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
@@ -103,30 +110,52 @@ const SEO: React.FC<SEOProps> = ({
       "itemListElement": [
         {
           "@type": "Offer",
+          "priceCurrency": "ARS",
           "itemOffered": {
             "@type": "Product",
             "name": "Sorrentinos Artesanales",
-            "description": "Sorrentinos caseros envasados en caja (Jamón y Queso, Calabaza y Mozzarella, Verdura y Ricota)."
+            "description": "Sorrentinos caseros envasados en caja (Jamón y Queso, Calabaza y Mozzarella, Verdura y Ricota).",
+            "offers": {
+              "@type": "Offer",
+              "priceCurrency": "ARS",
+              "price": "4500",
+              "availability": "https://schema.org/InStock"
+            }
           }
         },
         {
           "@type": "Offer",
+          "priceCurrency": "ARS",
           "itemOffered": {
             "@type": "Product",
             "name": "Ravioles y Panzottis",
-            "description": "Ravioles caseros y panzottis gourmet de elaboración artesanal congelados en origen."
+            "description": "Ravioles caseros y panzottis gourmet de elaboración artesanal congelados en origen.",
+            "offers": {
+              "@type": "Offer",
+              "priceCurrency": "ARS",
+              "price": "4200",
+              "availability": "https://schema.org/InStock"
+            }
           }
         },
         {
           "@type": "Offer",
+          "priceCurrency": "ARS",
           "itemOffered": {
             "@type": "Product",
             "name": "Ñoquis del 29 y Fideos Frescos",
-            "description": "Ñoquis tradicionales de papa y fideos/tallarines al huevo con sémola de trigo candeal."
+            "description": "Ñoquis tradicionales de papa y fideos/tallarines al huevo con sémola de trigo candeal.",
+            "offers": {
+              "@type": "Offer",
+              "priceCurrency": "ARS",
+              "price": "3800",
+              "availability": "https://schema.org/InStock"
+            }
           }
         },
         {
           "@type": "Offer",
+          "priceCurrency": "ARS",
           "itemOffered": {
             "@type": "Product",
             "name": "Venta Mayorista a Restaurantes y Rotiserías",
@@ -135,10 +164,17 @@ const SEO: React.FC<SEOProps> = ({
         },
         {
           "@type": "Offer",
+          "priceCurrency": "ARS",
           "itemOffered": {
             "@type": "Product",
             "name": "Empanadas de Bondiola y Variadas",
-            "description": "Empanadas artesanales congeladas rellenas de bondiola desmechada braseada."
+            "description": "Empanadas artesanales congeladas rellenas de bondiola desmechada braseada.",
+            "offers": {
+              "@type": "Offer",
+              "priceCurrency": "ARS",
+              "price": "1800",
+              "availability": "https://schema.org/InStock"
+            }
           }
         }
       ]
