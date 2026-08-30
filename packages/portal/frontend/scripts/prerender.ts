@@ -2,8 +2,8 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
 /**
- * Script de Prerenderizado Estático (Build-time Static HTML Pre-renderer)
- * Fábrica de Pastas Simón
+ * Script de Prerenderizado Estático Build-time (SSG / Static Pre-renderer)
+ * Fábrica de Pastas Simón — Bernal & Zona Sur
  */
 
 const BUILD_DIR = join(__dirname, '../build');
@@ -18,19 +18,47 @@ if (!existsSync(INDEX_HTML_PATH)) {
 
 const baseHtml = readFileSync(INDEX_HTML_PATH, 'utf8');
 
-// Rutas estáticas a pre-renderizar
+// Rutas comerciales y legales a pre-renderizar en HTML estático independiente
 const routesToPrerender = [
+  {
+    path: 'precios',
+    title: 'Lista de Precios Oficial | Fábrica de Pastas Simón (Bernal y Zona Sur)',
+    description: 'Consulta los precios actualizados de sorrentinos, ravioles, panzottis, ñoquis y empanadas gourmet. Descuentos por volumen y promociones mayoristas en Bernal y Quilmes.',
+    canonical: 'https://simonpastasartesanales.com.ar/precios',
+    ogTitle: 'Lista de Precios Oficial - Fábrica de Pastas Simón',
+    ogDescription: 'Precios actualizados de sorrentinos, ravioles caseros y venta mayorista en Bernal y Zona Sur.'
+  },
+  {
+    path: 'productos',
+    title: 'Catálogo de Sorrentinos, Ravioles & Pastas Caseras | Fábrica de Pastas Simón',
+    description: 'Descubre nuestra variedad de pastas artesanales congeladas en caja: sorrentinos de bondiola, ravioles de pollo y espinaca, panzottis gourmet y empanadas caseras.',
+    canonical: 'https://simonpastasartesanales.com.ar/productos',
+    ogTitle: 'Catálogo de Pastas Artesanales - Fábrica de Pastas Simón',
+    ogDescription: 'Sorrentinos caseros, ravioles y empanadas gourmet elaboradas de manera artesanal en Bernal.'
+  },
+  {
+    path: 'mayorista',
+    title: 'Venta Mayorista de Pastas para Restaurantes y Comercios | Fábrica de Pastas Simón',
+    description: 'Distribución mayorista directa de pastas frescas congeladas para restaurantes, cantinas, catering y comercios gastronómicos en Quilmes, Bernal, Avellaneda y Zona Sur.',
+    canonical: 'https://simonpastasartesanales.com.ar/mayorista',
+    ogTitle: 'Distribución Mayorista de Pastas en Zona Sur - Fábrica de Pastas Simón',
+    ogDescription: 'Proveedor mayorista de pastas congeladas de alta calidad para restaurantes y comercios.'
+  },
   {
     path: 'legal/terms',
     title: 'Términos y Condiciones | Fábrica de Pastas Simón',
     description: 'Términos y condiciones de uso del servicio y pedidos online de Fábrica de Pastas Simón en Bernal y Zona Sur.',
-    canonical: 'https://simonpastasartesanales.com.ar/legal/terms'
+    canonical: 'https://simonpastasartesanales.com.ar/legal/terms',
+    ogTitle: 'Términos y Condiciones - Fábrica de Pastas Simón',
+    ogDescription: 'Términos y condiciones de compra y delivery de Fábrica de Pastas Simón.'
   },
   {
     path: 'legal/privacy',
     title: 'Política de Privacidad | Fábrica de Pastas Simón',
     description: 'Política de privacidad y protección de datos personales de Fábrica de Pastas Simón.',
-    canonical: 'https://simonpastasartesanales.com.ar/legal/privacy'
+    canonical: 'https://simonpastasartesanales.com.ar/legal/privacy',
+    ogTitle: 'Política de Privacidad - Fábrica de Pastas Simón',
+    ogDescription: 'Política de privacidad y garantía de datos personales de Fábrica de Pastas Simón.'
   }
 ];
 
@@ -45,8 +73,10 @@ routesToPrerender.forEach((route) => {
     .replace(/<title>.*?<\/title>/, `<title>${route.title}</title>`)
     .replace(/<meta name="description"\s+content=".*?"\s*\/>/s, `<meta name="description" content="${route.description}" />`)
     .replace(/<link rel="canonical"\s+href=".*?"\s*\/>/s, `<link rel="canonical" href="${route.canonical}" />`)
-    .replace(/<meta property="og:title"\s+content=".*?"\s*\/>/s, `<meta property="og:title" content="${route.title}" />`)
-    .replace(/<meta property="og:description"\s+content=".*?"\s*\/>/s, `<meta property="og:description" content="${route.description}" />`);
+    .replace(/<meta property="og:title"\s+content=".*?"\s*\/>/s, `<meta property="og:title" content="${route.ogTitle}" />`)
+    .replace(/<meta property="og:description"\s+content=".*?"\s*\/>/s, `<meta property="og:description" content="${route.ogDescription}" />`)
+    .replace(/<meta property="twitter:title"\s+content=".*?"\s*\/>/s, `<meta property="twitter:title" content="${route.ogTitle}" />`)
+    .replace(/<meta property="twitter:description"\s+content=".*?"\s*\/>/s, `<meta property="twitter:description" content="${route.ogDescription}" />`);
 
   const outputPath = join(routeDir, 'index.html');
   writeFileSync(outputPath, routeHtml, 'utf8');

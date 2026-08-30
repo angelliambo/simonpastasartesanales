@@ -1,5 +1,5 @@
 # ==========================================
-# Robots.txt - Fábrica de Pastas Simón (Landing Page)
+# Robots.txt - Fábrica de Pastas Simón (Bernal & Zona Sur)
 # ==========================================
 
 # 1. Buscadores Tradicionales
@@ -8,13 +8,14 @@ User-agent: Bingbot
 User-agent: DuckDuckBot
 Allow: /
 Allow: /assets/
+Allow: /llms.txt
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /login
 Disallow: /api/
 Disallow: /*?*lang=
 
-# 2. Rastreadores de Modelos de Lenguaje (LLM / IA)
+# 2. Rastreadores de Modelos de Lenguaje (LLM / IA Generativa / GEO)
 User-agent: GPTBot              # OpenAI
 User-agent: ChatGPT-User        # ChatGPT Navegación
 User-agent: ClaudeBot           # Anthropic Claude
@@ -26,6 +27,7 @@ User-agent: Meta-ExternalAgent  # Meta AI
 User-agent: cohere-ai           # Cohere
 Allow: /
 Allow: /assets/
+Allow: /llms.txt
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /login
@@ -34,10 +36,11 @@ Disallow: /api/
 # 3. Reglas Generales
 User-agent: *
 Allow: /
+Allow: /llms.txt
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /login
 Disallow: /api/
 
-# Enlace al Sitemap del portal
+# Enlace al Sitemap y Manifiesto de IA
 Sitemap: https://simonpastasartesanales.com.ar/sitemap.xml
