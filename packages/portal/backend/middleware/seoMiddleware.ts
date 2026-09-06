@@ -8,6 +8,24 @@ import { BRAND_CONFIG } from "@factory/shared/config/brand";
  * Middleware para servir el index.html de React inyectando dinámicamente el SEO y estado de Tenant.
  */
 export async function serveReactWithSEO(req: Request, res: Response, next: NextFunction) {
+  // Servir archivos de texto plano esenciales (ads.txt, robots.txt, llms.txt) directamente desde Express
+  if (req.path === "/ads.txt" || req.path === "/robots.txt" || req.path === "/llms.txt") {
+    const fileName = req.path.substring(1);
+    let filePath = "/usr/share/nginx/html/" + fileName;
+    if (!fs.existsSync(filePath)) {
+      filePath = path.resolve(__dirname, "../../../frontend/build", fileName);
+    }
+    if (!fs.existsSync(filePath)) {
+      filePath = path.resolve(__dirname, "../../frontend/public", fileName);
+    }
+
+    if (fs.existsSync(filePath)) {
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      return res.sendFile(filePath);
+    }
+  }
+
   // Excluir la API y recursos estáticos con extensiones
   if (req.path.startsWith("/api") || req.path.includes(".")) {
     return next();
@@ -51,7 +69,8 @@ export async function serveReactWithSEO(req: Request, res: Response, next: NextF
     const seoTitle = tenant?.seo?.title || BRAND_CONFIG.seoTitle;
     const seoDescription = tenant?.seo?.description || BRAND_CONFIG.seoDescription;
     const seoKeywords = tenant?.seo?.keywords || BRAND_CONFIG.seoKeywords;
-    const seoImage = tenant?.seo?.image || BRAND_CONFIG.mapImageUrl; // fallback a la imagen de marca por defecto
+    const protocol = req.secure || req.headers["x-forwarded-proto"] === "https" ? "https" : "http";
+    const seoImage = tenant?.seo?.image || `${protocol}://${host}/og-image.jpg`;
     const themeColor = tenant?.theme?.primaryColor || "#1890ff";
 
     // Reemplazar title y metas. Usar expresiones regulares flexibles que toleren variaciones de tags
