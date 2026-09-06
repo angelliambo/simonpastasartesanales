@@ -12,6 +12,7 @@ import { Skeleton } from "@design-sys/atoms/Skeleton";
 import { useGetInstagramFeedQuery } from "../../services/api/socialFeedService";
 import RegisterModal from "../../components/RegisterModal";
 import GoogleSignInButton from "../../components/GoogleSignInButton";
+import GuidedTourCTA from "../../components/GuidedTourCTA";
 import {
   ContentSection,
   ContentCard,
@@ -816,7 +817,7 @@ const HomePage: React.FC = () => {
         </Container>
       </VhSection>
 
-
+      <GuidedTourCTA />
     </>
   );
 };
