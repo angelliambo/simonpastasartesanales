@@ -30,6 +30,13 @@ export interface ComponentRawTelemetry {
   };
   eventBreakdown: Record<string, number>;
   trafficSources: MetricDimensionBreakdown[];
+  aiAssistantReferrals?: Array<{
+    assistant: string;
+    domain: string;
+    activeUsers: number;
+    sessions: number;
+    impressions: number;
+  }>;
   geographicDistribution: MetricDimensionBreakdown[];
   deviceDistribution: MetricDimensionBreakdown[];
   errorTelemetry: Array<{ errorType: string; count: number; lastOccurred: string }>;
@@ -64,6 +71,29 @@ export interface GscSearchPerformanceData {
   topPages: GscPagePerformance[];
 }
 
+export interface AdSenseSitePerformance {
+  siteUrl: string;
+  earningsUsd: number;
+  adImpressions: number;
+  adClicks: number;
+  pageRpmUsd: number;
+  adCtrPercent: number;
+  status: 'authorized' | 'getting_ready' | 'needs_attention';
+}
+
+export interface AdSensePerformanceData {
+  publisherId: string;
+  dateRange: { startDate: string; endDate: string };
+  totals: {
+    totalEarningsUsd: number;
+    totalAdImpressions: number;
+    totalAdClicks: number;
+    avgPageRpmUsd: number;
+    avgAdCtrPercent: number;
+  };
+  sites: AdSenseSitePerformance[];
+}
+
 export interface BatchExtractionResult {
   timestamp: string;
   dateRange: { startDate: string; endDate: string };
@@ -71,6 +101,7 @@ export interface BatchExtractionResult {
   portal: ComponentRawTelemetry;
   backend: ComponentRawTelemetry;
   searchConsole: GscSearchPerformanceData;
+  adSense: AdSensePerformanceData;
 }
 
 export interface AggregatedEcosystemMetrics {
@@ -104,6 +135,21 @@ export interface AggregatedEcosystemMetrics {
     avgPosition: number;
     topQuery: string;
     topQueryClicks: number;
+  };
+  aiTrafficSummary?: {
+    totalUsers: number;
+    totalSessions: number;
+    totalImpressions: number;
+    breakdown: Array<{ assistant: string; domain: string; activeUsers: number; sessions: number; impressions: number }>;
+  };
+  adSenseSummary?: {
+    publisherId: string;
+    totalEarningsUsd: number;
+    totalAdImpressions: number;
+    totalAdClicks: number;
+    avgPageRpmUsd: number;
+    avgAdCtrPercent: number;
+    sites: Array<{ siteUrl: string; earningsUsd: number; adImpressions: number; adClicks: number; pageRpmUsd: number; adCtrPercent: number; status: string }>;
   };
 }
 
