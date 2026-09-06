@@ -18,7 +18,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@factory/shared": "1.5.2",
+    "@factory/shared": "1.5.3",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.10.0",
     "cookie-parser": "^1.4.6",
