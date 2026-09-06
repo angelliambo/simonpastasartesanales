@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { isUserEligibleForAds } from '@factory/shared/hooks/useAdEligibility';
-import { GOOGLE_ADSENSE_CLIENT_ID } from '@factory/shared/config/ads';
+import { GOOGLE_ADSENSE_CLIENT_ID, ADS_ENABLED } from '@factory/shared/config/ads';
 import { trackAdImpression, trackAdBlocked } from '../../../services/analytics';
 import { GoogleAdUnitProps } from './GoogleAdUnit.types';
 import { AdWrapper, AdHeader, InsElement } from './GoogleAdUnit.styles';
@@ -27,10 +27,14 @@ export const GoogleAdUnit: React.FC<GoogleAdUnitProps> = ({
   const [isVisible, setIsVisible] = useState(false);
   const [adLoaded, setAdLoaded] = useState(false);
 
-  const shouldShowAds = isUserEligibleForAds({
-    isAuthenticated,
-    plan: user?.plan,
-  });
+  const isPlaceholderSlot = /^100000000\d$/.test(slot);
+
+  const shouldShowAds =
+    ADS_ENABLED &&
+    isUserEligibleForAds({
+      isAuthenticated,
+      plan: user?.plan,
+    });
 
   useEffect(() => {
     const el = containerRef.current;
@@ -58,6 +62,14 @@ export const GoogleAdUnit: React.FC<GoogleAdUnitProps> = ({
   useEffect(() => {
     if (!isVisible || adLoaded || !shouldShowAds) return;
 
+    if (isPlaceholderSlot) {
+      if (process.env.NODE_ENV === 'development') {
+        console.info(`[AdSense] Slot ID de prueba (${slot}) omitido para evitar errores de SDK.`);
+      }
+      setAdLoaded(true);
+      return;
+    }
+
     try {
       const scriptId = 'google-adsense-script';
       if (!document.getElementById(scriptId)) {
@@ -79,7 +91,7 @@ export const GoogleAdUnit: React.FC<GoogleAdUnitProps> = ({
       console.warn('[AdSense] Error inicializando unidad publicitaria:', err);
       trackAdBlocked(slot, window.location.pathname);
     }
-  }, [isVisible, adLoaded, slot, shouldShowAds]);
+  }, [isVisible, adLoaded, slot, shouldShowAds, isPlaceholderSlot]);
 
   if (!shouldShowAds) {
     return null;

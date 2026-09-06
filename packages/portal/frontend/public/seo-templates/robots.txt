@@ -14,6 +14,15 @@ Disallow: /login
 Disallow: /api/
 Disallow: /*?*lang=
 
+# 1b. Rastreador de Google AdSense
+User-agent: Mediapartners-Google
+Allow: /
+Allow: /assets/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /login
+Disallow: /api/
+
 # 2. Rastreadores de Modelos de Lenguaje (LLM / IA)
 User-agent: GPTBot              # OpenAI
 User-agent: ChatGPT-User        # ChatGPT Navegación
