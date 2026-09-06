@@ -1,14 +1,23 @@
 /**
- * Configuración y Constantes para MERN SaaS Factory Analytics & Search Console Extractor
+ * Configuración y Constantes para MERN SaaS Factory Analytics & Search Console Extractor (Simón Pastas Artesanales)
  */
 
+import fs from 'fs';
 import path from 'path';
+import dotenv from 'dotenv';
+
+// Cargar variables de entorno automáticamente desde los archivos .env del monorepo
+const frontendEnvPath = path.resolve(process.cwd(), 'packages/portal/frontend/.env');
+const backendEnvPath = path.resolve(process.cwd(), 'packages/portal/backend/.env');
+if (fs.existsSync(frontendEnvPath)) dotenv.config({ path: frontendEnvPath });
+if (fs.existsSync(backendEnvPath)) dotenv.config({ path: backendEnvPath });
+dotenv.config();
 
 export const ANALYTICS_CONFIG = {
   portal: {
     name: 'Simón Pastas Artesanales',
     domain: process.env.PORTAL_DOMAIN || 'simonpastasartesanales.com.ar',
-    measurementId: process.env.GA4_MEASUREMENT_ID || process.env.REACT_APP_GA_MEASUREMENT_ID || 'G-SIMONPASTAS01',
+    measurementId: process.env.REACT_APP_GA_MEASUREMENT_ID || process.env.GA4_MEASUREMENT_ID || 'G-CSZZEJ6KG5',
     propertyId: process.env.GA4_PORTAL_PROPERTY_ID || process.env.GA4_PROPERTY_ID || 'properties/398271401',
   },
   backend: {

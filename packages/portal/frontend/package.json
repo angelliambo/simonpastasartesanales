@@ -1,11 +1,11 @@
 {
   "name": "@factory/frontend",
-  "version": "1.10.0",
+  "version": "1.10.1",
   "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.6.1",
-    "@factory/shared": "1.5.2",
+    "@factory/shared": "1.5.3",
     "@react-oauth/google": "^0.13.5",
     "@reduxjs/toolkit": "^2.9.0",
     "@testing-library/jest-dom": "^6.6.3",

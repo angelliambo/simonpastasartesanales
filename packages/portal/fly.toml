@@ -5,6 +5,8 @@ app = "simonpastasartesanales"
   [build.args]
     REACT_APP_API_URL = "https://simonpastasartesanales.com.ar/api"
     REACT_APP_GOOGLE_CLIENT_ID = "<google-client-id>"
+    REACT_APP_GOOGLE_ADSENSE_CLIENT_ID = "ca-pub-6167435415786243"
+    REACT_APP_ADS_ENABLED = "true"
 primary_region = "gru"
 
 [env]

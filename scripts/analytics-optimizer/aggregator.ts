@@ -69,6 +69,25 @@ export class TelemetryAggregator {
         topQuery: topQuery.query,
         topQueryClicks: topQuery.clicks,
       },
+      aiTrafficSummary: portal.aiAssistantReferrals
+        ? {
+            totalUsers: portal.aiAssistantReferrals.reduce((sum, item) => sum + item.activeUsers, 0),
+            totalSessions: portal.aiAssistantReferrals.reduce((sum, item) => sum + item.sessions, 0),
+            totalImpressions: portal.aiAssistantReferrals.reduce((sum, item) => sum + item.impressions, 0),
+            breakdown: portal.aiAssistantReferrals,
+          }
+        : undefined,
+      adSenseSummary: rawBatch.adSense
+        ? {
+            publisherId: rawBatch.adSense.publisherId,
+            totalEarningsUsd: rawBatch.adSense.totals.totalEarningsUsd,
+            totalAdImpressions: rawBatch.adSense.totals.totalAdImpressions,
+            totalAdClicks: rawBatch.adSense.totals.totalAdClicks,
+            avgPageRpmUsd: rawBatch.adSense.totals.avgPageRpmUsd,
+            avgAdCtrPercent: rawBatch.adSense.totals.avgAdCtrPercent,
+            sites: rawBatch.adSense.sites,
+          }
+        : undefined,
     };
   }
 }

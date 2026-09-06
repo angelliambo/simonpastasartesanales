@@ -289,13 +289,13 @@
 
   <div id="root">
     <div
-      style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: fixed; inset: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; transition: background-color 0.2s;">
+      style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: fixed; inset: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; transition: background-color 0.2s; z-index: 9999; background-color: inherit;">
       <div
         style="width: 48px; height: 48px; border: 4px solid rgba(156, 163, 175, 0.15); border-top: 4px solid #193220; border-radius: 50%; animation: portal-spin 1s linear infinite; margin-bottom: 24px;">
       </div>
       <div style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: #193220;" id="portal-loader-logo">
         Fábrica de Pastas Simón</div>
-      <div style="font-size: 13px; color: #9ca3af; margin-top: 8px;" id="portal-loader-text">Cargando aplicación...
+      <div style="font-size: 13px; color: #9ca3af; margin-top: 8px;" id="portal-loader-text">Cargando catálogo de pastas artesanales...
       </div>
     </div>
     <script>
@@ -323,6 +323,100 @@
         }
       }
     </style>
+
+    <!-- Contenido estático visible e indexable para AdSense crawler, buscadores e IAs -->
+    <main style="padding: 40px 20px; max-width: 1100px; margin: 0 auto; font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #1f2937;">
+      <header style="margin-bottom: 32px; text-align: center;">
+        <h1 style="font-size: 2.2rem; font-weight: 700; color: #193220; margin-bottom: 12px;">
+          Fábrica de Pastas Simón — Pastas Artesanales & Distribución Mayorista
+        </h1>
+        <p style="font-size: 1.15rem; color: #374151; max-width: 800px; margin: 0 auto;">
+          Elaboración artesanal de pastas frescas congeladas en caja: sorrentinos caseros, ravioles, panzottis gourmet, ñoquis del 29 y empanadas. Venta minorista en Bernal y envíos mayoristas a restaurantes y gastronomía en Quilmes y Zona Sur.
+        </p>
+      </header>
+
+      <section style="margin-bottom: 40px;">
+        <h2 style="font-size: 1.6rem; color: #193220; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">
+          Nuestra Fábrica y Filosofía de Elaboración
+        </h2>
+        <p style="margin-bottom: 16px;">
+          En <strong>Fábrica de Pastas Simón</strong> combinamos recetas tradicionales italianas con materia prima seleccionada de primera calidad. Elaboramos nuestras pastas de forma totalmente artesanal en nuestra planta de Bernal, congelándolas en origen inmediatamente después del armado. Este proceso térmico garantiza la conservación natural del sabor, la frescura y la textura óptima al momento de cocinar, sin necesidad de agregar conservantes ni aditivos artificiales.
+        </p>
+        <p style="margin-bottom: 16px;">
+          Nuestra misión es llevar la experiencia de las verdaderas pastas de domingo a la mesa de cada vecino de Bernal y Quilmes, así como proveer a comercios gastronómicos que buscan estándares superiores de calidad y rendimiento en plato.
+        </p>
+      </section>
+
+      <section style="margin-bottom: 40px;">
+        <h2 style="font-size: 1.6rem; color: #193220; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">
+          Catálogo Principal de Especialidades Artesanales
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 20px;">
+          <article style="background: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb;">
+            <h3 style="font-size: 1.25rem; color: #193220; margin-bottom: 8px;">Sorrentinos Artesanales</h3>
+            <p style="font-size: 0.95rem; color: #4b5563;">
+              Sorrentinos abundantes congelados en caja de 12 unidades. Rellenos estrella: Bondiola desmechada a la cerveza negra, Jamón cocido y queso muzzarella, Provolone con ciboulette y Espinaca a la crema con ricota fresca.
+            </p>
+          </article>
+          <article style="background: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb;">
+            <h3 style="font-size: 1.25rem; color: #193220; margin-bottom: 8px;">Ravioles Tradicionales</h3>
+            <p style="font-size: 0.95rem; color: #4b5563;">
+              Ravioles masa al huevo estirada a piedra con rellenos de Pollo y verdura sazonada, Carne vacuna magra y acelga, o Ricota fresca con nueces seleccionadas. Rendimiento perfecto para plato principal.
+            </p>
+          </article>
+          <article style="background: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb;">
+            <h3 style="font-size: 1.25rem; color: #193220; margin-bottom: 8px;">Panzottis Gourmet</h3>
+            <p style="font-size: 0.95rem; color: #4b5563;">
+              Pastas rellenas de formato rústico con combinaciones especiales: Salmón rosado y eneldo, Calabaza asada con muzzarella y almendras, y Cuatro Quesos estacionados.
+            </p>
+          </article>
+          <article style="background: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb;">
+            <h3 style="font-size: 1.25rem; color: #193220; margin-bottom: 8px;">Empanadas de Bondiola</h3>
+            <p style="font-size: 0.95rem; color: #4b5563;">
+              Empanadas estilo criollo artesanal congeladas en caja con relleno abundante de bondiola de cerdo desmechada a fuego lento con especias.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section style="margin-bottom: 40px;">
+        <h2 style="font-size: 1.6rem; color: #193220; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">
+          Venta Mayorista para Restaurantes y Comercios Gastronómicos
+        </h2>
+        <p style="margin-bottom: 16px;">
+          Ofrecemos un servicio integral de distribución de pastas congeladas por mayor en Bernal, Quilmes, Avellaneda, Lanús y Zona Sur. Desarrollamos presentaciones especiales para gastronomía (cajas por volumen), garantizando estandarización de porciones, costos controlados y entrega programada para trattorias, cantinas, hoteles, clubes y salones de fiestas.
+        </p>
+      </section>
+
+      <section style="margin-bottom: 40px;">
+        <h2 style="font-size: 1.6rem; color: #193220; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">
+          Preguntas Frecuentes (FAQ)
+        </h2>
+        <details style="margin-bottom: 12px; padding: 12px; background: #f3f4f6; border-radius: 6px;">
+          <summary style="font-weight: 600; cursor: pointer; color: #193220;">¿Cómo se deben cocinar las pastas congeladas?</summary>
+          <p style="margin-top: 8px; font-size: 0.95rem; color: #374151;">
+            Las pastas de Fábrica de Pastas Simón no requieren descongelación previa. Colocar directamente las pastas congeladas en abundante agua hirviendo con sal. Cocinar a fuego vivo durante 5 a 7 minutos desde que rompe el hervor nuevamente. Retirar suavemente con espumadera.
+          </p>
+        </details>
+        <details style="margin-bottom: 12px; padding: 12px; background: #f3f4f6; border-radius: 6px;">
+          <summary style="font-weight: 600; cursor: pointer; color: #193220;">¿Dónde se encuentra la fábrica y qué horarios de atención tienen?</summary>
+          <p style="margin-top: 8px; font-size: 0.95rem; color: #374151;">
+            Nuestra fábrica y local comercial se ubican en San Luis 1263, Bernal, Provincia de Buenos Aires. Atendemos de Lunes a Sábados de 09:00 a 19:00 hs.
+          </p>
+        </details>
+        <details style="margin-bottom: 12px; padding: 12px; background: #f3f4f6; border-radius: 6px;">
+          <summary style="font-weight: 600; cursor: pointer; color: #193220;">¿Cómo realizar pedidos al por mayor o envíos a domicilio?</summary>
+          <p style="margin-top: 8px; font-size: 0.95rem; color: #374151;">
+            Puedes comunicarte por WhatsApp directamente al +54 9 11 4192-1222 para solicitar la lista de precios mayoristas actualizada o coordinar entregas programadas en Zona Sur.
+          </p>
+        </details>
+      </section>
+
+      <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 0.9rem; color: #6b7280; text-align: center;">
+        <p>© Fábrica de Pastas Simón. Todos los derechos reservados. San Luis 1263, Bernal, Buenos Aires, Argentina.</p>
+        <p>Contacto Directo: +54 9 11 4192-1222 | Email: soporte@simonpastasartesanales.com.ar</p>
+      </footer>
+    </main>
   </div>
 </body>
 

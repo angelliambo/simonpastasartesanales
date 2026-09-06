@@ -34,18 +34,9 @@ export class EcosystemEvaluator {
         id: 'PRO_SEO_STRONG_POSITIONING',
         type: 'pro',
         title: 'Posicionamiento Medio Sólido en Palabras Clave Principales',
-        description: `La posición promedio global de #${aggregated.searchConsoleSummary.avgPosition} sitúa al portal en la primera/segunda página de resultados de búsqueda.`,
+        description: `La posición promedio global de #${aggregated.searchConsoleSummary.avgPosition} sitúa al portal SaaS en la primera/segunda página de resultados de búsqueda.`,
         metricOrigin: `GSC Top Query: "${aggregated.searchConsoleSummary.topQuery}" (Pos #${aggregated.searchConsoleSummary.avgPosition})`,
         impactScore: 8,
-      });
-    } else {
-      cons.push({
-        id: 'CON_SEO_LOW_ORGANIC_TRAFFIC',
-        type: 'con',
-        title: 'Bajo Volumen de Tráfico Orgánico y Posicionamiento Deficiente',
-        description: `El volumen de clics orgánicos (${aggregated.searchConsoleSummary.totalClicks} clics/mes) y la posición media (#${aggregated.searchConsoleSummary.avgPosition}) reflejan visibilidad limitada en Google para Simón Pastas Artesanales.`,
-        metricOrigin: `GSC Clics: ${aggregated.searchConsoleSummary.totalClicks} | Posición Media: #${aggregated.searchConsoleSummary.avgPosition}`,
-        impactScore: 10,
       });
     }
 

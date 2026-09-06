@@ -93,6 +93,30 @@ ${searchConsole.topQueries
 
 ---
 
+## 🤖 3. TRÁFICO Y REFERIDOS DE ASISTENTES DE IA (GEO-AI / AIO)
+
+${portal.aiAssistantReferrals ? `| Asistente de IA | Dominio Referido | Usuarios Activos | Sesiones | Impresiones Estimadas |
+| :--- | :--- | :--- | :--- | :--- |
+${portal.aiAssistantReferrals
+  .map((ai) => `| **${ai.assistant}** | \`${ai.domain}\` | \`${ai.activeUsers.toLocaleString()}\` | \`${ai.sessions.toLocaleString()}\` | \`${ai.impressions.toLocaleString()}\` |`)
+  .join('\n')}` : '_Sin datos de referidos de IA registrados._'}
+
+---
+
+## 💵 4. MONETIZACIÓN Y RENDIMIENTO DE ANUNCIOS (GOOGLE ADSENSE)
+
+**ID de Publisher AdSense:** \`${rawBatch.adSense.publisherId}\`  
+**Ingresos Totales (USD):** \`$${rawBatch.adSense.totals.totalEarningsUsd.toFixed(2)}\` | **Impresiones Anuncios:** \`${rawBatch.adSense.totals.totalAdImpressions.toLocaleString()}\` | **RPM Promedio:** \`$${rawBatch.adSense.totals.avgPageRpmUsd.toFixed(2)}\` | **CTR Anuncios:** \`${rawBatch.adSense.totals.avgAdCtrPercent}%\`
+
+### Desglose por Sitio Web (Proyectos Vinculados)
+| Sitio Web | Ingresos Estimados | Impresiones | Clics | RPM ($) | CTR (%) | Estado |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+${rawBatch.adSense.sites
+  .map((s) => `| **${s.siteUrl}** | \`$${s.earningsUsd.toFixed(2)}\` | \`${s.adImpressions.toLocaleString()}\` | \`${s.adClicks}\` | \`$${s.pageRpmUsd.toFixed(2)}\` | \`${s.adCtrPercent}%\` | \`${s.status}\` |`)
+  .join('\n')}
+
+---
+
 ## 🌐 3. METRICAS POR COMPONENTE (PORTAL VS BACKEND API)
 
 | Métrica | Portal Web (${portal.componentName}) | Backend Services (${backend.componentName}) |
