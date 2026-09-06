@@ -128,7 +128,7 @@ export const CACHE_TTL = {
   USER_SEARCH: 180, // 3 minutos para búsquedas de usuarios
   TOKEN_USER: 600, // 10 minutos para cachear usuario por token (autoRefreshToken)
   PROGRESS_SUMMARY: 120, // 2 minutos para resumen de progreso
-} as const;
+};
 
 // Helpers para keys comunes
 export const getCacheKey = {
@@ -139,4 +139,4 @@ export const getCacheKey = {
   gameStats: (userId: string) => `game:stats:${userId}`,
   userSearch: (query: string) => `user:search:${query}`,
   progressSummary: (userId: string) => `progress:summary:${userId}`,
-} as const;
+};

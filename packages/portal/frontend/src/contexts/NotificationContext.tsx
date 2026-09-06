@@ -50,7 +50,7 @@ const initialState = {
     vibration: true,
     desktop: true,
     email: false,
-    frequency: "immediate" as const,
+    frequency: "immediate",
     quietHours: {
       enabled: false,
       start: "22:00",

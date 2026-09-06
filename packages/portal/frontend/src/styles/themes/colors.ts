@@ -33,7 +33,7 @@ export const grayScale = {
   90: "#000000", // Negro puro
   95: "#000000", // Negro puro
   100: "#000000", // Negro puro
-} as const;
+};
 
 // Escalas específicas para tipos de daltonismo
 export const daltonismScales = {
@@ -223,7 +223,7 @@ export const colorScales = {
     90: "#065f46",
     100: "#064e3b",
   },
-} as const;
+};
 
 // Colores semánticos
 export const semanticColors = {
@@ -247,7 +247,7 @@ export const semanticColors = {
     main: "#3b82f6",
     dark: "#1d4ed8",
   },
-} as const;
+};
 
 // Gradientes centralizados
 export const gradients = {
@@ -305,7 +305,7 @@ export const gradients = {
     "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(0,0,0,0.05) 100%)",
   glass:
     "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(0,0,0,0.1) 100%)",
-} as const;
+};
 
 // Funciones helper para generar escalas de colores
 export const createColorScale = (

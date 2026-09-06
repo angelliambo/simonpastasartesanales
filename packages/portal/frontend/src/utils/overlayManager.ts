@@ -17,7 +17,7 @@ export const Z_INDEX = {
   DROPDOWN: 1020, // Dropdowns
   TOOLTIP: 1030, // Tooltips
   OVERLAY_DEV: 2147483647, // Z-index típico de webpack-dev-server overlay
-} as const;
+};
 
 /**
  * Selectores CSS para overlays de desarrollo comunes

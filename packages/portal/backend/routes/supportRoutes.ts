@@ -160,7 +160,7 @@ router.post("/tickets/detail/:ticketId/comments", verifyIsLoggedIn, async (req: 
     const comment = {
       authorId: (req as any).user?.userId,
       authorEmail: (req as any).user?.email || ticket.email,
-      authorRole: "user" as const,
+      authorRole: "user",
       message: message.trim(),
       createdAt: new Date(),
     };

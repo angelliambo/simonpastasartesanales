@@ -8236,6 +8236,14 @@ googleapis-common@^8.0.0:
     qs "^6.7.0"
     url-template "^2.0.8"
 
+googleapis@^176.0.0:
+  version "176.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-176.0.0.tgz#033220316f8ca7db9e48627b16b8e5b3020cc87f"
+  integrity sha512-v24+WfeIw3R9iF8LT7eixlawezy5SGGNB/WjFV8qeiBS9G6KCsqaFngsnTXvBrVH4womehN2Co8UYJxZ0KpbvQ==
+  dependencies:
+    google-auth-library "10.5.0"
+    googleapis-common "^8.0.0"
+
 gopd@^1.0.1, gopd@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/gopd/-/gopd-1.2.0.tgz#89f56b8217bdbc8802bd299df6d7f1081d7e51a1"

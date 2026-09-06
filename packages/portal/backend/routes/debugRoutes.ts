@@ -8,6 +8,7 @@ import config from "../config/environment";
 import { verifyIsLoggedIn, verifyIsAdmin } from "../middleware/verifyAuthToken";
 import SupportTicket, { generateTicketId } from "../models/SupportTicket";
 import { sendUserTicketReplyNotification } from "../services/emailService";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
 const { JWT_SECRET_KEY, JWT_EXPIRES_IN_SECONDS } = config;
 
 const router = Router();
@@ -592,8 +593,8 @@ router.post("/tickets/:ticketId/comments", async (req: Request, res: Response) =
 
     const comment = {
       authorId: (req as any).user?.userId,
-      authorEmail: (req as any).user?.email || "support@<domain>",
-      authorRole: "admin" as const,
+      authorEmail: (req as any).user?.email || BRAND_CONFIG.supportEmail,
+      authorRole: "admin",
       message: message.trim(),
       createdAt: new Date(),
     };
