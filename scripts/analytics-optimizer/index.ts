@@ -91,9 +91,9 @@ async function main() {
   `);
 
   try {
-    // 1. FASE 1: Extracción Masiva (GA4 + Search Console + Backend)
+    // 1. FASE 1: Extracción Masiva en Vivo (GA4 + Search Console)
     const extractor = new AnalyticsExtractor();
-    const rawBatch = await extractor.extractBatch(options.days, options.dryRun);
+    const rawBatch = await extractor.extractBatch(options.days);
 
     // 2. FASE 2: Agregación Numérica
     const aggregator = new TelemetryAggregator();
@@ -129,6 +129,29 @@ async function main() {
     console.log(`   - CTR Promedio:             ${aggregated.searchConsoleSummary.avgCtrPercent}%`);
     console.log(`   - Posición Media:           ${aggregated.searchConsoleSummary.avgPosition}`);
     console.log(`   - Keyword Principal:        "${aggregated.searchConsoleSummary.topQuery}" (${aggregated.searchConsoleSummary.topQueryClicks} clics)`);
+
+    if (aggregated.aiTrafficSummary) {
+      console.log(`\n🤖 ASISTENTES DE IA (GEO-AI / AIO REFERRALS):`);
+      console.log(`   - Usuarios Activos Totales IA: ${aggregated.aiTrafficSummary.totalUsers.toLocaleString()}`);
+      console.log(`   - Sesiones Totales IA:         ${aggregated.aiTrafficSummary.totalSessions.toLocaleString()}`);
+      console.log(`   - Impresiones Estimadas IA:    ${aggregated.aiTrafficSummary.totalImpressions.toLocaleString()}`);
+      aggregated.aiTrafficSummary.breakdown.forEach((ai) => {
+        console.log(`     • ${ai.assistant} (${ai.domain}): ${ai.activeUsers} usuarios / ${ai.sessions} sesiones / ${ai.impressions} impresiones`);
+      });
+    }
+
+    if (aggregated.adSenseSummary) {
+      console.log(`\n💵 GOOGLE ADSENSE MONETIZATION (${aggregated.adSenseSummary.publisherId}):`);
+      console.log(`   - Ingresos Estimados Totales:  $${aggregated.adSenseSummary.totalEarningsUsd.toFixed(2)} USD`);
+      console.log(`   - Impresiones de Anuncios:      ${aggregated.adSenseSummary.totalAdImpressions.toLocaleString()}`);
+      console.log(`   - Clics en Anuncios Totales:    ${aggregated.adSenseSummary.totalAdClicks.toLocaleString()}`);
+      console.log(`   - RPM Promedio por Página:      $${aggregated.adSenseSummary.avgPageRpmUsd.toFixed(2)} USD`);
+      console.log(`   - CTR Promedio de Anuncios:     ${aggregated.adSenseSummary.avgAdCtrPercent}%`);
+      console.log(`   - Desglose por Sitio Web (Proyectos Vinculados):`);
+      aggregated.adSenseSummary.sites.forEach((site) => {
+        console.log(`     • ${site.siteUrl}: $${site.earningsUsd.toFixed(2)} USD | ${site.adImpressions.toLocaleString()} imp. | ${site.adClicks} clics | RPM: $${site.pageRpmUsd.toFixed(2)} | [${site.status}]`);
+      });
+    }
 
     console.log(`\n🛒 EMBUDO DE CONVERSIÓN PORTAL:`);
     console.log(`   - Vistas Landing:    ${aggregated.portalFunnel.landingViews.toLocaleString()}`);

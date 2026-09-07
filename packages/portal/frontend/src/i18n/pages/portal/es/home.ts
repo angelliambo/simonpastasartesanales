@@ -88,6 +88,22 @@ export const home = {
   footerPrivacidad: 'Política de Privacidad',
   footerRights: 'Todos los derechos reservados.',
   versionLabel: 'Versión',
+
+  // Guided Tour
+  guidedTourBadge: 'Tour Guiado',
+  guidedTourClose: 'Cerrar tour',
+  guidedTourStepCount: 'Paso {{current}} de {{total}}',
+  guidedTourPrev: 'Anterior',
+  guidedTourPlay: 'Reproducir',
+  guidedTourPause: 'Pausar',
+  guidedTourNext: 'Siguiente',
+  guidedTourMute: 'Silenciar',
+  guidedTourUnmute: 'Activar sonido',
+  guidedTourStep1Text: 'Te damos la bienvenida. Esta plataforma modular te permite lanzar tu SaaS en tiempo récord.',
+  guidedTourStep2Text: 'Aquí encontrarás las características principales: Autenticación, Dashboard, Pagos y Soporte.',
+  guidedTourStep3Text: 'Contamos con alta disponibilidad, i18n y compatibilidad total en dispositivos móviles.',
+  guidedTourStep4Text: 'Lee las opiniones de desarrolladores que ya han lanzado sus plataformas usando nuestra base.',
+  guidedTourStep5Text: '¿Listo para empezar? Registrate gratis o ingresa a tu panel de control inmediatamente.',
 };
 
 export default home;

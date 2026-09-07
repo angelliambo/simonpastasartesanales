@@ -9,7 +9,7 @@ export const breakpoints = {
   lg: "992px",
   xl: "1200px",
   xxl: "1600px",
-} as const;
+};
 
 // Media queries consistentes
 export const media = {
@@ -21,7 +21,7 @@ export const media = {
   mobile: `(max-width: ${breakpoints.md})`,
   tablet: `(min-width: ${breakpoints.md}) and (max-width: ${breakpoints.lg})`,
   desktop: `(min-width: ${breakpoints.lg})`,
-} as const;
+};
 
 // Mixins responsive helpers
 export const mobile = (styles: any) => css`

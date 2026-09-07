@@ -1,28 +1,42 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Button from '@design-sys/atoms/Button';
+import { Container } from '@design-sys/atoms/Container';
+
+export const LayoutRoot = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  background: ${({ theme }) => theme.colors.background.primary};
+`;
 
 export const TopBar = styled.header`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 12px;
-  padding: 8px 24px;
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.lg};
   background: ${({ theme }) => theme.colors.background.secondary};
   border-bottom: 1px solid ${({ theme }) => theme.colors.border.light};
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
-  transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: ${({ theme }) => theme.zIndex.fixed};
+  transition: background ${({ theme }) => theme.transitions.normal};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.md};
+  }
 `;
 
 export const AccessBtn = styled(Button)<{ $isMobile?: boolean }>`
-  background: ${({ theme }) => theme.gradients?.premium || 'linear-gradient(135deg, #3b82f6, #8b5cf6)'};
-  color: ${({ theme }) => theme.colors.text.inverse || 'white'};
+  background: ${({ theme }) => theme.gradients.premium};
+  color: ${({ theme }) => theme.colors.text.inverse};
   border: none;
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   ${({ $isMobile }) => $isMobile && `width: 100%;`}
   
   &:hover {
@@ -34,15 +48,15 @@ export const AccessBtn = styled(Button)<{ $isMobile?: boolean }>`
 export const UserBadge = styled(Link)<{ $isMobile?: boolean }>`
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 600;
+  gap: ${({ theme }) => theme.spacing.xs};
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   color: ${({ theme }) => theme.colors.text.primary};
   text-decoration: none;
   padding: 6px 14px;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   background: ${({ theme }) => theme.colors.primary[50]};
-  transition: background 0.2s;
+  transition: background ${({ theme }) => theme.transitions.fast};
   ${({ $isMobile }) => $isMobile && `
     margin: 0;
     flex-grow: 1;
@@ -54,15 +68,15 @@ export const UserBadge = styled(Link)<{ $isMobile?: boolean }>`
 export const LogoutBtn = styled.button<{ $isMobile?: boolean }>`
   background: none;
   border: none;
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 16px;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.fontSize.md};
   cursor: pointer;
   padding: 6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  transition: color 0.2s, background-color 0.2s;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  transition: color ${({ theme }) => theme.transitions.fast}, background-color ${({ theme }) => theme.transitions.fast};
   ${({ $isMobile }) => $isMobile && `
     background: rgba(0,0,0,0.05);
     padding: 10px;
@@ -70,17 +84,17 @@ export const LogoutBtn = styled.button<{ $isMobile?: boolean }>`
   `}
   
   &:hover {
-    color: ${({ theme }) => theme.colors.error[500] || '#ef4444'};
-    background: ${({ theme }) => `${theme.colors.text.primary}14` || 'rgba(255, 255, 255, 0.08)'};
+    color: ${({ theme }) => theme.colors.error[500]};
+    background: ${({ theme }) => theme.colors.background.tertiary};
   }
 `;
 
 export const NavLinks = styled.nav`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: ${({ theme }) => theme.spacing.xs};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints?.md || '768px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
 `;
@@ -88,9 +102,9 @@ export const NavLinks = styled.nav`
 export const DesktopRight = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: ${({ theme }) => theme.spacing.sm};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints?.md || '768px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
 `;
@@ -100,19 +114,19 @@ export const HamburgerButton = styled.button`
   background: none;
   border: none;
   color: ${({ theme }) => theme.colors.text.primary};
-  font-size: 20px;
+  font-size: ${({ theme }) => theme.typography.fontSize.lg};
   cursor: pointer;
   padding: 6px;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  transition: background-color 0.2s;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  transition: background-color ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background: ${({ theme }) => `${theme.colors.text.primary}10`};
+    background: ${({ theme }) => theme.colors.background.tertiary};
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints?.md || '768px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: inline-flex;
   }
 `;
@@ -123,16 +137,17 @@ export const MobileSidebar = styled.div<{ $open: boolean }>`
   right: 0;
   bottom: 0;
   width: 280px;
+  max-width: calc(100vw - 48px);
   background: ${({ theme }) => theme.colors.background.secondary};
   border-left: 1px solid ${({ theme }) => theme.colors.border.light};
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.08);
-  z-index: 1001;
+  box-shadow: ${({ theme }) => theme.shadows.heavy};
+  z-index: ${({ theme }) => theme.zIndex.modal + 1};
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  gap: 20px;
+  padding: ${({ theme }) => theme.spacing.lg};
+  gap: ${({ theme }) => theme.spacing.md};
   transform: translateX(${({ $open }) => ($open ? "0" : "100%")});
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform ${({ theme }) => theme.transitions.normal};
 `;
 
 export const SidebarOverlay = styled.div<{ $open: boolean }>`
@@ -142,10 +157,10 @@ export const SidebarOverlay = styled.div<{ $open: boolean }>`
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.35);
-  z-index: 1000;
+  z-index: ${({ theme }) => theme.zIndex.modal};
   opacity: ${({ $open }) => ($open ? 1 : 0)};
   pointer-events: ${({ $open }) => ($open ? "auto" : "none")};
-  transition: opacity 0.3s ease;
+  transition: opacity ${({ theme }) => theme.transitions.normal};
 `;
 
 export const SidebarHeader = styled.div`
@@ -153,112 +168,122 @@ export const SidebarHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border.light};
-  padding-bottom: 16px;
+  padding-bottom: ${({ theme }) => theme.spacing.sm};
 `;
 
 export const CloseButton = styled.button`
   background: none;
   border: none;
   color: ${({ theme }) => theme.colors.text.secondary};
-  font-size: 18px;
+  font-size: ${({ theme }) => theme.typography.fontSize.md};
   cursor: pointer;
   padding: 6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  transition: background-color 0.2s, color 0.2s;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  transition: background-color ${({ theme }) => theme.transitions.fast}, color ${({ theme }) => theme.transitions.fast};
 
   &:hover {
     color: ${({ theme }) => theme.colors.text.primary};
-    background: ${({ theme }) => `${theme.colors.text.primary}10`};
+    background: ${({ theme }) => theme.colors.background.tertiary};
   }
 `;
 
 export const SidebarNav = styled.nav`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: ${({ theme }) => theme.spacing.xs};
 `;
 
 export const SidebarNavLink = styled(Link)<{ $active?: boolean }>`
-  font-size: 14px;
-  font-weight: 500;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: ${({ $active, theme }) => ($active ? theme.colors.primary[500] : theme.colors.text.secondary)};
   text-decoration: none;
   padding: 8px 12px;
-  border-radius: 6px;
-  transition: color 0.2s, background 0.2s;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  transition: color ${({ theme }) => theme.transitions.fast}, background ${({ theme }) => theme.transitions.fast};
 
   &:hover {
     color: ${({ theme }) => theme.colors.text.primary};
-    background: ${({ theme }) => `${theme.colors.text.primary}10`};
+    background: ${({ theme }) => theme.colors.background.tertiary};
   }
 `;
 
 export const NavLink = styled(Link)<{ $active?: boolean }>`
-  font-size: 13px;
-  font-weight: 500;
-  color: ${({ $active, theme }) => ($active ? (theme.colors.primary[400] || "#60a5fa") : (theme.colors.text.secondary || "rgba(255,255,255,0.65)"))};
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ $active, theme }) => ($active ? theme.colors.primary[400] : theme.colors.text.secondary)};
   text-decoration: none;
   padding: 4px 10px;
-  border-radius: 6px;
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  transition: color 0.2s, background 0.2s;
+  transition: color ${({ theme }) => theme.transitions.fast}, background ${({ theme }) => theme.transitions.fast};
   &:hover { 
-    color: ${({ theme }) => theme.colors.text.primary || '#fff'}; 
-    background: ${({ theme }) => `${theme.colors.text.primary}10` || 'rgba(255,255,255,0.06)'}; 
+    color: ${({ theme }) => theme.colors.text.primary}; 
+    background: ${({ theme }) => theme.colors.background.tertiary}; 
   }
 `;
 
 export const LogoLink = styled(Link)`
-  font-size: 16px;
-  font-weight: 700;
-  color: white;
+  font-size: ${({ theme }) => theme.typography.fontSize.md};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.text.inverse};
   text-decoration: none;
   margin-right: auto;
   letter-spacing: 0.5px;
-  background: ${({ theme }) => theme.gradients?.brand || 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%)'};
+  background: ${({ theme }) => theme.gradients.brand};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 `;
 
 export const MainContent = styled.main`
-  padding-top: 48px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 56px;
   position: relative;
   z-index: 1;
 `;
 
-// Wrappers locales para eliminar estilos en línea
+export const InnerContentContainer = styled(Container)`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
 export const AccessBtnWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: ${({ theme }) => theme.spacing.xs};
 `;
 
 export const MobileActionsWrapper = styled.div`
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: ${({ theme }) => theme.spacing.md};
 `;
 
 export const MobileUserRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: ${({ theme }) => theme.spacing.xs};
 `;
 
 export const MobileHeaderActions = styled.div`
   display: none;
   align-items: center;
-  gap: 8px;
+  gap: ${({ theme }) => theme.spacing.xs};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints?.md || '768px'}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: flex;
   }
 `;
@@ -266,8 +291,8 @@ export const MobileHeaderActions = styled.div`
 export const PreferencesSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding-top: 12px;
+  gap: ${({ theme }) => theme.spacing.xs};
+  padding-top: ${({ theme }) => theme.spacing.xs};
   border-top: 1px solid ${({ theme }) => theme.colors.border.light};
 `;
 
@@ -275,8 +300,8 @@ export const PreferenceRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  font-size: 13px;
+  gap: ${({ theme }) => theme.spacing.xs};
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
   color: ${({ theme }) => theme.colors.text.secondary};
 `;
 

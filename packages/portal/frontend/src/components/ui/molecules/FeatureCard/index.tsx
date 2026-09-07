@@ -1,9 +1,19 @@
-// frontend/src/components/ui/FeatureCard.tsx
 import React from "react";
-import Card from '@design-sys/atoms/Card';
 import Button from '@design-sys/atoms/Button';
 import { useAccessibilityPreferences } from "../../../../hooks/accessibility/useAccessibilityPreferences";
-import { useThemeColors } from "../../../../hooks/useThemeColors";
+import {
+  StyledCard,
+  CardHeader,
+  IconWrapper,
+  CardTitle,
+  CardDescription,
+  FeaturesContainer,
+  FeaturesTitle,
+  FeaturesList,
+  FeatureItem,
+  CheckIcon,
+  ButtonWrapper,
+} from "./FeatureCard.styles";
 
 interface FeatureCardProps {
   title: string;
@@ -26,122 +36,51 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   id,
 }) => {
   const { preferences } = useAccessibilityPreferences();
-  const colors = useThemeColors();
   const largeText = preferences?.largeText || false;
 
   const finalId = id ? `feature-card-${id}` : undefined;
 
   return (
-    <Card
+    <StyledCard
       id={finalId}
       variant={variant === "highlighted" ? "elevated" : "default"}
       size="medium"
       interactive={false}
       className="feature-card"
-      style={{
-        backgroundColor:
-          variant === "highlighted" ? colors.background.secondary : undefined,
-        border:
-          variant === "highlighted"
-            ? `2px solid ${colors.primary[500]}`
-            : undefined,
-      }}
+      $variant={variant}
     >
-      <div
-        style={{
-          textAlign: "center",
-          marginBottom: "20px",
-        }}
-      >
-        <div
-          style={{
-            fontSize: largeText ? "48px" : "40px",
-            marginBottom: "16px",
-            color:
-              variant === "highlighted"
-                ? colors.primary[500]
-                : colors.text.secondary,
-          }}
-        >
+      <CardHeader>
+        <IconWrapper $variant={variant} $largeText={largeText}>
           {icon}
-        </div>
+        </IconWrapper>
 
-        <h3
-          style={{
-            fontSize: largeText ? "20px" : "18px",
-            fontWeight: 600,
-            margin: "0 0 8px 0",
-            color: colors.text.primary,
-            lineHeight: 1.3,
-          }}
-        >
+        <CardTitle $largeText={largeText}>
           {title}
-        </h3>
+        </CardTitle>
 
-        <p
-          style={{
-            fontSize: largeText ? "16px" : "14px",
-            color: colors.text.secondary,
-            lineHeight: 1.5,
-            margin: 0,
-          }}
-        >
+        <CardDescription $largeText={largeText}>
           {description}
-        </p>
-      </div>
+        </CardDescription>
+      </CardHeader>
 
-      <div
-        style={{
-          marginBottom: "20px",
-        }}
-      >
-        <h4
-          style={{
-            fontSize: largeText ? "16px" : "14px",
-            fontWeight: 600,
-            margin: "0 0 12px 0",
-            color: colors.text.primary,
-          }}
-        >
+      <FeaturesContainer>
+        <FeaturesTitle $largeText={largeText}>
           Características:
-        </h4>
-        <ul
-          style={{
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-          }}
-        >
+        </FeaturesTitle>
+        <FeaturesList>
           {features.map((feature, index) => (
-            <li
-              key={index}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                marginBottom: "8px",
-                fontSize: largeText ? "14px" : "12px",
-                color: colors.text.secondary,
-              }}
-            >
-              <span
-                style={{
-                  color:
-                    variant === "highlighted"
-                      ? colors.primary[500]
-                      : colors.success[500],
-                }}
-              >
+            <FeatureItem key={index} $largeText={largeText}>
+              <CheckIcon $variant={variant}>
                 ✓
-              </span>
+              </CheckIcon>
               {feature}
-            </li>
+            </FeatureItem>
           ))}
-        </ul>
-      </div>
+        </FeaturesList>
+      </FeaturesContainer>
 
       {onLearnMore && (
-        <div style={{ textAlign: "center" }}>
+        <ButtonWrapper>
           <Button
             variant={variant === "highlighted" ? "primary" : "secondary"}
             size="md"
@@ -150,9 +89,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           >
             Saber más
           </Button>
-        </div>
+        </ButtonWrapper>
       )}
-    </Card>
+    </StyledCard>
   );
 };
 
