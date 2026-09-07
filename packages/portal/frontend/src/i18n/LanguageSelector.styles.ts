@@ -13,12 +13,10 @@ export const TriggerButton = styled.button<{ $fullWidth?: boolean }>`
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing.xs};
   width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
-  min-width: 180px;
+  min-width: 160px;
   padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
-  background: ${({ theme }) => theme.effects.glassBackground};
-  backdrop-filter: blur(${({ theme }) => theme.effects.blur.subtle});
-  -webkit-backdrop-filter: blur(${({ theme }) => theme.effects.blur.subtle});
-  border: 1px solid ${({ theme }) => theme.effects.glassBorder};
+  background: ${({ theme }) => theme.colors.background.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   color: ${({ theme }) => theme.colors.text.primary};
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
@@ -28,13 +26,13 @@ export const TriggerButton = styled.button<{ $fullWidth?: boolean }>`
 
   &:hover {
     background: ${({ theme }) => theme.colors.background.secondary};
-    border-color: ${({ theme }) => theme.colors.border.normal};
+    border-color: ${({ theme }) => theme.colors.primary[500]};
   }
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.primary[500]};
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.highlight.glow};
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.primary[500]}33;
   }
 `;
 
@@ -55,26 +53,24 @@ export const FlagImg = styled.img`
 
 export const ArrowIcon = styled(ZnIcon)`
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
-  opacity: 0.6;
+  color: ${({ theme }) => theme.colors.text.secondary};
 `;
 
 export const DropdownMenu = styled.div<{ $dropUp?: boolean }>`
   position: absolute;
   ${({ $dropUp }) => ($dropUp ? "bottom: calc(100% + 6px);" : "top: calc(100% + 6px);")}
   right: 0;
-  min-width: 180px;
-  background: ${({ theme }) => theme.colors.background.card};
-  backdrop-filter: blur(${({ theme }) => theme.effects.blur.glass});
-  -webkit-backdrop-filter: blur(${({ theme }) => theme.effects.blur.glass});
-  border: 1px solid ${({ theme }) => theme.effects.glassBorder};
+  min-width: 160px;
+  background: ${({ theme }) => theme.colors.background.surface};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  box-shadow: ${({ theme }) => theme.effects.glassShadow};
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   padding: ${({ theme }) => theme.spacing.xs};
   z-index: ${({ theme }) => theme.zIndex.modal};
   display: flex;
   flex-direction: column;
   gap: 2px;
-  max-height: 140px;
+  max-height: 180px;
   overflow-y: auto;
 
   /* Custom Scrollbar */
@@ -85,11 +81,11 @@ export const DropdownMenu = styled.div<{ $dropUp?: boolean }>`
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.border.light};
+    background: ${({ theme }) => theme.colors.border};
     border-radius: 3px;
   }
   &::-webkit-scrollbar-thumb:hover {
-    background: ${({ theme }) => theme.colors.border.normal};
+    background: ${({ theme }) => theme.colors.primary[500]};
   }
 `;
 
@@ -100,7 +96,7 @@ export const MenuItem = styled.div<{ $active: boolean }>`
   width: 100%;
   padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   background: ${({ theme, $active }) => ($active ? `${theme.colors.primary[500]}26` : 'transparent')};
-  color: ${({ theme, $active }) => ($active ? theme.colors.primary[500] : theme.colors.text.secondary)};
+  color: ${({ theme, $active }) => ($active ? theme.colors.primary[500] : theme.colors.text.primary)};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   font-size: ${({ theme }) => theme.typography.fontSize.xs};
   font-weight: ${({ $active, theme }) => ($active ? theme.typography.fontWeight.semibold : theme.typography.fontWeight.normal)};

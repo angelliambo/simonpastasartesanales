@@ -8,18 +8,18 @@ export const ModalHeader = styled.div`
 
 export const ModalTitle = styled(Title)`
   margin: 0 !important;
-  color: ${props => props.theme.colors.text.primary} !important;
+  color: ${({ theme }) => theme.colors.text.primary} !important;
 `;
 
 export const ModalSubtitle = styled(Text)`
-  font-size: ${props => props.theme.typography.fontSize.sm};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
 `;
 
 export const StepsContainer = styled.div`
-  padding: ${props => props.theme.spacing.lg} 0;
+  padding: ${({ theme }) => theme.spacing.lg} 0;
 `;
 
 export const ButtonContainer = styled.div`
-  margin-top: ${props => props.theme.spacing.lg};
+  margin-top: ${({ theme }) => theme.spacing.lg};
   text-align: center;
 `;

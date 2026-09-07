@@ -7,14 +7,14 @@ export const Container = styled.div`
   justify-content: center;
   min-height: 70vh;
   text-align: center;
-  padding: ${props => props.theme.spacing.xl} ${props => props.theme.spacing.lg};
+  padding: ${({ theme }) => `${theme.spacing.xl} ${theme.spacing.lg}`};
 `;
 
 export const ErrorCode = styled.h1`
   font-size: 96px;
-  font-weight: ${props => props.theme.typography.fontWeight.bold};
-  margin: 0 0 ${props => props.theme.spacing.xs};
-  background: linear-gradient(135deg, ${props => props.theme.colors.primary[400]}, ${props => props.theme.colors.primary[600]});
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  margin: 0 0 ${({ theme }) => theme.spacing.xs};
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary[400]}, ${({ theme }) => theme.colors.primary[600]});
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -22,30 +22,30 @@ export const ErrorCode = styled.h1`
 `;
 
 export const Title = styled.h2`
-  font-size: ${props => props.theme.typography.fontSize.xl};
-  font-weight: ${props => props.theme.typography.fontWeight.bold};
-  color: ${props => props.theme.colors.text.primary};
-  margin: 0 0 ${props => props.theme.spacing.xs};
+  font-size: ${({ theme }) => theme.typography.fontSize.xl};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  color: ${({ theme }) => theme.colors.text.primary};
+  margin: 0 0 ${({ theme }) => theme.spacing.xs};
 `;
 
 export const Description = styled.p`
-  font-size: ${props => props.theme.typography.fontSize.md};
-  color: ${props => props.theme.colors.text.secondary};
-  margin: 0 0 ${props => props.theme.spacing.xl};
+  font-size: ${({ theme }) => theme.typography.fontSize.md};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  margin: 0 0 ${({ theme }) => theme.spacing.xl};
   max-width: 380px;
   line-height: 1.6;
 `;
 
 export const StyledButton = styled.button`
-  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.xl};
+  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.xl}`};
   border: none;
-  border-radius: ${props => props.theme.borderRadius.md};
-  background: ${props => props.theme.colors.primary[500]};
-  color: ${props => props.theme.colors.text.inverse};
-  font-size: ${props => props.theme.typography.fontSize.md};
-  font-weight: ${props => props.theme.typography.fontWeight.semibold};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  background: ${({ theme }) => theme.colors.primary[500]};
+  color: ${({ theme }) => theme.colors.text.inverse};
+  font-size: ${({ theme }) => theme.typography.fontSize.md};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   cursor: pointer;
-  transition: opacity ${props => props.theme.transitions.fast};
+  transition: opacity ${({ theme }) => theme.transitions.fast};
 
   &:hover {
     opacity: 0.9;
