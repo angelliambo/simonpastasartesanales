@@ -1,5 +1,4 @@
 import React from "react";
-import Tooltip from "@design-sys/atoms/Tooltip";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import { SunOutlined, MoonOutlined } from "@ant-design/icons";
 import { useTheme } from "../../styles/ThemeProvider";
@@ -57,7 +56,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       type="button"
     >
       <ZnIcon icon={isDark ? SunOutlined : MoonOutlined} />
-      {showLabel && <ModeLabel style={{ marginLeft: 6 }}>{isDark ? "Oscuro" : "Claro"}</ModeLabel>}
+      {showLabel && <ModeLabel $hasMarginLeft>{isDark ? "Oscuro" : "Claro"}</ModeLabel>}
     </IconButton>
   );
 };

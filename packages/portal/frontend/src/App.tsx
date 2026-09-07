@@ -4,11 +4,7 @@ import OfflineIndicator from "./components/OfflineIndicator";
 import { AppProviders } from "./providers/AppProviders";
 import AppRoutes from "./routes";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { styled } from "styled-components";
-
-const AppContainer = styled.div`
-  width: 100%;
-`;
+import { AppContainer } from "./App.styles";
 
 const App = memo(() => {
   return (

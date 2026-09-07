@@ -1,85 +1,36 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import Space from '@design-sys/atoms/Space';
 import Tooltip from '@design-sys/atoms/Tooltip';
 import { DisconnectOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import { ZnIcon } from "@shared/design-sys/atoms/ZnIcon";
 import { useOffline } from "../hooks/useOffline";
-import Text from '@design-sys/atoms/Text';
-
-interface OfflineIndicatorProps {
-  showDetails?: boolean;
-  position?: "top" | "bottom";
-  style?: React.CSSProperties;
-}
-
-const IndicatorContainer = styled.div<{
-  $isVisible: boolean;
-  $isOffline: boolean;
-  $showSyncMessage: boolean;
-  $position: "top" | "bottom";
-}>`
-  position: fixed;
-  left: 50%;
-  z-index: 1000; // Below navbar (1100) but above other content
-  padding: 6px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-  box-shadow: ${({ theme }) => theme?.shadows?.medium || "0 4px 6px rgba(0, 0, 0, 0.1)"};
-  transition: all 0.3s ease-in-out;
-  opacity: ${({ $isVisible, $showSyncMessage }) => ($isVisible || $showSyncMessage ? 1 : 0)};
-  transform: ${({ $isVisible, $showSyncMessage }) =>
-    $isVisible || $showSyncMessage
-      ? "translateX(-50%) translateY(0)"
-      : "translateX(-50%) translateY(-20px)"};
-  
-  background: ${({ $isOffline, $showSyncMessage, theme }) =>
-    $isOffline
-      ? theme?.colors?.error?.[500] || "#ef4444"
-      : $showSyncMessage
-      ? theme?.colors?.success?.[500] || "#22c55e"
-      : "transparent"};
-  color: white;
-  top: ${({ $position }) => ($position === "top" ? "80px" : "auto")};
-  bottom: ${({ $position }) => ($position === "bottom" ? "20px" : "auto")};
-`;
-
-const WhiteText = styled(Text)`
-  color: white;
-`;
+import { OfflineIndicatorProps } from "./OfflineIndicator.types";
+import { IndicatorContainer, WhiteText } from "./OfflineIndicator.styles";
 
 const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
   showDetails = false,
   position = "top",
-  style,
 }) => {
   const { isOnline, isOffline } = useOffline();
   const [isVisible, setIsVisible] = useState(false);
   const [showSyncMessage, setShowSyncMessage] = useState(false);
   const [hasShownInitialMessage, setHasShownInitialMessage] = useState(false);
 
-  // Solo mostrar cuando esté OFFLINE - ocultar completamente cuando esté ONLINE
   useEffect(() => {
     if (isOffline) {
       setIsVisible(true);
       setHasShownInitialMessage(false);
-      // Marcar que la app estuvo offline
       localStorage.setItem("app-went-offline", "true");
     } else if (isOnline) {
-      // Cuando vuelve ONLINE, ocultar inmediatamente
       setIsVisible(false);
       setShowSyncMessage(false);
 
-      // Solo mostrar mensaje de sincronización si realmente se restauró la conexión
       const wasOffline = localStorage.getItem("app-went-offline");
       if (wasOffline && !hasShownInitialMessage) {
         setShowSyncMessage(true);
         setHasShownInitialMessage(true);
-        // Limpiar el flag de offline
         localStorage.removeItem("app-went-offline");
 
-        // Ocultar el mensaje de sincronización después de 2 segundos
         setTimeout(() => {
           setShowSyncMessage(false);
         }, 2000);
@@ -131,7 +82,6 @@ const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
         $isOffline={isOffline}
         $showSyncMessage={showSyncMessage}
         $position={position}
-        style={style}
       >
         {getContent()}
       </IndicatorContainer>
