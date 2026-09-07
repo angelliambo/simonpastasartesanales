@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Container } from '@design-sys/atoms/Container';
 import AppFooter from "../AppFooter";
 import FloatingWhatsAppCTA from "../FloatingWhatsAppCTA";
 import { LanguageSelector } from "../../i18n/LanguageSelector";
@@ -22,6 +21,7 @@ import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { SUPPORTED_LOCALES } from "../../i18n";
 import { usePageTracking } from "../../hooks/usePageTracking";
 import {
+  LayoutRoot,
   TopBar,
   AccessBtn,
   UserBadge,
@@ -38,6 +38,7 @@ import {
   NavLink,
   LogoLink,
   MainContent,
+  InnerContentContainer,
   AccessBtnWrapper,
   MobileActionsWrapper,
   MobileUserRow,
@@ -54,9 +55,20 @@ const Layout: React.FC = React.memo(() => {
   const [showRegister, setShowRegister] = useState<false | "email" | "code">(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
 
   return (
-    <Container style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <LayoutRoot>
       <TopBar>
         <LogoLink to="/">
           {BRAND_CONFIG.siteName}
@@ -202,14 +214,14 @@ const Layout: React.FC = React.memo(() => {
       {showRegister && <RegisterModal onClose={() => setShowRegister(false)} initialStep={showRegister} />}
 
       <MainContent>
-        <Container maxWidth="full" padding="none">
+        <InnerContentContainer maxWidth="full" padding="none">
           <Outlet />
-        </Container>
+        </InnerContentContainer>
       </MainContent>
 
       <AppFooter />
       <FloatingWhatsAppCTA />
-    </Container>
+    </LayoutRoot>
   );
 });
 

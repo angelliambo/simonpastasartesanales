@@ -81,6 +81,14 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
     }
   }, []);
 
+  const finishTour = useCallback(() => {
+    setIsPlaying(false);
+    isPlayingRef.current = false;
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, []);
+
   const playStepAudio = useCallback(
     (index: number) => {
       stopAudio();
@@ -113,7 +121,7 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
               }
             }, 800);
           } else {
-            setIsPlaying(false);
+            finishTour();
           }
         };
 
@@ -128,7 +136,7 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
               }
             }, 8000);
           } else {
-            setIsPlaying(false);
+            finishTour();
           }
         };
 
@@ -143,11 +151,11 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
             }
           }, 7000);
         } else {
-          setIsPlaying(false);
+          finishTour();
         }
       }
     },
-    [isMuted, locale, scrollToTarget, stopAudio, t]
+    [finishTour, isMuted, locale, scrollToTarget, stopAudio, t]
   );
 
   const handleStartTour = useCallback(() => {
@@ -215,6 +223,9 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
     setIsPlaying(false);
     isPlayingRef.current = false;
     setIsOpen(false);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }, [stopAudio]);
 
   useEffect(() => {
