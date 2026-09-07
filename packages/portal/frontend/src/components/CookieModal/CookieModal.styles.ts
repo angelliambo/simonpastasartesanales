@@ -18,12 +18,12 @@ export const Overlay = styled.div<{ $isOpen: boolean }>`
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  padding: ${props => props.theme.spacing.md};
-  transition: opacity ${props => props.theme.transitions.fast}, visibility ${props => props.theme.transitions.fast};
+  padding: ${({ theme }) => theme?.spacing?.md};
+  transition: opacity ${({ theme }) => theme?.transitions?.fast}, visibility ${({ theme }) => theme?.transitions?.fast};
   pointer-events: ${({ $isOpen }) => ($isOpen ? 'auto' : 'none')};
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: ${props => props.theme.spacing.sm};
+  @media (max-width: ${({ theme }) => theme?.breakpoints?.md}) {
+    padding: ${({ theme }) => theme?.spacing?.sm};
   }
 `;
 
@@ -33,13 +33,13 @@ export const ModalContainer = styled(Card)<{ $isOpen: boolean }>`
   max-height: 85vh;
   overflow-y: auto;
   position: relative;
-  border: 2px solid ${props => props.theme.colors.primary[500]};
+  border: 2px solid ${({ theme }) => theme?.colors?.primary?.[500]};
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   transform: ${({ $isOpen }) => ($isOpen ? 'translateY(0)' : 'translateY(20px)')};
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
-  transition: transform ${props => props.theme.transitions.fast}, opacity ${props => props.theme.transitions.fast};
+  transition: transform ${({ theme }) => theme?.transitions?.fast}, opacity ${({ theme }) => theme?.transitions?.fast};
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
+  @media (max-width: ${({ theme }) => theme?.breakpoints?.md}) {
     width: 90%;
     max-width: 100%;
     max-height: 90vh;
@@ -49,14 +49,14 @@ export const ModalContainer = styled(Card)<{ $isOpen: boolean }>`
 export const ModalHeader = styled.div`
   display: flex;
   align-items: center;
-  gap: ${props => props.theme.spacing.md};
-  padding: ${props => props.theme.spacing.lg};
-  border-bottom: 2px solid ${props => props.theme.colors.border};
-  background: ${props => props.theme.colors.background.secondary};
+  gap: ${({ theme }) => theme?.spacing?.md};
+  padding: ${({ theme }) => theme?.spacing?.lg};
+  border-bottom: 2px solid ${({ theme }) => theme?.colors?.border?.light};
+  background: ${({ theme }) => theme?.colors?.background?.secondary};
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.sm};
-    gap: ${props => props.theme.spacing.sm};
+  @media (max-width: ${({ theme }) => theme?.breakpoints?.md}) {
+    padding: ${({ theme }) => `${theme?.spacing?.md} ${theme?.spacing?.sm}`};
+    gap: ${({ theme }) => theme?.spacing?.sm};
   }
 `;
 
@@ -64,102 +64,104 @@ export const IconContainer = styled.div`
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: ${props => props.theme.colors.primary[500]};
+  background: ${({ theme }) => theme?.colors?.primary?.[500]};
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: ${props => props.theme.colors.text.inverse};
-  font-size: ${props => props.theme.typography.fontSize.xl};
+  color: ${({ theme }) => theme?.colors?.text?.inverse};
+  font-size: ${({ theme }) => theme?.typography?.fontSize?.xl};
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
+  @media (max-width: ${({ theme }) => theme?.breakpoints?.md}) {
     width: 40px;
     height: 40px;
-    font-size: ${props => props.theme.typography.fontSize.lg};
+    font-size: ${({ theme }) => theme?.typography?.fontSize?.lg};
   }
 `;
 
 export const ModalBody = styled.div<{ $isMobile?: boolean }>`
-  padding: ${({ $isMobile, theme }) => ($isMobile ? theme.spacing.md : theme.spacing.xl)};
+  padding: ${({ $isMobile, theme }) => ($isMobile ? theme?.spacing?.md : theme?.spacing?.xl)};
   line-height: 1.8;
 `;
 
 export const ModalFooter = styled.div<{ $isMobile?: boolean }>`
   display: flex;
-  gap: ${({ $isMobile, theme }) => ($isMobile ? theme.spacing.sm : theme.spacing.md)};
-  padding: ${({ $isMobile, theme }) => ($isMobile ? theme.spacing.md : theme.spacing.lg)};
-  border-top: 2px solid ${props => props.theme.colors.border};
-  background: ${props => props.theme.colors.background.secondary};
+  gap: ${({ $isMobile, theme }) => ($isMobile ? theme?.spacing?.sm : theme?.spacing?.md)};
+  padding: ${({ $isMobile, theme }) => ($isMobile ? theme?.spacing?.md : theme?.spacing?.lg)};
+  border-top: 2px solid ${({ theme }) => theme?.colors?.border?.light};
+  background: ${({ theme }) => theme?.colors?.background?.secondary};
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
+  @media (max-width: ${({ theme }) => theme?.breakpoints?.md}) {
     flex-direction: column;
-    gap: ${props => props.theme.spacing.sm};
+    gap: ${({ theme }) => theme?.spacing?.sm};
   }
 `;
 
 export const InfoBox = styled.div`
-  background: ${props => props.theme.colors.background.surface};
-  border-left: 4px solid ${props => props.theme.colors.primary[500]};
-  padding: ${props => props.theme.spacing.md};
-  border-radius: ${props => props.theme.borderRadius.md};
-  margin: ${props => props.theme.spacing.md} 0;
+  background: ${({ theme }) => theme?.colors?.background?.surface};
+  border-left: 4px solid ${({ theme }) => theme?.colors?.primary?.[500]};
+  padding: ${({ theme }) => theme?.spacing?.md};
+  border-radius: ${({ theme }) => theme?.borderRadius?.md};
+  margin: ${({ theme }) => theme?.spacing?.md} 0;
 
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: ${props => props.theme.spacing.sm};
-    margin: ${props => props.theme.spacing.sm} 0;
+  @media (max-width: ${({ theme }) => theme?.breakpoints?.md}) {
+    padding: ${({ theme }) => theme?.spacing?.sm};
+    margin: ${({ theme }) => theme?.spacing?.sm} 0;
   }
 `;
 
 export const LinkStyled = styled(Link)`
-  color: ${props => props.theme.colors.primary[500]};
+  color: ${({ theme }) => theme?.colors?.primary?.[500]};
   text-decoration: underline;
-  font-weight: ${props => props.theme.typography.fontWeight.medium};
+  font-weight: ${({ theme }) => theme?.typography?.fontWeight?.medium};
 
   &:hover {
-    color: ${props => props.theme.colors.primary[600]};
+    color: ${({ theme }) => theme?.colors?.primary?.[600]};
   }
 `;
 
 export const TitleStyled = styled(Title)<{ $isMobile?: boolean }>`
-  margin: 0 !important;
-  color: ${props => props.theme.colors.text.primary} !important;
-  font-size: ${({ $isMobile, theme }) => ($isMobile ? theme.typography.fontSize.lg : theme.typography.fontSize.xl)} !important;
+  && {
+    margin: 0;
+    color: ${({ theme }) => theme?.colors?.text?.primary};
+    font-size: ${({ $isMobile, theme }) => ($isMobile ? theme?.typography?.fontSize?.lg : theme?.typography?.fontSize?.xl)};
+  }
 `;
 
 export const BodyTextPrimary = styled(Text)<{ $isMobile?: boolean }>`
-  font-size: ${({ $isMobile, theme }) => ($isMobile ? theme.typography.fontSize.sm : theme.typography.fontSize.md)};
-  margin-bottom: ${props => props.theme.spacing.md};
-  color: ${props => props.theme.colors.text.primary};
+  font-size: ${({ $isMobile, theme }) => ($isMobile ? theme?.typography?.fontSize?.sm : theme?.typography?.fontSize?.md)};
+  margin-bottom: ${({ theme }) => theme?.spacing?.md};
+  color: ${({ theme }) => theme?.colors?.text?.primary};
 `;
 
 export const BodyTextSecondary = styled(Text)<{ $isMobile?: boolean }>`
-  font-size: ${({ $isMobile, theme }) => ($isMobile ? theme.typography.fontSize.xs : theme.typography.fontSize.sm)};
-  margin-bottom: ${props => props.theme.spacing.md};
-  color: ${props => props.theme.colors.text.secondary};
+  font-size: ${({ $isMobile, theme }) => ($isMobile ? theme?.typography?.fontSize?.xs : theme?.typography?.fontSize?.sm)};
+  margin-bottom: ${({ theme }) => theme?.spacing?.md};
+  color: ${({ theme }) => theme?.colors?.text?.secondary};
 `;
 
 export const StyledList = styled.ul<{ $isMobile?: boolean }>`
-  margin-left: ${props => props.theme.spacing.md};
-  margin-bottom: ${props => props.theme.spacing.md};
-  color: ${props => props.theme.colors.text.secondary};
-  font-size: ${({ $isMobile, theme }) => ($isMobile ? theme.typography.fontSize.xs : theme.typography.fontSize.sm)};
+  margin-left: ${({ theme }) => theme?.spacing?.md};
+  margin-bottom: ${({ theme }) => theme?.spacing?.md};
+  color: ${({ theme }) => theme?.colors?.text?.secondary};
+  font-size: ${({ $isMobile, theme }) => ($isMobile ? theme?.typography?.fontSize?.xs : theme?.typography?.fontSize?.sm)};
   line-height: 1.8;
 `;
 
 export const ListItem = styled.li`
-  margin-bottom: ${props => props.theme.spacing.xs};
+  margin-bottom: ${({ theme }) => theme?.spacing?.xs};
 `;
 
 export const InfoText = styled(Text)<{ $isMobile?: boolean }>`
-  font-size: ${({ $isMobile, theme }) => ($isMobile ? theme.typography.fontSize.xs : theme.typography.fontSize.sm)};
-  color: ${props => props.theme.colors.text.secondary};
+  font-size: ${({ $isMobile, theme }) => ($isMobile ? theme?.typography?.fontSize?.xs : theme?.typography?.fontSize?.sm)};
+  color: ${({ theme }) => theme?.colors?.text?.secondary};
   margin: 0;
 `;
 
 export const FooterText = styled(Text)<{ $isMobile?: boolean }>`
-  font-size: ${({ $isMobile, theme }) => ($isMobile ? theme.typography.fontSize.xs : theme.typography.fontSize.sm)};
-  color: ${props => props.theme.colors.text.tertiary};
-  margin-top: ${props => props.theme.spacing.md};
+  font-size: ${({ $isMobile, theme }) => ($isMobile ? theme?.typography?.fontSize?.xs : theme?.typography?.fontSize?.sm)};
+  color: ${({ theme }) => theme?.colors?.text?.tertiary};
+  margin-top: ${({ theme }) => theme?.spacing?.md};
 `;
 
 export const FooterButton = styled(Button)<{ $isMobile?: boolean }>`

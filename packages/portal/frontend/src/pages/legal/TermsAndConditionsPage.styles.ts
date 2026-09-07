@@ -1,25 +1,24 @@
 import styled from 'styled-components';
-import { Typography } from 'antd';
-
-const { Title, Paragraph, Text } = Typography;
+import Title from '@design-sys/atoms/Title';
+import Text from '@design-sys/atoms/Text';
 
 export const PageWrapper = styled.div`
   min-height: 100vh;
-  background: ${props => props.theme.colors.background.primary};
+  background: ${({ theme }) => theme?.colors?.background?.primary};
 `;
 
 export const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
-  padding: ${props => props.theme.spacing.xxl} ${props => props.theme.spacing.lg};
-  color: ${props => props.theme.colors.text.primary};
+  padding: ${({ theme }) => `${theme?.spacing?.xxl} ${theme?.spacing?.lg}`};
+  color: ${({ theme }) => theme?.colors?.text?.primary};
   line-height: 1.8;
 `;
 
 export const Section = styled.div`
-  margin-bottom: ${props => props.theme.spacing.xl};
-  padding-bottom: ${props => props.theme.spacing.lg};
-  border-bottom: 1px solid ${props => props.theme.colors.border};
+  margin-bottom: ${({ theme }) => theme?.spacing?.xl};
+  padding-bottom: ${({ theme }) => theme?.spacing?.lg};
+  border-bottom: 1px solid ${({ theme }) => theme?.colors?.border?.light};
   &:last-child {
     border-bottom: none;
     margin-bottom: 0;
@@ -28,71 +27,83 @@ export const Section = styled.div`
 `;
 
 export const List = styled.ul`
-  padding-left: ${props => props.theme.spacing.lg};
-  color: ${props => props.theme.colors.text.secondary};
+  padding-left: ${({ theme }) => theme?.spacing?.lg};
+  color: ${({ theme }) => theme?.colors?.text?.secondary};
 `;
 
 export const Item = styled.li`
-  margin-bottom: ${props => props.theme.spacing.xs};
+  margin-bottom: ${({ theme }) => theme?.spacing?.xs};
 `;
 
 export const WarningBox = styled.div`
-  background: ${props => props.theme.colors.warning.light};
-  border: 1px solid ${props => props.theme.colors.warning.main};
-  border-radius: ${props => props.theme.borderRadius.md};
-  padding: ${props => props.theme.spacing.md};
-  margin: ${props => props.theme.spacing.xl} 0;
+  background: ${({ theme }) => theme?.colors?.warning?.[50]};
+  border: 1px solid ${({ theme }) => theme?.colors?.warning?.[500]};
+  border-radius: ${({ theme }) => theme?.borderRadius?.md};
+  padding: ${({ theme }) => theme?.spacing?.md};
+  margin: ${({ theme }) => theme?.spacing?.xl} 0;
 `;
 
 export const StyledMainTitle = styled(Title)`
-  color: ${props => props.theme.colors.text.primary} !important;
-  margin-bottom: ${props => props.theme.spacing.xs} !important;
+  && {
+    color: ${({ theme }) => theme?.colors?.text?.primary};
+    margin-bottom: ${({ theme }) => theme?.spacing?.xs};
+  }
 `;
 
-export const StyledSubtitle = styled(Paragraph)`
-  color: ${props => props.theme.colors.text.tertiary} !important;
-  font-size: ${props => props.theme.typography.fontSize.sm} !important;
-  margin-bottom: ${props => props.theme.spacing.xl} !important;
+export const StyledSubtitle = styled(Text)`
+  display: block;
+  color: ${({ theme }) => theme?.colors?.text?.tertiary};
+  font-size: ${({ theme }) => theme?.typography?.fontSize?.sm};
+  margin-bottom: ${({ theme }) => theme?.spacing?.xl};
 `;
 
 export const StyledSectionTitle = styled(Title)`
-  color: ${props => props.theme.colors.text.primary} !important;
+  && {
+    color: ${({ theme }) => theme?.colors?.text?.primary};
+  }
 `;
 
-export const StyledBodyParagraph = styled(Paragraph)`
-  color: ${props => props.theme.colors.text.secondary} !important;
+export const StyledBodyParagraph = styled(Text)`
+  display: block;
+  color: ${({ theme }) => theme?.colors?.text?.secondary};
+  margin-bottom: ${({ theme }) => theme?.spacing?.sm};
 `;
 
 export const StyledStrongBlockWithTop = styled(Text)`
-  color: ${props => props.theme.colors.text.primary} !important;
+  color: ${({ theme }) => theme?.colors?.text?.primary};
   display: block;
-  margin-top: ${props => props.theme.spacing.md};
-  margin-bottom: ${props => props.theme.spacing.xs};
+  margin-top: ${({ theme }) => theme?.spacing?.md};
+  margin-bottom: ${({ theme }) => theme?.spacing?.xs};
 `;
 
 export const StyledStrongBlock = styled(Text)`
-  color: ${props => props.theme.colors.text.primary} !important;
+  color: ${({ theme }) => theme?.colors?.text?.primary};
   display: block;
-  margin-bottom: ${props => props.theme.spacing.xs};
+  margin-bottom: ${({ theme }) => theme?.spacing?.xs};
 `;
 
 export const StyledWarningTitle = styled(Title)`
-  color: ${props => props.theme.colors.warning.main} !important;
-  margin-bottom: ${props => props.theme.spacing.sm} !important;
+  && {
+    color: ${({ theme }) => theme?.colors?.warning?.[500]};
+    margin-bottom: ${({ theme }) => theme?.spacing?.sm};
+  }
 `;
 
-export const StyledWarningBody = styled(Paragraph)`
-  color: ${props => props.theme.colors.warning.main} !important;
+export const StyledWarningBody = styled(Text)`
+  display: block;
+  color: ${({ theme }) => theme?.colors?.warning?.[500]};
 `;
 
-export const StyledWarningSubtext = styled(Paragraph)`
-  color: ${props => props.theme.colors.warning.main} !important;
+export const StyledWarningSubtext = styled(Text)`
+  display: block;
+  color: ${({ theme }) => theme?.colors?.warning?.[500]};
   opacity: 0.85;
 `;
 
-export const StyledFooterText = styled(Paragraph)`
-  color: ${props => props.theme.colors.text.tertiary} !important;
-  font-size: ${props => props.theme.typography.fontSize.xs} !important;
+export const StyledFooterText = styled(Text)`
+  display: block;
+  color: ${({ theme }) => theme?.colors?.text?.tertiary};
+  font-size: ${({ theme }) => theme?.typography?.fontSize?.xs};
   text-align: center;
-  margin-top: ${props => props.theme.spacing.xl} !important;
+  margin-top: ${({ theme }) => theme?.spacing?.xl};
 `;
