@@ -8,6 +8,7 @@ import { PersonalizationProvider } from '@design-sys/contexts/PersonalizationCon
 import { SnackbarProvider } from '@design-sys/atoms/Snackbar';
 import { I18nProvider } from "../i18n/I18nProvider";
 import { ConfigProvider, theme as antdTheme } from "antd";
+import { QueryProvider } from "./QueryProvider";
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -51,23 +52,25 @@ const AntdConfigBridge: React.FC<{ children: ReactNode }> = ({ children }) => {
 export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
   return (
     <HelmetProvider>
-      <StoreProvider>
-        <I18nProvider>
-          <ResponsiveProvider>
-            <ProgressProvider>
-              <ThemeProvider>
-                <AntdConfigBridge>
-                  <PersonalizationProvider>
-                    <SnackbarProvider>
-                      {children}
-                    </SnackbarProvider>
-                  </PersonalizationProvider>
-                </AntdConfigBridge>
-              </ThemeProvider>
-            </ProgressProvider>
-          </ResponsiveProvider>
-        </I18nProvider>
-      </StoreProvider>
+      <QueryProvider>
+        <StoreProvider>
+          <I18nProvider>
+            <ResponsiveProvider>
+              <ProgressProvider>
+                <ThemeProvider>
+                  <AntdConfigBridge>
+                    <PersonalizationProvider>
+                      <SnackbarProvider>
+                        {children}
+                      </SnackbarProvider>
+                    </PersonalizationProvider>
+                  </AntdConfigBridge>
+                </ThemeProvider>
+              </ProgressProvider>
+            </ResponsiveProvider>
+          </I18nProvider>
+        </StoreProvider>
+      </QueryProvider>
     </HelmetProvider>
   );
 };

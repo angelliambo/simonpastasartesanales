@@ -7,11 +7,9 @@ import accessibilitySlice from "./slices/accessibilitySlice";
 import systemSlice from "./slices/systemSlice";
 import userSlice from "./slices/userSlice";
 import adminSlice from "./slices/adminSlice";
-import { api } from "../services/api/base";
 
 export const store = configureStore({
   reducer: {
-    [api.reducerPath]: api.reducer,
     auth: authSlice,
     ui: uiSlice,
     license: licenseSlice,
@@ -24,7 +22,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(api.middleware),
+    }),
   devTools: process.env.NODE_ENV === "development",
 });
 

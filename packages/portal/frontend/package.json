@@ -1,6 +1,6 @@
 {
   "name": "@factory/frontend",
-  "version": "1.6.2",
+  "version": "1.6.4",
   "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
@@ -8,6 +8,8 @@
     "@factory/shared": "workspace:*",
     "@react-oauth/google": "^0.13.5",
     "@reduxjs/toolkit": "^2.9.0",
+    "@tanstack/react-query": "^5.102.8",
+    "@tanstack/react-router": "^1.170.35",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.14",
@@ -26,6 +28,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@tanstack/react-query-devtools": "^5.102.8",
+    "@tanstack/router-devtools": "^1.167.1",
+    "@tanstack/router-plugin": "^1.168.37",
     "@testing-library/jest-dom": "6.6.3",
     "@types/babel__core": "^7.20.5",
     "@types/body-parser": "^1.19.6",

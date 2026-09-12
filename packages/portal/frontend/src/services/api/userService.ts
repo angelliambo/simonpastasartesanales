@@ -1,32 +1,45 @@
-import { api } from "./base";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import apiClient from "./client";
 
-export const userApi = api.injectEndpoints({
-  endpoints: (builder) => ({
-    getProfile: builder.query({
-      query: () => "/user/profile",
-    }),
-    deleteAccount: builder.mutation({
-      query: ({ email, code }) => ({
-        url: "/user/confirm-deletion",
+export const USER_PROFILE_QUERY_KEY = ["user", "profile"];
+
+export const useGetProfileQuery = (arg?: any, options?: { skip?: boolean }) => {
+  const query = useQuery({
+    queryKey: USER_PROFILE_QUERY_KEY,
+    queryFn: () => apiClient<any>("/user/profile"),
+    enabled: options?.skip !== true,
+  });
+
+  return {
+    ...query,
+    isLoading: query.isLoading || query.isFetching,
+  };
+};
+
+export const useDeleteAccountMutation = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (body: { email: string; code: string }) =>
+      apiClient<{ message?: string }>("/user/confirm-deletion", {
         method: "POST",
-        body: { email, code },
+        body: JSON.stringify(body),
       }),
-    }),
-    requestDeletion: builder.mutation({
-      query: ({ email }) => ({
-        url: "/user/request-deletion",
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: USER_PROFILE_QUERY_KEY });
+    },
+  });
+  const trigger = (args: { email: string; code: string }) => mutation.mutateAsync(args);
+  return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
+};
+
+export const useRequestDeletionMutation = () => {
+  const mutation = useMutation({
+    mutationFn: (body: { email: string }) =>
+      apiClient<{ message?: string }>("/user/request-deletion", {
         method: "POST",
-        body: { email },
+        body: JSON.stringify(body),
       }),
-    }),
-  }),
-  overrideExisting: false,
-});
-
-export const {
-  useGetProfileQuery,
-  useDeleteAccountMutation,
-  useRequestDeletionMutation,
-} = userApi;
-
-export default userApi;
+  });
+  const trigger = (args: { email: string }) => mutation.mutateAsync(args);
+  return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
+};
