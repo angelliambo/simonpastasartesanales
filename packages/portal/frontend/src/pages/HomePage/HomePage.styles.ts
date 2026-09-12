@@ -67,7 +67,7 @@ export const LogoWrapper = styled.div`
     background: radial-gradient(
       circle,
       ${({ theme }) => theme.colors.primary[500] || "rgba(96, 165, 250, 0.55)"} 0%,
-      ${({ theme }) => `${theme.colors.primary[500]}66` || "rgba(96, 165, 250, 0.25)"} 45%,
+      ${({ theme }) => (theme.colors.primary[500] ? `${theme.colors.primary[500]}66` : "rgba(96, 165, 250, 0.25)")} 45%,
       transparent 75%
     );
     filter: blur(32px);
