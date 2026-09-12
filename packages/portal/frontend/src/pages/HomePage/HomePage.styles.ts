@@ -887,7 +887,7 @@ export const MapFallback = styled.div`
   color: ${({ theme }) => theme.colors.text.secondary};
   font-size: 16px;
   
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     aspect-ratio: 4 / 3;
   }
 `;

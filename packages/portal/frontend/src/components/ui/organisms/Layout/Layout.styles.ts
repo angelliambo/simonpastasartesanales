@@ -40,29 +40,26 @@ export const StyledHeader = styled.div`
 `;
 
 export const StyledContent = styled.div<{ style?: React.CSSProperties }>`
-  @media (max-width: 767px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     margin: ${({ theme, style }) => {
-      // Si hay un margin en style inline, respetarlo (para app-layout.tsx)
       if (style?.margin) return style.margin;
       
       const mobileSpacing = theme?.spacing?.mobile;
       const topBottom = mobileSpacing?.xl || "21px";
-      const leftRight = mobileSpacing?.md || "8px"; // Usar md (8px) del sistema mobile
+      const leftRight = mobileSpacing?.md || "8px";
       return `${topBottom} ${leftRight}`;
     }};
     padding: ${({ theme, style }) => {
-      // Si hay un padding en style inline, respetarlo
       if (style?.padding) return style.padding;
       
       const mobileSpacing = theme?.spacing?.mobile;
       return mobileSpacing?.md || "8px";
     }};
-    /* Remover width para evitar overflow - el contenido se ajusta automáticamente */
     max-width: 100%;
     box-sizing: border-box;
   }
   
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     margin: ${({ theme, style }) => {
       // Si hay un margin en style inline, respetarlo
       if (style?.margin) return style.margin;

@@ -488,3 +488,33 @@ export const SkeletonImage = styled(StyledSkeleton)`
   border-radius: ${({ $size }) => getSkeletonDimensions($size).borderRadius}px;
 `;
 
+// =====================================
+// SKELETON CARD & SOCIAL
+// =====================================
+
+export const StyledCardSkeletonWrapper = styled.div<{ $variant?: "card" | "social" }>`
+  border-radius: 16px;
+  background: ${({ theme }) => theme.colors.background.card || theme.colors.background.surface || "rgba(255, 255, 255, 0.05)"};
+  border: 1px solid ${({ theme }) => theme.colors.border?.light || "rgba(255, 255, 255, 0.1)"};
+  padding: ${({ theme }) => theme.spacing.lg || "24px"};
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.md || "16px"};
+  width: 100%;
+  box-sizing: border-box;
+`;
+
+export const SocialHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+export const SocialHeaderText = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+`;
+
+

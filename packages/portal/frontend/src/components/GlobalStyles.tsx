@@ -122,7 +122,7 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
   }
 
   /* Prevenir scroll horizontal en mobile */
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     html, body, #root {
       overflow-x: hidden !important;
       max-width: 100%; /* Usar 100% en lugar de 100vw para evitar overflow */
@@ -131,7 +131,7 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
   }
 
   /* Asegurar que drawer mobile tenga z-index por encima de overlays de desarrollo */
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     /* Ant Design Drawer en mobile */
     .ant-drawer {
       z-index: 1100 !important;
@@ -283,7 +283,7 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
   }
 
   /* Estilos específicos para móvil */
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     .page-container {
       padding: 12px 8px;
       margin-top: 64px; /* Espacio para el header fijo */
@@ -333,7 +333,7 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
 
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     .page-container {
       padding: 8px 6px;
     }

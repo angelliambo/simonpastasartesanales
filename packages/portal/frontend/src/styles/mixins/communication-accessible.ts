@@ -491,7 +491,7 @@ export const NotificationBadge = styled.div<{
           background: ${theme.colors.secondary[700]};
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
           top: 10px;
           right: 10px;
           padding: 10px 14px;

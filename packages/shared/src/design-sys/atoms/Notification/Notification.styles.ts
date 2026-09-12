@@ -355,7 +355,7 @@ export const StyledNotificationWrapper = styled.div<StyledNotificationWrapperPro
         gap: 16px;
       `}
 
-      @media (max-width: 768px) {
+      @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
         left: 16px !important;
         right: 16px !important;
         transform: none !important;
@@ -533,7 +533,7 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
       `}
 
       // Mobile responsive
-      @media (max-width: 768px) {
+      @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
         width: 100%;
         min-width: auto;
         max-width: none;
@@ -904,7 +904,7 @@ export const StyledToastNotification = styled(StyledNotification)`
   max-width: 400px;
   backdrop-filter: blur(8px);
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     min-width: auto;
     max-width: none;
   }

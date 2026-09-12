@@ -77,3 +77,89 @@ export const SnackbarAction = styled.button`
     opacity: 1;
   }
 `;
+
+const getSnackbarTypeStyles = (type: "success" | "error" | "warning" | "info" = "info", theme: any) => {
+  const typeStyles = {
+    success: css`
+      background-color: ${theme.colors.success[50]};
+      color: ${theme.colors.success[700]};
+      border-left: 4px solid ${theme.colors.success[500]};
+    `,
+    error: css`
+      background-color: ${theme.colors.error[50]};
+      color: ${theme.colors.error[700]};
+      border-left: 4px solid ${theme.colors.error[500]};
+    `,
+    warning: css`
+      background-color: ${theme.colors.warning[50]};
+      color: ${theme.colors.warning[700]};
+      border-left: 4px solid ${theme.colors.warning[500]};
+    `,
+    info: css`
+      background-color: ${theme.colors.info[50]};
+      color: ${theme.colors.info[700]};
+      border-left: 4px solid ${theme.colors.info[500]};
+    `,
+  };
+  return typeStyles[type] || typeStyles.info;
+};
+
+export const StyledSnackbar = styled.div<{ $type?: "success" | "error" | "warning" | "info" }>`
+  position: fixed;
+  top: calc(${({ theme }) => theme?.spacing?.lg || "24px"} + 30px);
+  right: ${({ theme }) => theme?.spacing?.lg || "24px"};
+  z-index: 9999;
+  min-width: 300px;
+  max-width: 500px;
+  padding: ${({ theme }) => theme?.spacing?.md || "16px"} ${({ theme }) => theme?.spacing?.lg || "24px"};
+  border-radius: ${({ theme }) => theme?.borderRadius?.md || "8px"};
+  box-shadow: ${({ theme }) => theme?.shadows?.heavy || "0 10px 15px rgba(0, 0, 0, 0.1)"};
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme?.spacing?.md || "16px"};
+  font-family: ${({ theme }) => theme?.typography?.fontFamily?.primary || "sans-serif"};
+  font-weight: ${({ theme }) => theme?.typography?.fontWeight?.medium || 500};
+  font-size: ${({ theme }) => theme?.typography?.fontSize?.sm || "14px"};
+  animation: ${slideIn} 0.3s ease-out;
+
+  ${({ theme, $type }) => getSnackbarTypeStyles($type, theme)}
+
+  .snackbar-icon {
+    font-size: ${({ theme }) => theme.typography.fontSize.lg};
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .snackbar-close {
+    background: none;
+    border: none;
+    font-size: ${({ theme }) => theme.typography.fontSize.lg};
+    cursor: pointer;
+    padding: ${({ theme }) => theme.spacing.xs};
+    margin-left: auto;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+  }
+
+  &.closing {
+    animation: ${slideOut} 0.3s ease-in forwards;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    top: ${({ theme }) => theme.spacing.md};
+    right: ${({ theme }) => theme.spacing.md};
+    left: ${({ theme }) => theme.spacing.md};
+    min-width: auto;
+    max-width: none;
+  }
+`;

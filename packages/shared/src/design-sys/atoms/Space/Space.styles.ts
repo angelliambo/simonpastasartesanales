@@ -219,7 +219,7 @@ export const ToolbarSpace = styled(StyledSpace)`
   padding: ${getSpacingValue("sm")}px ${getSpacingValue("md")}px;
 
   /* Responsive para mobile */
-  @media (max-width: 767px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-direction: column;
     align-items: stretch;
     gap: ${getSpacingValue("sm")}px;
@@ -237,7 +237,7 @@ export const GridSpace = styled(StyledSpace)`
   }
 
   /* Responsive grid */
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     gap: ${getSpacingValue("md")}px;
 
     ${SpaceItem} {
@@ -246,7 +246,7 @@ export const GridSpace = styled(StyledSpace)`
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     gap: ${getSpacingValue("sm")}px;
 
     ${SpaceItem} {

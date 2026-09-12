@@ -40,7 +40,7 @@ export const StyledFormRow = styled.div<FormRowProps>`
   gap: ${({ $gap, theme }: { theme: any; [key: string]: any }) => $gap || theme.spacing.md};
   width: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 1fr;
   }
 `;

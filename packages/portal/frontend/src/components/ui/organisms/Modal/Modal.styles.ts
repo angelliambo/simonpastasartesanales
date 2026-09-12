@@ -44,7 +44,7 @@ export const Overlay = styled.div<{
           ${fadeIn} 0.2s ease-out
         `};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     padding: 0;
     align-items: flex-end;
   }
@@ -70,7 +70,7 @@ export const ModalContainer = styled.div<StyledModalProps>`
           ${slideUp} 0.3s ease-out
         `};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: ${({ $mobileWidth, $width }) =>
       typeof $mobileWidth === "number"
         ? `${$mobileWidth}px`
@@ -104,7 +104,7 @@ export const ModalHeader = styled.div<{
       ? `${(Number(theme.typography?.fontSize?.lg) || 18) * 1.25}px`
       : `${theme.typography?.fontSize?.lg || 18}px`};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     padding: ${({ theme }) => theme.spacing?.md || "16px"}
       ${({ theme }) => theme.spacing?.lg || "20px"};
   }
@@ -154,7 +154,7 @@ export const ModalBody = styled.div<{
       ? `${(Number(theme.typography?.fontSize?.md) || 16) * 1.25}px`
       : `${theme.typography?.fontSize?.md || 16}px`};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     padding: ${({ theme }) => theme.spacing?.lg || "20px"};
     max-height: 50vh;
   }
@@ -171,7 +171,7 @@ export const ModalFooter = styled.div`
     ${({ theme }) => theme.colors?.border?.light || "#e9ecef"};
   flex-shrink: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-direction: column-reverse;
     padding: ${({ theme }) => theme.spacing?.md || "12px"}
       ${({ theme }) => theme.spacing?.lg || "20px"};

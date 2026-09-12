@@ -218,7 +218,7 @@ export const StyledMessageWrapper = styled.div<StyledMessageWrapperProps>`
         gap: 16px;
       `}
 
-      @media (max-width: 768px) {
+      @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
         left: 16px !important;
         right: 16px !important;
         transform: none !important;
@@ -351,7 +351,7 @@ export const StyledMessage = styled.div<StyledMessageProps>`
       `}
 
       // Mobile responsive
-      @media (max-width: 768px) {
+      @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
         font-size: calc(${dimensions.fontSize} * 0.9);
         padding: calc(${dimensions.padding.split(" ")[0]} * 0.8)
           calc(${dimensions.padding.split(" ")[1]} * 0.8);
@@ -529,7 +529,7 @@ export const StyledNotification = styled(StyledMessage)`
   min-width: 320px;
   padding: 16px 24px;
   
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     min-width: auto;
     max-width: none;
   }
@@ -572,7 +572,7 @@ export const StyledToast = styled(StyledMessage)`
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     max-width: calc(100% - 32px); // Usar 100% en lugar de 100vw para evitar overflow
   }
 `;
