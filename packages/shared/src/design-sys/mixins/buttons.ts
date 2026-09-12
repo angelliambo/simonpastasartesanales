@@ -4,15 +4,15 @@ export const buttonBaseMixin = css`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: ${({ theme }) => theme?.spacing?.sm || "8px"};
+  gap: ${({ theme }) => theme.spacing.sm};
   border: none;
-  border-radius: ${({ theme }) => theme?.borderRadius?.md || "8px"};
-  font-family: ${({ theme }) => theme?.typography?.fontFamily?.primary || "sans-serif"};
-  font-weight: ${({ theme }) => theme?.typography?.fontWeight?.medium || 500};
-  font-size: ${({ theme }) => theme?.typography?.fontSize?.sm || "14px"};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
   line-height: 1;
   cursor: pointer;
-  transition: all ${({ theme }) => theme?.transitions?.fast || "0.2s ease"};
+  transition: all ${({ theme }) => theme.transitions.fast};
   text-decoration: none;
 
   &:disabled {

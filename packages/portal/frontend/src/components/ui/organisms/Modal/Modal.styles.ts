@@ -51,11 +51,9 @@ export const Overlay = styled.div<{
 `;
 
 export const ModalContainer = styled.div<StyledModalProps>`
-  background: ${({ theme }) => theme.colors?.background?.card || "#ffffff"};
-  border-radius: ${({ theme }) => theme.borderRadius?.lg || "12px"};
-  box-shadow: ${({ theme }) =>
-    theme.shadows?.heavy ||
-    "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"};
+  background: ${({ theme }) => theme.colors.background.card};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  box-shadow: ${({ theme }) => theme.shadows.heavy};
   display: flex;
   flex-direction: column;
   max-height: 90vh;
@@ -63,7 +61,7 @@ export const ModalContainer = styled.div<StyledModalProps>`
     typeof $width === "number" ? `${$width}px` : $width || "520px"};
   margin: 0 auto;
   overflow: hidden;
-  animation: ${({ accessibility, theme }) =>
+  animation: ${({ accessibility }) =>
     accessibility?.reducedMotion
       ? "none"
       : css`
@@ -83,7 +81,7 @@ export const ModalContainer = styled.div<StyledModalProps>`
 
   border: ${({ theme, accessibility }) =>
     accessibility?.highContrast
-      ? `2px solid ${theme.colors?.border?.contrast || "#000"}`
+      ? `2px solid ${theme.colors.border.contrast}`
       : "none"};
 `;
 
@@ -93,25 +91,22 @@ export const ModalHeader = styled.div<{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${({ theme }) => theme.spacing?.lg || "20px"}
-    ${({ theme }) => theme.spacing?.xl || "24px"};
-  border-bottom: 1px solid
-    ${({ theme }) => theme.colors?.border?.light || "#e9ecef"};
+  padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.xl};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border.light};
   flex-shrink: 0;
   font-weight: 600;
   font-size: ${({ theme, accessibility }) =>
     accessibility?.largeText
-      ? `${(Number(theme.typography?.fontSize?.lg) || 18) * 1.25}px`
-      : `${theme.typography?.fontSize?.lg || 18}px`};
+      ? `${Number(theme.typography.fontSize.lg) * 1.25}px`
+      : `${theme.typography.fontSize.lg}px`};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: ${({ theme }) => theme.spacing?.md || "16px"}
-      ${({ theme }) => theme.spacing?.lg || "20px"};
+    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
   }
 `;
 
 export const ModalTitle = styled.span`
-  color: ${({ theme }) => theme.colors?.text?.primary || "#1a1a1a"};
+  color: ${({ theme }) => theme.colors.text.primary};
   font-size: inherit;
   font-weight: inherit;
 `;
@@ -125,19 +120,17 @@ export const ModalCloseButton = styled.button`
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  color: ${({ theme }) => theme.colors?.text?.secondary || "#6c757d"};
+  color: ${({ theme }) => theme.colors.text.secondary};
   transition: color 0.2s ease;
   border-radius: 4px;
 
   &:hover {
-    color: ${({ theme }) => theme.colors?.text?.primary || "#1a1a1a"};
-    background: ${({ theme }) =>
-      theme.colors?.background?.tertiary || "#f8f9fa"};
+    color: ${({ theme }) => theme.colors.text.primary};
+    background: ${({ theme }) => theme.colors.background.tertiary};
   }
 
   &:focus {
-    outline: 2px solid
-      ${({ theme }) => theme.colors?.primary?.[500] || "#007bff"};
+    outline: 2px solid ${({ theme }) => theme.colors.primary[500]};
     outline-offset: 2px;
   }
 `;
@@ -145,17 +138,17 @@ export const ModalCloseButton = styled.button`
 export const ModalBody = styled.div<{
   accessibility?: StyledModalProps["accessibility"];
 }>`
-  padding: ${({ theme }) => theme.spacing?.xl || "24px"};
+  padding: ${({ theme }) => theme.spacing.xl};
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
   font-size: ${({ theme, accessibility }) =>
     accessibility?.largeText
-      ? `${(Number(theme.typography?.fontSize?.md) || 16) * 1.25}px`
-      : `${theme.typography?.fontSize?.md || 16}px`};
+      ? `${Number(theme.typography.fontSize.md) * 1.25}px`
+      : `${theme.typography.fontSize.md}px`};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: ${({ theme }) => theme.spacing?.lg || "20px"};
+    padding: ${({ theme }) => theme.spacing.lg};
     max-height: 50vh;
   }
 `;
@@ -164,17 +157,14 @@ export const ModalFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: ${({ theme }) => theme.spacing?.md || "12px"};
-  padding: ${({ theme }) => theme.spacing?.lg || "16px"}
-    ${({ theme }) => theme.spacing?.xl || "24px"};
-  border-top: 1px solid
-    ${({ theme }) => theme.colors?.border?.light || "#e9ecef"};
+  gap: ${({ theme }) => theme.spacing.md};
+  padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.xl};
+  border-top: 1px solid ${({ theme }) => theme.colors.border.light};
   flex-shrink: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-direction: column-reverse;
-    padding: ${({ theme }) => theme.spacing?.md || "12px"}
-      ${({ theme }) => theme.spacing?.lg || "20px"};
+    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.lg};
 
     button {
       width: 100%;

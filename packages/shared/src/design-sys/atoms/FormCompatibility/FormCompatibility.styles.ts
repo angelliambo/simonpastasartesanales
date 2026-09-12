@@ -33,12 +33,12 @@ export const StyledFormRow = styled.div<FormRowProps>`
 `;
 
 export const StyledLabel = styled.label<LabelProps>`
-  font-family: ${({ theme }) => theme?.typography?.fontFamily?.primary || "sans-serif"};
-  font-weight: ${({ theme }) => theme?.typography?.fontWeight?.medium || 500};
-  font-size: ${({ theme }) => theme?.typography?.fontSize?.sm || "14px"};
-  color: ${({ theme }) => theme?.colors?.text?.primary || "#212529"};
+  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.text.primary};
   display: block;
-  margin-bottom: ${({ theme }) => theme?.spacing?.xs || "4px"};
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
 
   ${({ required, theme }) =>
     required &&

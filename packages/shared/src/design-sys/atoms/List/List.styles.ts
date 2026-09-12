@@ -18,13 +18,13 @@ export const StyledList = styled.ul<{
   margin: 0;
   padding: 0;
   list-style: none;
-  background-color: ${({ theme }) => theme.colors?.background?.card || "#fff"};
-  border-radius: ${({ theme }) => theme.borderRadius?.md || "8px"};
+  background-color: ${({ theme }) => theme.colors.background.card};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
 
   ${({ $bordered, theme }) =>
     $bordered &&
     css`
-      border: 1px solid ${theme.colors?.border?.light || "#e9ecef"};
+      border: 1px solid ${theme.colors.border.light};
     `}
 
   ${({ $size, accessibility }) => {
@@ -41,41 +41,37 @@ export const StyledList = styled.ul<{
   ${({ accessibility }) =>
     accessibility?.highContrast &&
     css`
-      border: 2px solid ${({ theme }) => theme.colors?.border?.normal || "#000"};
+      border: 2px solid ${({ theme }) => theme.colors.border.normal};
     `}
 `;
 
 export const ListHeader = styled.div<{
   accessibility?: ListProps["accessibility"];
 }>`
-  padding: ${({ theme }) => theme.spacing?.md || "16px"} 24px;
-  border-bottom: 1px solid
-    ${({ theme }) => theme.colors?.border?.light || "#e9ecef"};
-  background-color: ${({ theme }) =>
-    theme.colors?.background?.secondary || "#f8f9fa"};
-  font-weight: ${({ theme }) => theme.typography?.fontWeight?.semibold || 600};
+  padding: ${({ theme }) => theme.spacing.md} 24px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border.light};
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 
   ${({ theme, accessibility }) =>
     accessibility?.highContrast &&
     css`
-      border-bottom: 2px solid ${theme.colors?.border?.normal || "#000"};
-      font-weight: ${theme.typography?.fontWeight?.bold || 700};
+      border-bottom: 2px solid ${theme.colors.border.normal};
+      font-weight: ${theme.typography.fontWeight.bold};
     `}
 `;
 
 export const ListFooter = styled.div<{
   accessibility?: ListProps["accessibility"];
 }>`
-  padding: ${({ theme }) => theme.spacing?.md || "16px"} 24px;
-  border-top: 1px solid
-    ${({ theme }) => theme.colors?.border?.light || "#e9ecef"};
-  background-color: ${({ theme }) =>
-    theme.colors?.background?.secondary || "#f8f9fa"};
+  padding: ${({ theme }) => theme.spacing.md} 24px;
+  border-top: 1px solid ${({ theme }) => theme.colors.border.light};
+  background-color: ${({ theme }) => theme.colors.background.secondary};
 
   ${({ theme, accessibility }) =>
     accessibility?.highContrast &&
     css`
-      border-top: 2px solid ${theme.colors?.border?.normal || "#000"};
+      border-top: 2px solid ${theme.colors.border.normal};
     `}
 `;
 
@@ -101,7 +97,7 @@ export const StyledListItem = styled.li<{
   ${({ $split, theme }) =>
     $split &&
     css`
-      border-bottom: 1px solid ${theme.colors?.border?.light || "#e9ecef"};
+      border-bottom: 1px solid ${theme.colors.border.light};
 
       &:last-child {
         border-bottom: none;
@@ -109,10 +105,10 @@ export const StyledListItem = styled.li<{
     `}
 
   &:hover {
-    ${({ $disabled, theme, accessibility }) =>
+    ${({ $disabled, theme }) =>
       !$disabled &&
       css`
-        background-color: ${theme.colors?.background?.secondary || "#f8f9fa"};
+        background-color: ${theme.colors.background.secondary};
       `}
   }
 
@@ -120,7 +116,7 @@ export const StyledListItem = styled.li<{
     accessibility?.highContrast &&
     css`
       border-left: 3px solid
-        ${({ theme }) => theme.colors?.primary?.[500] || "#007bff"};
+        ${({ theme }) => theme.colors.primary[500]};
     `}
 `;
 
@@ -128,13 +124,13 @@ export const ListItemContent = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing?.md || "16px"};
+  gap: ${({ theme }) => theme.spacing.md};
 `;
 
 export const ListItemActions = styled.ul`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing?.sm || "8px"};
+  gap: ${({ theme }) => theme.spacing.sm};
   margin: 0;
   padding: 0;
   list-style: none;
@@ -147,7 +143,7 @@ export const ListItemExtra = styled.div`
 export const ListItemMeta = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: ${({ theme }) => theme.spacing?.md || "16px"};
+  gap: ${({ theme }) => theme.spacing.md};
   flex: 1;
 `;
 
@@ -168,17 +164,17 @@ export const ListItemMetaTitle = styled.div<{
 }>`
   font-size: ${({ theme, accessibility }) =>
     accessibility?.largeText
-      ? `${(Number(theme.typography?.fontSize?.md) || 16) * 1.25}px`
-      : `${theme.typography?.fontSize?.md || 16}px`};
-  font-weight: ${({ theme }) => theme.typography?.fontWeight?.semibold || 600};
-  color: ${({ theme }) => theme.colors?.text?.primary || "#1a1a1a"};
-  margin-bottom: ${({ theme }) => theme.spacing?.xs || "4px"};
+      ? `${Number(theme.typography.fontSize.md) * 1.25}px`
+      : `${theme.typography.fontSize.md}px`};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.text.primary};
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
 
   ${({ theme, accessibility }) =>
     accessibility?.highContrast &&
     css`
-      font-weight: ${theme.typography?.fontWeight?.bold || 700};
-      color: ${theme.colors?.text?.primary || "#000"};
+      font-weight: ${theme.typography.fontWeight.bold};
+      color: ${theme.colors.text.primary};
     `}
 `;
 
@@ -187,32 +183,32 @@ export const ListItemMetaDescription = styled.div<{
 }>`
   font-size: ${({ theme, accessibility }) =>
     accessibility?.largeText
-      ? `${(Number(theme.typography?.fontSize?.sm) || 14) * 1.25}px`
-      : `${theme.typography?.fontSize?.sm || 14}px`};
-  color: ${({ theme }) => theme.colors?.text?.secondary || "#8c8c8c"};
-  line-height: ${({ theme }) => theme.typography?.lineHeight?.normal || 1.5715};
+      ? `${Number(theme.typography.fontSize.sm) * 1.25}px`
+      : `${theme.typography.fontSize.sm}px`};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  line-height: ${({ theme }) => theme.typography.lineHeight.normal};
 
   ${({ theme, accessibility }) =>
     accessibility?.highContrast &&
     css`
-      color: ${theme.colors?.text?.primary || "#1a1a1a"};
-      font-weight: ${theme.typography?.fontWeight?.medium || 500};
+      color: ${theme.colors.text.primary};
+      font-weight: ${theme.typography.fontWeight.medium};
     `}
 `;
 
 export const ListEmpty = styled.div<{
   accessibility?: ListProps["accessibility"];
 }>`
-  padding: ${({ theme }) => theme.spacing?.xl || "32px"};
+  padding: ${({ theme }) => theme.spacing.xl};
   text-align: center;
-  color: ${({ theme }) => theme.colors?.text?.secondary || "#8c8c8c"};
+  color: ${({ theme }) => theme.colors.text.secondary};
   font-size: ${({ theme, accessibility }) =>
     accessibility?.largeText
-      ? `${(Number(theme.typography?.fontSize?.md) || 16) * 1.25}px`
-      : `${theme.typography?.fontSize?.md || 16}px`};
+      ? `${Number(theme.typography.fontSize.md) * 1.25}px`
+      : `${theme.typography.fontSize.md}px`};
 `;
 
 export const ListLoading = styled.div`
-  padding: ${({ theme }) => theme.spacing?.xl || "32px"};
+  padding: ${({ theme }) => theme.spacing.xl};
   text-align: center;
 `;

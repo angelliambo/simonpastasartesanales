@@ -6,7 +6,7 @@ export const MapWrapper = styled.div`
   overflow: hidden;
   box-shadow: ${({ theme }) => theme.shadows.light};
   background-color: ${({ theme }) => theme.colors.background.card};
-  border: 1px solid ${({ theme }) => theme.colors.border || 'rgba(0, 0, 0, 0.1)'};
+  border: 1px solid ${({ theme }) => theme.colors.border.normal};
   
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     max-width: 350px;
@@ -37,16 +37,16 @@ export const CustomPinImage = styled.img`
   height: 42px;
   border-radius: 50%;
   border: 2px solid #ffffff;
-  box-shadow: ${({ theme }) => theme.shadows?.medium || '0 2px 8px rgba(0,0,0,0.3)'};
+  box-shadow: ${({ theme }) => theme.shadows.medium};
   display: block;
 `;
 
 export const DefaultPin = styled.div`
-  background-color: ${({ theme }) => theme.colors?.primary?.[600] || '#4f46e5'};
+  background-color: ${({ theme }) => theme.colors.primary[600]};
   color: #ffffff;
   padding: 8px;
   border-radius: 50%;
-  box-shadow: ${({ theme }) => theme.shadows?.medium || '0 2px 6px rgba(0,0,0,0.3)'};
+  box-shadow: ${({ theme }) => theme.shadows.medium};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,9 +61,9 @@ export const MapErrorFallback = styled.div`
   width: 100%;
   padding: 20px;
   text-align: center;
-  background-color: ${({ theme }) => theme.colors?.background?.secondary || 'rgba(0,0,0,0.05)'};
-  color: ${({ theme }) => theme.colors?.text?.secondary || '#6b7280'};
-  font-family: ${({ theme }) => theme.typography?.fontFamily?.primary || 'inherit'};
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
   font-size: 14px;
 `;
 

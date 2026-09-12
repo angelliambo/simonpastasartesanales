@@ -1,33 +1,27 @@
 import styled, { css } from "styled-components";
 import { StyledEmptyProps } from "./Empty.types";
 
-// =====================================
-// EMPTY STYLED COMPONENTS
-// =====================================
-
 export const EmptyContainer = styled.div<StyledEmptyProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: ${({ theme, $size }) => {
+  padding: ${({ theme, $size = "md" }) => {
     const sizeMap: Record<string, string> = {
-      sm: theme.spacing?.xl || "24px",
-      md: theme.spacing?.xxl || "48px",
+      sm: theme.spacing.xl,
+      md: theme.spacing.xxl,
       lg: "64px",
     };
-    return sizeMap[$size || "md"];
+    return sizeMap[$size] || sizeMap.md;
   }};
   text-align: center;
 
   ${({ accessibility }) =>
     accessibility?.highContrast &&
     css`
-      border: 2px solid
-        ${({ theme }) => theme.colors?.border?.normal || "#d9d9d9"};
-      border-radius: ${({ theme }) => theme.borderRadius?.md || "8px"};
-      background: ${({ theme }) =>
-        theme.colors?.background?.secondary || "#fafafa"};
+      border: 2px solid ${({ theme }) => theme.colors.border.normal};
+      border-radius: ${({ theme }) => theme.borderRadius.md};
+      background: ${({ theme }) => theme.colors.background.secondary};
     `}
 
   ${({ accessibility }) =>
@@ -38,23 +32,23 @@ export const EmptyContainer = styled.div<StyledEmptyProps>`
 `;
 
 export const EmptyImage = styled.div<StyledEmptyProps>`
-  width: ${({ $size }) => {
+  width: ${({ $size = "md" }) => {
     const sizeMap: Record<string, string> = {
       sm: "64px",
       md: "120px",
       lg: "180px",
     };
-    return sizeMap[$size || "md"];
+    return sizeMap[$size] || sizeMap.md;
   }};
-  height: ${({ $size }) => {
+  height: ${({ $size = "md" }) => {
     const sizeMap: Record<string, string> = {
       sm: "64px",
       md: "120px",
       lg: "180px",
     };
-    return sizeMap[$size || "md"];
+    return sizeMap[$size] || sizeMap.md;
   }};
-  margin-bottom: ${({ theme }) => theme.spacing?.md || "16px"};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,29 +67,28 @@ export const EmptyImage = styled.div<StyledEmptyProps>`
 `;
 
 export const EmptyDescription = styled.div<StyledEmptyProps>`
-  color: ${({ theme }) => theme.colors?.text?.secondary || "#8c8c8c"};
-  font-size: ${({ theme, $size }) => {
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme, $size = "md" }) => {
     const sizeMap: Record<string, string> = {
-      sm: theme.typography?.fontSize?.sm || "12px",
-      md: theme.typography?.fontSize?.md || "14px",
-      lg: theme.typography?.fontSize?.lg || "16px",
+      sm: theme.typography.fontSize.sm,
+      md: theme.typography.fontSize.md,
+      lg: theme.typography.fontSize.lg,
     };
-    return sizeMap[$size || "md"];
+    return sizeMap[$size] || sizeMap.md;
   }};
-  line-height: ${({ theme }) => theme.typography?.lineHeight?.normal || 1.5};
+  line-height: ${({ theme }) => theme.typography.lineHeight.normal};
   margin: 0;
 
   ${({ accessibility }) =>
     accessibility?.highContrast &&
     css`
-      color: ${({ theme }) => theme.colors?.text?.primary || "#000"};
-      font-weight: ${({ theme }) =>
-        theme.typography?.fontWeight?.medium || 500};
+      color: ${({ theme }) => theme.colors.text.primary};
+      font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
     `}
 
   ${({ accessibility }) =>
     accessibility?.largeText &&
     css`
-      font-size: ${({ theme }) => theme.typography?.fontSize?.xl || "18px"};
+      font-size: ${({ theme }) => theme.typography.fontSize.xl};
     `}
 `;

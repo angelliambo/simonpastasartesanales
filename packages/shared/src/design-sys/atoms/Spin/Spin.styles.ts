@@ -132,9 +132,9 @@ const getSpinDimensions = (size: string = "md") => {
 // Obtener colores del spinner
 const getSpinColors = (theme: any) => {
   return {
-    primary: theme?.colors?.primary?.[500] || "#007bff",
-    secondary: theme?.colors?.primary?.[200] || "#90caf9",
-    text: theme?.colors?.text?.secondary || "#6c757d",
+    primary: theme.colors.primary[500],
+    secondary: theme.colors.primary[200],
+    text: theme.colors.text.secondary,
     overlay: "rgba(255, 255, 255, 0.8)",
   };
 };
@@ -279,14 +279,7 @@ export const SpinnerIndicator = styled(BaseSpinIndicator)`
     accessibility?.reducedMotion
       ? css`
           /* Fallback para reduced motion */
-          &::after {
-            content: "⏳";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 0.8em;
-          }
+          opacity: 0.8;
         `
       : css`
           animation: ${spinnerRotate} ${ANIMATION_CONFIGS.spinner.duration}

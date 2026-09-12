@@ -19,7 +19,7 @@ export const StyledSider = styled.div<{
 }>`
   width: ${({ $collapsed, $width, $collapsedWidth }) =>
     $collapsed ? `${$collapsedWidth}px` : `${$width}px`};
-  background: ${({ theme }) => theme?.colors?.background?.card || "#fff"};
+  background: ${({ theme }) => theme.colors.background.card};
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
   transition: width 0.2s;
   flex-shrink: 0;
@@ -30,7 +30,7 @@ export const StyledSider = styled.div<{
 
 export const StyledHeader = styled.div`
   padding: 0 24px;
-  background: ${({ theme }) => theme?.colors?.background?.card || "#fff"};
+  background: ${({ theme }) => theme.colors.background.card};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,17 +43,14 @@ export const StyledContent = styled.div<{ style?: React.CSSProperties }>`
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     margin: ${({ theme, style }) => {
       if (style?.margin) return style.margin;
-      
-      const mobileSpacing = theme?.spacing?.mobile;
-      const topBottom = mobileSpacing?.xl || "21px";
-      const leftRight = mobileSpacing?.md || "8px";
-      return `${topBottom} ${leftRight}`;
+      const mobileSpacing = theme.spacing.mobile;
+      return mobileSpacing
+        ? `${mobileSpacing.xl} ${mobileSpacing.md}`
+        : `${theme.spacing.xl} ${theme.spacing.md}`;
     }};
     padding: ${({ theme, style }) => {
       if (style?.padding) return style.padding;
-      
-      const mobileSpacing = theme?.spacing?.mobile;
-      return mobileSpacing?.md || "8px";
+      return theme.spacing.mobile?.md ?? theme.spacing.md;
     }};
     max-width: 100%;
     box-sizing: border-box;
@@ -61,18 +58,16 @@ export const StyledContent = styled.div<{ style?: React.CSSProperties }>`
   
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     margin: ${({ theme, style }) => {
-      // Si hay un margin en style inline, respetarlo
       if (style?.margin) return style.margin;
-      return theme?.spacing?.xl || "24px";
+      return theme.spacing.xl;
     }};
     padding: ${({ theme, style }) => {
-      // Si hay un padding en style inline, respetarlo
       if (style?.padding) return style.padding;
-      return theme?.spacing?.xl || "24px";
+      return theme.spacing.xl;
     }};
   }
   
-  background: ${({ theme }) => theme?.colors?.background?.card || "#fff"};
+  background: ${({ theme }) => theme.colors.background.card};
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-height: calc(100vh - 112px);

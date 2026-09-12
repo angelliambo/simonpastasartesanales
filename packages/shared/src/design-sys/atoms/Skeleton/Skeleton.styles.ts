@@ -494,12 +494,12 @@ export const SkeletonImage = styled(StyledSkeleton)`
 
 export const StyledCardSkeletonWrapper = styled.div<{ $variant?: "card" | "social" }>`
   border-radius: 16px;
-  background: ${({ theme }) => theme.colors.background.card || theme.colors.background.surface || "rgba(255, 255, 255, 0.05)"};
-  border: 1px solid ${({ theme }) => theme.colors.border?.light || "rgba(255, 255, 255, 0.1)"};
-  padding: ${({ theme }) => theme.spacing.lg || "24px"};
+  background: ${({ theme }) => theme.colors.background.card};
+  border: 1px solid ${({ theme }) => theme.colors.border.light};
+  padding: ${({ theme }) => theme.spacing.lg};
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.md || "16px"};
+  gap: ${({ theme }) => theme.spacing.md};
   width: 100%;
   box-sizing: border-box;
 `;
