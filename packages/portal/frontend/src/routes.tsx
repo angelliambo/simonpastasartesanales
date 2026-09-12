@@ -1,24 +1,38 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import Loading from "./components/loading";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { FEATURES } from "@factory/shared/config/features";
 
-const HomePage = lazy(() => import("./pages/HomePage"));
-const DashboardPage = lazy(() => import("./pages/DashboardPage"));
-const SupportPage = lazy(() => import("./pages/SupportPage"));
+const loadHomePage = () => import("./pages/HomePage");
+const loadDashboardPage = () => import("./pages/DashboardPage");
+const loadSupportPage = () => import("./pages/SupportPage");
+const loadWelcomePage = () => import("./pages/WelcomePage");
+const loadTermsPage = () => import("./pages/legal/TermsAndConditionsPage");
+const loadPrivacyPage = () => import("./pages/legal/PrivacyPolicyPage");
+
+const HomePage = lazy(loadHomePage);
+const DashboardPage = lazy(loadDashboardPage);
+const SupportPage = lazy(loadSupportPage);
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
-const TermsAndConditionsPage = lazy(
-  () => import("./pages/legal/TermsAndConditionsPage")
-);
-const PrivacyPolicyPage = lazy(
-  () => import("./pages/legal/PrivacyPolicyPage")
-);
-const WelcomePage = lazy(() => import("./pages/WelcomePage"));
+const TermsAndConditionsPage = lazy(loadTermsPage);
+const PrivacyPolicyPage = lazy(loadPrivacyPage);
+const WelcomePage = lazy(loadWelcomePage);
 
 const AppRoutes = () => {
+  useEffect(() => {
+    // Precarga diferida (600ms) de los bundles de rutas secundarias para navegación instantánea
+    const timer = setTimeout(() => {
+      loadWelcomePage();
+      loadDashboardPage();
+      loadSupportPage();
+      loadTermsPage();
+      loadPrivacyPage();
+    }, 600);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
