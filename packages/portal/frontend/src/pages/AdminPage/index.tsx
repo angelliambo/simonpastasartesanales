@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@tanstack/react-router";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import { useTranslation } from "../../i18n/I18nProvider";
@@ -272,7 +272,7 @@ const AdminPage: React.FC = () => {
       const d = await r.json();
       if (d.success) {
         showSuccess("Estado del ticket actualizado exitosamente");
-        setSelectedTicket(prev => prev ? { ...prev, status: d.ticket.status } : null);
+        setSelectedTicket((prev: any) => prev ? { ...prev, status: d.ticket.status } : null);
         setAdminTickets(prev => prev.map(tk => tk.ticketId === ticketId ? { ...tk, status: d.ticket.status } : tk));
       } else {
         showError(d.error || "Error al actualizar estado");
@@ -443,7 +443,7 @@ const AdminPage: React.FC = () => {
         user: { _id: d.userId, email: d.email, role: d.role, plan: d.plan, isAdmin: d.isAdmin },
         token: d.token,
       }));
-      navigate("/dashboard");
+      navigate({ to: "/dashboard" });
     } catch (err: any) {
       showError(`${t('pages.errors.actionError', { action: t('pages.errors.actionLoginAs', 'Inicio de sesión suplantado') })}: ${err.message}`);
     }
@@ -674,7 +674,6 @@ const AdminPage: React.FC = () => {
                                     setCreateTicketMessage("");
                                     setIsCreateTicketModalOpen(true);
                                   }}
-                                  title="Crear Ticket a nombre de usuario"
                                   style={{ marginRight: 4, padding: '4px 8px', fontSize: 14 }}
                                 >
                                   <span style={{ display: "inline-flex", alignItems: "center", gap: "2px" }}>

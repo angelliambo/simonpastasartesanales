@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import Button from '@design-sys/atoms/Button';
 import { Container } from '@design-sys/atoms/Container';
 

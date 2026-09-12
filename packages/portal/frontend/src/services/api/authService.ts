@@ -4,24 +4,30 @@ import apiClient from "./client";
 export const useSendTokenMutation = () => {
   const mutation = useMutation({
     mutationFn: (body: { email: string }) =>
-      apiClient<{ message?: string }>("/auth/send-token", {
+      apiClient<{ message?: string; devCode?: string }>("/auth/send-token", {
         method: "POST",
         body: JSON.stringify(body),
       }),
   });
-  const trigger = (args: { email: string }) => mutation.mutateAsync(args);
+  const trigger = (args: { email: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
   return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
 };
 
 export const useVerifyTokenMutation = () => {
   const mutation = useMutation({
     mutationFn: (body: { email: string; code: string }) =>
-      apiClient<{ token?: string; user?: any }>("/auth/verify-token", {
+      apiClient<{ token?: string; user?: any; userId?: string; email?: string; role?: string; plan?: string; isNewUser?: boolean }>("/auth/verify-token", {
         method: "POST",
         body: JSON.stringify(body),
       }),
   });
-  const trigger = (args: { email: string; code: string }) => mutation.mutateAsync(args);
+  const trigger = (args: { email: string; code: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
   return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
 };
 
@@ -33,7 +39,10 @@ export const useGoogleLoginMutation = () => {
         body: JSON.stringify(body),
       }),
   });
-  const trigger = (args: { idToken: string }) => mutation.mutateAsync(args);
+  const trigger = (args: { idToken: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
   return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
 };
 
@@ -45,7 +54,10 @@ export const useExchangeMutation = () => {
         body: JSON.stringify(body),
       }),
   });
-  const trigger = (args: { userId: string }) => mutation.mutateAsync(args);
+  const trigger = (args: { userId: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
   return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
 };
 
@@ -57,7 +69,10 @@ export const useRestoreRequestMutation = () => {
         body: JSON.stringify(body),
       }),
   });
-  const trigger = (args: { email: string }) => mutation.mutateAsync(args);
+  const trigger = (args: { email: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
   return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
 };
 

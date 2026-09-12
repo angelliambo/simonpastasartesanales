@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useSearch, useNavigate } from "@tanstack/react-router";
 import type { RootState } from "../../store/store";
 import { ContactForm } from "../../components/ContactForm";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
@@ -45,19 +45,20 @@ import {
 } from "./SupportPage.styles";
 
 const SupportPage: React.FC = () => {
-  const { t, currentLocale } = useTranslation();
+  const { t, lang } = useTranslation();
   const { showError } = useSnackbar();
   const authUser = useSelector((state: RootState) => state.auth.user);
   const token = useSelector((state: RootState) => state.auth.token);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const queryTicketId = searchParams.get("ticketId");
+  const search = useSearch({ strict: false });
+  const navigate = useNavigate();
+  const queryTicketId = (search as any)?.ticketId;
 
   const [activeTab, setActiveTab] = useState<"new_ticket" | "my_tickets">(queryTicketId ? "my_tickets" : "new_ticket");
   const [tickets, setTickets] = useState<any[]>([]);
   const [loadingTickets, setLoadingTickets] = useState(false);
 
-  const [selectedTicketId, setSelectedTicketId] = useState<string | null>(queryTicketId);
+  const [selectedTicketId, setSelectedTicketId] = useState<string | null>(queryTicketId || null);
   const [selectedTicket, setSelectedTicket] = useState<any | null>(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
 
@@ -70,7 +71,7 @@ const SupportPage: React.FC = () => {
 
   const handleBack = () => {
     setSelectedTicketId(null);
-    setSearchParams({});
+    navigate({ search: {} as any });
   };
 
   const [replyText, setReplyText] = useState("");
@@ -166,7 +167,7 @@ const SupportPage: React.FC = () => {
 
   const formatDate = (dateStr: string) => {
     try {
-      return new Date(dateStr).toLocaleString(currentLocale === "es" ? "es-MX" : "en-US", {
+      return new Date(dateStr).toLocaleString(lang === "es" ? "es-MX" : "en-US", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",

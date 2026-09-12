@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "@tanstack/react-router";
 import { useAppSelector } from "../store/hooks";
 
 interface ProtectedRouteProps {
@@ -15,7 +15,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const location = useLocation();
 
   if (!isAuthenticated || !user) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/" search={{ from: location.pathname }} replace />;
   }
 
   if (requireAdmin && user.role !== "admin" && !user.isAdmin) {

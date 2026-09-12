@@ -28,7 +28,10 @@ export const useDeleteAccountMutation = () => {
       queryClient.invalidateQueries({ queryKey: USER_PROFILE_QUERY_KEY });
     },
   });
-  const trigger = (args: { email: string; code: string }) => mutation.mutateAsync(args);
+  const trigger = (args: { email: string; code: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
   return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
 };
 
@@ -40,6 +43,9 @@ export const useRequestDeletionMutation = () => {
         body: JSON.stringify(body),
       }),
   });
-  const trigger = (args: { email: string }) => mutation.mutateAsync(args);
+  const trigger = (args: { email: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
   return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
 };

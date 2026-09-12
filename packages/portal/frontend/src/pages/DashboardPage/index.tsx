@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@tanstack/react-router";
 import { useGetProfileQuery, useRequestDeletionMutation, useDeleteAccountMutation } from "../../services/api/userService";
 import { logout } from "../../store/slices/authSlice";
 
@@ -69,7 +69,6 @@ const DashboardPage: React.FC = () => {
   const [confirmDeletion] = useDeleteAccountMutation();
   const { data, isLoading, error } = useGetProfileQuery(undefined, {
     skip: !token || !authUser?._id,
-    refetchOnMountOrArgChange: true,
   });
 
   const profile = data?.profile;
@@ -142,7 +141,7 @@ const DashboardPage: React.FC = () => {
       setDeleteMsg(msg);
       showSuccess(t('pages.errors.actionSuccess', { action: t('pages.errors.actionDeleteAccount', 'Eliminación definitiva de cuenta') }));
       setDeleteStep('done');
-      setTimeout(() => { dispatch(logout()); navigate('/'); }, 2000);
+      setTimeout(() => { dispatch(logout()); navigate({ to: '/' }); }, 2000);
     } catch (err: any) {
       const errMsg = err.data?.error || t('pages.errors.actionError', { action: t('pages.errors.actionDeleteAccount', 'Eliminación definitiva de cuenta') });
       setDeleteErr(errMsg);
@@ -230,14 +229,14 @@ const DashboardPage: React.FC = () => {
                   <Label>{t('pages.dashboard.daysRemaining', 'Días restantes')}</Label>
                   <Value>
                     {remainingDays > 0
-                      ? t('pages.dashboard.daysRemainingText', '{{days}} días', { days: String(remainingDays) })
+                      ? t('pages.dashboard.daysRemainingText', { days: String(remainingDays) })
                       : t('pages.dashboard.expired', 'Vencida')}
                   </Value>
                 </Row>
               )}
               {(profile.plan === 'free' || profile.plan === 'trial') && (
                 <UpgradeButtonWrapper>
-                  <ActionButton onClick={() => navigate('/pricing')}>{t('pages.dashboard.buyPremium', 'Adquirir Premium')}</ActionButton>
+                  <ActionButton onClick={() => navigate({ to: '/pricing' as any })}>{t('pages.dashboard.buyPremium', 'Adquirir Premium')}</ActionButton>
                 </UpgradeButtonWrapper>
               )}
             </CustomCard>
@@ -248,7 +247,7 @@ const DashboardPage: React.FC = () => {
               ) : tickets.length === 0 ? (
                 <NoTicketsMessage>
                   {t('pages.dashboard.noTickets', 'No tienes ningún ticket de soporte registrado.')}{' '}
-                  <ActionLink onClick={() => navigate('/support')}>
+                  <ActionLink onClick={() => navigate({ to: '/support' as any })}>
                     {t('pages.dashboard.createTicketLink', 'Crear uno nuevo')}
                   </ActionLink>
                 </NoTicketsMessage>
@@ -257,7 +256,7 @@ const DashboardPage: React.FC = () => {
                   {tickets.map((t: any) => (
                     <TicketListItem
                       key={t.ticketId}
-                      onClick={() => navigate(`/support?ticketId=${t.ticketId}`)}
+                      onClick={() => navigate({ to: '/support' as any, search: { ticketId: t.ticketId } as any })}
                     >
                       <TicketInfoWrapper>
                         <TicketHeaderWrapper>
@@ -287,7 +286,7 @@ const DashboardPage: React.FC = () => {
                   ))}
                   <FooterAlignWrapper>
                     <ActionLink
-                      onClick={() => navigate('/support')}
+                      onClick={() => navigate({ to: '/support' as any })}
                       $fontSize="0.9rem"
                     >
                       {t('pages.dashboard.viewAllTicketsLink', 'Ver y gestionar todos los tickets →')}

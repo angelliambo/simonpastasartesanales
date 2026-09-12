@@ -36,15 +36,7 @@ export const usePortalVersion = () => {
     data,
     isLoading: rtkLoading,
     error: rtkError,
-  } = useGetPortalVersionQuery(undefined, {
-    // No hacer polling ya que la versión no cambia
-    pollingInterval: 0,
-    // No refetch automático: la versión es estable durante la sesión
-    refetchOnMountOrArgChange: false,
-    refetchOnFocus: false,
-    refetchOnReconnect: false,
-    // Cache permanente en RTK Query (configurado en systemService)
-  });
+  } = useGetPortalVersionQuery(undefined, {});
 
   // Obtener versión desde Redux Store (fuente única de verdad)
   const storeVersion = useAppSelector((state) => state.system.versions.portal);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { RootState } from "../../store/store";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
@@ -77,7 +77,7 @@ export const WelcomePage: React.FC = () => {
   const handleStart = () => {
     if (termsAccepted) {
       localStorage.setItem("zn-terms-accepted", "true");
-      navigate("/dashboard");
+      navigate({ to: "/dashboard" });
     }
   };
 
@@ -99,8 +99,8 @@ export const WelcomePage: React.FC = () => {
     try {
       const result = await verifyToken({ email, code }).unwrap();
       dispatch(setCredentials({
-        user: { _id: result.userId, email: result.email, role: result.role, plan: result.plan },
-        token: result.token,
+        user: { _id: result.userId || "", email: result.email || "", role: (result.role as any) || "user", plan: (result.plan as any) || "free" },
+        token: result.token || "",
       }));
       if (result.isNewUser) {
         showSuccess(t('pages.errors.actionSuccess', { action: t('pages.errors.actionRegister', 'Registro de cuenta') }), 4000);

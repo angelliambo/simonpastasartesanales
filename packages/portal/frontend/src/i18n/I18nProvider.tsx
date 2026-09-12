@@ -23,7 +23,7 @@ const LANGUAGES: Language[] = [
 const TRANSLATIONS = allLocales as unknown as Record<string, TranslationObject>;
 
 interface I18nContextType {
-  t: (key: string, params?: Record<string, string>) => string;
+  t: (key: string, params?: Record<string, string> | string) => string;
   lang: string;
   setLanguage: (lang: string) => void;
   languages: Language[];
@@ -145,12 +145,13 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [lang]);
 
   const t = useCallback(
-    (key: string, params?: Record<string, string>) => {
+    (key: string, params?: Record<string, string> | string) => {
       try {
-        return translate(key, TRANSLATIONS, lang, FALLBACK_LOCALE, { ...globals, ...params });
+        const options = typeof params === 'string' ? undefined : params;
+        return translate(key, TRANSLATIONS, lang, FALLBACK_LOCALE, { ...globals, ...options });
       } catch (err) {
         console.error(`[${BRAND_CONFIG.siteName}] [ERR-WEB-301]: Fallo al traducir la clave "${key}".`, err);
-        return key;
+        return typeof params === 'string' ? params : key;
       }
     },
     [lang],

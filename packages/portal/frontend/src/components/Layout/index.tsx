@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "@tanstack/react-router";
 import { useSelector, useDispatch } from "react-redux";
 import AppFooter from "../AppFooter";
 import FloatingWhatsAppCTA from "../FloatingWhatsAppCTA";
