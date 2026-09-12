@@ -40,7 +40,7 @@ export const WelcomeCard = styled(Card)`
   padding: 40px;
   animation: ${fadeIn} 0.5s ease-out;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     padding: 24px;
   }
 `;
@@ -218,7 +218,7 @@ export const FeatureRow = styled.div`
   width: 100%;
   margin-top: 20px;
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 1fr;
   }
 `;
@@ -262,7 +262,7 @@ export const ActionRow = styled.div`
   width: 100%;
   margin-top: 20px;
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     flex-direction: column;
     gap: 12px;
 

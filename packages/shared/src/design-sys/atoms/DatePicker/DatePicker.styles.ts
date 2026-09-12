@@ -486,7 +486,7 @@ export const StyledDatePicker = styled.div<StyledDatePickerProps>`
       `}
       
       // Responsive
-      @media (max-width: 768px) {
+      @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
         font-size: calc(${dimensions.fontSize} * 0.9);
         padding: calc(${dimensions.padding.split(" ")[0]} * 0.8)
           calc(${dimensions.padding.split(" ")[1]} * 0.8);
@@ -614,7 +614,7 @@ export const StyledDropdown = styled.div<StyledDropdownProps>`
       `}
       
       // Responsive
-      @media (max-width: 768px) {
+      @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
         min-width: 260px;
         max-width: calc(100% - 32px); // Usar 100% en lugar de 100vw para evitar overflow
       }

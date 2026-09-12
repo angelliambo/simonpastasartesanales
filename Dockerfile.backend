@@ -1,37 +1,29 @@
-FROM node:22-alpine AS base-dependencies
+FROM node:20-alpine AS base-dependencies
 WORKDIR /app
-COPY package.json yarn.lock* ./
+RUN npm install -g pnpm@latest
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* .npmrc* ./
 COPY packages/shared/package*.json ./packages/shared/
 COPY packages/portal/backend/package*.json ./packages/portal/backend/
-RUN yarn config set network-timeout 600000 && \
-    for i in 1 2 3 4 5; do \
-        yarn install --frozen-lockfile && break; \
-        if [ $i -eq 5 ]; then exit 1; fi; \
-        sleep 10; \
-    done
+RUN pnpm install --frozen-lockfile
 
 FROM base-dependencies AS shared-builder
 WORKDIR /app
 COPY packages/shared ./packages/shared
-RUN yarn workspace @factory/shared build
+RUN pnpm --filter @factory/shared build
 
 FROM shared-builder AS backend-builder
 WORKDIR /app
 COPY packages/portal/backend ./packages/portal/backend
-RUN yarn workspace @factory/backend build
+RUN pnpm --filter @factory/backend build
 
-FROM node:22-alpine
+FROM node:20-alpine
 WORKDIR /app
-COPY package.json yarn.lock* ./
+RUN npm install -g pnpm@latest
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* .npmrc* ./
 COPY packages/shared/package*.json ./packages/shared/
 COPY packages/portal/backend/package*.json ./packages/portal/backend/
 COPY --from=shared-builder /app/packages/shared /app/packages/shared
-RUN yarn config set network-timeout 600000 && \
-    for i in 1 2 3 4 5; do \
-        yarn install --production --frozen-lockfile && break; \
-        if [ $i -eq 5 ]; then exit 1; fi; \
-        sleep 10; \
-    done
+RUN pnpm install --prod --frozen-lockfile
 COPY --from=backend-builder /app/packages/portal/backend/dist ./packages/portal/backend/dist
 
 EXPOSE 5000

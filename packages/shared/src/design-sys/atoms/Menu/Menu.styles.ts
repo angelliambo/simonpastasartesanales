@@ -313,7 +313,7 @@ export const StyledMenu = styled.ul<StyledMenuProps>`
       `}
 
       // Responsive
-      @media (max-width: 768px) {
+      @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
         ${$mode === "horizontal" &&
         css`
           flex-direction: column;

@@ -337,7 +337,7 @@ export const StyledBackTop = styled.button.withConfig({
       `}
 
       /* Mobile responsive */
-      @media (max-width: 768px) {
+      @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
         ${$placement === "center" && css`
           left: auto;
           right: 20px;
@@ -601,7 +601,7 @@ export const BackTopSkeleton = styled.div`
 
 export const MobileBackTop = styled(StyledBackTop)`
   ${() => css`
-    @media (max-width: 768px) {
+    @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
       width: 44px;
       height: 44px;
       right: 20px;

@@ -5,8 +5,8 @@ app = "__BACKEND_SERVICE_NAME__"
 [build]
   dockerfile = "../../Dockerfile"
   [build.args]
-    REACT_APP_API_URL = "https://__DOMAIN_NAME__/api"
-    REACT_APP_GOOGLE_CLIENT_ID = "<google-client-id>"
+    VITE_API_URL = "https://__DOMAIN_NAME__/api"
+    VITE_GOOGLE_CLIENT_ID = "<google-client-id>"
 primary_region = "gru"
 
 [env]

@@ -359,7 +359,7 @@ export const StyledPagination = styled.div.withConfig({
       `}
       
       ${$responsive && css`
-        @media (max-width: 768px) {
+        @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
           gap: calc(${sizeStyles.gap} * 0.5);
           
           .pagination-total,
@@ -374,7 +374,7 @@ export const StyledPagination = styled.div.withConfig({
           }
         }
         
-        @media (max-width: 480px) {
+        @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
           .pagination-item:not(.pagination-prev):not(.pagination-next):not(.pagination-current) {
             display: none;
           }
@@ -699,7 +699,7 @@ export const LargePagination = styled(StyledPagination)`
 
 // Responsive pagination
 export const ResponsivePagination = styled(StyledPagination)`
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     gap: 4px;
     
     .pagination-total,
@@ -714,7 +714,7 @@ export const ResponsivePagination = styled(StyledPagination)`
     }
   }
   
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     .pagination-item:not(.pagination-prev):not(.pagination-next):not(.pagination-current) {
       display: none !important;
     }

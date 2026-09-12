@@ -52,7 +52,7 @@ import {
 } from "./WelcomePage.styles";
 import LanguageSelector from "../../i18n/LanguageSelector";
 
-const G_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
+const G_ID = process.env.VITE_GOOGLE_CLIENT_ID || "";
 
 export const WelcomePage: React.FC = () => {
   const { t } = useTranslation();

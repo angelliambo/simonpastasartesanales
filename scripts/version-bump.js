@@ -4,11 +4,11 @@
  * con propagación y sincronización de dependencias internas exactas (sin '^' ni '~').
  *
  * Uso:
- *   yarn bump status                     # Muestra tabla de versiones
- *   yarn bump sync                       # Sincroniza versiones exactas de dependencias @factory/*
- *   yarn bump <target> <type|version>    # Incrementa un package y propaga a sus dependientes
- *   yarn bump auto <type>                # Auto-detecta paquetes modificados en Git y los incrementa
- *   yarn bump --help | --h              # Muestra ayuda y ejemplos
+ *   pnpm bump status                     # Muestra tabla de versiones
+ *   pnpm bump sync                       # Sincroniza versiones exactas de dependencias @factory/*
+ *   pnpm bump <target> <type|version>    # Incrementa un package y propaga a sus dependientes
+ *   pnpm bump auto <type>                # Auto-detecta paquetes modificados en Git y los incrementa
+ *   pnpm bump --help | --h              # Muestra ayuda y ejemplos
  */
 
 const fs = require('fs');
@@ -107,8 +107,9 @@ function syncInternalDependencies(verbose = false) {
 
       for (const [depName, currentDepVer] of Object.entries(json[section])) {
         if (currentVersions[depName]) {
-          const expectedVer = currentVersions[depName]; // Exact version, no '^' or '~'
-          if (currentDepVer !== expectedVer) {
+          const rawExpected = currentVersions[depName];
+          const expectedVer = currentDepVer.startsWith('workspace:') ? 'workspace:*' : rawExpected;
+          if (currentDepVer !== expectedVer && currentDepVer !== `workspace:${rawExpected}`) {
             json[section][depName] = expectedVer;
             modified = true;
             totalSyncs++;
@@ -158,10 +159,10 @@ function printHelp() {
 🚀 MERN SaaS Factory Monorepo Version Bump Tool
 
 Uso:
-  yarn bump <target> <tipo_o_version>
-  yarn bump status
-  yarn bump sync
-  yarn bump --help
+  pnpm bump <target> <tipo_o_version>
+  pnpm bump status
+  pnpm bump sync
+  pnpm bump --help
 
 Comandos y Opciones:
   status, --status                 Muestra la tabla de versiones actuales de todos los packages.
@@ -179,13 +180,13 @@ Packages Disponibles (<package>):
   shared                           Shared Core (packages/shared/package.json)
 
 Ejemplos Prácticos:
-  yarn bump status                 # Ver tabla de versiones actual
-  yarn bump sync                   # Sincronizar dependencias internas a sus versiones exactas
-  yarn bump auto minor             # Incrementar MINOR a todos los packages modificados en Git
-  yarn bump shared minor           # Incrementar MINOR a shared y propagar a frontend/backend
-  yarn bump frontend minor         # Incrementar MINOR a frontend (ej. 1.4.0 -> 1.5.0)
-  yarn bump backend patch          # Incrementar PATCH a backend (ej. 1.2.4 -> 1.2.5)
-  yarn bump --h                    # Mostrar esta ayuda
+  pnpm bump status                 # Ver tabla de versiones actual
+  pnpm bump sync                   # Sincronizar dependencias internas a sus versiones exactas
+  pnpm bump auto minor             # Incrementar MINOR a todos los packages modificados en Git
+  pnpm bump shared minor           # Incrementar MINOR a shared y propagar a frontend/backend
+  pnpm bump frontend minor         # Incrementar MINOR a frontend (ej. 1.4.0 -> 1.5.0)
+  pnpm bump backend patch          # Incrementar PATCH a backend (ej. 1.2.4 -> 1.2.5)
+  pnpm bump --h                    # Mostrar esta ayuda
 `);
 }
 
@@ -243,7 +244,7 @@ function bumpTarget(targetKey, bumpType) {
   const target = TARGET_MAP[targetKey];
   if (!target) {
     console.error(`❌ Target desconocido: "${targetKey}". Targets válidos: ${Object.keys(TARGET_MAP).join(', ')}`);
-    console.log('Usa "yarn bump --help" para ver los ejemplos de uso.');
+    console.log('Usa "pnpm bump --help" para ver los ejemplos de uso.');
     process.exit(1);
   }
 

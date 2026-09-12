@@ -112,63 +112,63 @@ const getTooltipDimensions = (size: string = "md") => {
 
 // Obtener colores basados en variante
 const getTooltipColors = (variant: string = "dark", theme: any) => {
-  const colors = theme?.colors || {};
+  const { colors } = theme;
   
   switch (variant) {
     case "primary":
       return {
-        background: colors.primary?.[500] || "#007bff",
+        background: colors.primary[500],
         color: "#ffffff",
-        border: colors.primary?.[600] || "#0056b3",
+        border: colors.primary[600],
         shadow: "0 4px 12px rgba(0, 123, 255, 0.15)",
       };
     case "secondary":
       return {
-        background: colors.secondary?.[500] || "#6c757d",
+        background: colors.secondary[500],
         color: "#ffffff",
-        border: colors.secondary?.[600] || "#545862",
+        border: colors.secondary[600],
         shadow: "0 4px 12px rgba(108, 117, 125, 0.15)",
       };
     case "success":
       return {
-        background: colors.success?.[500] || "#28a745",
+        background: colors.success[500],
         color: "#ffffff",
-        border: colors.success?.[600] || "#218838",
+        border: colors.success[600],
         shadow: "0 4px 12px rgba(40, 167, 69, 0.15)",
       };
     case "warning":
       return {
-        background: colors.warning?.[500] || "#ffc107",
+        background: colors.warning[500],
         color: "#000000",
-        border: colors.warning?.[600] || "#e0a800",
+        border: colors.warning[600],
         shadow: "0 4px 12px rgba(255, 193, 7, 0.15)",
       };
     case "error":
       return {
-        background: colors.error?.[500] || "#dc3545",
+        background: colors.error[500],
         color: "#ffffff",
-        border: colors.error?.[600] || "#c82333",
+        border: colors.error[600],
         shadow: "0 4px 12px rgba(220, 53, 69, 0.15)",
       };
     case "info":
       return {
-        background: colors.info?.[500] || "#17a2b8",
+        background: colors.info[500],
         color: "#ffffff",
-        border: colors.info?.[600] || "#138496",
+        border: colors.info[600],
         shadow: "0 4px 12px rgba(23, 162, 184, 0.15)",
       };
     case "light":
       return {
-        background: colors.background?.card || "#ffffff",
-        color: colors.text?.primary || "#212529",
-        border: colors.border?.normal || "#ced4da",
+        background: colors.background.card,
+        color: colors.text.primary,
+        border: colors.border.normal,
         shadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
       };
     case "inverse":
       return {
-        background: colors.text?.inverse || "#ffffff",
-        color: colors.text?.primary || "#212529",
-        border: colors.border?.light || "#dee2e6",
+        background: colors.text.inverse,
+        color: colors.text.primary,
+        border: colors.border.light,
         shadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
       };
     case "dark":
@@ -306,7 +306,7 @@ export const TooltipContent = styled.div.withConfig({
   }}
   
   /* Typography */
-  font-weight: ${({ theme }) => theme?.typography?.fontWeight?.medium || 500};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: 1.4;
   text-align: center;
   

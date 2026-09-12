@@ -88,7 +88,7 @@ export class ActionPlanner {
         category: 'bug_fix',
         priority: 'P2_MEDIUM',
         title: 'Auditoría y Sincronización Automática de Claves i18n Faltantes',
-        description: 'Correr la suite `yarn audit:i18n` para garantizar que todas las claves en castellano estén presentes en los 7 idiomas regionales.',
+        description: 'Correr la suite `pnpm audit:i18n` para garantizar que todas las claves en castellano estén presentes en los 7 idiomas regionales.',
         targetComponent: 'shared',
         justification: 'Mantenimiento preventivo contra llaves de idioma faltantes en producción.',
         estimatedImpact: 'Garantía del 100% de cobertura en la internacionalización.',

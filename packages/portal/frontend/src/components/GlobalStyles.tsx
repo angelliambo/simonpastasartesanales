@@ -5,87 +5,55 @@ import { useTheme } from "../styles/ThemeProvider";
 const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
   /* Variables CSS para temas */
   :root {
-    /* Colores principales - con fallbacks */
-    --color-primary: ${(props) =>
-      props.theme?.colors?.primary?.[500] || "#14b8a6"};
-    --color-primary-50: ${(props) =>
-      props.theme?.colors?.primary?.[50] || "#f0fdfa"};
-    --color-primary-100: ${(props) =>
-      props.theme?.colors?.primary?.[100] || "#ccfbf1"};
-    --color-primary-500: ${(props) =>
-      props.theme?.colors?.primary?.[500] || "#14b8a6"};
-    --color-primary-600: ${(props) =>
-      props.theme?.colors?.primary?.[600] || "#0d9488"};
+    /* Colores principales */
+    --color-primary: ${(props) => props.theme.colors.primary[500]};
+    --color-primary-50: ${(props) => props.theme.colors.primary[50]};
+    --color-primary-100: ${(props) => props.theme.colors.primary[100]};
+    --color-primary-500: ${(props) => props.theme.colors.primary[500]};
+    --color-primary-600: ${(props) => props.theme.colors.primary[600]};
     
     /* Colores secundarios */
-    --color-secondary: ${(props) =>
-      props.theme?.colors?.secondary?.[500] || "#0ea5e9"};
-    --color-success: ${(props) =>
-      props.theme?.colors?.success?.[500] || "#22c55e"};
-    --color-warning: ${(props) =>
-      props.theme?.colors?.warning?.[500] || "#f59e0b"};
-    --color-error: ${(props) => props.theme?.colors?.error?.[500] || "#ef4444"};
-    --color-info: ${(props) => props.theme?.colors?.info?.[500] || "#3b82f6"};
+    --color-secondary: ${(props) => props.theme.colors.secondary[500]};
+    --color-success: ${(props) => props.theme.colors.success[500]};
+    --color-warning: ${(props) => props.theme.colors.warning[500]};
+    --color-error: ${(props) => props.theme.colors.error[500]};
+    --color-info: ${(props) => props.theme.colors.info[500]};
     
     /* Colores de fondo */
-    --color-background: ${(props) =>
-      props.theme?.colors?.background?.primary || "#ffffff"};
-    --color-background-primary: ${(props) =>
-      props.theme?.colors?.background?.primary || "#ffffff"};
-    --color-background-secondary: ${(props) =>
-      props.theme?.colors?.background?.secondary || "#f5f5f5"};
-    --color-background-card: ${(props) =>
-      props.theme?.colors?.background?.card || "#ffffff"};
-    --color-background-surface: ${(props) =>
-      props.theme?.colors?.background?.surface || "#fafafa"};
+    --color-background: ${(props) => props.theme.colors.background.primary};
+    --color-background-primary: ${(props) => props.theme.colors.background.primary};
+    --color-background-secondary: ${(props) => props.theme.colors.background.secondary};
+    --color-background-card: ${(props) => props.theme.colors.background.card};
+    --color-background-surface: ${(props) => props.theme.colors.background.surface};
     
     /* Colores de texto */
-    --color-text: ${(props) => props.theme?.colors?.text?.primary || "#1f2937"};
-    --color-text-primary: ${(props) =>
-      props.theme?.colors?.text?.primary || "#1f2937"};
-    --color-text-secondary: ${(props) =>
-      props.theme?.colors?.text?.secondary || "#6b7280"};
-    --color-text-tertiary: ${(props) =>
-      props.theme?.colors?.text?.tertiary || "#9ca3af"};
-    --color-text-inverse: ${(props) =>
-      props.theme?.colors?.text?.inverse || "#ffffff"};
+    --color-text: ${(props) => props.theme.colors.text.primary};
+    --color-text-primary: ${(props) => props.theme.colors.text.primary};
+    --color-text-secondary: ${(props) => props.theme.colors.text.secondary};
+    --color-text-tertiary: ${(props) => props.theme.colors.text.tertiary};
+    --color-text-inverse: ${(props) => props.theme.colors.text.inverse};
     
     /* Colores de borde */
-    --color-border: ${(props) =>
-      props.theme?.colors?.border?.light || "#e5e7eb"};
-    --color-border-light: ${(props) =>
-      props.theme?.colors?.border?.light || "#e5e7eb"};
-    --color-border-normal: ${(props) =>
-      props.theme?.colors?.border?.normal || "#d1d5db"};
-    --color-border-dark: ${(props) =>
-      props.theme?.colors?.border?.dark || "#9ca3af"};
+    --color-border: ${(props) => props.theme.colors.border.light};
+    --color-border-light: ${(props) => props.theme.colors.border.light};
+    --color-border-normal: ${(props) => props.theme.colors.border.normal};
+    --color-border-dark: ${(props) => props.theme.colors.border.dark};
     
     /* Colores neutros */
-    --color-neutral-50: ${(props) =>
-      props.theme?.colors?.neutral?.[50] || "#fafafa"};
-    --color-neutral-100: ${(props) =>
-      props.theme?.colors?.neutral?.[100] || "#f5f5f5"};
-    --color-neutral-200: ${(props) =>
-      props.theme?.colors?.neutral?.[200] || "#e5e5e5"};
-    --color-neutral-300: ${(props) =>
-      props.theme?.colors?.neutral?.[300] || "#d4d4d4"};
-    --color-neutral-400: ${(props) =>
-      props.theme?.colors?.neutral?.[400] || "#a3a3a3"};
-    --color-neutral-600: ${(props) =>
-      props.theme?.colors?.neutral?.[600] || "#525252"};
+    --color-neutral-50: ${(props) => props.theme.colors.neutral[50]};
+    --color-neutral-100: ${(props) => props.theme.colors.neutral[100]};
+    --color-neutral-200: ${(props) => props.theme.colors.neutral[200]};
+    --color-neutral-300: ${(props) => props.theme.colors.neutral[300]};
+    --color-neutral-400: ${(props) => props.theme.colors.neutral[400]};
+    --color-neutral-600: ${(props) => props.theme.colors.neutral[600]};
     
     /* Sombras */
-    --shadow-light: ${(props) =>
-      props.theme?.shadows?.light || "0 1px 3px rgba(0, 0, 0, 0.1)"};
-    --shadow-medium: ${(props) =>
-      props.theme?.shadows?.medium || "0 4px 6px rgba(0, 0, 0, 0.1)"};
-    --shadow-heavy: ${(props) =>
-      props.theme?.shadows?.heavy || "0 10px 15px rgba(0, 0, 0, 0.1)"};
+    --shadow-light: ${(props) => props.theme.shadows.light};
+    --shadow-medium: ${(props) => props.theme.shadows.medium};
+    --shadow-heavy: ${(props) => props.theme.shadows.heavy};
     
     /* Gradientes */
-    --gradient-hero: ${(props) =>
-      props.theme?.colors?.gradients?.hero ||
-      "linear-gradient(135deg, #14b8a6 0%, #0ea5e9 100%)"};
+    --gradient-hero: ${(props) => props.theme.gradients.hero};
   }
 
   /* Box-sizing global */
@@ -122,7 +90,7 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
   }
 
   /* Prevenir scroll horizontal en mobile */
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     html, body, #root {
       overflow-x: hidden !important;
       max-width: 100%; /* Usar 100% en lugar de 100vw para evitar overflow */
@@ -131,7 +99,7 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
   }
 
   /* Asegurar que drawer mobile tenga z-index por encima de overlays de desarrollo */
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     /* Ant Design Drawer en mobile */
     .ant-drawer {
       z-index: 1100 !important;
@@ -283,7 +251,7 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
   }
 
   /* Estilos específicos para móvil */
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     .page-container {
       padding: 12px 8px;
       margin-top: 64px; /* Espacio para el header fijo */
@@ -333,7 +301,7 @@ const GlobalStylesComponent = createGlobalStyle<{ theme: any }>`
 
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     .page-container {
       padding: 8px 6px;
     }

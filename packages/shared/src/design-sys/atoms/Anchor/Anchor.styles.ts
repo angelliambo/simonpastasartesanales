@@ -170,7 +170,7 @@ export const StyledAnchor = styled.nav<StyledAnchorProps>`
       animation: ${anchorSlideIn} 0.3s ease-out;
 
       /* Mobile responsive */
-      @media (max-width: 768px) {
+      @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
         ${$affix && css`
           position: static;
           transform: none;

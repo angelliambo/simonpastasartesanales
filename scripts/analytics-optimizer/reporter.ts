@@ -153,7 +153,7 @@ ${portal.errorTelemetry
   .join('\n')}
 
 ---
-*Informe cuantitativo compilado automáticamente por MERN SaaS Factory Telemetry Extractor (yarn analytics:extract)*
+*Informe cuantitativo compilado automáticamente por MERN SaaS Factory Telemetry Extractor (pnpm analytics:extract)*
 `;
   }
 

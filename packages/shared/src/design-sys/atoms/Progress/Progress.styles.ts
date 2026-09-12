@@ -12,7 +12,7 @@ export const ProgressContainer = styled.div<StyledProgressProps>`
   ${({ accessibility }) =>
     accessibility?.largeText &&
     css`
-      margin: ${({ theme }) => theme.spacing?.md || "16px"} 0;
+      margin: ${({ theme }) => theme.spacing.md} 0;
     `}
 `;
 
@@ -20,8 +20,8 @@ export const ProgressOuter = styled.div<StyledProgressProps>`
   display: flex;
   align-items: center;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors?.background?.secondary || "#f5f5f5"};
-  border-radius: ${({ theme }) => theme.borderRadius?.xl || "9999px"};
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
   position: relative;
   overflow: hidden;
   
@@ -38,7 +38,7 @@ export const ProgressOuter = styled.div<StyledProgressProps>`
   ${({ accessibility, theme }) =>
     accessibility?.highContrast &&
     css`
-      border: 2px solid ${theme.colors?.border?.normal || "#d9d9d9"};
+      border: 2px solid ${theme.colors.border.normal};
     `}
 `;
 
@@ -50,8 +50,8 @@ export const ProgressInner = styled.div<StyledProgressProps & {
 }>`
   height: 100%;
   background: ${({ $strokeColor, theme }) =>
-    $strokeColor || theme.colors?.primary?.[500] || "#1890ff"};
-  border-radius: ${({ theme }) => theme.borderRadius?.xl || "9999px"};
+    $strokeColor || theme.colors.primary[500]};
+  border-radius: ${({ theme }) => theme.borderRadius.xl};
   transition: ${({ accessibility }) =>
     accessibility?.reducedMotion ? "none" : "width 0.3s ease"};
   position: relative;
@@ -61,13 +61,13 @@ export const ProgressInner = styled.div<StyledProgressProps & {
   ${({ $status, theme }) =>
     $status === "success" &&
     css`
-      background: ${theme.colors?.success?.[500] || "#52c41a"};
+      background: ${theme.colors.success[500]};
     `}
   
   ${({ $status, theme }) =>
     $status === "exception" &&
     css`
-      background: ${theme.colors?.error?.[500] || "#ff4d4f"};
+      background: ${theme.colors.error[500]};
     `}
   
   ${({ $status }) =>
@@ -107,33 +107,33 @@ export const ProgressText = styled.span<StyledProgressProps>`
   transform: translateY(-50%);
   font-size: ${({ theme, $size }) => {
     const sizeMap: Record<string, string> = {
-      sm: theme.typography?.fontSize?.xs || "11px",
-      md: theme.typography?.fontSize?.sm || "12px",
-      lg: theme.typography?.fontSize?.md || "14px",
+      sm: theme.typography.fontSize.xs,
+      md: theme.typography.fontSize.sm,
+      lg: theme.typography.fontSize.md,
     };
     return sizeMap[$size || "md"];
   }};
-  color: ${({ theme }) => theme.colors?.text?.secondary || "#8c8c8c"};
-  font-weight: ${({ theme }) => theme.typography?.fontWeight?.medium || 500};
-  margin-left: ${({ theme }) => theme.spacing?.sm || "8px"};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  margin-left: ${({ theme }) => theme.spacing.sm};
   
   ${({ accessibility, theme }) =>
     accessibility?.highContrast &&
     css`
-      color: ${theme.colors?.text?.primary || "#000"};
-      font-weight: ${theme.typography?.fontWeight?.semibold || 600};
+      color: ${theme.colors.text.primary};
+      font-weight: ${theme.typography.fontWeight.semibold};
     `}
   
   ${({ accessibility, theme }) =>
     accessibility?.largeText &&
     css`
-      font-size: ${theme.typography?.fontSize?.md || "14px"};
+      font-size: ${theme.typography.fontSize.md};
     `}
 `;
 
 export const ProgressSteps = styled.div<StyledProgressProps & { $steps: number }>`
   display: flex;
-  gap: ${({ theme }) => theme.spacing?.xs || "4px"};
+  gap: ${({ theme }) => theme.spacing.xs};
   width: 100%;
 `;
 
@@ -148,11 +148,11 @@ export const ProgressStep = styled.div<StyledProgressProps & { $active: boolean;
     return sizeMap[$size || "md"];
   }};
   background: ${({ $active, $passed, theme }) => {
-    if ($passed) return theme.colors?.success?.[500] || "#52c41a";
-    if ($active) return theme.colors?.primary?.[500] || "#1890ff";
-    return theme.colors?.background?.secondary || "#f5f5f5";
+    if ($passed) return theme.colors.success[500];
+    if ($active) return theme.colors.primary[500];
+    return theme.colors.background.secondary;
   }};
-  border-radius: ${({ theme }) => theme.borderRadius?.sm || "4px"};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
   transition: ${({ accessibility }) =>
     accessibility?.reducedMotion ? "none" : "background 0.3s ease"};
 `;

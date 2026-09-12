@@ -15,12 +15,12 @@ export const glassMixin = (blurKey: BlurKey = 'glass') => css`
 `;
 
 export const hoverLiftMixin = (distance = '-2px') => css`
-  transition: transform ${({ theme }) => theme?.transitions?.normal || "0.3s ease"},
-              box-shadow ${({ theme }) => theme?.transitions?.normal || "0.3s ease"};
+  transition: transform ${({ theme }) => theme.transitions.normal},
+              box-shadow ${({ theme }) => theme.transitions.normal};
 
   &:hover {
     transform: translateY(${distance});
-    box-shadow: ${({ theme }) => theme?.shadows?.medium || "0 4px 6px rgba(0, 0, 0, 0.1)"};
+    box-shadow: ${({ theme }) => theme.shadows.medium};
   }
 `;
 

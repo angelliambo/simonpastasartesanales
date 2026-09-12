@@ -92,9 +92,9 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
       return;
     }
 
-    const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+    const clientId = process.env.VITE_GOOGLE_CLIENT_ID;
     if (!clientId) {
-      console.warn("REACT_APP_GOOGLE_CLIENT_ID no configurado");
+      console.warn("VITE_GOOGLE_CLIENT_ID no configurado");
       return;
     }
 

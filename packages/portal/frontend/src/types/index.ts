@@ -1,6 +1,5 @@
 // Exportar todos los tipos
 export * from "./auth";
-export * from "./activities";
 
 // Tipos generales del sistema
 export interface ApiResponse<T> {
