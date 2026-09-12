@@ -215,7 +215,7 @@ const SupportPage: React.FC = () => {
               userId={authUser?._id}
               userEmail={authUser?.email}
               userName={authUser?.email ? authUser.email.split("@")[0] : ""}
-              apiBaseUrl={process.env.REACT_APP_API_URL || "http://localhost:5000/api"}
+              apiBaseUrl={process.env.VITE_API_URL || "http://localhost:5000/api"}
             />
           ) : (
             <CustomCard>

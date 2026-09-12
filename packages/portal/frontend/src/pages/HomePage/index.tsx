@@ -101,7 +101,7 @@ const SECTION_LABELS: Record<string, string> = {
   cta: "Comenzar",
 };
 
-const G_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || '';
+const G_ID = process.env.VITE_GOOGLE_CLIENT_ID || '';
 
 
 

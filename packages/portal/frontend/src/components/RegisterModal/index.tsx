@@ -30,7 +30,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, initialStep = 'e
   const [code, setCode] = useState('');
   const [msg, setMsg] = useState('');
   const [err, setErr] = useState('');
-  const G_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const G_ID = process.env.VITE_GOOGLE_CLIENT_ID;
 
   const handleSend = useCallback(async () => {
     if (!email.includes('@')) { setErr('Correo inválido'); return; }
