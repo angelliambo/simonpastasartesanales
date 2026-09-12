@@ -29,7 +29,7 @@ ls -la env.*
 
 echo ""
 echo "🚀 Para iniciar el backend:"
-echo "   cd backend && yarn dev"
+echo "   pnpm dev"
 echo ""
 echo "🔍 Para verificar que funciona:"
 echo "   curl http://localhost:5000/"

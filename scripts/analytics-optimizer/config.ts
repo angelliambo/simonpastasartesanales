@@ -18,7 +18,7 @@ export const ANALYTICS_CONFIG = {
   portal: {
     name: `${BRAND_CONFIG.siteName} Portal Web`,
     domain: process.env.PORTAL_DOMAIN || BRAND_CONFIG.domain,
-    measurementId: process.env.REACT_APP_GA_MEASUREMENT_ID || process.env.GA4_MEASUREMENT_ID || '',
+    measurementId: process.env.VITE_GA_MEASUREMENT_ID || process.env.REACT_APP_GA_MEASUREMENT_ID || process.env.GA4_MEASUREMENT_ID || '',
     propertyId: process.env.GA4_PORTAL_PROPERTY_ID || process.env.GA4_PROPERTY_ID || '',
   },
   backend: {
