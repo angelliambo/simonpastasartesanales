@@ -2,7 +2,7 @@ import React from "react";
 import Card from '@design-sys/atoms/Card';
 import Tag from '@design-sys/atoms/Tag';
 import Text from '@design-sys/atoms/Text';
-import { useThemeColors } from "../../../../hooks";
+import { useThemeColors } from "../../../../hooks/useThemeColors";
 import { getGradient } from "../../../../styles/themes";
 
 interface GameCardProps {
