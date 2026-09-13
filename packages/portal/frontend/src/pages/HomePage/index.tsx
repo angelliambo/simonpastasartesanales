@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "@tanstack/react-router";
+import { useAuth } from "../../contexts/AuthContext";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { SUPPORTED_LOCALES } from "../../i18n";
 import { FEATURES } from "@factory/shared/config/features";
@@ -17,8 +17,6 @@ import {
   ContentSection,
   ContentCard,
 } from "../../components/ui/organisms/ConfigPageLayout";
-
-import { RootState } from "../../store/store";
 
 import TrackedClick from "../../components/TrackedClick";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
@@ -107,9 +105,7 @@ const G_ID = process.env.VITE_GOOGLE_CLIENT_ID || '';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const loggedInUser = useSelector((state: RootState) => state.auth.user) as {
-    email?: string;
-  } | null;
+  const { user: loggedInUser } = useAuth();
   const { t, lang } = useTranslation();
 
   const LANG_FLAGS: Record<string, { flag: string; name: string }> = {
@@ -155,7 +151,7 @@ const HomePage: React.FC = () => {
   const activeSections = getSections(shouldHideInstagramSection);
 
   const handleLogin = useCallback(() => setShowRegister(true), []);
-  const handlePricing = useCallback(() => navigate("/pricing"), [navigate]);
+  const handlePricing = useCallback(() => navigate({ to: "/pricing" as any }), [navigate]);
 
   const userInteracted = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -248,7 +244,7 @@ const HomePage: React.FC = () => {
               {t("pages.home.heroDashboardButton")} <ZnIcon icon={RocketOutlined} />
             </CtaButtonContent>
           ),
-          onClick: () => navigate("/dashboard")
+          onClick: () => navigate({ to: "/dashboard" })
         };
       } else {
         return {
@@ -291,7 +287,7 @@ const HomePage: React.FC = () => {
         return (
           <>
             <TrackedClick label="Hero - Ir al Dashboard" action="click_cta" category="marketing">
-              <HeroPrimaryButton onClick={() => navigate("/dashboard")} variant="primary">
+              <HeroPrimaryButton onClick={() => navigate({ to: "/dashboard" })} variant="primary">
                 {t("pages.home.heroDashboardButton")}
               </HeroPrimaryButton>
             </TrackedClick>
@@ -383,7 +379,7 @@ const HomePage: React.FC = () => {
         <HeroContent>
           <LogoWrapper>
             <ImageWithSkeleton
-              as={Logo}
+              {...({ as: Logo } as any)}
               src={BRAND_CONFIG.logoUrl || `${process.env.PUBLIC_URL}/assets/images/logo.png`}
               alt={BRAND_CONFIG.siteName}
               width="100%"

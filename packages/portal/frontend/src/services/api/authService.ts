@@ -1,60 +1,89 @@
-import { api } from "./base";
+import { useMutation } from "@tanstack/react-query";
+import apiClient from "./client";
 
-export const authApi = api.injectEndpoints({
-  endpoints: (builder) => ({
-    sendToken: builder.mutation({
-      query: ({ email }) => ({
-        url: "/auth/send-token",
+export const useSendTokenMutation = () => {
+  const mutation = useMutation({
+    mutationFn: (body: { email: string }) =>
+      apiClient<{ message?: string; devCode?: string }>("/auth/send-token", {
         method: "POST",
-        body: { email },
+        body: JSON.stringify(body),
       }),
-    }),
-    verifyToken: builder.mutation({
-      query: ({ email, code }) => ({
-        url: "/auth/verify-token",
-        method: "POST",
-        body: { email, code },
-      }),
-    }),
-    googleLogin: builder.mutation({
-      query: ({ idToken }) => ({
-        url: "/auth/google",
-        method: "POST",
-        body: { idToken },
-      }),
-    }),
-    exchange: builder.mutation({
-      query: ({ userId }) => ({
-        url: "/auth/exchange",
-        method: "POST",
-        body: { userId },
-      }),
-    }),
-    restoreRequest: builder.mutation({
-      query: ({ email }) => ({
-        url: "/auth/restore-request",
-        method: "POST",
-        body: { email },
-      }),
-    }),
-    restoreConfirm: builder.mutation({
-      query: ({ email, code }) => ({
-        url: "/auth/restore-confirm",
-        method: "POST",
-        body: { email, code },
-      }),
-    }),
-  }),
-  overrideExisting: false,
-});
+  });
+  const trigger = (args: { email: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
+  return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
+};
 
-export const {
-  useSendTokenMutation,
-  useVerifyTokenMutation,
-  useGoogleLoginMutation,
-  useExchangeMutation,
-  useRestoreRequestMutation,
-  useRestoreConfirmMutation,
-} = authApi;
+export const useVerifyTokenMutation = () => {
+  const mutation = useMutation({
+    mutationFn: (body: { email: string; code: string }) =>
+      apiClient<{ token?: string; user?: any; userId?: string; email?: string; role?: string; plan?: string; isNewUser?: boolean }>("/auth/verify-token", {
+        method: "POST",
+        body: JSON.stringify(body),
+      }),
+  });
+  const trigger = (args: { email: string; code: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
+  return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
+};
 
-export default authApi;
+export const useGoogleLoginMutation = () => {
+  const mutation = useMutation({
+    mutationFn: (body: { idToken: string }) =>
+      apiClient<{ token?: string; user?: any; userId?: string; email?: string; role?: string; plan?: string; isNewUser?: boolean }>("/auth/google", {
+        method: "POST",
+        body: JSON.stringify(body),
+      }),
+  });
+  const trigger = (args: { idToken: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
+  return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
+};
+
+export const useExchangeMutation = () => {
+  const mutation = useMutation({
+    mutationFn: (body: { userId: string }) =>
+      apiClient<{ token?: string }>("/auth/exchange", {
+        method: "POST",
+        body: JSON.stringify(body),
+      }),
+  });
+  const trigger = (args: { userId: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
+  return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
+};
+
+export const useRestoreRequestMutation = () => {
+  const mutation = useMutation({
+    mutationFn: (body: { email: string }) =>
+      apiClient<{ message?: string }>("/auth/restore-request", {
+        method: "POST",
+        body: JSON.stringify(body),
+      }),
+  });
+  const trigger = (args: { email: string }) => {
+    const promise = mutation.mutateAsync(args);
+    return Object.assign(promise, { unwrap: () => promise });
+  };
+  return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
+};
+
+export const useRestoreConfirmMutation = () => {
+  const mutation = useMutation({
+    mutationFn: (body: { email: string; code: string }) =>
+      apiClient<{ message?: string }>("/auth/restore-confirm", {
+        method: "POST",
+        body: JSON.stringify(body),
+      }),
+  });
+  const trigger = (args: { email: string; code: string }) => mutation.mutateAsync(args);
+  return [trigger, { ...mutation, isLoading: mutation.isPending }] as const;
+};

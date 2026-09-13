@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "../i18n/I18nProvider";
 import {
   Container,
@@ -20,7 +20,7 @@ const NotFoundPage: React.FC = () => {
       <Description>
         {t('pages.notFound.description')}
       </Description>
-      <StyledButton onClick={() => navigate("/")}>
+      <StyledButton onClick={() => navigate({ to: "/" })}>
         🏠 {t('pages.notFound.goHomeButton')}
       </StyledButton>
     </Container>

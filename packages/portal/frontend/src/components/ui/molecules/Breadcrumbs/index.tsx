@@ -1,7 +1,7 @@
 import React from "react";
 import { Breadcrumb } from '@design-sys/atoms/Breadcrumb';
 import Text from '@design-sys/atoms/Text';
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import {
   useBreadcrumbs,
   useThemeColors,

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import { Typography } from "antd";
 
 const { Paragraph } = Typography;

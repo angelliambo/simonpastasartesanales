@@ -343,15 +343,15 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
     total: state.notifications.length,
     unread: getUnreadCount(),
     byCategory: Object.values(NotificationCategory).reduce((acc, category) => {
-      acc[category] = getNotificationsByCategory(category).length;
+      acc[category as NotificationCategory] = getNotificationsByCategory(category as NotificationCategory).length;
       return acc;
     }, {} as Record<NotificationCategory, number>),
     byType: Object.values(NotificationType).reduce((acc, type) => {
-      acc[type] = getNotificationsByType(type).length;
+      acc[type as NotificationType] = getNotificationsByType(type as NotificationType).length;
       return acc;
     }, {} as Record<NotificationType, number>),
     byPriority: Object.values(NotificationPriority).reduce((acc, priority) => {
-      acc[priority] = state.notifications.filter(
+      acc[priority as NotificationPriority] = state.notifications.filter(
         (n) => n.priority === priority
       ).length;
       return acc;

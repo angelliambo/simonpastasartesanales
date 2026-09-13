@@ -17,7 +17,7 @@ interface UseAccessibilityReturn {
   refreshSettings: () => Promise<void>;
 }
 
-const STORAGE_KEY = "zn-portal-accessibility-settings";
+const STORAGE_KEY = "portal_accessibility_settings";
 
 const defaultSettings: AccessibilitySettings = {
   highContrast: false,

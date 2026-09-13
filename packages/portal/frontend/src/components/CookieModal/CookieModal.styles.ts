@@ -3,7 +3,7 @@ import Card from '@design-sys/atoms/Card';
 import Text from '@design-sys/atoms/Text';
 import Title from '@design-sys/atoms/Title';
 import Button from '@design-sys/atoms/Button';
-import { Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
 
 export const Overlay = styled.div<{ $isOpen: boolean }>`
   position: fixed;

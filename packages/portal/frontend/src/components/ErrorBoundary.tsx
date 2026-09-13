@@ -185,11 +185,11 @@ class ErrorBoundary extends Component<Props, State> {
       try {
         // Restaurar tema por defecto en localStorage
         localStorage.setItem(
-          "zn-portal-user-theme",
+          "portal_user_theme",
           JSON.stringify({ theme: "light", accessibility: "default", autoDetect: false })
         );
         localStorage.setItem(
-          "zn-portal-accessibility-preferences",
+          "portal_accessibility_settings",
           JSON.stringify({
             theme: "default",
             highContrast: false,

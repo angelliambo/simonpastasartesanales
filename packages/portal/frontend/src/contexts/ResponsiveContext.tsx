@@ -111,7 +111,7 @@ export const ResponsiveProvider: React.FC<ResponsiveProviderProps> = ({ children
         setWindowSize(initialSize);
       }
     }
-    // eslint-disable-next-line
+     
   }, []); // Solo ejecutar una vez después del mount
   
   // Valor del contexto memoizado

@@ -31,14 +31,14 @@ export const TrackedClick: React.FC<TrackedClickProps> = ({
   children
 }) => {
   // Asegurar que recibimos exactamente un elemento hijo interactivo
-  const child = React.Children.only(children);
+  const child = React.Children.only(children) as React.ReactElement<any>;
 
   const handleClick = (e: React.MouseEvent<any>) => {
     // Registrar el evento en el servicio centralizado de GA4
     trackEvent(action, category, label, value);
 
     // Ejecutar el onClick original del componente hijo si existía
-    if (child.props.onClick) {
+    if (child.props?.onClick) {
       child.props.onClick(e);
     }
   };
@@ -46,7 +46,7 @@ export const TrackedClick: React.FC<TrackedClickProps> = ({
   // Retornar el clon del hijo con el onClick interceptado
   return React.cloneElement(child, {
     onClick: handleClick
-  });
+  } as any);
 };
 
 export default TrackedClick;

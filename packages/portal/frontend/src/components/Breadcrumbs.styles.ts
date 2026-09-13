@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import { Breadcrumb } from '@design-sys/atoms/Breadcrumb';
 
 export const IconContainer = styled.span`
