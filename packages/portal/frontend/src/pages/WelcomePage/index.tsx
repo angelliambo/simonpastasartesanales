@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "../../i18n/I18nProvider";
-import { RootState } from "../../store/store";
+import { useAuth } from "../../contexts/AuthContext";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import GoogleSignInButton from "../../components/GoogleSignInButton";
 import { useSendTokenMutation, useVerifyTokenMutation } from "../../services/api/authService";
-import { setCredentials } from "../../store/slices/authSlice";
 import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import {
   GlobalOutlined,
@@ -56,16 +54,15 @@ const G_ID = process.env.VITE_GOOGLE_CLIENT_ID || "";
 
 export const WelcomePage: React.FC = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const loggedInUser = useSelector((state: RootState) => state.auth.user);
+  const { user: loggedInUser, setCredentials } = useAuth();
   const { showSuccess, showInfo } = useSnackbar();
 
   const [sendToken, { isLoading: sending }] = useSendTokenMutation();
   const [verifyToken, { isLoading: verifying }] = useVerifyTokenMutation();
 
   const [termsAccepted, setTermsAccepted] = useState(() => {
-    return localStorage.getItem("zn-terms-accepted") === "true";
+    return localStorage.getItem("portal_terms_accepted") === "true";
   });
   const [showManualForm, setShowManualForm] = useState(false);
   const [manualStep, setManualStep] = useState<'email' | 'code'>('email');
@@ -76,7 +73,7 @@ export const WelcomePage: React.FC = () => {
 
   const handleStart = () => {
     if (termsAccepted) {
-      localStorage.setItem("zn-terms-accepted", "true");
+      localStorage.setItem("portal_terms_accepted", "true");
       navigate({ to: "/dashboard" });
     }
   };
@@ -98,10 +95,10 @@ export const WelcomePage: React.FC = () => {
     setErr(''); setMsg(t('pages.wellcome.verificando') || 'Verificando...');
     try {
       const result = await verifyToken({ email, code }).unwrap();
-      dispatch(setCredentials({
+      setCredentials({
         user: { _id: result.userId || "", email: result.email || "", role: (result.role as any) || "user", plan: (result.plan as any) || "free" },
         token: result.token || "",
-      }));
+      });
       if (result.isNewUser) {
         showSuccess(t('pages.errors.actionSuccess', { action: t('pages.errors.actionRegister', 'Registro de cuenta') }), 4000);
       } else {

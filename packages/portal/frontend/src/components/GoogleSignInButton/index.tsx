@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 import { useGoogleLoginMutation } from "../../services/api/authService";
-import { setCredentials } from "../../store/slices/authSlice";
+import { useAuth } from "../../contexts/AuthContext";
 import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import { useTranslation } from "../../i18n/I18nProvider";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
@@ -18,7 +17,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   onSuccess,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
+  const { setCredentials } = useAuth();
   const { t } = useTranslation();
   const [googleLogin] = useGoogleLoginMutation();
   const { showSuccess, showInfo } = useSnackbar();
@@ -26,7 +25,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   // Use refs to store volatile values and callbacks, preventing useEffect re-runs
   const onSuccessRef = useRef(onSuccess);
   const googleLoginRef = useRef(googleLogin);
-  const dispatchRef = useRef(dispatch);
+  const setCredentialsRef = useRef(setCredentials);
   const showSuccessRef = useRef(showSuccess);
   const showInfoRef = useRef(showInfo);
   const tRef = useRef(t);
@@ -41,8 +40,8 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   }, [googleLogin]);
 
   useEffect(() => {
-    dispatchRef.current = dispatch;
-  }, [dispatch]);
+    setCredentialsRef.current = setCredentials;
+  }, [setCredentials]);
 
   useEffect(() => {
     showSuccessRef.current = showSuccess;
@@ -63,10 +62,16 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   handleGoogleCallbackRef.current = async (response: GoogleCredentialResponse) => {
     try {
       const result = await googleLoginRef.current({ idToken: response.credential }).unwrap();
-      dispatchRef.current(setCredentials({
-        user: { _id: result.userId, email: result.email, role: result.role, plan: result.plan },
-        token: result.token,
-      }));
+      const userObj = result.user || {
+        _id: result.userId || "",
+        email: result.email || "",
+        ...(result.role ? { role: result.role } : {}),
+        ...(result.plan ? { plan: result.plan } : {}),
+      };
+      setCredentialsRef.current({
+        user: userObj,
+        token: result.token || "",
+      });
       if (result.isNewUser) {
         showSuccessRef.current(tRef.current('pages.errors.actionSuccess', { action: tRef.current('pages.errors.actionRegister', 'Registro de cuenta') }), 4000);
       } else {
@@ -153,7 +158,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
       // Clean up active prompts on unmount
       if (window.google?.accounts?.id && oneTap) {
         try {
-          window.google.accounts.id.cancel();
+          window.google.accounts.id.cancel?.();
         } catch (err) {
           console.warn("Error cancelling Google One Tap prompt:", err);
         }

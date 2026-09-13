@@ -42,7 +42,7 @@ const TOUR_STEPS: GuidedTourStep[] = [
 ];
 
 const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
-  const { t, locale } = useTranslation();
+  const { t, lang } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
@@ -106,7 +106,7 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
         "speechSynthesis" in window
       ) {
         const utterance = new SpeechSynthesisUtterance(textToSpeak);
-        utterance.lang = locale?.startsWith("en") ? "en-US" : "es-AR";
+        utterance.lang = lang?.startsWith("en") ? "en-US" : "es-AR";
         utterance.rate = 0.95;
         utterance.pitch = 1.0;
 
@@ -155,7 +155,7 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
         }
       }
     },
-    [finishTour, isMuted, locale, scrollToTarget, stopAudio, t]
+    [finishTour, isMuted, lang, scrollToTarget, stopAudio, t]
   );
 
   const handleStartTour = useCallback(() => {
@@ -286,8 +286,8 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
           </CardTitleGroup>
           <StepCounterBadge>
             {t("pages.home.guidedTourStepCount", {
-              current: safeStepIndex + 1,
-              total: TOUR_STEPS.length,
+              current: String(safeStepIndex + 1),
+              total: String(TOUR_STEPS.length),
             })}
           </StepCounterBadge>
           <CloseIconButton

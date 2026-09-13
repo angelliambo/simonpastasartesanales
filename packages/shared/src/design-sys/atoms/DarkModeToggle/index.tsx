@@ -28,7 +28,7 @@ export const DarkModeToggle: React.FC<DarkModeToggleProps> = ({
 
   // Cargar estado inicial del localStorage del usuario
   useEffect(() => {
-    const savedTheme = localStorage.getItem("zn-portal-user-theme");
+    const savedTheme = localStorage.getItem("portal_user_theme");
     let initialTheme = false; // Por defecto light mode
 
     if (savedTheme) {
@@ -106,7 +106,7 @@ export const DarkModeToggle: React.FC<DarkModeToggleProps> = ({
       theme: newDarkMode ? "dark" : "light",
       accessibility: "default",
     };
-    localStorage.setItem("zn-portal-user-theme", JSON.stringify(themeConfig));
+    localStorage.setItem("portal_user_theme", JSON.stringify(themeConfig));
 
     // Callback opcional
     if (onToggle) {
