@@ -1,13 +1,12 @@
 {
   "name": "@factory/frontend",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.6.1",
     "@factory/shared": "workspace:*",
     "@react-oauth/google": "^0.13.5",
-    "@reduxjs/toolkit": "^2.9.0",
     "@tanstack/react-query": "^5.102.8",
     "@tanstack/react-router": "^1.170.35",
     "@testing-library/react": "^16.3.0",
@@ -21,7 +20,6 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-helmet-async": "^2.0.5",
-    "react-redux": "^9.2.0",
     "styled-components": "^6.1.19",
     "web-vitals": "^2.1.4"
   },

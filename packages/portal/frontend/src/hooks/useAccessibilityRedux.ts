@@ -1,49 +1,57 @@
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
-import {
-  setHighContrast,
-  setFontSize,
-  setReducedMotion,
-  reset,
-} from "../store/slices/accessibilitySlice";
+import { useState, useEffect, useCallback } from "react";
+
+export interface AccessibilitySettings {
+  highContrast: boolean;
+  fontSize: number;
+  reducedMotion: boolean;
+}
+
+const STORAGE_KEY = "portal_accessibility_settings";
+
+const defaultSettings: AccessibilitySettings = {
+  highContrast: false,
+  fontSize: 16,
+  reducedMotion: false,
+};
 
 export const useAccessibilityRedux = () => {
-  const dispatch = useDispatch();
-  const state = useSelector((state: RootState) => state.accessibility);
+  const [settings, setSettings] = useState<AccessibilitySettings>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return defaultSettings;
+  });
 
-  const updatePreferences = (updates: Partial<typeof state>) => {
-    if (updates.highContrast !== undefined) {
-      dispatch(setHighContrast(updates.highContrast));
-    }
-    if (updates.fontSize !== undefined) {
-      dispatch(setFontSize(updates.fontSize));
-    }
-    if (updates.reducedMotion !== undefined) {
-      dispatch(setReducedMotion(updates.reducedMotion));
-    }
-  };
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    } catch {}
+  }, [settings]);
 
-  const toggleHighContrast = () => {
-    dispatch(setHighContrast(!state.highContrast));
-  };
+  const updatePreferences = useCallback((updates: Partial<AccessibilitySettings>) => {
+    setSettings((prev) => ({ ...prev, ...updates }));
+  }, []);
 
-  const toggleReducedMotion = () => {
-    dispatch(setReducedMotion(!state.reducedMotion));
-  };
+  const toggleHighContrast = useCallback(() => {
+    setSettings((prev) => ({ ...prev, highContrast: !prev.highContrast }));
+  }, []);
 
-  const updateFontSize = (fontSize: number) => {
-    dispatch(setFontSize(fontSize));
-  };
+  const toggleReducedMotion = useCallback(() => {
+    setSettings((prev) => ({ ...prev, reducedMotion: !prev.reducedMotion }));
+  }, []);
 
-  const resetToDefaults = () => {
-    dispatch(reset());
-  };
+  const updateFontSize = useCallback((fontSize: number) => {
+    setSettings((prev) => ({ ...prev, fontSize }));
+  }, []);
+
+  const resetToDefaults = useCallback(() => {
+    setSettings(defaultSettings);
+  }, []);
 
   return {
-    preferences: state,
-    isLoading: false,
-    error: null,
-    lastUpdated: null,
+    ...settings,
+    preferences: settings,
     updatePreferences,
     toggleHighContrast,
     toggleReducedMotion,
@@ -51,3 +59,5 @@ export const useAccessibilityRedux = () => {
     resetToDefaults,
   };
 };
+
+export default useAccessibilityRedux;

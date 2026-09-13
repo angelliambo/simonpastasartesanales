@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "@tanstack/react-router";
 import { useGetProfileQuery, useRequestDeletionMutation, useDeleteAccountMutation } from "../../services/api/userService";
-import { logout } from "../../store/slices/authSlice";
-
+import { useAuth } from "../../contexts/AuthContext";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
@@ -15,7 +13,6 @@ import {
   MessageOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import type { RootState } from "../../store/store";
 import {
   PageContainer,
   Content,
@@ -56,10 +53,8 @@ import {
 
 const DashboardPage: React.FC = () => {
   const { t } = useTranslation();
-  const authUser = useSelector((state: RootState) => state.auth.user);
-  const token = useSelector((state: RootState) => state.auth.token);
+  const { user: authUser, token, logout } = useAuth();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { showSuccess, showError } = useSnackbar();
   const [deleteStep, setDeleteStep] = useState<'idle' | 'code' | 'done'>('idle');
   const [deleteCode, setDeleteCode] = useState('');
@@ -141,7 +136,7 @@ const DashboardPage: React.FC = () => {
       setDeleteMsg(msg);
       showSuccess(t('pages.errors.actionSuccess', { action: t('pages.errors.actionDeleteAccount', 'Eliminación definitiva de cuenta') }));
       setDeleteStep('done');
-      setTimeout(() => { dispatch(logout()); navigate({ to: '/' }); }, 2000);
+      setTimeout(() => { logout(); navigate({ to: '/' }); }, 2000);
     } catch (err: any) {
       const errMsg = err.data?.error || t('pages.errors.actionError', { action: t('pages.errors.actionDeleteAccount', 'Eliminación definitiva de cuenta') });
       setDeleteErr(errMsg);

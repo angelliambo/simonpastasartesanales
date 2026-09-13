@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { useSendTokenMutation, useVerifyTokenMutation } from '../../services/api/authService';
-import { setCredentials } from '../../store/slices/authSlice';
+import { useAuth } from '../../contexts/AuthContext';
 import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import { useTranslation } from '../../i18n/I18nProvider';
 import GoogleSignInButton from '../GoogleSignInButton';
@@ -18,7 +17,7 @@ interface RegisterModalProps {
 }
 
 const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, initialStep = 'email' }) => {
-  const dispatch = useDispatch();
+  const { setCredentials } = useAuth();
   const { t } = useTranslation();
   const { showSuccess, showInfo } = useSnackbar();
   const [sendToken, { isLoading: sending }] = useSendTokenMutation();
@@ -49,10 +48,10 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, initialStep = 'e
     setErr(''); setMsg('Verificando...');
     try {
       const result = await verifyToken({ email, code }).unwrap();
-      dispatch(setCredentials({
-        user: { _id: result.userId, email: result.email, role: result.role, plan: result.plan },
-        token: result.token,
-      }));
+      setCredentials({
+        user: { _id: result.userId || "", email: result.email || "", role: (result.role as any) || "user", plan: (result.plan as any) || "free" },
+        token: result.token || "",
+      });
       if (result.isNewUser) {
         showSuccess(t('pages.errors.actionSuccess', { action: t('pages.errors.actionRegister', 'Registro de cuenta') }), 4000);
       } else {
@@ -63,7 +62,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ onClose, initialStep = 'e
       setErr(e.data?.error || 'Código incorrecto');
       setMsg('');
     }
-  }, [email, code, verifyToken, dispatch, showSuccess, showInfo, onClose]);
+  }, [email, code, verifyToken, setCredentials, showSuccess, showInfo, onClose]);
 
   const renderGoogleButton = () => {
     console.log("🚀 ~ renderGoogleButton ~ G_ID:", G_ID)

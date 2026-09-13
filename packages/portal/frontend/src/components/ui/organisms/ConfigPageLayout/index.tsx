@@ -200,7 +200,6 @@ export const ContentCard = memo<{
   return (
     <CardWrapper
       $variant={variant}
-      size="lg"
       onClick={onClick}
       className={className}
       $hasClick={!!onClick}

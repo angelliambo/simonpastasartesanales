@@ -3,9 +3,10 @@ import React, { createContext, useContext, useState, useEffect, ReactNode, useCa
 export interface AuthUser {
   _id: string;
   email: string;
-  role: "user" | "admin";
-  plan: "free" | "6_meses" | "1_ano" | "god_mode" | "trial";
+  role?: string;
+  plan?: string;
   isAdmin?: boolean;
+  [key: string]: any;
 }
 
 interface AuthContextType {
@@ -48,8 +49,8 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(() => {
     try {
-      const savedUser = localStorage.getItem("zn-portal-user");
-      const savedAuth = localStorage.getItem("zn-portal-auth");
+      const savedUser = localStorage.getItem("portal_user");
+      const savedAuth = localStorage.getItem("portal_auth");
       if (savedUser && savedAuth) {
         const auth = JSON.parse(savedAuth);
         if (auth?.token && !isTokenExpired(auth.token)) {
@@ -62,7 +63,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const [token, setToken] = useState<string | null>(() => {
     try {
-      const savedAuth = localStorage.getItem("zn-portal-auth");
+      const savedAuth = localStorage.getItem("portal_auth");
       if (savedAuth) {
         const auth = JSON.parse(savedAuth);
         if (auth?.token && !isTokenExpired(auth.token)) {
@@ -76,25 +77,24 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const setCredentials = useCallback((payload: { user: AuthUser; token: string }) => {
     setUser(payload.user);
     setToken(payload.token);
-    localStorage.setItem("zn-portal-user", JSON.stringify(payload.user));
-    localStorage.setItem("zn-portal-auth", JSON.stringify({ token: payload.token }));
-    localStorage.setItem("zn_auth_token", payload.token);
+    localStorage.setItem("portal_user", JSON.stringify(payload.user));
+    localStorage.setItem("portal_auth", JSON.stringify({ token: payload.token }));
+    localStorage.setItem("auth_token", payload.token);
   }, []);
 
   const logout = useCallback(() => {
     setUser(null);
     setToken(null);
-    localStorage.removeItem("zn-portal-user");
-    localStorage.removeItem("zn-portal-auth");
-    localStorage.removeItem("zn-portal-auth-last-checked");
-    localStorage.removeItem("zn_auth_token");
+    localStorage.removeItem("portal_user");
+    localStorage.removeItem("portal_auth");
+    localStorage.removeItem("auth_token");
   }, []);
 
   useEffect(() => {
     if (token) {
-      localStorage.setItem("zn_auth_token", token);
+      localStorage.setItem("auth_token", token);
     } else {
-      localStorage.removeItem("zn_auth_token");
+      localStorage.removeItem("auth_token");
     }
   }, [token]);
 

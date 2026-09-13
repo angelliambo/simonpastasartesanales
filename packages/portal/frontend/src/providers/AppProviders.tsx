@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { HelmetProvider } from "react-helmet-async";
-import { StoreProvider } from "../store/StoreProvider";
+import { AuthProvider } from "../contexts/AuthContext";
 import { ProgressProvider } from "../contexts/ProgressContext";
 import { ThemeProvider, useTheme } from "../styles/ThemeProvider";
 import { ResponsiveProvider } from "../contexts/ResponsiveContext";
@@ -53,7 +53,7 @@ export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
   return (
     <HelmetProvider>
       <QueryProvider>
-        <StoreProvider>
+        <AuthProvider>
           <I18nProvider>
             <ResponsiveProvider>
               <ProgressProvider>
@@ -69,7 +69,7 @@ export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => {
               </ProgressProvider>
             </ResponsiveProvider>
           </I18nProvider>
-        </StoreProvider>
+        </AuthProvider>
       </QueryProvider>
     </HelmetProvider>
   );

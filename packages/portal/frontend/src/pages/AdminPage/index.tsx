@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../store/store";
+import { useAuth } from "../../contexts/AuthContext";
 import { useTranslation } from "../../i18n/I18nProvider";
-import { setCredentials } from "../../store/slices/authSlice";
 import { Input } from '@design-sys/atoms/Input';
 import { Select } from '@design-sys/atoms/Select';
 import { Switch } from '@design-sys/atoms/Switch';
@@ -68,8 +66,7 @@ import {
 const AdminPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.auth.token);
+  const { token, setCredentials } = useAuth();
   const { showSuccess, showError } = useSnackbar();
   const [email, setEmail] = useState('');
   const [users, setUsers] = useState<any[]>([]);
@@ -439,10 +436,10 @@ const AdminPage: React.FC = () => {
       });
       const d = await r.json();
       if (!d.success) throw new Error(d.error);
-      dispatch(setCredentials({
+      setCredentials({
         user: { _id: d.userId, email: d.email, role: d.role, plan: d.plan, isAdmin: d.isAdmin },
         token: d.token,
-      }));
+      });
       navigate({ to: "/dashboard" });
     } catch (err: any) {
       showError(`${t('pages.errors.actionError', { action: t('pages.errors.actionLoginAs', 'Inicio de sesión suplantado') })}: ${err.message}`);

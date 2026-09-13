@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "./client";
-import type { PlanType, LicenseStatusType } from "../../store/slices/licenseSlice";
+export type PlanType = "free" | "6_meses" | "1_ano" | "god_mode" | "trial";
+export type LicenseStatusType = "active" | "trial" | "expired" | "none";
 
 export interface LicenseStatusResponse {
   plan: PlanType;

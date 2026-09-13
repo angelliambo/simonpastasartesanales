@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { useSelector } from "react-redux";
+import { useAuth } from "../../contexts/AuthContext";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { SUPPORTED_LOCALES } from "../../i18n";
 import { FEATURES } from "@factory/shared/config/features";
@@ -17,8 +17,6 @@ import {
   ContentSection,
   ContentCard,
 } from "../../components/ui/organisms/ConfigPageLayout";
-
-import { RootState } from "../../store/store";
 
 import TrackedClick from "../../components/TrackedClick";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
@@ -107,9 +105,7 @@ const G_ID = process.env.VITE_GOOGLE_CLIENT_ID || '';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const loggedInUser = useSelector((state: RootState) => state.auth.user) as {
-    email?: string;
-  } | null;
+  const { user: loggedInUser } = useAuth();
   const { t, lang } = useTranslation();
 
   const LANG_FLAGS: Record<string, { flag: string; name: string }> = {
