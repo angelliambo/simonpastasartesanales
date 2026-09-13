@@ -6,7 +6,7 @@ import {
   TABS_DEFAULTS,
   SIZE_MAPPING_TABS,
 } from "./Tabs.types";
-import { useThemeColors } from "../../../../hooks";
+import { useThemeColors } from "../../../../hooks/useThemeColors";
 import { usePersonalization } from '@design-sys/contexts/PersonalizationContext';
 
 // =====================================

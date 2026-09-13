@@ -1,7 +1,3 @@
-// Exportar todos los tipos
-export * from "./auth";
-
-// Tipos generales del sistema
 export interface ApiResponse<T> {
   success: boolean;
   data: T;
@@ -35,24 +31,4 @@ export interface RecentActivity {
   timestamp: Date;
   status: string;
   score?: number;
-}
-
-export interface Notification {
-  id: string;
-  userId: string;
-  type: NotificationType;
-  title: string;
-  message: string;
-  read: boolean;
-  createdAt: Date;
-  actionUrl?: string;
-}
-
-export enum NotificationType {
-  ACHIEVEMENT = "achievement",
-  REMINDER = "reminder",
-  PROGRESS_UPDATE = "progress_update",
-  THERAPIST_MESSAGE = "therapist_message",
-  PARENT_ALERT = "parent_alert",
-  SYSTEM = "system",
 }

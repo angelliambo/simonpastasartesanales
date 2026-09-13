@@ -1,10 +1,8 @@
 import React, { useCallback, useMemo, memo } from "react";
 import { getHeroGradient } from "../../../../styles/themes";
-import {
-  useResponsive,
-  useThemeColors,
-  useResponsiveSpacing,
-} from "../../../../hooks";
+import { useResponsive } from "../../../../hooks/useResponsive";
+import { useThemeColors } from "../../../../hooks/useThemeColors";
+import { useResponsiveSpacing } from "../../../../hooks/useResponsiveSpacing";
 import {
   LayoutOuter,
   LayoutInner,
