@@ -34,7 +34,7 @@ export const useVerifyTokenMutation = () => {
 export const useGoogleLoginMutation = () => {
   const mutation = useMutation({
     mutationFn: (body: { idToken: string }) =>
-      apiClient<{ token?: string; user?: any }>("/auth/google", {
+      apiClient<{ token?: string; user?: any; userId?: string; email?: string; role?: string; plan?: string; isNewUser?: boolean }>("/auth/google", {
         method: "POST",
         body: JSON.stringify(body),
       }),

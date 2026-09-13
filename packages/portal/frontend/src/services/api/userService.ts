@@ -1,12 +1,16 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient, queryOptions } from "@tanstack/react-query";
 import apiClient from "./client";
 
 export const USER_PROFILE_QUERY_KEY = ["user", "profile"];
 
+export const userProfileQueryOptions = queryOptions({
+  queryKey: USER_PROFILE_QUERY_KEY,
+  queryFn: () => apiClient<any>("/user/profile"),
+});
+
 export const useGetProfileQuery = (arg?: any, options?: { skip?: boolean }) => {
   const query = useQuery({
-    queryKey: USER_PROFILE_QUERY_KEY,
-    queryFn: () => apiClient<any>("/user/profile"),
+    ...userProfileQueryOptions,
     enabled: options?.skip !== true,
   });
 

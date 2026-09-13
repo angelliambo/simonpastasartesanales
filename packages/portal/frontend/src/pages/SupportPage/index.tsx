@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
 import { useSearch, useNavigate } from "@tanstack/react-router";
-import type { RootState } from "../../store/store";
 import { ContactForm } from "../../components/ContactForm";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { useTranslation } from "../../i18n/I18nProvider";
@@ -43,16 +41,16 @@ import {
   TicketNewMessageBadge,
   CardFooterRow,
 } from "./SupportPage.styles";
+import { useAuth } from "../../contexts/AuthContext";
 
 const SupportPage: React.FC = () => {
   const { t, lang } = useTranslation();
   const { showError } = useSnackbar();
-  const authUser = useSelector((state: RootState) => state.auth.user);
-  const token = useSelector((state: RootState) => state.auth.token);
+  const { user: authUser, token } = useAuth();
 
-  const search = useSearch({ strict: false });
+  const search = useSearch({ from: "/layout/support" });
   const navigate = useNavigate();
-  const queryTicketId = (search as any)?.ticketId;
+  const queryTicketId = search.ticketId;
 
   const [activeTab, setActiveTab] = useState<"new_ticket" | "my_tickets">(queryTicketId ? "my_tickets" : "new_ticket");
   const [tickets, setTickets] = useState<any[]>([]);

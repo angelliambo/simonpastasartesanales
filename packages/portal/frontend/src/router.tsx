@@ -5,15 +5,17 @@ import {
   createRouter,
   RouterProvider,
   Outlet,
+  redirect,
 } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { QueryClient } from "@tanstack/react-query";
 import { queryClient } from "./providers/QueryProvider";
 import Loading from "./components/loading";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { FEATURES } from "@factory/shared/config/features";
-import { USER_PROFILE_QUERY_KEY } from "./services/api/userService";
-import apiClient from "./services/api/client";
+import { userProfileQueryOptions } from "./services/api/userService";
+import { useAuth } from "./contexts/AuthContext";
 
 // Lazy loading de páginas
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -27,6 +29,7 @@ const WelcomePage = lazy(() => import("./pages/WelcomePage"));
 
 export interface RouterContext {
   queryClient: QueryClient;
+  auth?: ReturnType<typeof useAuth>;
 }
 
 // 1. Root Route
@@ -34,6 +37,7 @@ const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <Suspense fallback={<Loading />}>
       <Outlet />
+      {process.env.NODE_ENV === "development" && <TanStackRouterDevtools position="bottom-left" />}
     </Suspense>
   ),
   notFoundComponent: () => <NotFoundPage />,
@@ -62,13 +66,15 @@ const welcomeRoute = createRoute({
 const dashboardRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: "/dashboard",
+  beforeLoad: ({ context }) => {
+    const isAuth = context.auth?.isAuthenticated ?? (typeof window !== "undefined" && Boolean(localStorage.getItem("auth_token")));
+    if (!isAuth) {
+      throw redirect({ to: "/" });
+    }
+  },
   loader: async ({ context }) => {
-    // Prefetching de datos con QueryClient para carga instantánea
     await context.queryClient
-      .ensureQueryData({
-        queryKey: USER_PROFILE_QUERY_KEY,
-        queryFn: () => apiClient("/user/profile"),
-      })
+      .ensureQueryData(userProfileQueryOptions)
       .catch(() => null);
   },
   component: () =>
@@ -84,6 +90,12 @@ const dashboardRoute = createRoute({
 const adminRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: "/admin",
+  beforeLoad: ({ context }) => {
+    const isAuth = context.auth?.isAuthenticated ?? (typeof window !== "undefined" && Boolean(localStorage.getItem("auth_token")));
+    if (!isAuth) {
+      throw redirect({ to: "/" });
+    }
+  },
   component: () =>
     FEATURES.ENABLE_GOOGLE_AUTH ? (
       <ProtectedRoute requireAdmin>
@@ -110,8 +122,8 @@ const debugRoute = createRoute({
 const supportRoute = createRoute({
   getParentRoute: () => layoutRoute,
   path: "/support",
-  validateSearch: (search: Record<string, unknown>) => ({
-    ticketId: (search.ticketId as string) || undefined,
+  validateSearch: (search: Record<string, unknown>): { ticketId?: string } => ({
+    ticketId: typeof search.ticketId === "string" ? search.ticketId : undefined,
   }),
   component: () => (FEATURES.ENABLE_TICKETING_SYSTEM ? <SupportPage /> : <NotFoundPage />),
 });
@@ -147,7 +159,7 @@ const contactoRoute = createRoute({
   component: () => <HomePage />,
 });
 
-// Arbol de rutas (RouteTree)
+// Árbol de rutas (RouteTree)
 const routeTree = rootRoute.addChildren([
   layoutRoute.addChildren([
     indexRoute,
@@ -181,7 +193,8 @@ declare module "@tanstack/react-router" {
 }
 
 export const AppRouter: React.FC = () => {
-  return <RouterProvider router={router} />;
+  const auth = useAuth();
+  return <RouterProvider router={router} context={{ queryClient, auth }} />;
 };
 
 export default AppRouter;

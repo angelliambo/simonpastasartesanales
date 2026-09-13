@@ -1,5 +1,4 @@
 import { API_BASE_URL } from "../../config/environment";
-import { store } from "../../store";
 
 export interface ApiError {
   message: string;
@@ -20,9 +19,18 @@ export async function apiClient<T>(
     headers.set("Content-Type", "application/json");
   }
 
-  // Obtener token JWT del store de Redux
-  const state = store.getState() as any;
-  const token = state?.auth?.token;
+  // Obtener token JWT de localStorage
+  let token: string | null = null;
+  try {
+    token = localStorage.getItem("auth_token");
+    if (!token) {
+      const savedAuth = localStorage.getItem("portal_auth");
+      if (savedAuth) {
+        token = JSON.parse(savedAuth).token || null;
+      }
+    }
+  } catch {}
+
   if (token && token !== "cookie-based" && !headers.has("authorization")) {
     headers.set("authorization", `Bearer ${token}`);
   }

@@ -1,8 +1,19 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient, queryOptions } from "@tanstack/react-query";
 import apiClient from "./client";
 
 export const ADMIN_USERS_QUERY_KEY = (page = 1, limit = 20) => ["admin", "users", page, limit];
 export const ADMIN_STATS_QUERY_KEY = ["admin", "stats"];
+
+export const adminUsersQueryOptions = (page = 1, limit = 20) =>
+  queryOptions({
+    queryKey: ADMIN_USERS_QUERY_KEY(page, limit),
+    queryFn: () => apiClient<any>(`/admin/users?page=${page}&limit=${limit}`),
+  });
+
+export const adminStatsQueryOptions = queryOptions({
+  queryKey: ADMIN_STATS_QUERY_KEY,
+  queryFn: () => apiClient<any>("/admin/stats"),
+});
 
 export const useGetUsersQuery = (
   params: { page?: number; limit?: number } = {},
@@ -12,8 +23,7 @@ export const useGetUsersQuery = (
   const limit = params.limit ?? 20;
 
   const query = useQuery({
-    queryKey: ADMIN_USERS_QUERY_KEY(page, limit),
-    queryFn: () => apiClient<any>(`/admin/users?page=${page}&limit=${limit}`),
+    ...adminUsersQueryOptions(page, limit),
     enabled: options?.skip !== true,
   });
 
@@ -56,8 +66,7 @@ export const useDeleteUserMutation = () => {
 
 export const useGetAdminStatsQuery = (arg?: any, options?: { skip?: boolean }) => {
   const query = useQuery({
-    queryKey: ADMIN_STATS_QUERY_KEY,
-    queryFn: () => apiClient<any>("/admin/stats"),
+    ...adminStatsQueryOptions,
     enabled: options?.skip !== true,
   });
 

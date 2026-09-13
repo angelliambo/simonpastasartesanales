@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useLocation } from "@tanstack/react-router";
-import { useSelector, useDispatch } from "react-redux";
+import { useAuth } from "../../contexts/AuthContext";
 import AppFooter from "../AppFooter";
 import FloatingWhatsAppCTA from "../FloatingWhatsAppCTA";
 import { LanguageSelector } from "../../i18n/LanguageSelector";
 import { ThemeToggle } from "../ThemeToggle";
-import { RootState } from "../../store/store";
-import { logout } from "../../store/slices/authSlice";
 import RegisterModal from "../RegisterModal";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
@@ -50,8 +48,7 @@ import {
 const Layout: React.FC = React.memo(() => {
   usePageTracking();
   const location = useLocation();
-  const dispatch = useDispatch();
-  const { user, token } = useSelector((state: RootState) => state.auth);
+  const { user, token, logout } = useAuth();
   const [showRegister, setShowRegister] = useState<false | "email" | "code">(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -112,7 +109,7 @@ const Layout: React.FC = React.memo(() => {
                 <UserBadge to="/dashboard">
                   <ZnIcon icon={UserOutlined} /> {user.email?.split('@')[0] || 'User'}
                 </UserBadge>
-                <LogoutBtn onClick={() => dispatch(logout())}>
+                <LogoutBtn onClick={() => logout()}>
                   <ZnIcon icon={LogoutOutlined} />
                 </LogoutBtn>
               </>
@@ -184,7 +181,7 @@ const Layout: React.FC = React.memo(() => {
                 <UserBadge to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} $isMobile={true}>
                   <ZnIcon icon={UserOutlined} /> {user.email?.split('@')[0] || 'User'}
                 </UserBadge>
-                <LogoutBtn onClick={() => { dispatch(logout()); setIsMobileMenuOpen(false); }} $isMobile={true}>
+                <LogoutBtn onClick={() => { logout(); setIsMobileMenuOpen(false); }} $isMobile={true}>
                   <ZnIcon icon={LogoutOutlined} />
                 </LogoutBtn>
               </MobileUserRow>
