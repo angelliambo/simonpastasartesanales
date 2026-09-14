@@ -1,33 +1,15 @@
 import React, { useEffect, useState, createContext, useContext } from "react";
-import styled, { keyframes } from "styled-components";
 import { usePersonalization } from '../../contexts/PersonalizationContext';
 import { ZnIcon } from '../ZnIcon';
-import { CloseOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  ExclamationCircleOutlined,
+  InfoCircleOutlined,
+} from "@ant-design/icons";
+import { StyledSnackbar } from './Snackbar.styles';
 
-// Animaciones
-const slideIn = keyframes`
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-`;
-
-const slideOut = keyframes`
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-`;
-
-// Tipos para las props del componente Snackbar
 interface SnackbarProps {
   message: string;
   type?: "success" | "error" | "warning" | "info";
@@ -40,115 +22,16 @@ interface SnackbarProps {
   id?: string;
 }
 
-// Styled component base
-const StyledSnackbar = styled.div<SnackbarProps>`
-  position: fixed;
-  top: calc(${({ theme }) => theme?.spacing?.lg || "24px"} + 30px);
-  right: ${({ theme }) => theme?.spacing?.lg || "24px"};
-  z-index: 9999;
-  min-width: 300px;
-  max-width: 500px;
-  padding: ${({ theme }) => theme?.spacing?.md || "16px"} ${({ theme }) => theme?.spacing?.lg || "24px"};
-  border-radius: ${({ theme }) => theme?.borderRadius?.md || "8px"};
-  box-shadow: ${({ theme }) => theme?.shadows?.heavy || "0 10px 15px rgba(0, 0, 0, 0.1)"};
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme?.spacing?.md || "16px"};
-  font-family: ${({ theme }) => theme?.typography?.fontFamily?.primary || "sans-serif"};
-  font-weight: ${({ theme }) => theme?.typography?.fontWeight?.medium || 500};
-  font-size: ${({ theme }) => theme?.typography?.fontSize?.sm || "14px"};
-  animation: ${slideIn} 0.3s ease-out;
+const getIconForType = (type: "success" | "error" | "warning" | "info" = "info") => {
+  const iconMap = {
+    success: CheckCircleOutlined,
+    error: CloseCircleOutlined,
+    warning: ExclamationCircleOutlined,
+    info: InfoCircleOutlined,
+  };
+  return iconMap[type] || InfoCircleOutlined;
+};
 
-  // Tipos de snackbar
-  ${({ theme, type = "info" }) => {
-    switch (type) {
-      case "success":
-        return `
-          background-color: ${theme.colors.success[50]};
-          color: ${theme.colors.success[700]};
-          border-left: 4px solid ${theme.colors.success[500]};
-        `;
-      case "error":
-        return `
-          background-color: ${theme.colors.error[50]};
-          color: ${theme.colors.error[700]};
-          border-left: 4px solid ${theme.colors.error[500]};
-        `;
-      case "warning":
-        return `
-          background-color: ${theme.colors.warning[50]};
-          color: ${theme.colors.warning[700]};
-          border-left: 4px solid ${theme.colors.warning[500]};
-        `;
-      case "info":
-        return `
-          background-color: ${theme.colors.info[50]};
-          color: ${theme.colors.info[700]};
-          border-left: 4px solid ${theme.colors.info[500]};
-        `;
-      default:
-        return "";
-    }
-  }}
-
-  // Iconos por tipo
-  &::before {
-    content: "";
-    font-size: ${({ theme }) => theme.typography.fontSize.lg};
-    flex-shrink: 0;
-
-    ${({ type = "info" }) => {
-      switch (type) {
-        case "success":
-          return `content: "✅";`;
-        case "error":
-          return `content: "❌";`;
-        case "warning":
-          return `content: "⚠️";`;
-        case "info":
-          return `content: "ℹ️";`;
-        default:
-          return "";
-      }
-    }}
-  }
-
-  // Botón de cerrar
-  .snackbar-close {
-    background: none;
-    border: none;
-    font-size: ${({ theme }) => theme.typography.fontSize.lg};
-    cursor: pointer;
-    padding: ${({ theme }) => theme.spacing.xs};
-    margin-left: auto;
-    opacity: 0.7;
-    transition: opacity 0.2s ease;
-
-    &:hover {
-      opacity: 1;
-    }
-
-    &:focus {
-      outline: 2px solid currentColor;
-      outline-offset: 2px;
-    }
-  }
-
-  // Animación de salida
-  &.closing {
-    animation: ${slideOut} 0.3s ease-in forwards;
-  }
-
-  @media (max-width: 768px) {
-    top: ${({ theme }) => theme.spacing.md};
-    right: ${({ theme }) => theme.spacing.md};
-    left: ${({ theme }) => theme.spacing.md};
-    min-width: auto;
-    max-width: none;
-  }
-`;
-
-// Componente Snackbar principal
 export const Snackbar: React.FC<SnackbarProps> = ({
   message,
   type = "info",
@@ -164,7 +47,6 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   const [isVisible, setIsVisible] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
 
-  // Auto-cerrar después de la duración especificada
   useEffect(() => {
     if (duration > 0) {
       const timer = setTimeout(() => {
@@ -180,10 +62,9 @@ export const Snackbar: React.FC<SnackbarProps> = ({
     setTimeout(() => {
       setIsVisible(false);
       onClose?.();
-    }, 300); // Duración de la animación de salida
+    }, 300);
   };
 
-  // Aplicar estilos de accesibilidad
   const getAccessibilityStyles = () => {
     const styles: React.CSSProperties = {};
 
@@ -203,19 +84,22 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   if (!isVisible) return null;
 
   const finalId = id ? `snackbar-${id}` : undefined;
+  const TypeIcon = getIconForType(type);
 
   return (
     <StyledSnackbar
       id={finalId}
-      message={message}
-      type={type}
-      className={`${className} ${isClosing ? "closing" : ""}`}
+      $type={type}
+      className={`${className || ""} ${isClosing ? "closing" : ""}`}
       style={{ ...getAccessibilityStyles(), ...style }}
       aria-live={ariaLive}
       role="alert"
       data-speak={accessibility.textToSpeech ? message : undefined}
       {...props}
     >
+      <span className="snackbar-icon">
+        <ZnIcon icon={TypeIcon} />
+      </span>
       <span>{message}</span>
       <button
         className="snackbar-close"
@@ -229,7 +113,6 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   );
 };
 
-// Hook para usar Snackbar de forma más fácil (versión individual)
 interface UseSnackbarReturn {
   showSnackbar: (
     message: string,
@@ -261,7 +144,6 @@ export const useSnackbarIndividual = (): UseSnackbarReturn => {
   return { showSnackbar, hideSnackbar };
 };
 
-// Componente SnackbarProvider para manejar múltiples snackbars
 interface SnackbarProviderProps {
   children: React.ReactNode;
 }
@@ -316,7 +198,6 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({
   );
 };
 
-// Context para SnackbarProvider
 interface SnackbarContextType {
   addSnackbar: (
     message: string,
@@ -340,7 +221,6 @@ export const useSnackbarContext = (): SnackbarContextType => {
   return context;
 };
 
-// Hook mejorado con funciones específicas por tipo
 export const useSnackbar = () => {
   const { addSnackbar } = useSnackbarContext();
   const [currentMessage, setCurrentMessage] = useState<{

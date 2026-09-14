@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "ES2022",
     "lib": [
       "dom",
       "dom.iterable",
@@ -9,7 +9,10 @@
     "allowJs": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "types": [],
+    "types": [
+      "node",
+      "jest"
+    ],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,

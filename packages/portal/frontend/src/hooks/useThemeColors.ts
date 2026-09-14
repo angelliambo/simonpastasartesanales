@@ -1,16 +1,13 @@
 import React from "react";
 import { DefaultTheme } from "styled-components";
-import { useSelector } from "react-redux";
 import { useTheme } from "../styles/ThemeProvider";
 import { useAccessibilityRedux } from "./useAccessibilityRedux";
 import { getCombinedTheme, lightTheme } from "../styles/themes";
-import { RootState } from "../store/store";
 
 const createFallbackTheme = (): DefaultTheme => {
   try {
     return getCombinedTheme("light", "default");
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.warn(
       "[useThemeColors] No se pudo cargar el tema combinado, usando lightTheme.",
       error
@@ -21,8 +18,7 @@ const createFallbackTheme = (): DefaultTheme => {
 
 export const useThemeColors = () => {
   const { currentTheme } = useTheme();
-  const reduxTheme = useSelector((state: RootState) => state.ui.theme);
-  const { preferences, lastUpdated } = useAccessibilityRedux();
+  const { highContrast } = useAccessibilityRedux();
   const fallbackThemeRef = React.useRef<DefaultTheme | null>(null);
   if (!fallbackThemeRef.current) {
     fallbackThemeRef.current = createFallbackTheme();
@@ -37,19 +33,11 @@ export const useThemeColors = () => {
       return currentTheme as DefaultTheme;
     }
     return fallbackThemeRef.current!;
-  }, [currentTheme, reduxTheme]);
+  }, [currentTheme]);
 
   // Forzar re-render cuando cambien las preferencias de accesibilidad
   // Esto asegura que todos los componentes se actualicen automáticamente
-  React.useEffect(() => {
-    // Este efecto se ejecuta cada vez que cambian las preferencias
-    // y fuerza el re-render de todos los componentes que usan useThemeColors
-  }, [
-    preferences?.theme,
-    preferences?.highContrast,
-    (preferences as any)?.colorBlindSupport,
-    lastUpdated,
-  ]);
+
 
   // Función para obtener valores CSS de las variables de accesibilidad
   const getCSSVariable = (variable: string, fallback: string) => {

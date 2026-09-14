@@ -1,7 +1,7 @@
 // Service Worker simplificado para Simon App
 // Versión: 3.0.0 - Optimizado para rendimiento
-const CACHE_NAME = "zn-portal-v3.0";
-const STATIC_CACHE = "zn-portal-static-v3.0";
+const CACHE_NAME = "portal-v1.0";
+const STATIC_CACHE = "portal-static-v1.0";
 
 // Recursos críticos mínimos
 const CRITICAL_RESOURCES = ["/", "/manifest.json", "/favicon.ico"];

@@ -1,56 +1,56 @@
-# 1. Instalar dependencias del monorepo en la raíz
-FROM node:22-alpine AS base-dependencies
+# 1. Instalar dependencias del monorepo en la raíz con pnpm
+FROM node:20-alpine AS base-dependencies
 WORKDIR /app
-COPY package.json yarn.lock* ./
+RUN npm install -g pnpm@latest
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* .npmrc* ./
 COPY packages/shared/package*.json ./packages/shared/
 COPY packages/portal/package*.json ./packages/portal/
 COPY packages/portal/backend/package*.json ./packages/portal/backend/
 COPY packages/portal/frontend/package*.json ./packages/portal/frontend/
-RUN yarn config set network-timeout 600000 && \
-    for i in 1 2 3 4 5; do \
-        yarn install --frozen-lockfile && break; \
-        if [ $i -eq 5 ]; then exit 1; fi; \
-        sleep 10; \
-    done
+RUN pnpm install --frozen-lockfile
 
 # 2. Compilar paquete compartido (@factory/shared)
 FROM base-dependencies AS shared-builder
 WORKDIR /app
 COPY packages/shared ./packages/shared
-RUN yarn workspace @factory/shared build
+RUN pnpm --filter @factory/shared build
 
 # 3. Compilar backend
 FROM shared-builder AS backend-builder
 WORKDIR /app
 COPY packages/portal/backend ./packages/portal/backend
 RUN touch packages/portal/backend/env.production
-RUN yarn workspace @factory/backend build
+RUN pnpm --filter @factory/backend build
 
-# 4. Compilar frontend
+# 4. Compilar frontend con Vite
 FROM shared-builder AS frontend-builder
 WORKDIR /app
 COPY packages/portal/frontend ./packages/portal/frontend
-ARG REACT_APP_API_URL
-ARG REACT_APP_GOOGLE_CLIENT_ID
-ARG REACT_APP_GOOGLE_ADSENSE_CLIENT_ID
-ARG REACT_APP_ADS_ENABLED
-ARG REACT_APP_ADSENSE_SLOT_SUBHERO
-ARG REACT_APP_ADSENSE_SLOT_FOOTER
-ENV REACT_APP_API_URL=$REACT_APP_API_URL
-ENV REACT_APP_GOOGLE_CLIENT_ID=$REACT_APP_GOOGLE_CLIENT_ID
-ENV REACT_APP_GOOGLE_ADSENSE_CLIENT_ID=${REACT_APP_GOOGLE_ADSENSE_CLIENT_ID:-ca-pub-6167435415786243}
-ENV REACT_APP_ADS_ENABLED=${REACT_APP_ADS_ENABLED:-true}
-ENV REACT_APP_ADSENSE_SLOT_SUBHERO=$REACT_APP_ADSENSE_SLOT_SUBHERO
-ENV REACT_APP_ADSENSE_SLOT_FOOTER=$REACT_APP_ADSENSE_SLOT_FOOTER
-RUN yarn workspace @factory/frontend build
+ARG VITE_API_URL
+ARG VITE_GOOGLE_CLIENT_ID
+ARG VITE_GA_MEASUREMENT_ID
+ARG VITE_GOOGLE_ADSENSE_CLIENT_ID
+ARG VITE_ADS_ENABLED
+ARG VITE_ADSENSE_SLOT_SUBHERO
+ARG VITE_ADSENSE_SLOT_FOOTER
+
+ENV VITE_API_URL=$VITE_API_URL
+ENV VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID
+ENV VITE_GA_MEASUREMENT_ID=$VITE_GA_MEASUREMENT_ID
+ENV VITE_GOOGLE_ADSENSE_CLIENT_ID=${VITE_GOOGLE_ADSENSE_CLIENT_ID:-ca-pub-6167435415786243}
+ENV VITE_ADS_ENABLED=${VITE_ADS_ENABLED:-true}
+ENV VITE_ADSENSE_SLOT_SUBHERO=$VITE_ADSENSE_SLOT_SUBHERO
+ENV VITE_ADSENSE_SLOT_FOOTER=$VITE_ADSENSE_SLOT_FOOTER
+RUN pnpm --filter @factory/frontend build
 
 # 5. Imagen final de Nginx + Node Backend
 FROM nginx:alpine
-RUN apk add --no-cache nodejs npm yarn wget
+RUN apk add --no-cache nodejs npm wget
+RUN npm install -g pnpm@latest
 WORKDIR /app
 
 # Copiar la estructura del monorepo necesaria para producción
-COPY package.json yarn.lock* ./
+COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* .npmrc* ./
 COPY packages/shared/package*.json ./packages/shared/
 COPY packages/portal/package*.json ./packages/portal/
 COPY packages/portal/backend/package*.json ./packages/portal/backend/
@@ -58,17 +58,12 @@ COPY packages/portal/frontend/package*.json ./packages/portal/frontend/
 COPY --from=shared-builder /app/packages/shared /app/packages/shared
 
 # Instalar dependencias de producción en la raíz
-RUN yarn config set network-timeout 600000 && \
-    for i in 1 2 3 4 5; do \
-        yarn install --production --frozen-lockfile && break; \
-        if [ $i -eq 5 ]; then exit 1; fi; \
-        sleep 10; \
-    done
+RUN pnpm install --prod --frozen-lockfile
 
 # Copiar el backend compilado y los estáticos del frontend
 COPY --from=backend-builder /app/packages/portal/backend/dist ./packages/portal/backend/dist
 COPY --from=backend-builder /app/packages/portal/backend/env.production ./packages/portal/backend/env.production
-COPY --from=frontend-builder /app/packages/portal/frontend/build /usr/share/nginx/html
+COPY --from=frontend-builder /app/packages/portal/frontend/dist /usr/share/nginx/html
 COPY packages/portal/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Script de arranque
@@ -87,7 +82,7 @@ RUN echo '#!/bin/sh' > /start.sh && \
     echo '  exit 1' >> /start.sh && \
     echo 'fi' >> /start.sh && \
     echo 'echo "✅ Archivos verificados, iniciando servidor..."' >> /start.sh && \
-    echo 'NODE_ENV=production npx tsx dist/server.js &' >> /start.sh && \
+    echo 'NODE_ENV=production node dist/server.js &' >> /start.sh && \
     echo 'BACKEND_PID=$!' >> /start.sh && \
     echo 'echo "⏳ Esperando a que el backend esté listo..."' >> /start.sh && \
     echo 'MAX_WAIT=60' >> /start.sh && \

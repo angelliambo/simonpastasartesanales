@@ -186,45 +186,45 @@ declare module "styled-components" {
       popover: number;
       tooltip: number;
     };
-    transitions?: {
+    transitions: {
       fast: string;
       normal: string;
       slow: string;
     };
-    highlight?: {
+    highlight: {
       main: string;
       light: string;
       glow: string;
     };
-    brand?: {
+    brand: {
       purple400: string;
       pink500: string;
       indigo500: string;
       indigo400: string;
     };
-    effects?: {
+    effects: {
       glassBackground: string;
       glassBorder: string;
       glassShadow: string;
-      blur?: {
+      blur: {
         subtle: string;
         glass: string;
         heavy: string;
         extreme: string;
       };
-      glow?: {
+      glow: {
         primary: string;
         premium: string;
         success: string;
       };
     };
-    gradients?: {
+    gradients: {
       brand: string;
       premium: string;
       highlight: string;
       glass: string;
     };
-    animations?: {
+    animations: {
       duration: {
         instant: string;
         fast: string;
@@ -240,7 +240,7 @@ declare module "styled-components" {
         bounce: string;
       };
     };
-    animatedBackground?: {
+    animatedBackground: {
       darkGradient1: string;
       darkGradient2: string;
       darkGradient3: string;

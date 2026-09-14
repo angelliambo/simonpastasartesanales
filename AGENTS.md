@@ -45,15 +45,18 @@ The backend validates `X-God-Mode` header → returns `plan: god_mode`.
 | Prod | `fly secrets set GOD_MODE_SECRET=<hash>` |
 
 ```bash
-yarn build                  # shared → portal (full pipeline)
-yarn shared:build           # tsc -> dist/
-yarn portal:build           # react-app-rewired (CRA, ForkTsChecker disabled)
+pnpm build                  # shared → backend → frontend (pipeline completo)
+pnpm shared:build           # tsc -> dist/
+pnpm portal:build           # backend + frontend build
 
-yarn cleanup                # borra dist, build, node_modules en TODOS los packages
-yarn portal:cleanup         # portal + backend + frontend
-yarn shared:cleanup         # solo shared
+pnpm cleanup                # borra dist, build, node_modules en TODOS los packages
+pnpm portal:cleanup         # backend + frontend clean
+pnpm shared:cleanup         # solo shared
 
-yarn install                # reinstala todo después de cleanup
+pnpm dev:backend            # inicia servidor backend en desarrollo
+pnpm dev:frontend           # inicia servidor frontend en desarrollo
+
+pnpm install                # reinstala todo después de cleanup
 ```
 
 ## Architecture
@@ -61,7 +64,7 @@ yarn install                # reinstala todo después de cleanup
 | Package | Build | Aliases |
 |---------|-------|---------|
 | `packages/shared` | tsc → `dist/` | — |
-| `packages/portal/frontend` | CRA + react-app-rewired | `@design-sys` → `@factory/shared/design-sys`<br>`@shared` → `@factory/shared` |
+| `packages/portal/frontend` | Vite | `@design-sys` → `@factory/shared/design-sys`<br>`@shared` → `@factory/shared` |
 | `packages/portal/backend` | tsc → `dist/` | Express + Mongoose + JWT |
 
 ## Shared package (`packages/shared/`)
@@ -246,16 +249,16 @@ Per-environment SEMVER. Bump by plan phase, not by commit.
 
 See `PLAN_DE_TRABAJO_UNIFICADO.md` → "Tabla de Versiones por Fase".
 
-### Regla Obligatoria de Control de Versionado mediante CLI (`yarn bump`)
+### Regla Obligatoria de Control de Versionado mediante CLI (`pnpm bump`)
 
-- **Herramienta Única Obligatoria**: A partir de ahora, **TODO** incremento o gestión de versión en cualquier paquete del monorepo debe realizarse **estrictamente** utilizando la herramienta CLI `scripts/version-bump.js` (mediante el comando `yarn bump`). Está prohibido modificar manualmente la versión en los archivos `package.json`.
+- **Herramienta Única Obligatoria**: A partir de ahora, **TODO** incremento o gestión de versión en cualquier paquete del monorepo debe realizarse **estrictamente** utilizando la herramienta CLI `scripts/version-bump.js` (mediante el comando `pnpm bump`). Está prohibido modificar manualmente la versión en los archivos `package.json`.
 - **Comandos Principales**:
-  - `yarn bump status`: Muestra la tabla de versiones actuales y audita dependencias internas.
-  - `yarn bump auto minor`: Auto-detecta paquetes modificados en Git e incrementa la versión **MINOR** (ej. de `1.4.10` a `1.5.0`) cuando se agregan **nuevas funcionalidades, componentes, herramientas CLI o mejoras estéticas/retrocompatibles**.
-  - `yarn bump auto patch`: Auto-detecta paquetes modificados en Git e incrementa la versión **PATCH** (ej. de `1.4.9` a `1.4.10`) para **correcciones de errores (bug fixes) o parches técnicos menores**.
-  - `yarn bump <package> <patch|minor|major>`: Incrementa un paquete específico y sincroniza automáticamente las dependencias internas en todo el monorepo.
+  - `pnpm bump status`: Muestra la tabla de versiones actuales y audita dependencias internas.
+  - `pnpm bump auto minor`: Auto-detecta paquetes modificados en Git e incrementa la versión **MINOR** (ej. de `1.4.10` a `1.5.0`) cuando se agregan **nuevas funcionalidades, componentes, herramientas CLI o mejoras estéticas/retrocompatibles**.
+  - `pnpm bump auto patch`: Auto-detecta paquetes modificados en Git e incrementa la versión **PATCH** (ej. de `1.4.9` a `1.4.10`) para **correcciones de errores (bug fixes) o parches técnicos menores**.
+  - `pnpm bump <package> <patch|minor|major>`: Incrementa un paquete específico y sincroniza automáticamente las dependencias internas en todo el monorepo.
 - **Límite de incrementos**: El incremento del versionado se realiza **una única vez por rama/fase** de desarrollo. No se deben iterar o acumular incrementos de versión en commits sucesivos dentro de la misma rama.
-- **Sincronización de Dependencias Internas**: `yarn bump` garantiza que las dependencias internas `@factory/*` se mantengan sincronizadas en sus versiones exactas (sin `^` ni `~`).
+- **Sincronización de Dependencias Internas**: `pnpm bump` garantiza que las dependencias internas `@factory/*` se mantengan sincronizadas en sus versiones exactas (sin `^` ni `~`).
 
 ## Git rules for AI agent
 
@@ -288,9 +291,9 @@ See `PLAN_DE_TRABAJO_UNIFICADO.md` → "Tabla de Versiones por Fase".
 
 ### Verification checklist (Pre-commit / Pre-turn exit)
 
-- Run `yarn build` and `yarn type-check` to verify the monorepo passes all compilations.
-- Run linters to check for code issues (specifically unused variables or import errors):
-  `yarn workspace @factory/portal-frontend lint` (or relevant workspace lint command).
+- Run `pnpm build` and `pnpm --filter @factory/frontend exec tsc --noEmit` to verify the monorepo passes all compilations.
+- Run linters to check for code issues:
+  `pnpm --filter @factory/frontend lint`.
 - Ensure the tree is completely clean and consistent.
 
 ## Idioma y Comunicación

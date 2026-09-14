@@ -1,30 +1,14 @@
 import React from "react";
-import styled from "styled-components";
 import Spin from '@design-sys/atoms/Spin';
-import Text from '@design-sys/atoms/Text';
-
-const LoadingContainer = styled.div<{ $isDark: boolean }>`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  background-color: ${({ theme }) => theme.colors.background.primary};
-  transition: background-color 0.2s ease;
-`;
+import { LoadingContainer, LoadingText } from "./loading.styles";
 
 const Loading: React.FC = () => {
-  const isDark =
-    typeof document !== "undefined" &&
-    document.documentElement.getAttribute("data-theme") === "dark";
-
   return (
-    <LoadingContainer $isDark={isDark}>
+    <LoadingContainer>
       <Spin size="large" />
-      <Text color="secondary" style={{ fontSize: 16 }}>
+      <LoadingText color="secondary">
         Cargando, por favor espera...
-      </Text>
+      </LoadingText>
     </LoadingContainer>
   );
 };

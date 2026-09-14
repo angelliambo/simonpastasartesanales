@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { useAuth } from "../contexts/AuthContext";
 
-const COOKIE_CONSENT_KEY = "zn-portal-cookie-consent";
-const COOKIE_CONSENT_TIMESTAMP_KEY = "zn-portal-cookie-consent-timestamp";
+const COOKIE_CONSENT_KEY = "portal_cookie_consent";
+const COOKIE_CONSENT_TIMESTAMP_KEY = "portal_cookie_consent_timestamp";
 
 export type CookieConsentStatus = "accepted" | "rejected" | "pending" | null;
 
@@ -22,9 +21,7 @@ interface CookieConsentState {
  * - Persiste el estado de consentimiento
  */
 export const useCookieConsent = () => {
-  const { isAuthenticated, user } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { isAuthenticated, user } = useAuth();
 
   // Obtener ID del usuario (puede ser _id o id dependiendo del formato)
   const userId = user?._id || (user as any)?.id;

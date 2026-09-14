@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
-import { Card, Button, Text } from "./index";
+import Card from "@design-sys/atoms/Card";
+import Button from "@design-sys/atoms/Button";
+import Text from "@design-sys/atoms/Text";
 import type { CardProps, TextProps } from "./types";
 import { createShouldForwardProp } from "../../utils/shouldForwardProp";
 
@@ -260,7 +262,7 @@ export const TextInput = styled.textarea`
 
 // ===== COMPONENTES DE LISTA DE CONTACTOS =====
 
-export const ContactListContainer = styled(Card)`
+export const ContactListContainer = styled(Card)<CardProps>`
   ${({ theme, variant = "default", fullWidth, fullHeight }) => css`
     ${fullWidth ? "width: 100%;" : ""}
     ${fullHeight ? "height: 100%;" : ""}

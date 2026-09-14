@@ -1,6 +1,13 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
-import { useThemeColors } from "../hooks/useThemeColors";
-import styled from "styled-components";
+import {
+  ErrorContainer,
+  ErrorIcon,
+  ErrorTitle,
+  ErrorMessage,
+  ErrorDetails,
+  ButtonGroup,
+  ActionButton,
+} from "./ErrorBoundary.styles";
 
 interface Props {
   children: ReactNode;
@@ -16,131 +23,6 @@ interface State {
   errorType?: "theme" | "network" | "component" | "unknown";
 }
 
-// Componentes estilizados
-const ErrorContainer = styled.div<{ colors: ReturnType<typeof useThemeColors> }>`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 24px;
-  text-align: center;
-  background: ${({ colors }) => colors.background.primary};
-  color: ${({ colors }) => colors.text.primary};
-`;
-
-const ErrorIcon = styled.div<{ colors: ReturnType<typeof useThemeColors> }>`
-  font-size: 64px;
-  margin-bottom: 24px;
-  color: ${({ colors }) => colors.error[500]};
-`;
-
-const ErrorTitle = styled.h1<{ colors: ReturnType<typeof useThemeColors> }>`
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  color: ${({ colors }) => colors.text.primary};
-`;
-
-const ErrorMessage = styled.p<{ colors: ReturnType<typeof useThemeColors> }>`
-  font-size: 16px;
-  margin-bottom: 24px;
-  color: ${({ colors }) => colors.text.secondary};
-  max-width: 600px;
-  line-height: 1.6;
-`;
-
-const ErrorDetails = styled.details<{ colors: ReturnType<typeof useThemeColors> }>`
-  margin: 24px 0;
-  padding: 16px;
-  background: ${({ colors }) => colors.background.card};
-  border: 1px solid ${({ colors }) => colors.border.normal};
-  border-radius: 8px;
-  text-align: left;
-  max-width: 800px;
-  width: 100%;
-
-  summary {
-    cursor: pointer;
-    font-weight: 600;
-    color: ${({ colors }) => colors.text.primary};
-    margin-bottom: 12px;
-  }
-
-  pre {
-    font-size: 12px;
-    color: ${({ colors }) => colors.text.secondary};
-    overflow-x: auto;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 24px;
-`;
-
-const ActionButton = styled.button<{ 
-  colors: ReturnType<typeof useThemeColors>;
-  variant?: "primary" | "secondary" | "danger";
-}>`
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  
-  ${({ colors, variant = "primary" }) => {
-    switch (variant) {
-      case "primary":
-        return `
-          background: ${colors.primary[500]};
-          color: ${colors.text.inverse || "#ffffff"};
-          &:hover {
-            background: ${colors.primary[600]};
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-          }
-        `;
-      case "secondary":
-        return `
-          background: ${colors.background.card};
-          color: ${colors.text.primary};
-          border: 1px solid ${colors.border.normal};
-          &:hover {
-            background: ${colors.background.secondary};
-            border-color: ${colors.border.normal};
-          }
-        `;
-      case "danger":
-        return `
-          background: ${colors.error[500]};
-          color: ${colors.text.inverse || "#ffffff"};
-          &:hover {
-            background: ${colors.error[600]};
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-          }
-        `;
-    }
-  }}
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  &:focus {
-    outline: 2px solid ${({ colors }) => colors.primary[500]};
-    outline-offset: 2px;
-  }
-`;
-
 // Componente funcional para el UI del error
 const ErrorFallback: React.FC<{
   error: Error;
@@ -151,7 +33,6 @@ const ErrorFallback: React.FC<{
   onGoBack: () => void;
   showDetails?: boolean;
 }> = ({ error, errorInfo, errorType, onRetry, onGoHome, onGoBack, showDetails = false }) => {
-  const colors = useThemeColors();
   const [copied, setCopied] = React.useState(false);
   const isDev = process.env.NODE_ENV === 'development';
 
@@ -199,13 +80,13 @@ const ErrorFallback: React.FC<{
   const content = getErrorContent();
 
   return (
-    <ErrorContainer colors={colors}>
-      <ErrorIcon colors={colors}>{content.icon}</ErrorIcon>
-      <ErrorTitle colors={colors}>{content.title}</ErrorTitle>
-      <ErrorMessage colors={colors}>{content.message}</ErrorMessage>
+    <ErrorContainer>
+      <ErrorIcon>{content.icon}</ErrorIcon>
+      <ErrorTitle>{content.title}</ErrorTitle>
+      <ErrorMessage>{content.message}</ErrorMessage>
 
       {(isDev || showDetails) && errorInfo && (
-        <ErrorDetails colors={colors} open={isDev}>
+        <ErrorDetails open={isDev}>
           <summary>Detalles técnicos del error</summary>
           <div>
             <p><strong>Error:</strong> {error.message}</p>
@@ -223,17 +104,17 @@ const ErrorFallback: React.FC<{
       )}
 
       <ButtonGroup>
-        <ActionButton colors={colors} variant="primary" onClick={onRetry}>
+        <ActionButton $variant="primary" onClick={onRetry}>
           🔄 Reintentar
         </ActionButton>
-        <ActionButton colors={colors} variant="secondary" onClick={onGoBack}>
+        <ActionButton $variant="secondary" onClick={onGoBack}>
           ← Volver atrás
         </ActionButton>
-        <ActionButton colors={colors} variant="secondary" onClick={onGoHome}>
+        <ActionButton $variant="secondary" onClick={onGoHome}>
           🏠 Ir al inicio
         </ActionButton>
         {(isDev || showDetails) && (
-          <ActionButton colors={colors} variant="danger" onClick={handleCopy}>
+          <ActionButton $variant="danger" onClick={handleCopy}>
             {copied ? '✅ Copiado' : '📋 Copiar error'}
           </ActionButton>
         )}
@@ -304,11 +185,11 @@ class ErrorBoundary extends Component<Props, State> {
       try {
         // Restaurar tema por defecto en localStorage
         localStorage.setItem(
-          "zn-portal-user-theme",
+          "portal_user_theme",
           JSON.stringify({ theme: "light", accessibility: "default", autoDetect: false })
         );
         localStorage.setItem(
-          "zn-portal-accessibility-preferences",
+          "portal_accessibility_settings",
           JSON.stringify({
             theme: "default",
             highContrast: false,

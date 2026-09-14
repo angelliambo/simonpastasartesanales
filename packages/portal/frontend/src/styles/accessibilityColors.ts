@@ -1,5 +1,7 @@
 // frontend/src/styles/accessibilityColors.ts
 import { DefaultTheme } from "styled-components";
+import lightTheme from "@design-sys/theme/light";
+import darkTheme from "@design-sys/theme/dark";
 
 // Paleta de colores suaves optimizada para accesibilidad
 export const accessibilityColors = {
@@ -114,174 +116,90 @@ export const accessibilityColors = {
 
 // Tema claro optimizado para TEA
 export const teaLightTheme: DefaultTheme = {
+  ...lightTheme,
   colors: {
-    primary: teaColors.primary,
-    secondary: teaColors.secondary,
-    tertiary: teaColors.tertiary,
-    success: teaColors.success,
-    warning: teaColors.warning,
-    error: teaColors.error,
-    info: teaColors.info,
-    neutral: teaColors.neutral,
+    ...lightTheme.colors,
+    primary: accessibilityColors.primary,
+    secondary: accessibilityColors.secondary,
+    tertiary: accessibilityColors.tertiary,
+    success: accessibilityColors.success,
+    warning: accessibilityColors.warning,
+    error: accessibilityColors.error,
+    info: accessibilityColors.info,
+    neutral: accessibilityColors.neutral,
 
     background: {
       primary: "#ffffff",
-      secondary: teaColors.neutral[50],
-      tertiary: teaColors.neutral[50],
+      secondary: accessibilityColors.neutral[50],
+      tertiary: accessibilityColors.neutral[50],
       surface: "#ffffff",
       card: "#ffffff",
     },
 
     text: {
-      primary: teaColors.neutral[800],
-      secondary: teaColors.neutral[600],
-      tertiary: teaColors.neutral[500],
+      primary: accessibilityColors.neutral[800],
+      secondary: accessibilityColors.neutral[600],
+      tertiary: accessibilityColors.neutral[500],
       inverse: "#ffffff",
     },
 
     border: {
-      light: teaColors.neutral[200],
-      normal: teaColors.neutral[400],
-      dark: teaColors.neutral[400],
+      light: accessibilityColors.neutral[200],
+      normal: accessibilityColors.neutral[400],
+      dark: accessibilityColors.neutral[400],
     },
-  },
-
-  typography: {
-    fontFamily: {
-      primary:
-        "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-      secondary: "'Roboto', sans-serif",
-      mono: "'JetBrains Mono', 'Fira Code', monospace",
-    },
-
-    fontSize: {
-      xs: "12px",
-      sm: "14px",
-      md: "16px",
-      lg: "18px",
-      xl: "20px",
-      xxl: "24px",
-      xxxl: "30px",
-    },
-
-    fontWeight: {
-      light: 300,
-      normal: 400,
-      medium: 500,
-      semibold: 600,
-      bold: 700,
-    },
-
-    lineHeight: {
-      tight: 1.25,
-      normal: 1.5,
-      relaxed: 1.75,
-    },
-
-    fontScale: {
-      normal: 1,
-      medium: 1.125,
-      large: 1.25,
-    },
-  },
-
-  spacing: {
-    xs: "4px",
-    sm: "8px",
-    md: "16px",
-    lg: "24px",
-    xl: "32px",
-    xxl: "48px",
-  },
-
-  borderRadius: {
-    sm: "4px",
-    md: "8px",
-    lg: "12px",
-    xl: "16px",
-  },
-
-  shadows: {
-    light: "0 1px 2px rgba(0, 0, 0, 0.05)",
-    medium: "0 4px 6px rgba(0, 0, 0, 0.07)",
-    heavy: "0 10px 15px rgba(0, 0, 0, 0.1)",
-  },
-
-  transitions: {
-    fast: "0.15s ease",
-    normal: "0.2s ease",
-    slow: "0.3s ease",
-  },
-  breakpoints: {
-    xs: "480px",
-    sm: "768px",
-    md: "1024px",
-    lg: "1280px",
-    xl: "1536px",
-  },
-  zIndex: {
-    dropdown: 1000,
-    sticky: 1020,
-    fixed: 1030,
-    modal: 1050,
-    popover: 1060,
-    tooltip: 1070,
   },
 };
 
 // Tema oscuro optimizado para TEA
 export const teaDarkTheme: DefaultTheme = {
+  ...darkTheme,
   colors: {
-    primary: teaColors.primary,
-    secondary: teaColors.secondary,
-    tertiary: teaColors.tertiary,
-    success: teaColors.success,
-    warning: teaColors.warning,
-    error: teaColors.error,
-    info: teaColors.info,
-    neutral: teaColors.neutral,
+    ...darkTheme.colors,
+    primary: accessibilityColors.primary,
+    secondary: accessibilityColors.secondary,
+    tertiary: accessibilityColors.tertiary,
+    success: accessibilityColors.success,
+    warning: accessibilityColors.warning,
+    error: accessibilityColors.error,
+    info: accessibilityColors.info,
+    neutral: accessibilityColors.neutral,
 
     background: {
-      primary: teaColors.neutral[900],
-      secondary: teaColors.neutral[800],
-      tertiary: teaColors.neutral[700],
-      surface: teaColors.neutral[800],
-      card: teaColors.neutral[800],
+      primary: accessibilityColors.neutral[900],
+      secondary: accessibilityColors.neutral[800],
+      tertiary: accessibilityColors.neutral[700],
+      surface: accessibilityColors.neutral[800],
+      card: accessibilityColors.neutral[800],
     },
 
     text: {
-      primary: teaColors.neutral[50],
-      secondary: teaColors.neutral[400],
-      tertiary: teaColors.neutral[400],
+      primary: accessibilityColors.neutral[50],
+      secondary: accessibilityColors.neutral[400],
+      tertiary: accessibilityColors.neutral[400],
       inverse: "#000000",
     },
 
     border: {
-      light: teaColors.neutral[600],
-      normal: teaColors.neutral[700],
-      dark: teaColors.neutral[800],
+      light: accessibilityColors.neutral[600],
+      normal: accessibilityColors.neutral[700],
+      dark: accessibilityColors.neutral[800],
     },
   },
-
-  typography: teaLightTheme.typography,
-  spacing: teaLightTheme.spacing,
-  borderRadius: teaLightTheme.borderRadius,
-  shadows: teaLightTheme.shadows,
-  transitions: teaLightTheme.transitions,
-  breakpoints: teaLightTheme.breakpoints,
-  zIndex: teaLightTheme.zIndex,
 };
 
 // Tema de alto contraste para TEA
 export const teaHighContrastTheme: DefaultTheme = {
+  ...lightTheme,
   colors: {
+    ...lightTheme.colors,
     primary: {
       50: "#ffffff",
       100: "#ffffff",
       200: "#ffffff",
       300: "#ffffff",
       400: "#ffffff",
-      500: "#0000ff", // Azul vibrante
+      500: "#0000ff",
       600: "#0000cc",
       700: "#000099",
       800: "#000066",
@@ -293,7 +211,7 @@ export const teaHighContrastTheme: DefaultTheme = {
       200: "#ffffff",
       300: "#ffffff",
       400: "#ffffff",
-      500: "#ff0000", // Rojo vibrante
+      500: "#ff0000",
       600: "#cc0000",
       700: "#990000",
       800: "#660000",
@@ -305,7 +223,7 @@ export const teaHighContrastTheme: DefaultTheme = {
       200: "#ffffff",
       300: "#ffffff",
       400: "#ffffff",
-      500: "#00ff00", // Verde vibrante
+      500: "#00ff00",
       600: "#00cc00",
       700: "#009900",
       800: "#006600",
@@ -313,35 +231,35 @@ export const teaHighContrastTheme: DefaultTheme = {
     },
     success: {
       50: "#ffffff",
-      500: "#00ff00", // Verde brillante
+      500: "#00ff00",
       600: "#00cc00",
       700: "#009900",
     },
     warning: {
       50: "#ffffff",
-      500: "#ffff00", // Amarillo brillante
+      500: "#ffff00",
       600: "#cccc00",
       700: "#999900",
     },
     error: {
       50: "#ffffff",
-      500: "#ff0000", // Rojo brillante
+      500: "#ff0000",
       600: "#cc0000",
       700: "#990000",
     },
     info: {
       50: "#ffffff",
-      500: "#0000ff", // Azul brillante
+      500: "#0000ff",
       600: "#0000cc",
       700: "#000099",
     },
     neutral: {
-      50: "#ffffff", // Blanco puro
+      50: "#ffffff",
       100: "#ffffff",
       200: "#ffffff",
       300: "#ffffff",
       400: "#ffffff",
-      500: "#000000", // Negro puro
+      500: "#000000",
       600: "#000000",
       700: "#000000",
       800: "#000000",
@@ -349,7 +267,7 @@ export const teaHighContrastTheme: DefaultTheme = {
     },
 
     background: {
-      primary: "#ffffff", // Fondo blanco
+      primary: "#ffffff",
       secondary: "#ffffff",
       tertiary: "#ffffff",
       surface: "#ffffff",
@@ -357,52 +275,16 @@ export const teaHighContrastTheme: DefaultTheme = {
     },
 
     text: {
-      primary: "#000000", // Texto negro
+      primary: "#000000",
       secondary: "#000000",
       tertiary: "#000000",
-      inverse: "#ffffff", // Texto blanco para fondos oscuros
+      inverse: "#ffffff",
     },
 
     border: {
-      light: "#000000", // Bordes negros
+      light: "#000000",
       normal: "#000000",
       dark: "#000000",
     },
-  },
-
-  typography: {
-    ...teaLightTheme.typography,
-    fontWeight: {
-      ...teaLightTheme.typography.fontWeight,
-      normal: 500, // Texto más grueso para mejor legibilidad
-    },
-  },
-
-  spacing: teaLightTheme.spacing,
-  borderRadius: teaLightTheme.borderRadius,
-  shadows: {
-    light: "none",
-    medium: "none",
-    heavy: "none",
-  },
-  transitions: {
-    fast: "0s",
-    normal: "0s",
-    slow: "0s",
-  },
-  breakpoints: {
-    xs: "480px",
-    sm: "768px",
-    md: "1024px",
-    lg: "1280px",
-    xl: "1536px",
-  },
-  zIndex: {
-    dropdown: 1000,
-    sticky: 1020,
-    fixed: 1030,
-    modal: 1040,
-    popover: 1050,
-    tooltip: 1060,
   },
 };

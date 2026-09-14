@@ -103,6 +103,6 @@ export const colorPalette = {
     hero: "linear-gradient(135deg, #14b8a6 0%, #0ea5e9 100%)",
     card: "linear-gradient(145deg, #ffffff 0%, #fafafa 100%)",
   },
-} as const;
+};
 
 export type ColorPalette = typeof colorPalette;

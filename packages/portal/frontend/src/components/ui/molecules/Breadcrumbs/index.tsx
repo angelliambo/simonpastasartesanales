@@ -1,12 +1,10 @@
 import React from "react";
 import { Breadcrumb } from '@design-sys/atoms/Breadcrumb';
 import Text from '@design-sys/atoms/Text';
-import { Link } from "react-router-dom";
-import {
-  useBreadcrumbs,
-  useThemeColors,
-  useResponsive,
-} from "../../../../hooks";
+import { Link } from "@tanstack/react-router";
+import { useBreadcrumbs } from "../../../../hooks/useBreadcrumbs";
+import { useThemeColors } from "../../../../hooks/useThemeColors";
+import { useResponsive } from "../../../../hooks/useResponsive";
 import SEO from "../../../SEO";
 
 interface BreadcrumbsProps {

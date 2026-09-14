@@ -9,7 +9,7 @@
  * - Cualquier funcionalidad que use cookies o localStorage para tracking
  */
 
-const COOKIE_CONSENT_KEY = "zn-portal-cookie-consent";
+const COOKIE_CONSENT_KEY = "portal_cookie_consent";
 
 /**
  * Verifica si el usuario ha aceptado las cookies
@@ -42,11 +42,11 @@ export const canSaveToLocalStorage = (
 
   // Lista de claves esenciales que siempre se pueden guardar
   const essentialKeys = [
-    "zn-portal-cookie-consent",
-    "zn-portal-cookie-consent-timestamp",
-    "auth-token",
-    "refresh-token",
-    "user-session",
+    "portal_cookie_consent",
+    "portal_cookie_consent_timestamp",
+    "auth_token",
+    "refresh_token",
+    "user_session",
   ];
 
   if (essentialKeys.includes(key)) {

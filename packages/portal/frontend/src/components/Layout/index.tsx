@@ -1,14 +1,11 @@
-import React, { useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { Container } from '@design-sys/atoms/Container';
+import React, { useState, useEffect } from "react";
+import { Outlet, useLocation } from "@tanstack/react-router";
+import { useAuth } from "../../contexts/AuthContext";
 import AppFooter from "../AppFooter";
 import FloatingWhatsAppCTA from "../FloatingWhatsAppCTA";
 import GuidedTourCTA from "../GuidedTourCTA";
 import { LanguageSelector } from "../../i18n/LanguageSelector";
 import { ThemeToggle } from "../ThemeToggle";
-import { RootState } from "../../store/store";
-import { logout } from "../../store/slices/authSlice";
 import RegisterModal from "../RegisterModal";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
@@ -23,6 +20,7 @@ import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import { SUPPORTED_LOCALES } from "../../i18n";
 import { usePageTracking } from "../../hooks/usePageTracking";
 import {
+  LayoutRoot,
   TopBar,
   AccessBtn,
   UserBadge,
@@ -39,6 +37,7 @@ import {
   NavLink,
   LogoLink,
   MainContent,
+  InnerContentContainer,
   AccessBtnWrapper,
   MobileActionsWrapper,
   MobileUserRow,
@@ -50,12 +49,22 @@ import {
 const Layout: React.FC = React.memo(() => {
   usePageTracking();
   const location = useLocation();
-  const dispatch = useDispatch();
-  const { user, token } = useSelector((state: RootState) => state.auth);
+  const { user, token, logout } = useAuth();
   const [showRegister, setShowRegister] = useState<false | "email" | "code">(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
   return (
-    <Container maxWidth="full" padding="none" style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <LayoutRoot>
       <TopBar>
         <LogoLink to="/">
           {BRAND_CONFIG.siteName}
@@ -104,7 +113,7 @@ const Layout: React.FC = React.memo(() => {
                 <UserBadge to="/dashboard">
                   <ZnIcon icon={UserOutlined} /> {user.email?.split('@')[0] || 'User'}
                 </UserBadge>
-                <LogoutBtn onClick={() => dispatch(logout())}>
+                <LogoutBtn onClick={() => logout()}>
                   <ZnIcon icon={LogoutOutlined} />
                 </LogoutBtn>
               </>
@@ -181,7 +190,7 @@ const Layout: React.FC = React.memo(() => {
                 <UserBadge to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} $isMobile={true}>
                   <ZnIcon icon={UserOutlined} /> {user.email?.split('@')[0] || 'User'}
                 </UserBadge>
-                <LogoutBtn onClick={() => { dispatch(logout()); setIsMobileMenuOpen(false); }} $isMobile={true}>
+                <LogoutBtn onClick={() => { logout(); setIsMobileMenuOpen(false); }} $isMobile={true}>
                   <ZnIcon icon={LogoutOutlined} />
                 </LogoutBtn>
               </MobileUserRow>
@@ -211,15 +220,15 @@ const Layout: React.FC = React.memo(() => {
       {showRegister && <RegisterModal onClose={() => setShowRegister(false)} initialStep={showRegister} />}
 
       <MainContent>
-        <Container maxWidth="full" padding="none">
+        <InnerContentContainer maxWidth="full" padding="none">
           <Outlet />
-        </Container>
+        </InnerContentContainer>
       </MainContent>
 
       <AppFooter />
       {!["/precios", "/admin/precios", "/pricing"].includes(location.pathname) && <FloatingWhatsAppCTA />}
       {!["/precios", "/admin/precios", "/pricing"].includes(location.pathname) && <GuidedTourCTA />}
-    </Container>
+    </LayoutRoot>
   );
 });
 

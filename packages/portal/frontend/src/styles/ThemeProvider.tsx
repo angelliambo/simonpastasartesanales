@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback, ReactNode } from "react";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
-import { useDispatch } from "react-redux";
 import { getCombinedTheme } from "./themes";
 import type { DefaultTheme } from "styled-components";
-import { setTheme as setReduxTheme } from "../store/slices/uiSlice";
 
 export type Theme = "light" | "dark";
 export type AccessibilityTheme = "default" | "high-contrast" | "protanopia" | "deuteranopia" | "tritanopia";
@@ -41,8 +39,8 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-const STORAGE_KEY = "zn-portal-user-theme";
-const THEMES_KEY = "zn-portal-custom-themes";
+const STORAGE_KEY = "portal_user_theme";
+const THEMES_KEY = "portal_custom_themes";
 
 function loadConfig(): ThemeConfig {
   let initialTheme: Theme = "light";
@@ -103,7 +101,6 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const dispatch = useDispatch();
   const [themeConfig, setThemeConfigState] = useState<ThemeConfig>(loadConfig);
 
   const currentTheme = useMemo(() => {
@@ -127,15 +124,13 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   }, []);
 
   const setTheme = useCallback((theme: Theme) => {
-    updateConfig({ theme, autoDetect: false, customColors: undefined });
-    dispatch(setReduxTheme(theme));
-  }, [updateConfig, dispatch]);
+    updateConfig({ theme, autoDetect: false });
+  }, [updateConfig]);
 
   const toggleTheme = useCallback(() => {
     const newTheme: Theme = themeConfig.theme === "light" ? "dark" : "light";
-    updateConfig({ theme: newTheme, autoDetect: false, customColors: undefined });
-    dispatch(setReduxTheme(newTheme));
-  }, [themeConfig.theme, updateConfig, dispatch]);
+    updateConfig({ theme: newTheme, autoDetect: false });
+  }, [themeConfig.theme, updateConfig]);
 
   const setAccessibility = useCallback((accessibility: AccessibilityTheme) => {
     updateConfig({ accessibility });
@@ -155,9 +150,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       const newTheme: Theme = prefersDark ? "dark" : "light";
       updateConfig({ theme: newTheme, autoDetect: true });
-      dispatch(setReduxTheme(newTheme));
     }
-  }, [updateConfig, dispatch]);
+  }, [updateConfig]);
 
   const saveCustomTheme = useCallback((name: string, colors: CustomColors) => {
     try {

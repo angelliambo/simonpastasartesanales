@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#3b82f6" />
+  <link rel="canonical" href="https://__DOMAIN_NAME__/" />
+
+  <!-- Meta tags básicos para SEO -->
+  <meta name="description" content="La estructura modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte." />
+  <meta name="keywords" content="portal saas, boilerplate, panel de control web, base para startup, desarrollo modular, login google, soporte integrado" />
+  <meta name="author" content="__BRAND_NAME__" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="es-ES" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="rating" content="General" />
+  <meta name="distribution" content="Global" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://__DOMAIN_NAME__/" />
+  <meta property="og:title" content="__BRAND_NAME__ - Tu Plataforma Lista para Despegar" />
+  <meta property="og:description" content="La estructura modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte." />
+  <meta property="og:image" content="https://__DOMAIN_NAME__/og-image.jpg" />
+  <meta property="og:image:secure_url" content="https://__DOMAIN_NAME__/og-image.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="__BRAND_NAME__ — Plataforma SaaS Modular" />
+  <meta property="og:site_name" content="__BRAND_NAME__" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://__DOMAIN_NAME__/" />
+  <meta property="twitter:title" content="__BRAND_NAME__ - Tu Plataforma Lista para Despegar" />
+  <meta property="twitter:description" content="La estructura modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte." />
+  <meta property="twitter:image" content="https://__DOMAIN_NAME__/og-image.jpg" />
+  <meta property="twitter:image:alt" content="__BRAND_NAME__ — Plataforma SaaS Modular" />
+  <meta property="twitter:site" content="@factory" />
+  <meta property="twitter:creator" content="@factory" />
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/logo192.png" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Preconnect para mejorar performance (conectar temprano a recursos externos) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fuentes optimizadas: carga diferida con font-display swap para evitar render blocking -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+      rel="stylesheet">
+  </noscript>
+
+  <!-- og-image - LCP candidate en mobile, preload condicional con media query -->
+  <link rel="preload" href="/og-image.jpg" as="image" fetchpriority="high" media="(max-width: 768px)">
+
+  <!-- DNS prefetch para recursos externos (mejora conexión temprana) -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://accounts.google.com">
+
+  <title>__BRAND_NAME__ - Tu Plataforma Lista para Despegar</title>
+
+  <!-- DESHABILITAR SERVICE WORKER TEMPORALMENTE -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+  </script>
+
+  <!-- APLICAR TEMA ANTES DE QUE REACT SE MONTE - EVITA PARPADEO -->
+  <script>
+    (function () {
+      try {
+        if (typeof document === 'undefined' || !document.documentElement) {
+          return;
+        }
+
+        const savedConfig = localStorage.getItem('portal_user_theme');
+        let theme = 'light';
+
+        if (savedConfig) {
+          try {
+            const parsed = JSON.parse(savedConfig);
+            if (parsed.autoDetect !== false) {
+              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              theme = prefersDark ? 'dark' : 'light';
+            } else {
+              theme = parsed.theme || 'light';
+            }
+          } catch (e) {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            theme = prefersDark ? 'dark' : 'light';
+          }
+        } else {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          theme = prefersDark ? 'dark' : 'light';
+        }
+
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-accessibility', 'default');
+
+        if (theme === 'dark') {
+          document.documentElement.style.backgroundColor = '#1a1a1a';
+        } else {
+          document.documentElement.style.backgroundColor = '#ffffff';
+        }
+
+        if (document.body) {
+          document.body.className = 'theme-' + theme + ' accessibility-default';
+          if (theme === 'dark') {
+            document.body.style.backgroundColor = '#1a1a1a';
+          } else {
+            document.body.style.backgroundColor = '#ffffff';
+          }
+        } else {
+          const applyToBody = function () {
+            if (document.body) {
+              document.body.className = 'theme-' + theme + ' accessibility-default';
+              if (theme === 'dark') {
+                document.body.style.backgroundColor = '#1a1a1a';
+              } else {
+                document.body.style.backgroundColor = '#ffffff';
+              }
+            } else {
+              setTimeout(applyToBody, 0);
+            }
+          };
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', applyToBody);
+          } else {
+            applyToBody();
+          }
+        }
+      } catch (e) {
+        if (document.documentElement) {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.style.backgroundColor = '#ffffff';
+        }
+        if (document.body) {
+          document.body.className = 'theme-light accessibility-default';
+          document.body.style.backgroundColor = '#ffffff';
+        }
+      }
+    })();
+  </script>
+
+</head>
+
+<body>
+  <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
+  <div id="root">
+    <div style="display: none;">
+      <h1>__BRAND_NAME__ - Tu Plataforma Lista para Despegar</h1>
+      <h2>La estructura modular de alto rendimiento para tu negocio o startup con paneles de administración, facturación y soporte.</h2>
+      <p>
+        __BRAND_NAME__ es la estructura modular definitiva para tu próximo proyecto web o startup. Provee autenticación unificada,
+        panel de administración interactivo, facturación integrada mediante Lemon Squeezy y un canal opcional de soporte por tickets.
+        Todo configurado a través de variables de entorno y listo para desplegar al instante.
+      </p>
+
+      <h3>¿Por qué elegir el framework __BRAND_NAME__?</h3>
+      <ul>
+        <li><strong>Autenticación Unificada:</strong> Login seguro por correo o mediante Google OAuth preconfigurado y listo para su uso.</li>
+        <li><strong>Panel de Control Inteligente:</strong> Panel de administración de métricas y roles para usuarios y administradores.</li>
+        <li><strong>Pasarela de Pagos Flexible:</strong> Suscripciones y facturación nativas conectadas mediante webhooks de Lemon Squeezy.</li>
+        <li><strong>Soporte y Mensajería:</strong> Sistema integrado de ticketing para atención y soporte directo a clientes dentro de la plataforma.</li>
+        <li><strong>Arquitectura Limpia:</strong> Estructura en monorepo optimizada y móvil-primero para acelerar el desarrollo.</li>
+      </ul>
+
+      <h3>Comienza tu Proyecto SaaS</h3>
+      <p>
+        Optimiza el tiempo de desarrollo de tu negocio. __BRAND_NAME__ te ahorra semanas de configuración e integración de servicios comunes,
+        permitiéndote enfocarte en la propuesta de valor de tu producto.
+      </p>
+    </div>
+
+    <div
+      style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: fixed; inset: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; transition: background-color 0.2s;">
+      <div
+        style="width: 48px; height: 48px; border: 4px solid rgba(156, 163, 175, 0.15); border-top: 4px solid #3b82f6; border-radius: 50%; animation: portal-spin 1s linear infinite; margin-bottom: 24px;">
+      </div>
+      <div style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: #3b82f6;" id="portal-loader-logo">__BRAND_NAME__</div>
+      <div style="font-size: 13px; color: #9ca3af; margin-top: 8px;" id="portal-loader-text">Cargando aplicación...
+      </div>
+    </div>
+    <script>
+      (function () {
+        const theme = document.documentElement.getAttribute('data-theme') || 'light';
+        const logoEl = document.getElementById('portal-loader-logo');
+        const textEl = document.getElementById('portal-loader-text');
+        if (theme === 'dark') {
+          if (logoEl) logoEl.style.color = '#60a5fa';
+          if (textEl) textEl.style.color = '#9ca3af';
+        } else {
+          if (logoEl) logoEl.style.color = '#2563eb';
+          if (textEl) textEl.style.color = '#4b5563';
+        }
+      })();
+    </script>
+    <style>
+      @keyframes portal-spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </div>
+  <script type="module" src="/src/index.tsx"></script>
+</body>
+
+</html>

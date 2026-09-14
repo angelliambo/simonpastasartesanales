@@ -1,7 +1,7 @@
 import React from "react";
 import Title from '@design-sys/atoms/Title';
 import Text from '@design-sys/atoms/Text';
-import { useThemeColors } from "../../hooks";
+import { useThemeColors } from "../../hooks/useThemeColors";
 
 interface ThemedTypographyProps {
   variant?: "primary" | "secondary" | "tertiary" | "accent";

@@ -1,5 +1,7 @@
 import styled, { keyframes } from "styled-components";
-import { Card, Text, Button } from "../../../styles/mixins";
+import Card from "@design-sys/atoms/Card";
+import Text from "@design-sys/atoms/Text";
+import Button from "@design-sys/atoms/Button";
 
 // ===== ANIMACIONES =====
 export const fadeIn = keyframes`

@@ -7,35 +7,55 @@ declare const process: { env: Record<string, string | undefined> };
 /**
  * Master Feature Flag for Monetization & Ads.
  * Controlled globally via environment variable REACT_APP_ADS_ENABLED.
- * Defaults to true. If set to false, disables all ad units globally across Portal.
- */
+const getEnv = (key: string): string | undefined => {
+  if (typeof import.meta !== "undefined" && import.meta.env) {
+    if (import.meta.env[key] !== undefined) return import.meta.env[key];
+  }
+  if (typeof process !== "undefined" && process.env) {
+    if (process.env[key] !== undefined) return process.env[key];
+  }
+  return undefined;
+};
+
 export const ADS_ENABLED =
-  typeof process !== 'undefined' && process.env?.REACT_APP_ADS_ENABLED !== undefined
-    ? process.env.REACT_APP_ADS_ENABLED !== 'false' && process.env.REACT_APP_ADS_ENABLED !== '0'
-    : true;
+  getEnv("VITE_ADS_ENABLED") !== "false" &&
+  getEnv("VITE_ADS_ENABLED") !== "0" &&
+  getEnv("REACT_APP_ADS_ENABLED") !== "false" &&
+  getEnv("REACT_APP_ADS_ENABLED") !== "0";
 
 export const GOOGLE_ADSENSE_CLIENT_ID =
-  typeof process !== 'undefined' && process.env?.REACT_APP_GOOGLE_ADSENSE_CLIENT_ID
-    ? process.env.REACT_APP_GOOGLE_ADSENSE_CLIENT_ID
-    : 'ca-pub-6167435415786243';
+  getEnv("VITE_GOOGLE_ADSENSE_CLIENT_ID") ||
+  getEnv("REACT_APP_GOOGLE_ADSENSE_CLIENT_ID") ||
+  "ca-pub-6167435415786243";
 
 export const ADSENSE_SLOTS = {
   PORTAL_HOME_SUBHERO:
-    typeof process !== 'undefined' && process.env?.REACT_APP_ADSENSE_SLOT_SUBHERO
-      ? process.env.REACT_APP_ADSENSE_SLOT_SUBHERO
-      : '1000000001',
+    getEnv("VITE_ADSENSE_SLOT_SUBHERO") || getEnv("REACT_APP_ADSENSE_SLOT_SUBHERO") || "1000000001",
   PORTAL_HOME_FOOTER:
-    typeof process !== 'undefined' && process.env?.REACT_APP_ADSENSE_SLOT_FOOTER
-      ? process.env.REACT_APP_ADSENSE_SLOT_FOOTER
-      : '1000000002',
+    getEnv("VITE_ADSENSE_SLOT_FOOTER") || getEnv("REACT_APP_ADSENSE_SLOT_FOOTER") || "1000000002",
   PORTAL_CATALOG_BANNER:
-    typeof process !== 'undefined' && process.env?.REACT_APP_ADSENSE_SLOT_CATALOG
-      ? process.env.REACT_APP_ADSENSE_SLOT_CATALOG
-      : '1000000003',
+    getEnv("VITE_ADSENSE_SLOT_CATALOG") || getEnv("REACT_APP_ADSENSE_SLOT_CATALOG") || "1000000003",
   PORTAL_DASHBOARD_SIDEBAR:
-    typeof process !== 'undefined' && process.env?.REACT_APP_ADSENSE_SLOT_DASHBOARD
-      ? process.env.REACT_APP_ADSENSE_SLOT_DASHBOARD
-      : '1000000004',
+    getEnv("VITE_ADSENSE_SLOT_DASHBOARD") || getEnv("REACT_APP_ADSENSE_SLOT_DASHBOARD") || "1000000004",
 } as const;
 
 export type AdSlotName = keyof typeof ADSENSE_SLOTS;
+
+/**
+ * Detects whether a given slot ID is a test/placeholder slot
+ */
+export function isPlaceholderAdSlot(slot: string | undefined | null): boolean {
+  if (!slot) return true;
+  const clean = slot.trim();
+  if (clean === "" || clean.startsWith("10000000") || clean.toLowerCase().includes("test")) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Validates if an ad slot ID is real and safe to send requests to Google AdSense SDK.
+ */
+export function isValidAdSlot(slot: string | undefined | null): boolean {
+  return !isPlaceholderAdSlot(slot);
+}

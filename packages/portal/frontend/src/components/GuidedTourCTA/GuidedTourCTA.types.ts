@@ -6,4 +6,5 @@ export interface GuidedTourStep {
 
 export interface GuidedTourCTAProps {
   delayMs?: number;
+  whatsappUrl?: string;
 }

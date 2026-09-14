@@ -71,7 +71,7 @@ function generateTicketId(): string {
   const m = String(now.getMonth() + 1).padStart(2, "0");
   const d = String(now.getDate()).padStart(2, "0");
   const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
-  return `ZN-${y}${m}${d}-${rand}`;
+  return `TCK-${y}${m}${d}-${rand}`;
 }
 
 export { generateTicketId };

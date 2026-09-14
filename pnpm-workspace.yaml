@@ -1,0 +1,25 @@
+packages:
+  - 'packages/portal'
+  - 'packages/portal/backend'
+  - 'packages/portal/frontend'
+  - 'packages/shared'
+
+allowBuilds:
+  canvas: true
+  core-js: true
+  core-js-pure: true
+  esbuild: true
+  protobufjs: true
+
+onlyBuiltDependencies:
+  - canvas
+  - core-js
+  - core-js-pure
+  - esbuild
+  - protobufjs
+
+overrides:
+  react: "^19.1.0"
+  react-dom: "^19.1.0"
+  "@types/react": "^19.0.0"
+  "@types/react-dom": "^19.0.0"
