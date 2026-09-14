@@ -43,7 +43,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      outDir: 'build',
+      outDir: 'dist',
       emptyOutDir: true,
       sourcemap: mode === 'development',
       rollupOptions: {

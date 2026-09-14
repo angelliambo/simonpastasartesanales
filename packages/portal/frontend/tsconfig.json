@@ -11,7 +11,8 @@
     "skipDefaultLibCheck": true,
     "types": [
       "node",
-      "jest"
+      "jest",
+      "vite/client"
     ],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
