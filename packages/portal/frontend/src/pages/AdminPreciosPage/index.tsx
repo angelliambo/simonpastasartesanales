@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { createPortal } from "react-dom";
-import styled, { keyframes } from "styled-components";
 import { Helmet } from "react-helmet-async";
 import type { Product, ProductPresentation } from "@factory/shared/types/products";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
@@ -19,539 +18,73 @@ import {
   PictureOutlined,
   FolderOutlined,
 } from "@ant-design/icons";
+import { Button } from "@design-sys/atoms/Button";
+import {
+  PinModal,
+  PinInput,
+  Input,
+  RequiredAsterisk,
+  FormGrid,
+  ModalBody,
+  ModalFooter,
+  FormModalDialog,
+  ThumbImage,
+  Table,
+  CategoryBadge,
+  ItemBadge,
+  VarietyTag,
+  CategoryRemoveTagBtn,
+  TagRemoveBtn,
+  ActionsCellContainer,
+  ModalCloseIconButton,
+  Label,
+  TextArea,
+  AdminContainer,
+  HeaderSection,
+  Title,
+  HeaderActions,
+  SecondaryBtnLink,
+  PrimaryBtn,
+  SaveAllBtn,
+  CancelBtn,
+  DangerBtn,
+  IconBtn,
+  SearchCard,
+  SearchInput,
+  CategorySelect,
+  TableContainer,
+  StyledTable,
+  Th,
+  Tr,
+  Td,
+  ProductThumb,
+  InlineInput,
+  PriceInputGroup,
+  PriceInput,
+  CategoryTag,
+  ModalOverlay,
+  ModalDialog,
+  ModalHeader,
+  ModalTitle,
+  FormGroup,
+  FormLabel,
+  FormInput,
+  FormTextArea,
+  SectionSubTitle,
+  PresentationRow,
+  ImageGrid,
+  ImagePreviewCard,
+  PreviewImage,
+  ImageDeletingOverlay,
+  ImageDeleteBtn,
+  ConfirmDialog,
+  DeleteProductCardPreview,
+  SnackbarContainer,
+  SnackbarCloseBtn,
+} from "./AdminPreciosPage.styles";
 
 const NO_IMAGE_PLACEHOLDER =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23f3f4f6'/><g fill='%239ca3af' transform='translate(100, 70)'><rect x='10' y='10' width='80' height='80' rx='8' fill='none' stroke='%239ca3af' stroke-width='4'/><circle cx='35' cy='35' r='8'/><path d='M20 75 L45 45 L60 60 L75 45 L80 75 Z'/></g><text x='150' y='200' font-size='16' font-weight='600' font-family='sans-serif' fill='%236b7280' text-anchor='middle'>Sin Imagen</text></svg>";
-
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-`;
-
-const AdminContainer = styled.div`
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: ${props => props.theme.spacing.md};
-  min-height: 80vh;
-
-  @media (min-width: 768px) {
-    padding: ${props => props.theme.spacing.lg};
-  }
-`;
-
-const HeaderSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: ${props => props.theme.spacing.lg};
-  flex-wrap: wrap;
-  gap: ${props => props.theme.spacing.md};
-`;
-
-const Title = styled.h1`
-  font-size: 1.5rem;
-  color: ${props => props.theme.colors.text.primary};
-  margin: 0;
-
-  @media (min-width: 768px) {
-    font-size: 1.8rem;
-  }
-`;
-
-const PinModal = styled.div`
-  max-width: 420px;
-  margin: 40px auto;
-  padding: ${props => props.theme.spacing.xl};
-  background: ${props => props.theme.colors.background.card};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-
-  @media (max-width: 480px) {
-    padding: ${props => props.theme.spacing.lg};
-    margin: 20px 10px;
-  }
-`;
-
-const PinInput = styled.input`
-  width: 100%;
-  padding: ${props => props.theme.spacing.md};
-  margin: ${props => props.theme.spacing.md} 0;
-  border: 1px solid ${props => props.theme.colors.border};
-  border-radius: 8px;
-  font-size: 1.1rem;
-  text-align: center;
-  outline: none;
-
-  &:focus {
-    border-color: ${props => props.theme.colors.primary};
-  }
-`;
-
-const Button = styled.button<{ $variant?: "primary" | "secondary" | "danger" }>`
-  padding: 8px 14px;
-  border: none;
-  border-radius: ${props => props.theme.borderRadius.md};
-  font-weight: ${props => props.theme.typography.fontWeight.semibold};
-  font-size: ${props => props.theme.typography.fontSize.sm};
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  white-space: nowrap;
-  background: ${props =>
-    props.$variant === "danger"
-      ? props.theme.colors.error[500]
-      : props.$variant === "secondary"
-      ? props.theme.colors.neutral[600]
-      : props.theme.colors.primary[500]};
-  color: ${props => props.theme.colors.text.inverse || "#ffffff"};
-  box-shadow: ${props => props.theme.shadows.light};
-  transition: all ${props => props.theme.transitions.normal};
-
-  &:hover:not(:disabled) {
-    background: ${props =>
-      props.$variant === "danger"
-        ? props.theme.colors.error[600]
-        : props.$variant === "secondary"
-        ? props.theme.colors.neutral[700]
-        : props.theme.colors.primary[600]};
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-`;
-
-const TableContainer = styled.div`
-  width: 100%;
-  overflow-x: auto;
-  background: ${props => props.theme.colors.background.card};
-  border-radius: 12px;
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  box-shadow: ${props => props.theme.shadows.medium};
-  margin-bottom: ${props => props.theme.spacing.xl};
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 750px;
-`;
-
-const Th = styled.th`
-  text-align: left;
-  padding: ${props => props.theme.spacing.md};
-  background-color: ${props => props.theme.colors.background.secondary};
-  border-bottom: 2px solid ${props => props.theme.colors.border.normal};
-  color: ${props => props.theme.colors.text.primary};
-  font-size: ${props => props.theme.typography.fontSize.sm};
-  font-weight: ${props => props.theme.typography.fontWeight.bold};
-`;
-
-const Tr = styled.tr<{ $isDeleting?: boolean; $isEditing?: boolean }>`
-  transition: background-color 0.2s ease;
-  background-color: ${props =>
-    props.$isDeleting
-      ? "#fff1f0"
-      : props.$isEditing
-      ? props.theme.colors.primary[50]
-      : "transparent"};
-
-  &:hover {
-    background-color: ${props =>
-      props.$isDeleting
-        ? "#ffe5e5"
-        : props.$isEditing
-        ? props.theme.colors.primary[100]
-        : props.theme.colors.background.secondary};
-  }
-`;
-
-const Td = styled.td`
-  padding: ${props => props.theme.spacing.md};
-  border-bottom: 1px solid ${props => props.theme.colors.border.normal};
-  color: ${props => props.theme.colors.text.primary};
-  vertical-align: middle;
-  font-size: ${props => props.theme.typography.fontSize.sm};
-`;
-
-const ActionsCellContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: nowrap;
-`;
-
-const ThumbImage = styled.img`
-  width: 54px;
-  height: 54px;
-  object-fit: cover;
-  border-radius: ${props => props.theme.borderRadius.md};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  background-color: ${props => props.theme.colors.background.secondary};
-`;
-
-const ItemBadge = styled.span`
-  display: inline-block;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  background-color: ${props => props.theme.colors.primary[50]};
-  color: ${props => props.theme.colors.primary[700]};
-  margin-right: 6px;
-`;
-
-const CategoryBadge = styled.span`
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  background-color: ${props => props.theme.colors.primary[100]};
-  color: ${props => props.theme.colors.primary[800]};
-  margin-right: 4px;
-  margin-bottom: 4px;
-`;
-
-const CategoryRemoveTagBtn = styled.button`
-  background: transparent;
-  border: none;
-  color: ${props => props.theme.colors.error[500]};
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 0.8rem;
-  line-height: 1;
-  padding: 0 2px;
-  margin-left: 4px;
-  &:hover {
-    color: ${props => props.theme.colors.error[700]};
-  }
-`;
-
-const VarietyTag = styled.span`
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  background-color: ${props => props.theme.colors.background.secondary};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  color: ${props => props.theme.colors.text.secondary};
-  margin: 2px;
-`;
-
-const TagRemoveBtn = styled.button`
-  background: transparent;
-  border: none;
-  color: ${props => props.theme.colors.error[500]};
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 0.8rem;
-  line-height: 1;
-  padding: 0 2px;
-  &:hover {
-    color: ${props => props.theme.colors.error[700]};
-  }
-`;
-
-/* Overlay genérico para modales flotantes (React Portal) */
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999999;
-  padding: ${props => props.theme.spacing.md};
-  backdrop-filter: blur(6px);
-`;
-
-const FormModalDialog = styled.div`
-  background: ${props => props.theme.colors.background.card};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  border-radius: ${props => props.theme.borderRadius.lg};
-  max-width: 700px;
-  width: 100%;
-  max-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
-  overflow: hidden;
-`;
-
-const ModalHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 24px;
-  border-bottom: 1px solid ${props => props.theme.colors.border.normal};
-  background-color: ${props => props.theme.colors.background.card};
-  position: sticky;
-  top: 0;
-  z-index: 10;
-`;
-
-const ModalTitle = styled.h2`
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: ${props => props.theme.colors.text.primary};
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-const ModalCloseIconButton = styled.button`
-  background: transparent;
-  border: none;
-  color: ${props => props.theme.colors.text.secondary};
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: ${props => props.theme.colors.background.secondary};
-    color: ${props => props.theme.colors.text.primary};
-  }
-`;
-
-const ModalBody = styled.div`
-  padding: 20px 24px;
-  overflow-y: auto;
-  flex: 1;
-`;
-
-const ModalFooter = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 24px;
-  border-top: 1px solid ${props => props.theme.colors.border.normal};
-  background-color: ${props => props.theme.colors.background.card};
-  position: sticky;
-  bottom: 0;
-  z-index: 10;
-`;
-
-const RequiredAsterisk = styled.span`
-  color: ${props => props.theme.colors.error[500] || "#ff4d4f"};
-  margin-left: 4px;
-  font-weight: bold;
-`;
-
-const FormGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: ${props => props.theme.spacing.md};
-
-  @media (min-width: 600px) {
-    grid-template-columns: 1fr 1fr;
-  }
-`;
-
-const FormGroup = styled.div<{ $fullWidth?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  grid-column: ${props => (props.$fullWidth ? "1 / -1" : "auto")};
-`;
-
-const Label = styled.label`
-  font-weight: ${props => props.theme.typography.fontWeight.semibold};
-  font-size: ${props => props.theme.typography.fontSize.sm};
-  color: ${props => props.theme.colors.text.primary};
-`;
-
-const Input = styled.input`
-  padding: 10px 12px;
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  background-color: ${props => props.theme.colors.background.surface};
-  color: ${props => props.theme.colors.text.primary};
-  border-radius: ${props => props.theme.borderRadius.md};
-  font-size: ${props => props.theme.typography.fontSize.sm};
-  outline: none;
-  transition: border-color ${props => props.theme.transitions.fast};
-
-  &:focus {
-    border-color: ${props => props.theme.colors.primary[500]};
-  }
-`;
-
-const TextArea = styled.textarea`
-  padding: 10px 12px;
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  background-color: ${props => props.theme.colors.background.surface};
-  color: ${props => props.theme.colors.text.primary};
-  border-radius: ${props => props.theme.borderRadius.md};
-  font-size: ${props => props.theme.typography.fontSize.sm};
-  min-height: 80px;
-  outline: none;
-
-  &:focus {
-    border-color: ${props => props.theme.colors.primary[500]};
-  }
-`;
-
-const SectionSubTitle = styled.h4`
-  font-size: 0.95rem;
-  margin: 16px 0 8px 0;
-  color: ${props => props.theme.colors.text.primary};
-  display: flex;
-  align-items: center;
-  gap: 6px;
-`;
-
-const PresentationRow = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 8px;
-`;
-
-/* Styled Components para las fotos (hasta 3 fotos por producto) */
-const ImageGrid = styled.div`
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 10px;
-`;
-
-const ImagePreviewCard = styled.div`
-  position: relative;
-  width: 72px;
-  height: 72px;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  background-color: ${props => props.theme.colors.background.secondary};
-`;
-
-const PreviewImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const ImageDeletingOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  font-size: 1.2rem;
-`;
-
-const ImageDeleteBtn = styled.button`
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  background-color: #ff4d4f;
-  color: #ffffff;
-  border: none;
-  border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 0.75rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  transition: transform 0.15s ease;
-
-  &:hover {
-    transform: scale(1.15);
-    background-color: #cf1322;
-  }
-`;
-
-/* Modal de Confirmación de Borrado */
-const ConfirmDialog = styled.div`
-  background: ${props => props.theme.colors.background.card};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  border-radius: ${props => props.theme.borderRadius.lg};
-  max-width: 480px;
-  width: 100%;
-  padding: ${props => props.theme.spacing.xl};
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
-  text-align: center;
-`;
-
-const DeleteProductCardPreview = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background-color: ${props => props.theme.colors.background.secondary};
-  padding: ${props => props.theme.spacing.md};
-  border-radius: ${props => props.theme.borderRadius.md};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  margin: ${props => props.theme.spacing.md} 0;
-  text-align: left;
-`;
-
-const SnackbarContainer = styled.div<{ $error?: boolean }>`
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 999999;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border-radius: 24px;
-  background-color: ${props => (props.$error ? props.theme.colors.error[600] : props.theme.colors.success[600])};
-  color: #ffffff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-  font-weight: 600;
-  font-size: 0.875rem;
-  animation: ${fadeIn} 0.25s ease-out;
-
-  @media (max-width: 480px) {
-    bottom: 16px;
-    right: 16px;
-    left: 16px;
-    justify-content: space-between;
-  }
-`;
-
-const SnackbarCloseBtn = styled.button`
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  padding: 2px;
-  opacity: 0.85;
-  margin-left: 4px;
-  &:hover {
-    opacity: 1;
-  }
-`;
 
 export const AdminPreciosPage: React.FC = () => {
   const [pin, setPin] = useState("");
@@ -916,7 +449,7 @@ export const AdminPreciosPage: React.FC = () => {
               type="password"
               placeholder="Clave Admin Secreta"
               value={pin}
-              onChange={(e) => setPin(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPin(e.target.value)}
               autoFocus
             />
             <Button type="submit" style={{ width: "100%" }}>
@@ -986,7 +519,7 @@ export const AdminPreciosPage: React.FC = () => {
                         <ThumbImage
                           src={prodImages[0]}
                           alt={prod.titulo}
-                          onError={(e) => {
+                          onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                             e.currentTarget.src = NO_IMAGE_PLACEHOLDER;
                           }}
                         />
@@ -1011,7 +544,7 @@ export const AdminPreciosPage: React.FC = () => {
                   </Td>
                   <Td>
                     {prodCategories.length > 0 ? (
-                      prodCategories.map((c, cIdx) => <CategoryBadge key={cIdx}>{c}</CategoryBadge>)
+                      prodCategories.map((c: string, cIdx: number) => <CategoryBadge key={cIdx}>{c}</CategoryBadge>)
                     ) : (
                       <small style={{ color: "#999" }}>Sin Categoría</small>
                     )}
@@ -1026,7 +559,7 @@ export const AdminPreciosPage: React.FC = () => {
                     {prod.variedades && prod.variedades.length > 0 && (
                       <div style={{ marginTop: 6 }}>
                         <small style={{ color: "#888", fontWeight: 600 }}>Variedades: </small>
-                        {prod.variedades.map((v, idx) => (
+                        {prod.variedades.map((v: string, idx: number) => (
                           <VarietyTag key={idx}>{v}</VarietyTag>
                         ))}
                       </div>
@@ -1034,7 +567,7 @@ export const AdminPreciosPage: React.FC = () => {
                   </Td>
                   <Td>
                     {prod.presentaciones && prod.presentaciones.length > 0 ? (
-                      prod.presentaciones.map((p, pIdx) => (
+                      prod.presentaciones.map((p: ProductPresentation, pIdx: number) => (
                         <div key={pIdx} style={{ marginBottom: 4 }}>
                           <strong>{p.presentacion}</strong>: ${p.precio.toLocaleString("es-AR")}
                         </div>
@@ -1050,7 +583,7 @@ export const AdminPreciosPage: React.FC = () => {
                       <Button onClick={() => setEditingProduct({ ...prod })}>
                         <ZnIcon icon={EditOutlined} /> Editar
                       </Button>
-                      <Button $variant="danger" onClick={() => setDeleteTarget(prod)}>
+                      <Button variant="danger" onClick={() => setDeleteTarget(prod)}>
                         <ZnIcon icon={DeleteOutlined} /> Eliminar
                       </Button>
                     </ActionsCellContainer>
@@ -1066,7 +599,7 @@ export const AdminPreciosPage: React.FC = () => {
       {editingProduct &&
         createPortal(
           <ModalOverlay onClick={() => !isSaving && setEditingProduct(null)}>
-            <FormModalDialog onClick={(e) => e.stopPropagation()}>
+            <FormModalDialog onClick={(e: React.MouseEvent) => e.stopPropagation()}>
               <ModalHeader>
                 <ModalTitle>
                   <ZnIcon icon={editingProduct.id ? EditOutlined : PlusOutlined} />
@@ -1219,14 +752,14 @@ export const AdminPreciosPage: React.FC = () => {
                             }
                           />
                           {(editingProduct.presentaciones || []).length > 1 && (
-                            <Button type="button" $variant="danger" onClick={() => handleRemovePresentation(pIdx)}>
+                            <Button type="button" variant="danger" onClick={() => handleRemovePresentation(pIdx)}>
                               <ZnIcon icon={CloseOutlined} />
                             </Button>
                           )}
                         </PresentationRow>
                       ))}
 
-                      <Button type="button" $variant="secondary" style={{ marginTop: 6, alignSelf: "flex-start" }} onClick={handleAddPresentation}>
+                      <Button type="button" variant="secondary" style={{ marginTop: 6, alignSelf: "flex-start" }} onClick={handleAddPresentation}>
                         <ZnIcon icon={PlusOutlined} /> Agregar otra presentación
                       </Button>
                     </FormGroup>
@@ -1298,7 +831,7 @@ export const AdminPreciosPage: React.FC = () => {
                 </ModalBody>
 
                 <ModalFooter>
-                  <Button type="button" $variant="secondary" onClick={() => setEditingProduct(null)} disabled={isSaving}>
+                  <Button type="button" variant="secondary" onClick={() => setEditingProduct(null)} disabled={isSaving}>
                     <ZnIcon icon={CloseOutlined} /> Cancelar
                   </Button>
                   <Button type="submit" disabled={!isFormValid || isSaving}>
@@ -1327,7 +860,7 @@ export const AdminPreciosPage: React.FC = () => {
                 <ThumbImage
                   src={deleteTarget.imagen || (deleteTarget.imagenes && deleteTarget.imagenes[0]) || NO_IMAGE_PLACEHOLDER}
                   alt={deleteTarget.titulo}
-                  onError={(e) => {
+                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                     e.currentTarget.src = NO_IMAGE_PLACEHOLDER;
                   }}
                 />
@@ -1342,10 +875,10 @@ export const AdminPreciosPage: React.FC = () => {
               </DeleteProductCardPreview>
 
               <div style={{ display: "flex", justifyContent: "center", gap: 12, marginTop: 16 }}>
-                <Button $variant="secondary" onClick={() => setDeleteTarget(null)} disabled={isDeletingProduct}>
+                <Button variant="secondary" onClick={() => setDeleteTarget(null)} disabled={isDeletingProduct}>
                   <ZnIcon icon={CloseOutlined} /> Cancelar
                 </Button>
-                <Button $variant="danger" onClick={confirmDeleteProduct} disabled={isDeletingProduct}>
+                <Button variant="danger" onClick={confirmDeleteProduct} disabled={isDeletingProduct}>
                   <ZnIcon icon={isDeletingProduct ? LoadingOutlined : DeleteOutlined} />
                   {isDeletingProduct ? "Eliminando..." : "Eliminar Pasta"}
                 </Button>

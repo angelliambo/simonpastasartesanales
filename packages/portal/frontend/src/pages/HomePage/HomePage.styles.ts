@@ -1,17 +1,7 @@
 import styled, { css } from "styled-components";
 import Button from '@design-sys/atoms/Button';
 import { Row, Col } from '@design-sys/atoms/Grid';
-export const Container = styled.div<{ maxWidth?: string; padding?: string }>`
-  width: 100%;
-  max-width: ${({ maxWidth }) => {
-    if (maxWidth === "sm") return "600px";
-    if (maxWidth === "md") return "900px";
-    if (maxWidth === "lg") return "1200px";
-    return maxWidth || "1200px";
-  }};
-  margin: 0 auto;
-  padding: ${({ padding, theme }) => (padding === "none" ? "0" : `0 ${theme.spacing.md}`)};
-`;
+export { Container } from '@design-sys/atoms/Container';
 
 export const VhSection = styled.section<{
   $visible?: boolean;
