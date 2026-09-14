@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "@tanstack/react-router";
 import { useTranslation } from "../i18n/I18nProvider";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 

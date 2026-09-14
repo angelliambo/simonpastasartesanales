@@ -26,6 +26,8 @@ const AdminPage = lazy(() => import("./pages/AdminPage"));
 const TermsAndConditionsPage = lazy(() => import("./pages/legal/TermsAndConditionsPage"));
 const PrivacyPolicyPage = lazy(() => import("./pages/legal/PrivacyPolicyPage"));
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
+const PreciosPage = lazy(() => import("./pages/PreciosPage"));
+const AdminPreciosPage = lazy(() => import("./pages/AdminPreciosPage"));
 
 export interface RouterContext {
   queryClient: QueryClient;
@@ -140,6 +142,46 @@ const privacyRoute = createRoute({
   component: () => <PrivacyPolicyPage />,
 });
 
+const preciosRoute = createRoute({
+  getParentRoute: () => layoutRoute,
+  path: "/precios",
+  component: () => <PreciosPage />,
+});
+
+const productosRoute = createRoute({
+  getParentRoute: () => layoutRoute,
+  path: "/productos",
+  component: () => <PreciosPage />,
+});
+
+const mayoristaRoute = createRoute({
+  getParentRoute: () => layoutRoute,
+  path: "/mayorista",
+  component: () => <PreciosPage />,
+});
+
+const pricingRoute = createRoute({
+  getParentRoute: () => layoutRoute,
+  path: "/pricing",
+  component: () => <PreciosPage />,
+});
+
+const adminPreciosRoute = createRoute({
+  getParentRoute: () => layoutRoute,
+  path: "/admin/precios",
+  beforeLoad: ({ context }) => {
+    const isAuth = context.auth?.isAuthenticated ?? (typeof window !== "undefined" && Boolean(localStorage.getItem("auth_token")));
+    if (!isAuth) {
+      throw redirect({ to: "/" });
+    }
+  },
+  component: () => (
+    <ProtectedRoute requireAdmin>
+      <AdminPreciosPage />
+    </ProtectedRoute>
+  ),
+});
+
 // Rutas estáticas para landing/SEO SSG
 const serviciosRoute = createRoute({
   getParentRoute: () => layoutRoute,
@@ -163,6 +205,11 @@ const contactoRoute = createRoute({
 const routeTree = rootRoute.addChildren([
   layoutRoute.addChildren([
     indexRoute,
+    preciosRoute,
+    productosRoute,
+    mayoristaRoute,
+    pricingRoute,
+    adminPreciosRoute,
     serviciosRoute,
     faqRoute,
     contactoRoute,
