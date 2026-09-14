@@ -5,6 +5,7 @@ import type { Product, ProductPresentation } from "@factory/shared/types/product
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import SEO from "../../components/SEO";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
+import { useTranslation } from "../../i18n/I18nProvider";
 import {
   LockOutlined,
   SearchOutlined,
@@ -107,6 +108,7 @@ const ProductCardItem: React.FC<{
   onOpenLightbox: (url: string, title: string) => void;
   onShare: (product: Product) => void;
 }> = ({ product, onOpenLightbox, onShare }) => {
+  const { t } = useTranslation();
   const imagenes = product.imagenes && product.imagenes.length > 0 ? product.imagenes : (product.imagen ? [product.imagen] : []);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
 
@@ -114,7 +116,7 @@ const ProductCardItem: React.FC<{
   const presentaciones =
     product.presentaciones && product.presentaciones.length > 0
       ? product.presentaciones
-      : [{ presentacion: product.presentacion || "Unidad", precio: product.precio ?? 0 }];
+      : [{ presentacion: product.presentacion || t("pages.precios.unitPresentation"), precio: product.precio ?? 0 }];
 
   const prodCategories = product.categorias && product.categorias.length > 0 ? product.categorias : (product.categoria ? [product.categoria] : []);
 
@@ -135,20 +137,9 @@ const ProductCardItem: React.FC<{
             e.currentTarget.src = NO_IMAGE_PLACEHOLDER;
           }}
         />
-        <ShareIconButton
-          type="button"
-          aria-label="Compartir este producto"
-          title="Compartir en redes sociales"
-          onClick={(e) => {
-            e.stopPropagation();
-            onShare(product);
-          }}
-        >
-          <ZnIcon icon={ShareAltOutlined} />
-        </ShareIconButton>
         <ZoomIconButton
           type="button"
-          aria-label="Ver imagen ampliada"
+          title="Ampliar imagen"
           onClick={(e) => {
             e.stopPropagation();
             onOpenLightbox(currentImg, product.titulo);
@@ -156,17 +147,27 @@ const ProductCardItem: React.FC<{
         >
           <ZnIcon icon={ZoomInOutlined} />
         </ZoomIconButton>
+        <ShareIconButton
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onShare(product);
+          }}
+          title="Compartir producto"
+        >
+          <ZnIcon icon={ShareAltOutlined} />
+        </ShareIconButton>
       </ImageContainer>
 
       {imagenes.length > 1 && (
         <GalleryThumbBar>
-          {imagenes.map((img, idx) => (
+          {imagenes.map((imgUrl, idx) => (
             <GalleryThumbBtn
               key={idx}
               $active={idx === activeImgIndex}
               onClick={() => setActiveImgIndex(idx)}
             >
-              <img src={img} alt={`Miniatura ${idx + 1}`} loading="lazy" decoding="async" />
+              <img src={imgUrl} alt={`Miniatura ${idx + 1}`} />
             </GalleryThumbBtn>
           ))}
         </GalleryThumbBar>
@@ -175,18 +176,19 @@ const ProductCardItem: React.FC<{
       <CardContent>
         {prodCategories.length > 0 && (
           <CategoryTagsContainer>
-            {prodCategories.map((c, cIdx) => (
-              <CategoryTag key={cIdx}>{c}</CategoryTag>
+            {prodCategories.map((cat, cIdx) => (
+              <CategoryTag key={cIdx}>{cat}</CategoryTag>
             ))}
           </CategoryTagsContainer>
         )}
+
         <ProductTitle>{product.titulo}</ProductTitle>
         <ProductDescription>{product.descripcion}</ProductDescription>
 
         {product.variedades && product.variedades.length > 0 && (
           <VarietiesContainer>
             <VarietiesTitle>
-              <ZnIcon icon={TagOutlined} /> Variedades disponibles:
+              <ZnIcon icon={TagOutlined} /> {t("pages.precios.availableVarieties")}
             </VarietiesTitle>
             {product.variedades.map((v, vIdx) => (
               <VarietyBadge key={vIdx}>{v}</VarietyBadge>
@@ -205,7 +207,7 @@ const ProductCardItem: React.FC<{
 
         <ActionRowGrid>
           <WhatsAppBtn href={waLink} target="_blank" rel="noopener noreferrer">
-            <ZnIcon icon={WhatsAppOutlined} /> Pedir por WhatsApp
+            <ZnIcon icon={WhatsAppOutlined} /> {t("pages.precios.orderWhatsApp")}
           </WhatsAppBtn>
           <ListShareBtn type="button" onClick={() => onShare(product)} title="Compartir">
             <ZnIcon icon={ShareAltOutlined} />
@@ -217,6 +219,7 @@ const ProductCardItem: React.FC<{
 };
 
 export const PreciosPage: React.FC = () => {
+  const { t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -442,13 +445,13 @@ export const PreciosPage: React.FC = () => {
       />
 
       <HeroSection>
-        <Title>Lista de Precios Oficial</Title>
+        <Title>{t("pages.precios.badge")}</Title>
         <Subtitle>
-          Pastas frescas artesanales elaboradas día a día con ingredientes seleccionados.
+          {t("pages.precios.heroSubtitle")}
         </Subtitle>
         <div style={{ marginTop: 20 }}>
           <AdminBadgeLink href="/admin/precios">
-            <ZnIcon icon={LockOutlined} /> Administrador
+            <ZnIcon icon={LockOutlined} /> {t("pages.precios.adminBadge")}
           </AdminBadgeLink>
         </div>
       </HeroSection>
@@ -457,26 +460,26 @@ export const PreciosPage: React.FC = () => {
         <TopSearchRow>
           <SearchInput
             type="text"
-            placeholder="Buscar por nombre, sabor o ingrediente..."
+            placeholder={t("pages.precios.searchPlaceholder")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
 
           <ControlsRight>
             <SelectSort value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-              <option value="orden">Orden Recomendado</option>
-              <option value="precio-asc">Precio: Menor a Mayor</option>
-              <option value="precio-desc">Precio: Mayor a Menor</option>
-              <option value="nombre">Nombre (A-Z)</option>
-              <option value="categoria">Por Categoría</option>
+              <option value="orden">{t("pages.precios.sortDefault")}</option>
+              <option value="precio-asc">{t("pages.precios.sortPriceAsc")}</option>
+              <option value="precio-desc">{t("pages.precios.sortPriceDesc")}</option>
+              <option value="nombre">{t("pages.precios.sortTitleAsc")}</option>
+              <option value="categoria">{t("pages.precios.categoryColumn")}</option>
             </SelectSort>
 
             <ViewToggleGroup>
               <ViewToggleButton $active={viewMode === "cards"} onClick={() => setViewMode("cards")}>
-                <ZnIcon icon={AppstoreOutlined} /> Tarjetas
+                <ZnIcon icon={AppstoreOutlined} /> {t("pages.precios.viewCards")}
               </ViewToggleButton>
               <ViewToggleButton $active={viewMode === "list"} onClick={() => setViewMode("list")}>
-                <ZnIcon icon={UnorderedListOutlined} /> Lista Rápida
+                <ZnIcon icon={UnorderedListOutlined} /> {t("pages.precios.viewList")}
               </ViewToggleButton>
             </ViewToggleGroup>
           </ControlsRight>
@@ -491,7 +494,7 @@ export const PreciosPage: React.FC = () => {
                 $active={selectedCategory === cat}
                 onClick={() => setSelectedCategory(cat)}
               >
-                {cat === "Todas" ? "Todas las Categorías" : cat}
+                {cat === "Todas" ? t("pages.precios.filterAll") : cat}
               </CategoryPill>
             ))}
           </CategoryPillsBar>
@@ -556,11 +559,11 @@ export const PreciosPage: React.FC = () => {
           <ListTable>
             <thead>
               <tr>
-                <ListTh style={{ width: "160px" }}>Categoría(s)</ListTh>
-                <ListTh>Producto y Descripción</ListTh>
-                <ListTh>Variedades / Sabores</ListTh>
-                <ListTh>Presentaciones y Precios</ListTh>
-                <ListTh style={{ width: "180px", textAlign: "center" }}>Acción</ListTh>
+                <ListTh style={{ width: "160px" }}>{t("pages.precios.categoryColumn")}</ListTh>
+                <ListTh>{t("pages.precios.productAndDescColumn")}</ListTh>
+                <ListTh>{t("pages.precios.varietiesColumn")}</ListTh>
+                <ListTh>{t("pages.precios.presentationsAndPricesColumn")}</ListTh>
+                <ListTh style={{ width: "180px", textAlign: "center" }}>{t("pages.precios.actionColumn")}</ListTh>
               </tr>
             </thead>
             <tbody>
@@ -568,7 +571,7 @@ export const PreciosPage: React.FC = () => {
                 const presentaciones =
                   product.presentaciones && product.presentaciones.length > 0
                     ? product.presentaciones
-                    : [{ presentacion: product.presentacion || "Unidad", precio: product.precio ?? 0 }];
+                    : [{ presentacion: product.presentacion || t("pages.precios.unitPresentation"), precio: product.precio ?? 0 }];
 
                 const prodCategories = product.categorias && product.categorias.length > 0 ? product.categorias : (product.categoria ? [product.categoria] : []);
 
@@ -587,7 +590,7 @@ export const PreciosPage: React.FC = () => {
                           ))}
                         </CategoryTagsContainer>
                       ) : (
-                        <small style={{ color: "#999" }}>General</small>
+                        <small style={{ color: "#999" }}>{t("pages.precios.generalCategory")}</small>
                       )}
                     </ListTd>
                     <ListTd>
@@ -600,7 +603,7 @@ export const PreciosPage: React.FC = () => {
                       {product.variedades && product.variedades.length > 0 ? (
                         product.variedades.map((v: string, vIdx: number) => <VarietyBadge key={vIdx}>{v}</VarietyBadge>)
                       ) : (
-                        <small style={{ color: "#888" }}>Tradicional</small>
+                        <small style={{ color: "#888" }}>{t("pages.precios.traditionalVariety")}</small>
                       )}
                     </ListTd>
                     <ListTd>
@@ -613,7 +616,7 @@ export const PreciosPage: React.FC = () => {
                     <ListTd style={{ textAlign: "center" }}>
                       <div style={{ display: "flex", gap: 6, justifyContent: "center" }}>
                         <WhatsAppBtn href={waLink} target="_blank" rel="noopener noreferrer">
-                          <ZnIcon icon={WhatsAppOutlined} /> Pedir
+                          <ZnIcon icon={WhatsAppOutlined} /> {t("pages.precios.orderBtn")}
                         </WhatsAppBtn>
                         <ListShareBtn
                           type="button"
@@ -690,10 +693,10 @@ export const PreciosPage: React.FC = () => {
       {/* Tarjeta de Aviso Legal */}
       <LegalDisclaimerCard>
         <LegalDisclaimerTitle>
-          <ZnIcon icon={InfoCircleOutlined} /> * Aviso Legal y Variación de Precios
+          <ZnIcon icon={InfoCircleOutlined} /> {t("pages.precios.legalDisclaimerTitle")}
         </LegalDisclaimerTitle>
         <LegalDisclaimerText>
-          Los precios, presentaciones, promociones y disponibilidad de productos exhibidos en esta lista oficial están sujetos a modificaciones y ajustes sin previo aviso debido a variaciones de costos de insumos y mercado. Fábrica de Pastas Simón y la administración de la plataforma quedan exentas de toda responsabilidad civil, comercial o legal por eventuales errores tipográficos, desactualizaciones temporales o imponderables de stock. Para confirmar valores vigentes, cotizaciones especiales o pedidos mayoristas, consulte vía WhatsApp antes de concretar su compra. Consulte nuestros <LegalLink href="/legal/terms">Términos y Condiciones</LegalLink>.
+          {t("pages.precios.legalDisclaimerText")} Consulte nuestros <LegalLink href="/legal/terms">Términos y Condiciones</LegalLink>.
         </LegalDisclaimerText>
       </LegalDisclaimerCard>
 
@@ -719,7 +722,7 @@ export const PreciosPage: React.FC = () => {
             <ShareDialog onClick={(e) => e.stopPropagation()}>
               <ShareHeader>
                 <ShareTitle>
-                  <ZnIcon icon={ShareAltOutlined} /> Compartir Producto
+                  <ZnIcon icon={ShareAltOutlined} /> {t("pages.precios.shareTitle")}
                 </ShareTitle>
                 <ModalCloseButton
                   type="button"
@@ -745,7 +748,7 @@ export const PreciosPage: React.FC = () => {
                 <ShareCardInfo>
                   <strong style={{ fontSize: "1rem" }}>{shareProduct.titulo}</strong>
                   <small style={{ color: "#666" }}>
-                    {shareProduct.presentaciones?.[0]?.presentacion || shareProduct.presentacion || "Unidad"} — $
+                    {shareProduct.presentaciones?.[0]?.presentacion || shareProduct.presentacion || t("pages.precios.unitPresentation")} — $
                     {(shareProduct.presentaciones?.[0]?.precio ?? shareProduct.precio ?? 0).toLocaleString("es-AR")}
                   </small>
                 </ShareCardInfo>
@@ -759,7 +762,7 @@ export const PreciosPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ZnIcon icon={WhatsAppOutlined} /> WhatsApp
+                  <ZnIcon icon={WhatsAppOutlined} /> {t("pages.precios.shareWhatsApp")}
                 </ShareOptionBtn>
 
                 {/* 2. Facebook */}
@@ -771,7 +774,7 @@ export const PreciosPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ZnIcon icon={FacebookOutlined} /> Facebook
+                  <ZnIcon icon={FacebookOutlined} /> {t("pages.precios.shareFacebook")}
                 </ShareOptionBtn>
 
                 {/* 3. Threads */}
@@ -781,7 +784,7 @@ export const PreciosPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ZnIcon icon={SendOutlined} /> Threads
+                  <ZnIcon icon={SendOutlined} /> {t("pages.precios.shareThreads")}
                 </ShareOptionBtn>
 
                 {/* 4. X (Twitter) */}
@@ -791,7 +794,7 @@ export const PreciosPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ZnIcon icon={TwitterOutlined} /> X (Twitter)
+                  <ZnIcon icon={TwitterOutlined} /> {t("pages.precios.shareTwitter")}
                 </ShareOptionBtn>
 
                 {/* 5. Telegram */}
@@ -803,7 +806,7 @@ export const PreciosPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ZnIcon icon={SendOutlined} /> Telegram
+                  <ZnIcon icon={SendOutlined} /> {t("pages.precios.shareTelegram")}
                 </ShareOptionBtn>
               </ShareGrid>
 
@@ -815,7 +818,7 @@ export const PreciosPage: React.FC = () => {
                     onClick={() => handleNativeShare(shareProduct)}
                     style={{ width: "100%" }}
                   >
-                    <ZnIcon icon={ShareAltOutlined} /> Compartir Foto + Texto en Celular
+                    <ZnIcon icon={ShareAltOutlined} /> {t("pages.precios.shareMobileNative")}
                   </ShareOptionBtn>
                 </div>
               )}
@@ -834,7 +837,7 @@ export const PreciosPage: React.FC = () => {
                   }
                   style={{ width: "100%" }}
                 >
-                  <ZnIcon icon={DownloadOutlined} /> Descargar Foto del Producto (Para Postear)
+                  <ZnIcon icon={DownloadOutlined} /> {t("pages.precios.shareDownloadImg")}
                 </ShareOptionBtn>
               </div>
 
@@ -849,7 +852,7 @@ export const PreciosPage: React.FC = () => {
                 onClick={() => handleCopyText(getShareText(shareProduct))}
                 style={{ width: "100%" }}
               >
-                <ZnIcon icon={CopyOutlined} /> Copiar Texto de Ficha
+                <ZnIcon icon={CopyOutlined} /> {t("pages.precios.shareCopyText")}
               </ShareOptionBtn>
             </ShareDialog>
           </ModalOverlay>,

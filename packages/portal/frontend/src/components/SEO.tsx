@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { useTranslation, LANGUAGES } from "../i18n/I18nProvider";
+import { useTranslation } from "../i18n/I18nProvider";
+import { LANGUAGES } from "../i18n/languages";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 
 export interface SEOProps {
