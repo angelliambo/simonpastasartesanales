@@ -50,7 +50,7 @@ const HeaderSection = styled.div`
 
 const Title = styled.h1`
   font-size: 1.5rem;
-  color: ${props => props.theme.colors.textPrimary};
+  color: ${props => props.theme.colors.text.primary};
   margin: 0;
 
   @media (min-width: 768px) {
@@ -62,8 +62,8 @@ const PinModal = styled.div`
   max-width: 420px;
   margin: 40px auto;
   padding: ${props => props.theme.spacing.xl};
-  background: ${props => props.theme.colors.surface};
-  border: 1px solid ${props => props.theme.colors.border};
+  background: ${props => props.theme.colors.background.card};
+  border: 1px solid ${props => props.theme.colors.border.normal};
   border-radius: 16px;
   text-align: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);

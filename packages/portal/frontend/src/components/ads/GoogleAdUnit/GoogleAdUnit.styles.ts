@@ -8,8 +8,8 @@ export const AdWrapper = styled.div<{ $responsive?: boolean }>`
   width: 100%;
   margin: ${props => props.theme.spacing?.md || '16px'} 0;
   padding: ${props => props.theme.spacing?.sm || '8px'};
-  background: ${props => props.theme.colors?.backgroundSecondary || '#f9fafb'};
-  border: 1px dashed ${props => props.theme.colors?.border || '#e5e7eb'};
+  background: ${props => props.theme.colors?.background?.secondary || '#f9fafb'};
+  border: 1px dashed ${props => props.theme.colors?.border?.normal || '#e5e7eb'};
   border-radius: 8px;
   overflow: hidden;
   box-sizing: border-box;
@@ -25,7 +25,7 @@ export const AdHeader = styled.div`
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: ${props => props.theme.colors?.textSecondary || '#6b7280'};
+  color: ${props => props.theme.colors?.text?.secondary || '#6b7280'};
 `;
 
 export const InsElement = styled.ins`

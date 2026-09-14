@@ -23,7 +23,7 @@ const LANGUAGES: Language[] = [
 const TRANSLATIONS = allLocales as unknown as Record<string, TranslationObject>;
 
 interface I18nContextType {
-  t: (key: string, params?: Record<string, string> | string) => string;
+  t: (key: string, params?: Record<string, string | number> | string) => string;
   lang: string;
   setLanguage: (lang: string) => void;
   languages: Language[];
@@ -145,7 +145,7 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [lang]);
 
   const t = useCallback(
-    (key: string, params?: Record<string, string> | string) => {
+    (key: string, params?: Record<string, string | number> | string) => {
       try {
         const options = typeof params === 'string' ? undefined : params;
         return translate(key, TRANSLATIONS, lang, FALLBACK_LOCALE, { ...globals, ...options });

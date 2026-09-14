@@ -13,8 +13,8 @@ export function getNestedValue(obj: TranslationObject, key: string): Translation
   return current as TranslationValue | undefined;
 }
 
-export function interpolate(text: string, params: Record<string, string>): string {
-  return text.replace(/\{\{(\w+)\}\}/g, (_, key) => params[key] ?? `{{${key}}}`);
+export function interpolate(text: string, params: Record<string, any>): string {
+  return text.replace(/\{\{(\w+)\}\}/g, (_, key) => String(params[key] ?? `{{${key}}}`));
 }
 
 export function translate(
@@ -22,7 +22,7 @@ export function translate(
   translations: Record<string, TranslationObject>,
   currentLang: string,
   fallbackLang: string,
-  params: Record<string, string> = {},
+  params: Record<string, any> = {},
 ): string {
   const mergedParams = {
     siteName: BRAND_CONFIG.siteName,

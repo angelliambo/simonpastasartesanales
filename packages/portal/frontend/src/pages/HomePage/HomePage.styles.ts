@@ -1,6 +1,17 @@
 import styled, { css } from "styled-components";
 import Button from '@design-sys/atoms/Button';
 import { Row, Col } from '@design-sys/atoms/Grid';
+export const Container = styled.div<{ maxWidth?: string; padding?: string }>`
+  width: 100%;
+  max-width: ${({ maxWidth }) => {
+    if (maxWidth === "sm") return "600px";
+    if (maxWidth === "md") return "900px";
+    if (maxWidth === "lg") return "1200px";
+    return maxWidth || "1200px";
+  }};
+  margin: 0 auto;
+  padding: ${({ padding, theme }) => (padding === "none" ? "0" : `0 ${theme.spacing.md}`)};
+`;
 
 export const VhSection = styled.section<{
   $visible?: boolean;
@@ -18,12 +29,12 @@ export const VhSection = styled.section<{
   z-index: 1;
   background: ${({ $variant, theme }) => {
     if ($variant === "alternate") {
-      return theme.colors.background.secondary || "#f8f9fa";
+      return theme.colors.background.secondary;
     }
     if ($variant === "accent") {
-      return theme.colors.background.tertiary || "#e0e0e0";
+      return theme.colors.background.tertiary;
     }
-    return theme.colors.background.primary || "#ffffff";
+    return theme.colors.background.primary;
   }};
   color: ${({ theme }) => theme.colors.text.primary};
 
@@ -65,8 +76,8 @@ export const LogoWrapper = styled.div`
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      ${({ theme }) => theme.colors.primary[500] || "rgba(249, 115, 22, 0.55)"} 0%,
-      ${({ theme }) => `${theme.colors.primary[500]}66` || "rgba(249, 115, 22, 0.25)"} 45%,
+      ${({ theme }) => theme.colors.primary[500]} 0%,
+      ${({ theme }) => `${theme.colors.primary[500]}66`} 45%,
       transparent 75%
     );
     filter: blur(32px);
@@ -100,9 +111,7 @@ export const HeroTitle = styled.h1`
   color: ${({ theme }) => theme.colors.text.primary};
 
   span {
-    background: ${({ theme }) =>
-    theme.gradients?.brand ||
-    "linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6)"};
+    background: ${({ theme }) => theme.gradients.brand};
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -163,8 +172,7 @@ const gradientBtnMixin = css`
   min-width: 180px;
   font-family: inherit;
   line-height: 1.4;
-  box-shadow: ${({ theme }) =>
-    theme.effects?.glow?.premium || "0 4px 12px rgba(168, 85, 247, 0.4)"};
+  box-shadow: ${({ theme }) => theme.effects.glow.premium};
   position: relative;
   overflow: hidden;
 
@@ -192,8 +200,7 @@ const gradientBtnMixin = css`
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: ${({ theme }) =>
-    `0 8px 20px ${theme.effects?.glow?.premium || "rgba(168, 85, 247, 0.6)"}`};
+    box-shadow: ${({ theme }) => `0 8px 20px ${theme.effects.glow.premium}`};
     &::before {
       animation: shimmer 0.5s ease-out;
     }
@@ -304,8 +311,8 @@ export const ProductGrid = styled.div`
 `;
 
 export const ProductCard = styled.div`
-  background: ${({ theme }) => theme.colors.background.secondary || "#f5f2eb"};
-  border: 1px solid ${({ theme }) => theme.effects?.glassBorder || "rgba(0, 0, 0, 0.05)"};
+  background: ${({ theme }) => theme.colors.background.secondary};
+  border: 1px solid ${({ theme }) => theme.effects.glassBorder};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   overflow: hidden;
   display: flex;
@@ -345,7 +352,7 @@ export const ProductTitle = styled.h3`
   font-family: 'Playfair Display', 'Lora', serif;
   font-size: 18px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.primary?.[500] || "#193220"};
+  color: ${({ theme }) => theme.colors.primary[500]};
   margin-bottom: ${({ theme }) => theme.spacing.xs};
 `;
 
@@ -374,7 +381,7 @@ export const OrderButton = styled.a`
   line-height: 1;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary?.[600] || "#14291a"};
+    background: ${({ theme }) => theme.colors.primary[600]};
     color: #fff !important;
   }
 
@@ -415,7 +422,7 @@ const PricingCardSilverBorder = css`
         rgba(255, 255, 255, 0.3)
       )
       padding-box,
-    ${({ theme }) => theme.colors.background.card || "#0e111a"} padding-box,
+    ${({ theme }) => theme.colors.background.card} padding-box,
     linear-gradient(
         135deg,
         rgba(192, 192, 192, 0.4),
@@ -450,7 +457,7 @@ const PricingCardGoldBorder = css`
         rgba(170, 119, 28, 0.2)
       )
       padding-box,
-    ${({ theme }) => theme.colors.background.card || "#0e111a"} padding-box,
+    ${({ theme }) => theme.colors.background.card} padding-box,
     linear-gradient(
         135deg,
         rgba(191, 149, 63, 0.5),
@@ -493,8 +500,8 @@ export const PricingCard = styled.div<{ $popular?: boolean; $bestValue?: boolean
       : $bestValue
         ? PricingCardGoldBorder
         : `
-      background: ${theme.colors.background.card || "#ffffff"};
-      border: 1px solid ${theme.colors.border.light || "#dee2e6"};
+      background: ${theme.colors.background.card};
+      border: 1px solid ${theme.colors.border.light};
     `}
 
   &:hover {
@@ -670,7 +677,7 @@ export const PricingButton = styled(Button) <{ $primary?: boolean }>`
   width: 100%;
   background: ${({ $primary, theme }) =>
     $primary
-      ? (theme.gradients?.premium || "linear-gradient(135deg, #a855f7, #7c3aed)")
+      ? theme.gradients.premium
       : "rgba(255,255,255,0.08)"};
   color: #fff;
   border: none;
@@ -694,7 +701,7 @@ export const PricingButton = styled(Button) <{ $primary?: boolean }>`
   &:hover {
     background: ${({ $primary, theme }) =>
     $primary
-      ? (theme.gradients?.brand || "linear-gradient(135deg, #b967ff, #8b5cf6)")
+      ? theme.gradients.brand
       : "rgba(255,255,255,0.15)"};
     transform: translateY(-2px);
   }
@@ -723,8 +730,8 @@ export const TestimonialCol = styled(Col)`
 
 export const TestimonialCard = styled.div`
   flex: 1;
-  background: ${({ theme }) => theme.colors.background.card || "#ffffff"};
-  border: 1px solid ${({ theme }) => theme.colors.border.light || "#eef0f2"};
+  background: ${({ theme }) => theme.colors.background.card};
+  border: 1px solid ${({ theme }) => theme.colors.border.light};
   border-radius: 16px;
   padding: ${({ theme }) => theme.spacing.lg};
   text-align: left;

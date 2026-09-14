@@ -510,7 +510,7 @@ export const darkTheme: DefaultTheme = {
       200: "#573415",
       300: "#73481e",
       400: "#905d27",
-      50: "#f59e0b",
+      500: "#f59e0b",
       600: "#fbbf24",
       700: "#fcd34d",
       800: "#fef08a",

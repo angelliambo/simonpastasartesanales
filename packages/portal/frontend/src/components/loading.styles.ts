@@ -7,11 +7,11 @@ export const LoadingContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: ${props => props.theme.spacing.md};
-  background-color: ${props => props.theme.colors.background.primary};
-  transition: background-color ${props => props.theme.transitions.fast};
+  gap: ${({ theme }) => theme.spacing.md};
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  transition: background-color ${({ theme }) => theme.transitions.fast};
 `;
 
 export const LoadingText = styled(Text)`
-  font-size: ${props => props.theme.typography.fontSize.md};
+  font-size: ${({ theme }) => theme.typography.fontSize.md};
 `;

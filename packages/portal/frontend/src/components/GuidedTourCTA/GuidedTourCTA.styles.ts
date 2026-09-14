@@ -105,7 +105,7 @@ export const FloatingSpeechCard = styled.div<{ $isOpen: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors?.border?.light || theme.colors?.border?.normal};
   border-radius: ${({ theme }) => theme.borderRadius?.xl || "16px"};
   padding: ${({ theme }) => theme.spacing?.md};
-  box-shadow: ${({ theme }) => theme.shadows?.large || theme.shadows?.heavy};
+  box-shadow: ${({ theme }) => theme.shadows?.heavy};
   backdrop-filter: blur(16px);
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
   visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")};

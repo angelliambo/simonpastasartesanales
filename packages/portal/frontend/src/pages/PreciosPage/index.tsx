@@ -684,7 +684,7 @@ const ModalImage = styled.img`
   max-height: 80vh;
   object-fit: contain;
   border-radius: ${props => props.theme.borderRadius.md};
-  box-shadow: ${props => props.theme.shadows.large};
+  box-shadow: ${props => props.theme.shadows.heavy};
 `;
 
 const ModalCloseButton = styled.button`
@@ -810,7 +810,7 @@ const LegalDisclaimerCard = styled.div`
   background-color: ${props => props.theme.colors.background.card};
   border: 1px solid ${props => props.theme.colors.border.normal};
   border-radius: ${props => props.theme.borderRadius.lg};
-  box-shadow: ${props => props.theme.shadows.small};
+  box-shadow: ${props => props.theme.shadows.light};
 `;
 
 const LegalDisclaimerTitle = styled.h4`
@@ -1571,7 +1571,7 @@ export const PreciosPage: React.FC = () => {
               </ShareGrid>
 
               {/* Botón de Compartir Nativo Mobile (Foto + Texto adjunto) si está disponible */}
-              {typeof navigator !== "undefined" && navigator.share && (
+              {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
                 <div style={{ marginBottom: 12 }}>
                   <ShareOptionBtn
                     $bg="#722ed1"

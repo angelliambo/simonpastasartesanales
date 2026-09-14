@@ -84,8 +84,6 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
     }
   }, []);
 
-<<<<<<< HEAD
-=======
   const finishTour = useCallback(() => {
     setIsPlaying(false);
     isPlayingRef.current = false;
@@ -94,7 +92,6 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
     }
   }, []);
 
->>>>>>> upstream/master
   const playStepAudio = useCallback(
     (index: number) => {
       stopAudio();
