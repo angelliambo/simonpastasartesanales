@@ -23,7 +23,7 @@ export const VhSection = styled.section<{
   justify-content: center;
   
   /* Agregamos una separación lateral base para que NADA toque el borde de la pantalla */
-  padding: 20px 24px; 
+  padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.lg}`}; 
   
   position: relative;
   z-index: 1;
@@ -39,15 +39,15 @@ export const VhSection = styled.section<{
   color: ${({ theme }) => theme.colors.text.primary};
 
   @media (max-height: 800px) {
-    padding: 10px 24px;
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
   }
   @media (max-height: 700px) {
-    padding: 5px 24px;
+    padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.lg}`};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     min-height: 100dvh;
-    padding: 20px 16px; /* Separación lateral ligeramente más compacta en celulares */
+    padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.md}`}; /* Separación lateral ligeramente más compacta en celulares */
   }
 `;
 
@@ -161,10 +161,10 @@ export const HeroActions = styled.div`
 
 const gradientBtnMixin = css`
   background: ${({ theme }) => theme.gradients.premium};
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.inverse};
   border: none;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  padding: 14px 32px;
+  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -177,7 +177,7 @@ const gradientBtnMixin = css`
   overflow: hidden;
 
   @media (max-height: 800px) {
-    padding: 10px 24px;
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
     font-size: 14px;
     min-width: 140px;
   }
@@ -221,10 +221,10 @@ const gradientBtnMixin = css`
 
 export const HeroOutlinedButton = styled(Button)`
   background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.inverse};
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  padding: 14px 32px;
+  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
   font-size: 16px;
   font-weight: 600;
   min-width: 180px;
@@ -236,7 +236,7 @@ export const HeroOutlinedButton = styled(Button)`
   gap: 6px;
 
   @media (max-height: 800px) {
-    padding: 10px 24px;
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
     font-size: 14px;
     min-width: 140px;
   }
@@ -366,11 +366,11 @@ export const ProductDescription = styled.p`
 
 export const OrderButton = styled.a`
   width: 100%;
-  background: ${({ theme }) => theme.colors.primary?.[500]};
-  color: #fff !important;
+  background: ${({ theme }) => theme.colors.primary[500]};
+  color: ${({ theme }) => theme.colors.text.inverse} !important;
   border: none;
   font-weight: 600;
-  padding: 12px 16px;
+  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   display: inline-flex;
   align-items: center;
@@ -382,7 +382,7 @@ export const OrderButton = styled.a`
 
   &:hover {
     background: ${({ theme }) => theme.colors.primary[600]};
-    color: #fff !important;
+    color: ${({ theme }) => theme.colors.text.inverse} !important;
   }
 
   &:active {
@@ -477,14 +477,14 @@ const PricingCardGoldBorder = css`
 
 export const PricingCard = styled.div<{ $popular?: boolean; $bestValue?: boolean }>`
   border-radius: 1.5rem;
-  padding: 2.5rem 1.5rem;
+  padding: ${({ theme }) => `${theme.spacing.xxl} ${theme.spacing.lg}`};
   display: flex;
   flex-direction: column;
   position: relative;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   transform: none;
   height: 100%;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.inverse};
 
   @media (max-height: 800px) {
     padding: 1.2rem 1rem;
@@ -679,7 +679,7 @@ export const PricingButton = styled(Button) <{ $primary?: boolean }>`
     $primary
       ? theme.gradients.premium
       : "rgba(255,255,255,0.08)"};
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.inverse};
   border: none;
   padding: 0.85rem;
   border-radius: 1rem;
@@ -790,7 +790,7 @@ export const TestimonialAvatar = styled.div`
   justify-content: center;
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.inverse};
 `;
 
 export const TestimonialName = styled.span`
@@ -884,7 +884,7 @@ export const CtaButton = styled(Button)`
   display: block;
 
   @media (max-height: 800px) {
-    padding: 10px 24px;
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
     font-size: 14px;
   }
 
@@ -985,13 +985,13 @@ export const MapFallback = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.background.card || '#10141f'};
+  background-color: ${({ theme }) => theme.colors.background.card};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  border: 1px solid ${({ theme }) => theme.colors.border || 'rgba(255, 255, 255, 0.1)'};
+  border: 1px solid ${({ theme }) => theme.colors.border.light};
   color: ${({ theme }) => theme.colors.text.secondary};
   font-size: 16px;
   
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     aspect-ratio: 4 / 3;
   }
 `;
@@ -1084,8 +1084,8 @@ export const StatList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  margin-top: 10px;
+  gap: ${({ theme }) => theme.spacing.xs};
+  margin-top: ${({ theme }) => theme.spacing.sm};
 
   @media (max-height: 800px) {
     margin-top: 4px;

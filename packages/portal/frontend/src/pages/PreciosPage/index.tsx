@@ -64,7 +64,7 @@ const Title = styled.h1`
   margin-bottom: ${props => props.theme.spacing.xs};
   font-weight: ${props => props.theme.typography.fontWeight.bold};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     font-size: 1.8rem;
   }
 `;
