@@ -25,7 +25,7 @@ const KNOWN_PLACEHOLDER_SLOTS = new Set([
  * Normaliza el Publisher/Client ID asegurando el prefijo ca-pub-
  */
 function normalizeClientId(rawClient?: string): string {
-  const envClient = process?.env?.VITE_GOOGLE_ADSENSE_CLIENT_ID || process?.env?.REACT_APP_GOOGLE_ADSENSE_CLIENT_ID || rawClient || DEFAULT_CLIENT_ID;
+  const envClient = process?.env?.VITE_GOOGLE_ADSENSE_CLIENT_ID || rawClient || DEFAULT_CLIENT_ID;
   if (!envClient) return "";
 
   const trimmed = envClient.trim();

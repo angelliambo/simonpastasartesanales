@@ -48,7 +48,8 @@ export async function serveReactWithSEO(req: Request, res: Response, next: NextF
     if (process.env.NODE_ENV === "production") {
       indexPath = "/usr/share/nginx/html/index.html";
       if (!fs.existsSync(indexPath)) {
-      indexPath = path.resolve(__dirname, "../../../frontend/dist/index.html");
+        indexPath = path.resolve(__dirname, "../../../frontend/dist/index.html");
+      }
       if (!fs.existsSync(indexPath)) {
         indexPath = path.resolve(__dirname, "../../../frontend/build/index.html");
       }
