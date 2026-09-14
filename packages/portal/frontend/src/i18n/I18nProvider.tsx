@@ -9,16 +9,7 @@ const STORAGE_KEY = 'portal_lang';
 const DEFAULT_LANG = 'es';
 const FALLBACK_LOCALE = 'es';
 
-interface Language {
-  code: string;
-  name: string;
-  flag: string;
-}
-
-const LANGUAGES: Language[] = [
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-];
+import { Language, LANGUAGES } from './languages';
 
 const TRANSLATIONS = allLocales as unknown as Record<string, TranslationObject>;
 
@@ -167,5 +158,3 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export function useTranslation(): I18nContextType {
   return useContext(I18nContext);
 }
-
-export { LANGUAGES };

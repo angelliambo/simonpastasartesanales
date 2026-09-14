@@ -1,6 +1,8 @@
 export { translate, getNestedValue, interpolate } from './t';
 export { globals } from './globals';
-export { useTranslation, I18nProvider, LANGUAGES } from './I18nProvider';
+export { useTranslation, I18nProvider } from './I18nProvider';
+export { LANGUAGES } from './languages';
+export type { Language } from './languages';
 
 export type { TranslationValue, TranslationObject } from './t';
 

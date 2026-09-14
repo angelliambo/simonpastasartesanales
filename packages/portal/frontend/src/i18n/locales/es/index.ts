@@ -12,6 +12,7 @@ import notFound from '../../pages/portal/es/notFound';
 import dashboard from '../../pages/portal/es/dashboard';
 import admin from '../../pages/portal/es/admin';
 import support from '../../pages/portal/es/support';
+import precios from '../../pages/portal/es/precios';
 
 const { login, register } = loginRegister;
 
@@ -30,6 +31,7 @@ const pages = {
   dashboard,
   admin,
   support,
+  precios,
 };
 
 export default pages;
