@@ -19,7 +19,7 @@
     "shared:cleanup": "pnpm --filter @factory/shared run clean",
     "portal:cleanup": "pnpm --filter @factory/backend run clean && pnpm --filter @factory/frontend run clean",
     "reset": "pnpm cleanup && pnpm install && pnpm build",
-    "deploy": "cd packages/portal && pnpm fdeploy",
+    "rollout": "echo '🚀 INICIANDO DEPLOY A PRODUCCIÓN...' && echo '🔧 Verificando builds...' && pnpm build && echo '🚀 Haciendo deploy desde raíz del monorepo...' && flyctl deploy --config packages/portal/fly.toml --dockerfile Dockerfile",
     "bump": "node scripts/version-bump.js",
     "gp": "node scripts/gp.js",
     "free-ports": "node scripts/free-ports.js",

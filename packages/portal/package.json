@@ -9,7 +9,7 @@
     "build": "pnpm --filter @factory/shared build && pnpm --filter @factory/backend build && pnpm --filter @factory/frontend build",
     "build:all": "pnpm build",
     "cleanup": "pnpm --filter @factory/backend run clean && pnpm --filter @factory/frontend run clean && rm -rf node_modules",
-    "fdeploy": "echo '🚀 INICIANDO DEPLOY A PRODUCCIÓN...' && echo '🔧 Verificando builds...' && pnpm build && echo '🚀 Haciendo deploy desde raíz del monorepo...' && cd ../../ && flyctl deploy --config packages/portal/fly.toml --dockerfile Dockerfile",
+    "rollout": "echo '🚀 INICIANDO DEPLOY A PRODUCCIÓN...' && echo '🔧 Verificando builds...' && pnpm build && echo '🚀 Haciendo deploy desde raíz del monorepo...' && cd ../../ && flyctl deploy --config packages/portal/fly.toml --dockerfile Dockerfile",
     "qa:backend": "pnpm --filter @factory/backend test && pnpm --filter @factory/backend build",
     "qa:check": "pnpm qa:backend && pnpm --filter @factory/shared build && pnpm --filter @factory/frontend build",
     "gp": "node ../../scripts/gp.js"
