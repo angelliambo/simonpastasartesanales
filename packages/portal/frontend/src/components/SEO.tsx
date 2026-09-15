@@ -54,8 +54,10 @@ const SEO: React.FC<SEOProps> = ({
     ? finalTitle
     : `${finalTitle} | ${BRAND_CONFIG.siteName}`;
 
+  const rawPath = typeof window !== "undefined" ? window.location.pathname : "";
+  const normalizedPath = rawPath && !rawPath.endsWith('/') && !rawPath.includes('.') ? `${rawPath}/` : rawPath;
   const currentUrl =
-    canonicalUrl || (typeof window !== "undefined" ? window.location.origin + window.location.pathname : "");
+    canonicalUrl || (typeof window !== "undefined" ? `${window.location.origin}${normalizedPath}` : "");
 
   const absoluteOgImage = ogImage.startsWith('http')
     ? ogImage
