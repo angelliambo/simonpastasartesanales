@@ -49,8 +49,11 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks(id) {
-            if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/@tanstack/')) {
+            if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
               return 'vendor-react';
+            }
+            if (id.includes('node_modules/@tanstack/')) {
+              return 'vendor-tanstack';
             }
             if (id.includes('node_modules/antd/') || id.includes('node_modules/@ant-design/')) {
               return 'vendor-antd';
@@ -60,6 +63,9 @@ export default defineConfig(({ mode }) => {
             }
             if (id.includes('node_modules/@reduxjs/') || id.includes('node_modules/react-redux/')) {
               return 'vendor-redux';
+            }
+            if (id.includes('node_modules/firebase/')) {
+              return 'vendor-firebase';
             }
             if (id.includes('shared/src/i18n/locales/es-ES/') || id.includes('shared/src/i18n/locales/es/')) {
               return 'i18n-es';

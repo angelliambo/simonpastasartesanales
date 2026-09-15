@@ -88,6 +88,7 @@ export const Logo = styled.img`
   border-radius: 100px;
   width: 100%;
   max-width: 380px;
+  aspect-ratio: 1 / 1;
   height: auto;
   display: block;
 

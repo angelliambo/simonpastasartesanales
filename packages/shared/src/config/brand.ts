@@ -5,7 +5,7 @@ export const ASSET_VERSION = '1.3.7';
 export const BRAND_CONFIG = {
   siteName: 'Fábrica de Pastas Simón',
   domain: DOMAIN,
-  logoUrl: `/assets/images/logo.webp?v=${ASSET_VERSION}`,
+  logoUrl: '/assets/images/logo.webp',
   supportEmail: `info@${DOMAIN}`,
   whatsappUrl: 'https://wa.me/5491141921222',
   seoTitle: 'Fábrica de Pastas Simón | Pastas Artesanales, Sorrentinos & Venta Mayorista',

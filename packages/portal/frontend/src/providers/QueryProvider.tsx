@@ -1,6 +1,14 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useState, lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const ReactQueryDevtools =
+  process.env.NODE_ENV === "development"
+    ? lazy(() =>
+        import("@tanstack/react-query-devtools").then((m) => ({
+          default: m.ReactQueryDevtools,
+        }))
+      )
+    : null;
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,8 +30,10 @@ export const QueryProvider: React.FC<QueryProviderProps> = ({ children }) => {
   return (
     <QueryClientProvider client={client}>
       {children}
-      {process.env.NODE_ENV === "development" && (
-        <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
+      {process.env.NODE_ENV === "development" && ReactQueryDevtools && (
+        <Suspense fallback={null}>
+          <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
+        </Suspense>
       )}
     </QueryClientProvider>
   );

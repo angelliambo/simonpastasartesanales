@@ -27,39 +27,42 @@ export const initGA = (): void => {
     return;
   }
 
-  // Si Firebase Analytics está activo, informamos en la consola en modo desarrollo
-  if (analytics && process.env.NODE_ENV === 'development') {
-    console.info("📊 [ANALYTICS] Firebase Analytics inicializado correctamente.");
-  }
-
-  if (!GA_MEASUREMENT_ID) {
-    return;
-  }
-
-  // Evitar doble inicialización si ya existe gtag
-  if (window.gtag) {
-    return;
-  }
-
-  // Inyectar el script de Google Tag Manager
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  document.head.appendChild(script);
-
-  // Inicializar dataLayer y la función gtag
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag(...args: any[]) {
-    if (window.dataLayer) {
-      window.dataLayer.push(args);
+  const startGA = () => {
+    // Si Firebase Analytics está activo, informamos en la consola en modo desarrollo
+    if (analytics && process.env.NODE_ENV === 'development') {
+      console.info("📊 [ANALYTICS] Firebase Analytics inicializado correctamente.");
     }
+
+    if (!GA_MEASUREMENT_ID || window.gtag) {
+      return;
+    }
+
+    // Inyectar el script de Google Tag Manager
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    document.head.appendChild(script);
+
+    // Inicializar dataLayer y la función gtag
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag(...args: any[]) {
+      if (window.dataLayer) {
+        window.dataLayer.push(args);
+      }
+    };
+
+    window.gtag('js', new Date());
+    window.gtag('config', GA_MEASUREMENT_ID, {
+      send_page_view: false, // Desactivamos el pageview automático para manejarlo por código en React
+    });
   };
 
-  window.gtag('js', new Date());
-  window.gtag('config', GA_MEASUREMENT_ID, {
-    send_page_view: false, // Desactivamos el pageview automático para manejarlo por código en React
-  });
-}
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(startGA, { timeout: 3500 });
+  } else {
+    setTimeout(startGA, 2500);
+  }
+};
 
 /**
  * Registra una vista de página (Pageview).

@@ -7,9 +7,17 @@ import {
   Outlet,
   redirect,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { QueryClient } from "@tanstack/react-query";
 import { queryClient } from "./providers/QueryProvider";
+
+const TanStackRouterDevtools =
+  process.env.NODE_ENV === "development"
+    ? lazy(() =>
+        import("@tanstack/react-router-devtools").then((m) => ({
+          default: m.TanStackRouterDevtools,
+        }))
+      )
+    : null;
 import Loading from "./components/loading";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -47,7 +55,11 @@ const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <Suspense fallback={<Loading />}>
       <Outlet />
-      {process.env.NODE_ENV === "development" && <TanStackRouterDevtools position="bottom-left" />}
+      {process.env.NODE_ENV === "development" && TanStackRouterDevtools && (
+        <Suspense fallback={null}>
+          <TanStackRouterDevtools position="bottom-left" />
+        </Suspense>
+      )}
     </Suspense>
   ),
   notFoundComponent: () => <NotFoundPage />,
