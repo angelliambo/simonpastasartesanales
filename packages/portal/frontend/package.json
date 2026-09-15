@@ -1,6 +1,6 @@
 {
   "name": "@factory/frontend",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {
@@ -47,10 +47,11 @@
     "update-seo": "npx tsx scripts/update-seo.ts",
     "optimize-og": "npx tsx scripts/optimize-og.ts",
     "prerender": "npx tsx scripts/prerender.ts",
+    "generate-rss": "npx tsx scripts/generate-rss.ts",
     "clean": "rm -rf build dist node_modules",
     "start": "vite --port 3000",
     "dev": "vite --port 3000",
-    "build": "vite build && npx tsx scripts/prerender.ts",
+    "build": "vite build && npx tsx scripts/prerender.ts && npx tsx scripts/generate-rss.ts",
     "audit:pagespeed": "node ../../../scripts/audit-pagespeed.js",
     "audit:sitemap": "npx tsx ../../../scripts/audit-sitemap-urls.ts",
     "preview": "vite preview",

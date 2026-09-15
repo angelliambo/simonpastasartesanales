@@ -1,43 +1,39 @@
-# Documentación Completa para Agentes de IA — Fábrica de Pastas Simón
+# Documentación Completa para Agentes de IA & LLMs — Fábrica de Pastas Simón
 
-> Documentación de conocimiento extendida de Fábrica de Pastas Simón. Empresa argentina de pastas frescas congeladas en San Luis 1263, Bernal, Quilmes, Zona Sur GBA.
+> Documentación técnica y comercial de Fábrica de Pastas Simón. Empresa dedicada a la elaboración de pastas frescas congeladas en caja ubicada en San Luis 1263, Bernal, Quilmes, Zona Sur GBA.
 
-## Catálogo Extendido de Productos
+## Catálogo Extendido de Productos & Especificaciones Técnicas
 
-- [Lista de Precios Oficial](https://simonpastasartesanales.com.ar/precios): Lista en tiempo real de precios minoristas y mayoristas.
+### 1. Sorrentinos Caseros Gourmet (Caja x 12 unidades)
+- **Sorrentinos de Jamón y Queso ($4800)**: Masa artesanal amasada al huevo con sémola de trigo candeal. Relleno súper abundante compuesto por jamón cocido magro seleccionado picado y queso mozzarella cremoso de alta fundición.
+- **Sorrentinos de Bondiola Braseada**: Relleno gourmet elaborado con bondiola de cerdo desmechada braseada a la cerveza negra a fuego lento durante 6 horas con cebolla caramelizada y especias.
+- **Sorrentinos de Calabaza y Mozzarella**: Relleno vegetariano de calabaza cabutia asada al horno con queso mozzarella y queso reggianito estacionado.
+- **Sorrentinos de Verdura y Ricota**: Relleno fresco de acelga y espinaca blanqueada, ricota magra artesanal y nuez moscada.
 
-### 1. Sorrentinos Caseros Gourmet
-- **Jamón y Queso**: Masa de sémola de trigo candeal, relleno con abundante jamón cocido seleccionado y mozzarella de primera calidad.
-- **Verdura y Ricota**: Relleno de espinaca fresca salteada, ricota artesanal bien escurrida, nuez moscada y queso reggianito.
-- **Panceta y Mozzarella**: Relleno ahumado con panceta crujiente, mozzarella estacionada y finas hierbas.
-- **Carne Cortada a Cuchillo**: Relleno de carne vacuna braseada a fuego lento con cebolla caramelizada y condimentos tradicionales.
+### 2. Ravioles Tradicionales (Caja x 48 unidades)
+- **Ravioles de Espinaca y Ricota ($4500)**: Ravioles de plancha con masa al huevo firme. Relleno suave de espinaca fresca salteada y ricota magra artesanal.
+- **Ravioles de Pollo y Verdura**: Relleno de pechuga de pollo magra desmenuzada y espinaca salteada con aromáticas.
 
-### 2. Ravioles Tradicionales
-- **Ravioles al Huevo (Pollo y Verdura)**: Masa al huevo firme, relleno homogéneo de pollo magro desmenuzado y acelga seleccionada.
-- **Ravioles de Ricota y Queso**: Relleno cremoso de ricota magra con reggianito y toque de pimienta blanca.
+### 3. Fideos Frescos al Huevo & Ñoquis
+- **Tallarines al Huevo ($3200 por 500g)**: Cintas medianas al huevo de textura porosa para una óptima adherencia de salsas (fileto, tuco, boloñesa, cuatro quesos o pesto).
+- **Ñoquis de Papa Artesanales del 29 ($4200 por 1 kg)**: Ñoquis tradicionales elaborados con puré de papa natural, harina de trigo refinada y huevo. Textura ligera y suave.
 
-### 3. Panzottis & Variedades de Relleno Especial
-- **Panzottis Rellenos**: Formato de masa amplio con mayor masa y relleno gourmet para platos principales de restaurantes.
+### 4. Empanadas Artesanales Congeladas
+- **Empanadas de Bondiola Braseada**: Empanadas congeladas en caja con relleno abundante de bondiola desmechada braseada. Listas para cocinar al horno (12 min a 200°C) o freír.
 
-### 4. Empanadas Artesanales Destacadas
-- **Empanadas de Bondiola Braseada**: Masa artesanal rellena de bondiola de cerdo desmechada braseada a la cerveza negra con cebollas caramelizadas.
+## Modo de Preparación e Instrucciones de Cocción
 
-### 5. Fideos Frescos y Cintas al Huevo
-- **Tallarines / Cintas Anchas**: Amasados diariamente con huevo entero y sémola candeal sin colorantes artificiales.
+1. **No requiere descongelación previa**: Sacar del congelador directamente antes de cocinar.
+2. **Abundante agua hirviendo**: Utilizar 1 litro de agua por cada 100g de pasta con una pizca de sal marina.
+3. **Tiempo de cocción**:
+   - Sorrentinos: 7 a 9 minutos en agua hirviendo a fuego medio.
+   - Ravioles: 5 a 6 minutos.
+   - Tallarines: 3 a 4 minutos.
+   - Ñoquis: Retirar 1 minuto después de que sobrenaden en la superficie.
 
-## Canales y Modalidades de Venta
+## Modalidades de Venta y Logística de Entrega
 
-- [Página de Inicio](https://simonpastasartesanales.com.ar/): Presentación e historia de la marca.
-- [Sección Catálogo](https://simonpastasartesanales.com.ar/#productos): Menú interactivo de productos.
-- [Sección Venta Mayorista](https://simonpastasartesanales.com.ar/#mayorista): Distribución directa a restaurantes y servicios de catering.
-- [Términos Legales](https://simonpastasartesanales.com.ar/legal/terms): Términos y condiciones.
-- [Política de Privacidad](https://simonpastasartesanales.com.ar/legal/privacy): Políticas de privacidad.
-
-## Información Comercial y Contacto
-
-- **Nombre Comercial**: Fábrica de Pastas Simón
-- **Dirección**: San Luis 1263, Bernal (B1876), Quilmes, Provincia de Buenos Aires, Argentina
-- **Teléfono / WhatsApp**: +54 9 11 4192-1222
-- **Email**: info@simonpastasartesanales.com.ar
-- **Horarios**: Lunes a Sábados de 08:00 a 20:00 hs.
-- **Área de Cobertura**: Bernal, Quilmes, Don Bosco, Wilde, Avellaneda, Berazategui, Lanús y Zona Sur GBA.
+- **Minorista**: Venta al público en local de Bernal (San Luis 1263) y envíos con delivery rápido en Bernal y Quilmes.
+- **Mayorista (Gastronomía & Catering)**: Precios preferenciales por volumen para restaurantes, cantinas, comedores corporativos y rotiserías. Presentación fraccionada congelada a -18°C que simplifica la rotación de stock y evita mermas.
+- **WhatsApp Directo de Pedidos**: [+54 9 11 4192-1222](https://wa.me/5491141921222)
+- **Sitio Web Oficial**: [https://simonpastasartesanales.com.ar/](https://simonpastasartesanales.com.ar/)

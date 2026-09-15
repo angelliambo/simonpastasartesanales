@@ -27,7 +27,18 @@ if (isProduction && isValidKey) {
   try {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
     if (typeof window !== "undefined" && firebaseConfig.measurementId) {
-      analytics = getAnalytics(app);
+      const initAnalytics = () => {
+        try {
+          if (app) analytics = getAnalytics(app);
+        } catch (e) {
+          console.warn("⚠️ [FIREBASE] Error diferido Analytics:", e);
+        }
+      };
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(initAnalytics, { timeout: 3000 });
+      } else {
+        setTimeout(initAnalytics, 2000);
+      }
     }
   } catch (error) {
     console.warn("⚠️ [FIREBASE] Error al inicializar Firebase SDK:", error);

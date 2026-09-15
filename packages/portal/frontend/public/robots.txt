@@ -1,43 +1,81 @@
-# ==========================================
-# Robots.txt - Fábrica de Pastas Simón (Landing Page)
-# ==========================================
+# Robots.txt for Fábrica de Pastas Simón Portal
+# https://www.robotstxt.org/robotstxt.html
 
-# 1. Buscadores Tradicionales
-User-agent: Googlebot
-User-agent: Bingbot
-User-agent: DuckDuckBot
-Allow: /
-Allow: /assets/
-Disallow: /admin/
-Disallow: /dashboard/
-Disallow: /login
-Disallow: /api/
-Disallow: /*?*lang=
-
-# 2. Rastreadores de Modelos de Lenguaje (LLM / IA)
-User-agent: GPTBot              # OpenAI
-User-agent: ChatGPT-User        # ChatGPT Navegación
-User-agent: ClaudeBot           # Anthropic Claude
-User-agent: Claude-Web          # Claude interactivo
-User-agent: PerplexityBot       # Perplexity AI
-User-agent: Applebot-Extended   # Apple Intelligence
-User-agent: Google-Extended     # Google Gemini
-User-agent: Meta-ExternalAgent  # Meta AI
-User-agent: cohere-ai           # Cohere
-Allow: /
-Allow: /assets/
-Disallow: /admin/
-Disallow: /dashboard/
-Disallow: /login
-Disallow: /api/
-
-# 3. Reglas Generales
+# Allow all search engine bots and AI crawlers
 User-agent: *
 Allow: /
+
+# Specifically invite and optimize for AI web crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# Allow standard search engine crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Block access to private routes and backend API
+Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /login
-Disallow: /api/
+
+# Block source code and map files from indexation
+Disallow: /*.map$
+Disallow: /*.ts$
+Disallow: /*.tsx$
+Disallow: /*.md$
+
+# Explicitly allow static assets, feeds, and public meta files
+Allow: /assets/
+Allow: /favicon.ico
+Allow: /robots.txt
+Allow: /ads.txt
+Allow: /sitemap.xml
+Allow: /feed.xml
+Allow: /rss.xml
+Allow: /atom.xml
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /llm.txt
+Allow: /llm-full.txt
+Allow: /manifest.json
+Allow: /apple-touch-icon.webp
+Allow: /favicon-16x16.webp
+Allow: /favicon-32x32.webp
+Allow: /logo.webp
+Allow: /logo192.webp
+Allow: /logo512.webp
+Allow: /og-image.webp
 
 # Sitemap & LLM Knowledge locations
 Sitemap: https://simonpastasartesanales.com.ar/sitemap.xml
