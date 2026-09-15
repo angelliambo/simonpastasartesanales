@@ -69,6 +69,11 @@ temp/
 uploads/
 public/uploads/
 
+# Credentials & Keys
+credentials/
+**/credentials/
+*.json.key
+
 # Project-specific junk
 audits/
 **/audits/
