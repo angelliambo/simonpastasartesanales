@@ -8,6 +8,8 @@ app = "simonpastasartesanales"
     VITE_GA_MEASUREMENT_ID = "G-CSZZEJ6KG5"
     VITE_GOOGLE_ADSENSE_CLIENT_ID = "ca-pub-6167435415786243"
     VITE_ADS_ENABLED = "true"
+    VITE_ADSENSE_SLOT_SUBHERO = "1000000001"
+    VITE_ADSENSE_SLOT_FOOTER = "1000000002"
 primary_region = "gru"
 
 [env]
