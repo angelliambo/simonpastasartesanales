@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { google } from 'googleapis';
-import { BRAND_CONFIG } from '../packages/shared/src/config/brand';
 
 async function submitSitemap() {
   const credsPath = path.join(process.cwd(), 'credentials', 'gcp-service-account.json');
@@ -16,17 +15,21 @@ async function submitSitemap() {
   });
 
   const searchconsole = google.searchconsole({ version: 'v1', auth });
-  const targetDomain = process?.env?.GSC_SITE_DOMAIN || BRAND_CONFIG.domain;
-  const siteUrl = `sc-domain:${targetDomain}`;
-  const sitemapUrl = `https://${targetDomain}/sitemap.xml`;
 
   console.log(`\n======================================================`);
-  console.log(`🚀 RE-ENVIANDO SITEMAP FRESCO A GOOGLE SEARCH CONSOLE`);
+  console.log(`🚀 RE-ENVIANDO SITEMAP A GOOGLE SEARCH CONSOLE`);
   console.log(`======================================================`);
-  console.log(`• Sitio: ${siteUrl}`);
-  console.log(`• Sitemap URL: ${sitemapUrl}`);
 
   try {
+    const sitesRes = await searchconsole.sites.list({});
+    const siteList = sitesRes.data.siteEntry || [];
+    const matchedSite = siteList.find(s => s.siteUrl?.includes('simonpastasartesanales'));
+    const siteUrl = matchedSite?.siteUrl || 'https://simonpastasartesanales.com.ar/';
+    const sitemapUrl = 'https://simonpastasartesanales.com.ar/sitemap.xml';
+
+    console.log(`• Sitio identificado en GSC: ${siteUrl}`);
+    console.log(`• Sitemap URL: ${sitemapUrl}`);
+
     const res = await searchconsole.sitemaps.submit({
       siteUrl,
       feedpath: sitemapUrl,

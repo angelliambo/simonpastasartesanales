@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { google } from 'googleapis';
-import { BRAND_CONFIG } from '../packages/shared/src/config/brand';
 
 async function runDeepInspection() {
   const credsPath = path.join(process.cwd(), 'credentials', 'gcp-service-account.json');
@@ -16,31 +15,42 @@ async function runDeepInspection() {
   });
 
   const searchconsole = google.searchconsole({ version: 'v1', auth });
-  const targetDomain = process?.env?.GSC_SITE_DOMAIN || BRAND_CONFIG.domain;
-  const siteUrl = `sc-domain:${targetDomain}`;
 
   console.log(`\n======================================================`);
   console.log(`🔍 INICIANDO INSPECCIÓN EN VIVO EN GOOGLE SEARCH CONSOLE`);
   console.log(`======================================================`);
 
-  // 1. Verificar sitio autorizados
-  const sitesRes = await searchconsole.sites.list({});
-  console.log(`✅ Propiedades autorizadas en GSC:`, sitesRes.data.siteEntry?.map(s => s.siteUrl));
+  let siteUrl = 'https://simonpastasartesanales.com.ar/';
+  try {
+    const sitesRes = await searchconsole.sites.list({});
+    const siteList = sitesRes.data.siteEntry || [];
+    console.log(`✅ Propiedades autorizadas en GSC:`, siteList.map(s => s.siteUrl));
+    const matched = siteList.find(s => s.siteUrl?.includes('simonpastasartesanales'));
+    if (matched?.siteUrl) {
+      siteUrl = matched.siteUrl;
+    }
+  } catch (err: any) {
+    console.warn(`⚠️ Error al listar sitios autorizados:`, err?.message || err);
+  }
 
-  // 2. Leer URLs del sitemap
+  console.log(`• Propiedad objetivo: ${siteUrl}`);
+
   const sitemapPath = path.join(process.cwd(), 'packages/portal/frontend/public/sitemap.xml');
+  if (!fs.existsSync(sitemapPath)) {
+    console.error('❌ No se encontró sitemap.xml en public/');
+    return;
+  }
+
   const sitemapXml = fs.readFileSync(sitemapPath, 'utf-8');
   const locMatches = Array.from(sitemapXml.matchAll(/<loc>(https:\/\/[^<]+)<\/loc>/g)).map(m => m[1]);
-  const uniqueUrls = Array.from(new Set(locMatches));
+  const uniqueUrls = Array.from(new Set(locMatches)).map(url => url.split('#')[0]);
 
   console.log(`\n📄 Se extrajeron ${uniqueUrls.length} URLs únicas desde el sitemap.xml.`);
 
-  // Muestra de URLs clave (incluyendo landings, herramientas y blog)
-  const sampleUrls = uniqueUrls.slice(0, 30);
   const inspectionResults: any[] = [];
   const coverageStateCount: Record<string, number> = {};
 
-  for (const url of sampleUrls) {
+  for (const url of uniqueUrls) {
     try {
       console.log(`⏳ Inspeccionando en Google: ${url}`);
       const res = await searchconsole.urlInspection.index.inspect({
@@ -77,15 +87,19 @@ async function runDeepInspection() {
 
   console.log('\n📋 DETALLE DE INSPECCIÓN POR URL:');
   console.table(inspectionResults.map(r => ({
-    URL: r.url.replace(`https://${targetDomain}`, ''),
+    URL: r.url.replace('https://simonpastasartesanales.com.ar', ''),
     Verdict: r.verdict,
     Coverage: r.coverageState,
-    UserCanonical: r.userCanonical.replace(`https://${targetDomain}`, ''),
-    GoogleCanonical: r.googleCanonical.replace(`https://${targetDomain}`, ''),
+    UserCanonical: r.userCanonical.replace('https://simonpastasartesanales.com.ar', ''),
+    GoogleCanonical: r.googleCanonical.replace('https://simonpastasartesanales.com.ar', ''),
   })));
 
-  // Guardar reporte
-  const reportPath = path.join(process.cwd(), 'reports', 'gsc-urls-inspection.json');
+  const reportsDir = path.join(process.cwd(), 'reports');
+  if (!fs.existsSync(reportsDir)) {
+    fs.mkdirSync(reportsDir, { recursive: true });
+  }
+
+  const reportPath = path.join(reportsDir, 'gsc-urls-inspection.json');
   fs.writeFileSync(reportPath, JSON.stringify({
     timestamp: new Date().toISOString(),
     siteUrl,
