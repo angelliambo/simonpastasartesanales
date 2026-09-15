@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from '@tanstack/react-router';
 import { SHOW_SOCIAL_LINKS, SOCIAL_X_URL, SOCIAL_INSTAGRAM_URL } from '@shared/config/urls';
 import { BRAND_CONFIG } from '@factory/shared/config/brand';
 
@@ -50,7 +50,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
             "name": BRAND_CONFIG.siteName,
             "logo": {
               "@type": "ImageObject",
-              "url": `${baseUrl}/assets/images/logo.png`
+              "url": `${baseUrl}/assets/images/logo.webp`
             }
           }
         };
@@ -73,7 +73,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
             "name": BRAND_CONFIG.siteName,
             "logo": {
               "@type": "ImageObject",
-              "url": `${baseUrl}/assets/images/logo.png`
+              "url": `${baseUrl}/assets/images/logo.webp`
             }
           },
           "mainEntity": {
@@ -111,8 +111,8 @@ export const useStructuredData = (config: StructuredDataConfig) => {
           "name": BRAND_CONFIG.siteName,
           "description": BRAND_CONFIG.seoDescription || "Plataforma SaaS premium modular con paneles de administración, facturación y soporte.",
           "url": baseUrl,
-          "logo": `${baseUrl}/assets/images/logo.png`,
-          "image": `${baseUrl}/og-image.png`,
+          "logo": `${baseUrl}/assets/images/logo.webp`,
+          "image": `${baseUrl}/og-image.webp`,
           "address": {
             "@type": "PostalAddress",
             "addressCountry": "AR"
@@ -160,7 +160,7 @@ export const useStructuredData = (config: StructuredDataConfig) => {
           "@type": ["LocalBusiness", "FoodEstablishment", "WholesaleStore"],
           "@id": `${baseUrl}/#localbusiness`,
           "name": BRAND_CONFIG.siteName,
-          "image": `${baseUrl}/assets/images/logo.png`,
+          "image": `${baseUrl}/assets/images/logo.webp`,
           "description": BRAND_CONFIG.seoDescription,
           "url": baseUrl,
           "telephone": "+541141921222",

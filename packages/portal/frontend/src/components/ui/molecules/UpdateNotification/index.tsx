@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import Button from '@design-sys/atoms/Button';
-import Card from '@design-sys/atoms/Card';
-import Text from '@design-sys/atoms/Text';
 import Space from '@design-sys/atoms/Space';
 import {
   ReloadOutlined,
@@ -11,53 +7,16 @@ import {
 } from "@ant-design/icons";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import { UpdateNotificationContainer } from '@design-sys/atoms/styles/updateNotification.mixins';
-
-interface UpdateNotificationProps {
-  onUpdate: () => void;
-  onDismiss: () => void;
-  isVisible: boolean;
-  /** ID único del componente (opcional) - se concatena con "update-notification-" */
-  id?: string;
-}
-
-const StyledCard = styled(Card)`
-  border: none !important;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-  color: white !important;
-
-  /* Override Card body padding */
-  > div {
-    padding: 20px !important;
-  }
-`;
-
-const UpdateButton = styled(Button)`
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  border-radius: 8px;
-  font-weight: 600;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
-    color: white;
-  }
-`;
-
-const DismissButton = styled(Button)`
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
-    color: white;
-  }
-`;
+import { UpdateNotificationProps } from "./UpdateNotification.types";
+import {
+  StyledCard,
+  CardHeaderTitle,
+  NotificationBodyText,
+  FullWidthSpace,
+  ActionsSpace,
+  UpdateButton,
+  DismissButton,
+} from "./UpdateNotification.styles";
 
 const UpdateNotification: React.FC<UpdateNotificationProps> = ({
   onUpdate,
@@ -90,41 +49,31 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({
   return (
     <UpdateNotificationContainer id={finalId} $isVisible={isVisible}>
       <StyledCard>
-        <Space direction="vertical" size="small" style={{ width: "100%" }}>
+        <FullWidthSpace direction="vertical" size="small">
           <Space align="center">
-            <ZnIcon icon={InfoCircleOutlined} size={20} style={{ color: "white" }} />
-            <h4
-              style={{
-                color: "white",
-                margin: 0,
-                fontSize: "18px",
-                fontWeight: 600,
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px"
-              }}
-            >
+            <ZnIcon icon={InfoCircleOutlined} size={20} />
+            <CardHeaderTitle>
               <ZnIcon icon={ReloadOutlined} /> Nueva versión disponible
-            </h4>
+            </CardHeaderTitle>
           </Space>
 
-          <Text size="sm" style={{ color: "rgba(255, 255, 255, 0.9)" }}>
+          <NotificationBodyText size="sm">
             Se encontraron mejoras y correcciones de bugs. La aplicación se
             actualizará automáticamente en {countdown} segundos.
-          </Text>
+          </NotificationBodyText>
 
-          <Space style={{ width: "100%", justifyContent: "space-between" }}>
+          <ActionsSpace>
             <UpdateButton onClick={onUpdate} size="sm">
-              <ZnIcon icon={ReloadOutlined} style={{ marginRight: "8px" }} />
+              <ZnIcon icon={ReloadOutlined} />
               Actualizar ahora
             </UpdateButton>
 
             <DismissButton onClick={onDismiss} size="sm">
-              <ZnIcon icon={CloseOutlined} style={{ marginRight: "8px" }} />
+              <ZnIcon icon={CloseOutlined} />
               Más tarde
             </DismissButton>
-          </Space>
-        </Space>
+          </ActionsSpace>
+        </FullWidthSpace>
       </StyledCard>
     </UpdateNotificationContainer>
   );

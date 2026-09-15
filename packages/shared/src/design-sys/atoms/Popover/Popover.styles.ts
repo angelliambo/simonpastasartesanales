@@ -270,7 +270,7 @@ export const StyledPopoverContent = styled.div<StyledPopoverContentProps>`
       `}
 
       // Mobile responsive
-      @media (max-width: 768px) {
+      @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
         max-width: calc(100% - 32px); // Usar 100% en lugar de 100vw para evitar overflow
         min-width: auto;
       }

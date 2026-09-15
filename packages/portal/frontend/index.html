@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f97316" />
+  <link rel="canonical" href="https://simonpastasartesanales.com.ar/" />
+
+  <!-- Meta tags básicos para SEO -->
+  <meta name="description" content="Fábrica de pastas frescas congeladas en Bernal y Quilmes. Sorrentinos artesanales, ravioles caseros, ñoquis del 29, fideos al huevo y empanadas. Venta minorista, delivery y distribución al por mayor para restaurantes en Zona Sur." />
+  <meta name="keywords" content="fábrica de pastas, pastas artesanales, sorrentinos artesanales, sorrentinos caseros, ravioles caseros, ñoquis del 29, fideos frescos, panzottis, pastas congeladas, venta de pastas al por mayor, proveedor de pastas para restaurantes, fábrica de pastas cerca de mí, casa de pastas bernal, delivery de pastas quilmes, pastas zona sur, fábrica de pastas simón" />
+  <meta name="author" content="Fábrica de Pastas Simón" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="es-ES" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="rating" content="General" />
+  <meta name="distribution" content="Global" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://simonpastasartesanales.com.ar/" />
+  <meta property="og:title" content="Fábrica de Pastas Simón | Pastas Artesanales, Sorrentinos & Venta Mayorista" />
+  <meta property="og:description" content="Fábrica de pastas frescas congeladas en Bernal y Quilmes. Sorrentinos artesanales, ravioles caseros, ñoquis del 29, fideos al huevo y empanadas. Venta minorista, delivery y distribución al por mayor para restaurantes en Zona Sur." />
+  <meta property="og:image" content="https://simonpastasartesanales.com.ar/og-image.webp" />
+  <meta property="og:image:secure_url" content="https://simonpastasartesanales.com.ar/og-image.webp" />
+  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Fábrica de Pastas Simón — Pastas Artesanales" />
+  <meta property="og:site_name" content="Fábrica de Pastas Simón" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://simonpastasartesanales.com.ar/" />
+  <meta property="twitter:title" content="Fábrica de Pastas Simón | Pastas Artesanales, Sorrentinos & Venta Mayorista" />
+  <meta property="twitter:description" content="Fábrica de pastas frescas congeladas en Bernal y Quilmes. Sorrentinos artesanales, ravioles caseros, ñoquis del 29, fideos al huevo y empanadas. Venta minorista, delivery y distribución al por mayor para restaurantes en Zona Sur." />
+  <meta property="twitter:image" content="https://simonpastasartesanales.com.ar/og-image.webp" />
+  <meta property="twitter:image:alt" content="Fábrica de Pastas Simón — Pastas Artesanales" />
+  <meta property="twitter:site" content="@simonpastas" />
+  <meta property="twitter:creator" content="@simonpastas" />
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.webp">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/logo192.webp" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Preconnect para mejorar performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fuentes optimizadas: carga diferida con font-display swap -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
+      rel="stylesheet">
+  </noscript>
+
+  <!-- High-priority WebP LCP preloads -->
+  <link rel="preload" href="/logo.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="/og-image.webp" as="image" type="image/webp" fetchpriority="high" media="(max-width: 768px)">
+
+  <!-- DNS prefetch para recursos externos (mejora conexión temprana) -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://accounts.google.com">
+
+  <title>Fábrica de Pastas Simón | Pastas Artesanales, Sorrentinos & Venta Mayorista</title>
+
+  <!-- DESHABILITAR SERVICE WORKER TEMPORALMENTE -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+  </script>
+
+  <!-- APLICAR TEMA ANTES DE QUE REACT SE MONTE - EVITA PARPADEO -->
+  <script>
+    (function () {
+      try {
+        if (typeof document === 'undefined' || !document.documentElement) {
+          return;
+        }
+
+        const savedConfig = localStorage.getItem('portal_user_theme');
+        let theme = 'light';
+
+        if (savedConfig) {
+          try {
+            const parsed = JSON.parse(savedConfig);
+            if (parsed.autoDetect !== false) {
+              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+              theme = prefersDark ? 'dark' : 'light';
+            } else {
+              theme = parsed.theme || 'light';
+            }
+          } catch (e) {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            theme = prefersDark ? 'dark' : 'light';
+          }
+        } else {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          theme = prefersDark ? 'dark' : 'light';
+        }
+
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-accessibility', 'default');
+
+        if (theme === 'dark') {
+          document.documentElement.style.backgroundColor = '#1a1a1a';
+        } else {
+          document.documentElement.style.backgroundColor = '#ffffff';
+        }
+
+        if (document.body) {
+          document.body.className = 'theme-' + theme + ' accessibility-default';
+          if (theme === 'dark') {
+            document.body.style.backgroundColor = '#1a1a1a';
+          } else {
+            document.body.style.backgroundColor = '#ffffff';
+          }
+        } else {
+          const applyToBody = function () {
+            if (document.body) {
+              document.body.className = 'theme-' + theme + ' accessibility-default';
+              if (theme === 'dark') {
+                document.body.style.backgroundColor = '#1a1a1a';
+              } else {
+                document.body.style.backgroundColor = '#ffffff';
+              }
+            } else {
+              setTimeout(applyToBody, 0);
+            }
+          };
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', applyToBody);
+          } else {
+            applyToBody();
+          }
+        }
+      } catch (e) {
+        if (document.documentElement) {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.style.backgroundColor = '#ffffff';
+        }
+        if (document.body) {
+          document.body.className = 'theme-light accessibility-default';
+          document.body.style.backgroundColor = '#ffffff';
+        }
+      }
+    })();
+  </script>
+
+</head>
+
+<body>
+  <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
+  <div id="root">
+    <div style="display: none;">
+      <h1>Fábrica de Pastas Simón - Pastas Artesanales & Venta Mayorista</h1>
+      <h2>Fábrica de pastas frescas congeladas en Bernal y Quilmes. Sorrentinos artesanales, ravioles caseros, ñoquis del 29 y fideos al huevo.</h2>
+      <p>
+        Fábrica de Pastas Simón elabora las mejores pastas frescas y congeladas en Bernal y Quilmes. Especialistas en sorrentinos de jamón y queso,
+        carne cortada a cuchillo, verdura y pollo, ravioles, ñoquis y fideos caseros al huevo. Venta minorista y atención mayorista a restaurantes.
+      </p>
+
+      <h3>¿Por qué elegir Fábrica de Pastas Simón?</h3>
+      <ul>
+        <li><strong>Calidad Artesanal:</strong> Elaborado con ingredientes seleccionados y recetas familiares.</li>
+        <li><strong>Amplia Variedad:</strong> Sorrentinos, ravioles, ñoquis, fideos y tapas de empanadas.</li>
+        <li><strong>Venta Mayorista y Minorista:</strong> Distribución directa a restaurantes y hogares en Zona Sur.</li>
+      </ul>
+    </div>
+
+    <div
+      style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: fixed; inset: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; transition: background-color 0.2s;">
+      <div
+        style="width: 48px; height: 48px; border: 4px solid rgba(249, 115, 22, 0.15); border-top: 4px solid #f97316; border-radius: 50%; animation: portal-spin 1s linear infinite; margin-bottom: 24px;">
+      </div>
+      <div style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: #f97316;" id="portal-loader-logo">Fábrica de Pastas Simón</div>
+      <div style="font-size: 13px; color: #9ca3af; margin-top: 8px;" id="portal-loader-text">Cargando aplicación...
+      </div>
+    </div>
+    <script>
+      (function () {
+        const theme = document.documentElement.getAttribute('data-theme') || 'light';
+        const logoEl = document.getElementById('portal-loader-logo');
+        const textEl = document.getElementById('portal-loader-text');
+        if (theme === 'dark') {
+          if (logoEl) logoEl.style.color = '#fb923c';
+          if (textEl) textEl.style.color = '#9ca3af';
+        } else {
+          if (logoEl) logoEl.style.color = '#ea580c';
+          if (textEl) textEl.style.color = '#4b5563';
+        }
+      })();
+    </script>
+    <style>
+      @keyframes portal-spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </div>
+  <script type="module" src="/src/index.tsx"></script>
+</body>
+
+</html>

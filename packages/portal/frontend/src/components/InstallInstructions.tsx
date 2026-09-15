@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { useThemeColors } from "../hooks/useThemeColors";
-import Title from '@design-sys/atoms/Title';
-import Text from '@design-sys/atoms/Text';
 import Button from '@design-sys/atoms/Button';
 import Steps from '@design-sys/atoms/Steps';
 import Modal from "./ui/organisms/Modal";
@@ -15,6 +12,13 @@ import {
 } from "@ant-design/icons";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import { DeviceInfo, getInstallInstructions } from "../utils/pwaUtils";
+import {
+  ModalHeader,
+  ModalTitle,
+  ModalSubtitle,
+  StepsContainer,
+  ButtonContainer,
+} from "./InstallInstructions.styles";
 
 interface InstallInstructionsProps {
   deviceInfo: DeviceInfo;
@@ -27,7 +31,6 @@ const InstallInstructions: React.FC<InstallInstructionsProps> = ({
   onClose,
   visible,
 }) => {
-  const colors = useThemeColors();
   const [currentStep, setCurrentStep] = useState(0);
   const instructions = getInstallInstructions(deviceInfo);
 
@@ -82,21 +85,21 @@ const InstallInstructions: React.FC<InstallInstructionsProps> = ({
   return (
     <Modal
       title={
-        <div style={{ textAlign: "center" }}>
-          <Title level={3} style={{ margin: 0, color: colors.text.primary }}>
+        <ModalHeader>
+          <ModalTitle level={3}>
             {getTitle()}
-          </Title>
-          <Text color="secondary" style={{ fontSize: "14px" }}>
+          </ModalTitle>
+          <ModalSubtitle color="secondary">
             {getSubtitle()}
-          </Text>
-        </div>
+          </ModalSubtitle>
+        </ModalHeader>
       }
       open={visible}
       onCancel={onClose}
       footer={<Button onClick={onClose}>Entendido</Button>}
       width={400}
     >
-      <div style={{ padding: "20px 0" }}>
+      <StepsContainer>
         <Steps
           direction="vertical"
           current={currentStep}
@@ -107,7 +110,7 @@ const InstallInstructions: React.FC<InstallInstructionsProps> = ({
         />
 
         {deviceInfo.installMethod !== "none" && (
-          <div style={{ marginTop: "20px", textAlign: "center" }}>
+          <ButtonContainer>
             <Button
               variant="primary"
               size="lg"
@@ -121,9 +124,9 @@ const InstallInstructions: React.FC<InstallInstructionsProps> = ({
             >
               Siguiente Paso
             </Button>
-          </div>
+          </ButtonContainer>
         )}
-      </div>
+      </StepsContainer>
     </Modal>
   );
 };

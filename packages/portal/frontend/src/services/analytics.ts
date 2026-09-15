@@ -6,7 +6,9 @@
 import { logEvent } from "firebase/analytics";
 import { analytics } from "./firebase";
 
-const GA_MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID || 'G-CSZZEJ6KG5';
+const GA_MEASUREMENT_ID =
+  (typeof import.meta !== "undefined" && import.meta.env?.VITE_GA_MEASUREMENT_ID) ||
+  "G-CSZZEJ6KG5";
 
 // Extender la interfaz global de Window para TypeScript
 declare global {
@@ -18,7 +20,7 @@ declare global {
 
 /**
  * Inicializa GA4 en la aplicación inyectando el script de gtag.js dinámicamente.
- * Solo se ejecuta si el REACT_APP_GA_MEASUREMENT_ID está configurado en las variables de entorno.
+ * Solo se ejecuta si el VITE_GA_MEASUREMENT_ID está configurado en las variables de entorno.
  */
 export const initGA = (): void => {
   if (typeof window === 'undefined') {
@@ -47,9 +49,9 @@ export const initGA = (): void => {
 
   // Inicializar dataLayer y la función gtag
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag() {
+  window.gtag = function gtag(...args: any[]) {
     if (window.dataLayer) {
-      window.dataLayer.push(arguments);
+      window.dataLayer.push(args);
     }
   };
 

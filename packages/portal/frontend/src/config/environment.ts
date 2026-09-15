@@ -1,5 +1,5 @@
 export const ENV_CONFIG = {
-  API_URL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
+  API_URL: process.env.VITE_API_URL || "http://localhost:5000/api",
   IS_PRODUCTION: process.env.NODE_ENV === "production",
   IS_DEVELOPMENT: process.env.NODE_ENV === "development",
   PRODUCTION_API_URL: "https://api.yourdomain.com/api",
@@ -7,8 +7,8 @@ export const ENV_CONFIG = {
 };
 
 export const getApiUrl = (): string => {
-  if (process.env.REACT_APP_API_URL) {
-    return process.env.REACT_APP_API_URL;
+  if (process.env.VITE_API_URL) {
+    return process.env.VITE_API_URL;
   }
   if (ENV_CONFIG.IS_PRODUCTION) {
     return ENV_CONFIG.PRODUCTION_API_URL;

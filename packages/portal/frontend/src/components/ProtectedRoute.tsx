@@ -1,6 +1,6 @@
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import { useAppSelector } from "../store/hooks";
+import { Navigate, useLocation } from "@tanstack/react-router";
+import { useAuth } from "../contexts/AuthContext";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -11,11 +11,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requireAdmin = false,
 }) => {
-  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { user, isAuthenticated } = useAuth();
   const location = useLocation();
 
   if (!isAuthenticated || !user) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/" search={{ from: location.pathname } as any} replace />;
   }
 
   if (requireAdmin && user.role !== "admin" && !user.isAdmin) {

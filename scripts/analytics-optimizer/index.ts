@@ -6,8 +6,8 @@
  * diagnóstico y generación de planes de optimización de telemetría y SEO.
  * 
  * Comandos:
- *   yarn analytics:extract
- *   yarn analytics:digest
+ *   pnpm analytics:extract
+ *   pnpm analytics:digest
  */
 
 import { ANALYTICS_CONFIG } from './config';
@@ -53,8 +53,8 @@ function printHelp(): void {
 ================================================================================
 
 Uso:
-  yarn analytics:extract [opciones]
-  yarn analytics:digest [opciones]
+  pnpm analytics:extract [opciones]
+  pnpm analytics:digest [opciones]
 
 Opciones:
   --days=N              Ventana de análisis en días (Por defecto: 30).
@@ -91,9 +91,9 @@ async function main() {
   `);
 
   try {
-    // 1. FASE 1: Extracción Masiva (GA4 + Search Console + Backend)
+    // 1. FASE 1: Extracción Masiva en Vivo (GA4 + Search Console)
     const extractor = new AnalyticsExtractor();
-    const rawBatch = await extractor.extractBatch(options.days, options.dryRun);
+    const rawBatch = await extractor.extractBatch(options.days);
 
     // 2. FASE 2: Agregación Numérica
     const aggregator = new TelemetryAggregator();

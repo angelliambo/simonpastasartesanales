@@ -94,10 +94,10 @@ export const StyledCard = styled.div.withConfig({
     if (normalizedSize === "xs") {
       const paddingValue = Number(getResponsiveSpacing("md")) || 8; // Cambiar de sm a md
       return css`
-        @media (max-width: 767px) {
+        @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
           padding: ${(Number(spacing.mobile?.md) || 8) * spacingMultiplier}px; // Cambiar de sm a md
         }
-        @media (min-width: 768px) {
+        @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
           padding: ${paddingValue * spacingMultiplier}px;
         }
         font-size: ${12 * textMultiplier}px;
@@ -107,10 +107,10 @@ export const StyledCard = styled.div.withConfig({
     if (normalizedSize === "sm") {
       const paddingValue = Number(getResponsiveSpacing("md")) || 16;
       return css`
-        @media (max-width: 767px) {
+        @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
           padding: ${(Number(spacing.mobile?.md) || 8) * spacingMultiplier}px; // Cambiar de sm a md
         }
-        @media (min-width: 768px) {
+        @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
           padding: ${paddingValue * spacingMultiplier}px;
         }
         font-size: ${14 * textMultiplier}px;
@@ -120,10 +120,10 @@ export const StyledCard = styled.div.withConfig({
     if (normalizedSize === "lg") {
       const paddingValue = Number(getResponsiveSpacing("xl")) || 32;
       return css`
-        @media (max-width: 767px) {
+        @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
           padding: ${(Number(spacing.mobile?.md) || 8) * spacingMultiplier}px; // Cambiar de sm a md
         }
-        @media (min-width: 768px) {
+        @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
           padding: ${paddingValue * spacingMultiplier}px;
         }
         font-size: ${18 * textMultiplier}px;
@@ -133,10 +133,10 @@ export const StyledCard = styled.div.withConfig({
     if (normalizedSize === "xl") {
       const paddingValue = Number(getResponsiveSpacing("xxl")) || 40;
       return css`
-        @media (max-width: 767px) {
+        @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
           padding: ${(Number(spacing.mobile?.lg) || 13) * spacingMultiplier}px;
         }
-        @media (min-width: 768px) {
+        @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
           padding: ${paddingValue * spacingMultiplier}px;
         }
         font-size: ${20 * textMultiplier}px;
@@ -146,10 +146,10 @@ export const StyledCard = styled.div.withConfig({
     // md (default)
     const paddingValue = Number(getResponsiveSpacing("lg")) || 24;
     return css`
-      @media (max-width: 767px) {
+      @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
         padding: ${(Number(spacing.mobile?.md) || 8) * spacingMultiplier}px; // Cambiar de sm a md
       }
-      @media (min-width: 768px) {
+      @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
         padding: ${paddingValue * spacingMultiplier}px;
       }
       font-size: ${16 * textMultiplier}px;

@@ -22,6 +22,7 @@ import {
 } from "./Skeleton.styles";
 import { usePersonalization } from "../../contexts/PersonalizationContext";
 import { AllSize } from "../shared";
+import { SkeletonCard, SocialFeedSkeleton } from "./SkeletonCard";
 
 // =====================================
 // HELPER FUNCTIONS
@@ -86,7 +87,7 @@ const normalizeTitle = (title?: boolean | { width?: number | string }) => {
  *
  * Reemplazo directo de Ant Design Skeleton con sistema unificado.
  */
-export const Skeleton: React.FC<SkeletonProps> = ({
+const SkeletonBase: React.FC<SkeletonProps> = ({
   active = SKELETON_DEFAULTS.active,
   animation = SKELETON_DEFAULTS.animation,
   size = SKELETON_DEFAULTS.size,
@@ -361,16 +362,23 @@ export const SkeletonImage: React.FC<SkeletonImageProps> = ({
   );
 };
 
-import { SkeletonCard, SocialFeedSkeleton } from "./SkeletonCard";
+export interface SkeletonComponent extends React.FC<SkeletonProps> {
+  Button: typeof SkeletonButton;
+  Input: typeof SkeletonInput;
+  Avatar: typeof SkeletonAvatar;
+  Image: typeof SkeletonImage;
+  Card: typeof SkeletonCard;
+  SocialFeed: typeof SocialFeedSkeleton;
+}
 
-// Agregar métodos estáticos al componente principal
-(Skeleton as any).Button = SkeletonButton;
-(Skeleton as any).Input = SkeletonInput;
-(Skeleton as any).Avatar = SkeletonAvatar;
-(Skeleton as any).Image = SkeletonImage;
-(Skeleton as any).Card = SkeletonCard;
-(Skeleton as any).SocialFeed = SocialFeedSkeleton;
+const TypedSkeleton = SkeletonBase as SkeletonComponent;
+TypedSkeleton.Button = SkeletonButton;
+TypedSkeleton.Input = SkeletonInput;
+TypedSkeleton.Avatar = SkeletonAvatar;
+TypedSkeleton.Image = SkeletonImage;
+TypedSkeleton.Card = SkeletonCard;
+TypedSkeleton.SocialFeed = SocialFeedSkeleton;
 
-export { SkeletonCard, SocialFeedSkeleton };
-export default Skeleton;
+export { SkeletonCard, SocialFeedSkeleton, TypedSkeleton as Skeleton };
+export default TypedSkeleton;
 

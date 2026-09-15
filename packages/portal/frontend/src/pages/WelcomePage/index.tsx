@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "../../i18n/I18nProvider";
-import { RootState } from "../../store/store";
+import { useAuth } from "../../contexts/AuthContext";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import GoogleSignInButton from "../../components/GoogleSignInButton";
 import { useSendTokenMutation, useVerifyTokenMutation } from "../../services/api/authService";
-import { setCredentials } from "../../store/slices/authSlice";
 import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import {
   GlobalOutlined,
@@ -52,13 +50,12 @@ import {
 } from "./WelcomePage.styles";
 import LanguageSelector from "../../i18n/LanguageSelector";
 
-const G_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || "";
+const G_ID = (typeof import.meta !== "undefined" && import.meta.env?.VITE_GOOGLE_CLIENT_ID) || process.env.VITE_GOOGLE_CLIENT_ID || "";
 
 export const WelcomePage: React.FC = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const loggedInUser = useSelector((state: RootState) => state.auth.user);
+  const { user: loggedInUser, setCredentials } = useAuth();
   const { showSuccess, showInfo } = useSnackbar();
 
   const [sendToken, { isLoading: sending }] = useSendTokenMutation();
@@ -77,7 +74,7 @@ export const WelcomePage: React.FC = () => {
   const handleStart = () => {
     if (termsAccepted) {
       localStorage.setItem("zn-terms-accepted", "true");
-      navigate("/dashboard");
+      navigate({ to: "/dashboard" });
     }
   };
 
@@ -98,10 +95,10 @@ export const WelcomePage: React.FC = () => {
     setErr(''); setMsg(t('pages.wellcome.verificando') || 'Verificando...');
     try {
       const result = await verifyToken({ email, code }).unwrap();
-      dispatch(setCredentials({
-        user: { _id: result.userId, email: result.email, role: result.role, plan: result.plan },
-        token: result.token,
-      }));
+      setCredentials({
+        user: { _id: result.userId || '', email: result.email || email, role: result.role, plan: result.plan },
+        token: result.token || '',
+      });
       if (result.isNewUser) {
         showSuccess(t('pages.errors.actionSuccess', { action: t('pages.errors.actionRegister', 'Registro de cuenta') }), 4000);
       } else {
@@ -127,7 +124,7 @@ export const WelcomePage: React.FC = () => {
       <WelcomeContainer>
         <WelcomeCard variant="elevated">
           <WelcomeHeader>
-            <Logo src={`${process.env.PUBLIC_URL}/assets/images/logo.png?v=${BRAND_CONFIG.assetVersion}`} alt={BRAND_CONFIG.siteName} />
+            <Logo src={BRAND_CONFIG.logoUrl} alt={BRAND_CONFIG.siteName} width={180} height={180} loading="eager" decoding="async" />
             <Title>{BRAND_CONFIG.siteName}</Title>
             <Subtitle>{t("pages.brandSlogan.slogan") || "Comunicación en su punto máximo."}</Subtitle>
           </WelcomeHeader>

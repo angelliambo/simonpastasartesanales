@@ -66,6 +66,7 @@ export const checkLoop = (
       console.log(
         `🔍 DEBUGGING: ${effectName} está causando el loop infinito. Pausando navegador para inspección...`
       );
+      // eslint-disable-next-line no-debugger
       debugger; // Pausará el navegador
     }
 

@@ -19,6 +19,9 @@ node_modules/
 *.key
 *.crt
 *.cer
+credentials/
+credentials/*
+
 
 # Build outputs
 build/

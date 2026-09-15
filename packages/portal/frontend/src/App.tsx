@@ -2,13 +2,9 @@ import React, { memo } from "react";
 import { GlobalStyles } from "./components/GlobalStyles";
 import OfflineIndicator from "./components/OfflineIndicator";
 import { AppProviders } from "./providers/AppProviders";
-import AppRoutes from "./routes";
+import AppRouter from "./router";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { styled } from "styled-components";
-
-const AppContainer = styled.div`
-  width: 100%;
-`;
+import { AppContainer } from "./App.styles";
 
 const App = memo(() => {
   return (
@@ -16,7 +12,7 @@ const App = memo(() => {
       <ErrorBoundary>
         <GlobalStyles />
         <AppContainer>
-          <AppRoutes />
+          <AppRouter />
           <OfflineIndicator showDetails={true} position="top" />
         </AppContainer>
       </ErrorBoundary>

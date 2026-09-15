@@ -5,25 +5,16 @@ import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import type { TranslationObject } from './index';
 import { locales as allLocales } from './locales';
 
-const STORAGE_KEY = 'zn_portal_lang';
+const STORAGE_KEY = 'portal_lang';
 const DEFAULT_LANG = 'es';
 const FALLBACK_LOCALE = 'es';
 
-interface Language {
-  code: string;
-  name: string;
-  flag: string;
-}
-
-const LANGUAGES: Language[] = [
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-];
+import { Language, LANGUAGES } from './languages';
 
 const TRANSLATIONS = allLocales as unknown as Record<string, TranslationObject>;
 
 interface I18nContextType {
-  t: (key: string, params?: Record<string, string>) => string;
+  t: (key: string, params?: Record<string, string | number> | string) => string;
   lang: string;
   setLanguage: (lang: string) => void;
   languages: Language[];
@@ -65,12 +56,12 @@ function loadLang(): string {
       if (sanitized) return sanitized;
     } catch { }
 
-    const extLang = (typeof window !== 'undefined' ? (window as any).__ZN_LANG__ : undefined) as string | undefined;
+    const extLang = (typeof window !== 'undefined' ? (window as any).__PORTAL_LANG__ : undefined) as string | undefined;
     const sanitizedExt = getSanitizedLang(extLang);
     if (sanitizedExt) return sanitizedExt;
 
     try {
-      const devExtLang = localStorage.getItem('zn_idiomaUI');
+      const devExtLang = localStorage.getItem('portal_idiomaUI');
       if (devExtLang) {
         const parsed = JSON.parse(devExtLang);
         const sanitizedDevExt = getSanitizedLang(parsed);
@@ -105,7 +96,7 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setLangState(newLang);
     saveLang(newLang);
     // Dispatch event to the page window
-    window.dispatchEvent(new CustomEvent('zn-lang-ready', { detail: newLang }));
+    window.dispatchEvent(new CustomEvent('portal-lang-ready', { detail: newLang }));
   }, []);
 
   // Sincronizar el parámetro lang en la URL
@@ -140,17 +131,18 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setLangState(detail);
       }
     };
-    window.addEventListener('zn-lang-ready', handler as EventListener);
-    return () => window.removeEventListener('zn-lang-ready', handler as EventListener);
+    window.addEventListener('portal-lang-ready', handler as EventListener);
+    return () => window.removeEventListener('portal-lang-ready', handler as EventListener);
   }, [lang]);
 
   const t = useCallback(
-    (key: string, params?: Record<string, string>) => {
+    (key: string, params?: Record<string, string | number> | string) => {
       try {
-        return translate(key, TRANSLATIONS, lang, FALLBACK_LOCALE, { ...globals, ...params });
+        const options = typeof params === 'string' ? undefined : params;
+        return translate(key, TRANSLATIONS, lang, FALLBACK_LOCALE, { ...globals, ...options });
       } catch (err) {
         console.error(`[${BRAND_CONFIG.siteName}] [ERR-WEB-301]: Fallo al traducir la clave "${key}".`, err);
-        return key;
+        return typeof params === 'string' ? params : key;
       }
     },
     [lang],
@@ -166,5 +158,3 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export function useTranslation(): I18nContextType {
   return useContext(I18nContext);
 }
-
-export { LANGUAGES };

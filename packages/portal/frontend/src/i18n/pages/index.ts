@@ -1,2 +1,2 @@
-export * as commons from './commons';
-export * as portal from './portal';
+export const pages = {};
+export default pages;

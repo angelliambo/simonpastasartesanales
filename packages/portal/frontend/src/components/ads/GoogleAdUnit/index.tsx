@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
+import { useAuth } from '../../../contexts/AuthContext';
 import { isUserEligibleForAds } from '@factory/shared/hooks/useAdEligibility';
 import { GOOGLE_ADSENSE_CLIENT_ID, ADS_ENABLED } from '@factory/shared/config/ads';
 import { trackAdImpression, trackAdBlocked } from '../../../services/analytics';
@@ -22,7 +21,7 @@ export const GoogleAdUnit: React.FC<GoogleAdUnitProps> = ({
   className,
   label = 'Publicidad',
 }) => {
-  const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { user, isAuthenticated } = useAuth();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [adLoaded, setAdLoaded] = useState(false);

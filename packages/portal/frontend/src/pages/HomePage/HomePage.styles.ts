@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import Button from '@design-sys/atoms/Button';
 import { Row, Col } from '@design-sys/atoms/Grid';
+export { Container } from '@design-sys/atoms/Container';
 
 export const VhSection = styled.section<{
   $visible?: boolean;
@@ -12,31 +13,31 @@ export const VhSection = styled.section<{
   justify-content: center;
   
   /* Agregamos una separación lateral base para que NADA toque el borde de la pantalla */
-  padding: 20px 24px; 
+  padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.lg}`}; 
   
   position: relative;
   z-index: 1;
   background: ${({ $variant, theme }) => {
     if ($variant === "alternate") {
-      return theme.colors.background.secondary || "#f8f9fa";
+      return theme.colors.background.secondary;
     }
     if ($variant === "accent") {
-      return theme.colors.background.tertiary || "#e0e0e0";
+      return theme.colors.background.tertiary;
     }
-    return theme.colors.background.primary || "#ffffff";
+    return theme.colors.background.primary;
   }};
   color: ${({ theme }) => theme.colors.text.primary};
 
   @media (max-height: 800px) {
-    padding: 10px 24px;
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
   }
   @media (max-height: 700px) {
-    padding: 5px 24px;
+    padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.lg}`};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     min-height: 100dvh;
-    padding: 20px 16px; /* Separación lateral ligeramente más compacta en celulares */
+    padding: ${({ theme }) => `${theme.spacing.lg} ${theme.spacing.md}`}; /* Separación lateral ligeramente más compacta en celulares */
   }
 `;
 
@@ -65,8 +66,8 @@ export const LogoWrapper = styled.div`
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      ${({ theme }) => theme.colors.primary[500] || "rgba(249, 115, 22, 0.55)"} 0%,
-      ${({ theme }) => `${theme.colors.primary[500]}66` || "rgba(249, 115, 22, 0.25)"} 45%,
+      ${({ theme }) => theme.colors.primary[500]} 0%,
+      ${({ theme }) => `${theme.colors.primary[500]}66`} 45%,
       transparent 75%
     );
     filter: blur(32px);
@@ -100,9 +101,7 @@ export const HeroTitle = styled.h1`
   color: ${({ theme }) => theme.colors.text.primary};
 
   span {
-    background: ${({ theme }) =>
-    theme.gradients?.brand ||
-    "linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6)"};
+    background: ${({ theme }) => theme.gradients.brand};
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -152,10 +151,10 @@ export const HeroActions = styled.div`
 
 const gradientBtnMixin = css`
   background: ${({ theme }) => theme.gradients.premium};
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.inverse};
   border: none;
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  padding: 14px 32px;
+  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -163,13 +162,12 @@ const gradientBtnMixin = css`
   min-width: 180px;
   font-family: inherit;
   line-height: 1.4;
-  box-shadow: ${({ theme }) =>
-    theme.effects?.glow?.premium || "0 4px 12px rgba(168, 85, 247, 0.4)"};
+  box-shadow: ${({ theme }) => theme.effects.glow.premium};
   position: relative;
   overflow: hidden;
 
   @media (max-height: 800px) {
-    padding: 10px 24px;
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
     font-size: 14px;
     min-width: 140px;
   }
@@ -192,8 +190,7 @@ const gradientBtnMixin = css`
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: ${({ theme }) =>
-    `0 8px 20px ${theme.effects?.glow?.premium || "rgba(168, 85, 247, 0.6)"}`};
+    box-shadow: ${({ theme }) => `0 8px 20px ${theme.effects.glow.premium}`};
     &::before {
       animation: shimmer 0.5s ease-out;
     }
@@ -214,10 +211,10 @@ const gradientBtnMixin = css`
 
 export const HeroOutlinedButton = styled(Button)`
   background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.inverse};
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  padding: 14px 32px;
+  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.xl}`};
   font-size: 16px;
   font-weight: 600;
   min-width: 180px;
@@ -229,7 +226,7 @@ export const HeroOutlinedButton = styled(Button)`
   gap: 6px;
 
   @media (max-height: 800px) {
-    padding: 10px 24px;
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
     font-size: 14px;
     min-width: 140px;
   }
@@ -304,8 +301,8 @@ export const ProductGrid = styled.div`
 `;
 
 export const ProductCard = styled.div`
-  background: ${({ theme }) => theme.colors.background.secondary || "#f5f2eb"};
-  border: 1px solid ${({ theme }) => theme.effects?.glassBorder || "rgba(0, 0, 0, 0.05)"};
+  background: ${({ theme }) => theme.colors.background.secondary};
+  border: 1px solid ${({ theme }) => theme.effects.glassBorder};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   overflow: hidden;
   display: flex;
@@ -345,7 +342,7 @@ export const ProductTitle = styled.h3`
   font-family: 'Playfair Display', 'Lora', serif;
   font-size: 18px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.primary?.[500] || "#193220"};
+  color: ${({ theme }) => theme.colors.primary[500]};
   margin-bottom: ${({ theme }) => theme.spacing.xs};
 `;
 
@@ -359,11 +356,11 @@ export const ProductDescription = styled.p`
 
 export const OrderButton = styled.a`
   width: 100%;
-  background: ${({ theme }) => theme.colors.primary?.[500]};
-  color: #fff !important;
+  background: ${({ theme }) => theme.colors.primary[500]};
+  color: ${({ theme }) => theme.colors.text.inverse} !important;
   border: none;
   font-weight: 600;
-  padding: 12px 16px;
+  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   display: inline-flex;
   align-items: center;
@@ -374,8 +371,8 @@ export const OrderButton = styled.a`
   line-height: 1;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primary?.[600] || "#14291a"};
-    color: #fff !important;
+    background: ${({ theme }) => theme.colors.primary[600]};
+    color: ${({ theme }) => theme.colors.text.inverse} !important;
   }
 
   &:active {
@@ -415,7 +412,7 @@ const PricingCardSilverBorder = css`
         rgba(255, 255, 255, 0.3)
       )
       padding-box,
-    ${({ theme }) => theme.colors.background.card || "#0e111a"} padding-box,
+    ${({ theme }) => theme.colors.background.card} padding-box,
     linear-gradient(
         135deg,
         rgba(192, 192, 192, 0.4),
@@ -450,7 +447,7 @@ const PricingCardGoldBorder = css`
         rgba(170, 119, 28, 0.2)
       )
       padding-box,
-    ${({ theme }) => theme.colors.background.card || "#0e111a"} padding-box,
+    ${({ theme }) => theme.colors.background.card} padding-box,
     linear-gradient(
         135deg,
         rgba(191, 149, 63, 0.5),
@@ -470,14 +467,14 @@ const PricingCardGoldBorder = css`
 
 export const PricingCard = styled.div<{ $popular?: boolean; $bestValue?: boolean }>`
   border-radius: 1.5rem;
-  padding: 2.5rem 1.5rem;
+  padding: ${({ theme }) => `${theme.spacing.xxl} ${theme.spacing.lg}`};
   display: flex;
   flex-direction: column;
   position: relative;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   transform: none;
   height: 100%;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.inverse};
 
   @media (max-height: 800px) {
     padding: 1.2rem 1rem;
@@ -493,8 +490,8 @@ export const PricingCard = styled.div<{ $popular?: boolean; $bestValue?: boolean
       : $bestValue
         ? PricingCardGoldBorder
         : `
-      background: ${theme.colors.background.card || "#ffffff"};
-      border: 1px solid ${theme.colors.border.light || "#dee2e6"};
+      background: ${theme.colors.background.card};
+      border: 1px solid ${theme.colors.border.light};
     `}
 
   &:hover {
@@ -670,9 +667,9 @@ export const PricingButton = styled(Button) <{ $primary?: boolean }>`
   width: 100%;
   background: ${({ $primary, theme }) =>
     $primary
-      ? (theme.gradients?.premium || "linear-gradient(135deg, #a855f7, #7c3aed)")
+      ? theme.gradients.premium
       : "rgba(255,255,255,0.08)"};
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.inverse};
   border: none;
   padding: 0.85rem;
   border-radius: 1rem;
@@ -694,7 +691,7 @@ export const PricingButton = styled(Button) <{ $primary?: boolean }>`
   &:hover {
     background: ${({ $primary, theme }) =>
     $primary
-      ? (theme.gradients?.brand || "linear-gradient(135deg, #b967ff, #8b5cf6)")
+      ? theme.gradients.brand
       : "rgba(255,255,255,0.15)"};
     transform: translateY(-2px);
   }
@@ -723,8 +720,8 @@ export const TestimonialCol = styled(Col)`
 
 export const TestimonialCard = styled.div`
   flex: 1;
-  background: ${({ theme }) => theme.colors.background.card || "#ffffff"};
-  border: 1px solid ${({ theme }) => theme.colors.border.light || "#eef0f2"};
+  background: ${({ theme }) => theme.colors.background.card};
+  border: 1px solid ${({ theme }) => theme.colors.border.light};
   border-radius: 16px;
   padding: ${({ theme }) => theme.spacing.lg};
   text-align: left;
@@ -783,7 +780,7 @@ export const TestimonialAvatar = styled.div`
   justify-content: center;
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.text.inverse};
 `;
 
 export const TestimonialName = styled.span`
@@ -877,7 +874,7 @@ export const CtaButton = styled(Button)`
   display: block;
 
   @media (max-height: 800px) {
-    padding: 10px 24px;
+    padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
     font-size: 14px;
   }
 
@@ -978,13 +975,13 @@ export const MapFallback = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.background.card || '#10141f'};
+  background-color: ${({ theme }) => theme.colors.background.card};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  border: 1px solid ${({ theme }) => theme.colors.border || 'rgba(255, 255, 255, 0.1)'};
+  border: 1px solid ${({ theme }) => theme.colors.border.light};
   color: ${({ theme }) => theme.colors.text.secondary};
   font-size: 16px;
   
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     aspect-ratio: 4 / 3;
   }
 `;
@@ -1077,8 +1074,8 @@ export const StatList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  margin-top: 10px;
+  gap: ${({ theme }) => theme.spacing.xs};
+  margin-top: ${({ theme }) => theme.spacing.sm};
 
   @media (max-height: 800px) {
     margin-top: 4px;

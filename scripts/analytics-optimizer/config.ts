@@ -1,10 +1,4 @@
-/**
- * Configuración y Constantes para MERN SaaS Factory Analytics & Search Console Extractor (Simón Pastas Artesanales)
- */
-
-import fs from 'fs';
-import path from 'path';
-import dotenv from 'dotenv';
+import { BRAND_CONFIG } from '../../packages/shared/src/config/brand';
 
 // Cargar variables de entorno automáticamente desde los archivos .env del monorepo
 const frontendEnvPath = path.resolve(process.cwd(), 'packages/portal/frontend/.env');
@@ -15,17 +9,17 @@ dotenv.config();
 
 export const ANALYTICS_CONFIG = {
   portal: {
-    name: 'Simón Pastas Artesanales',
-    domain: process.env.PORTAL_DOMAIN || 'simonpastasartesanales.com.ar',
-    measurementId: process.env.REACT_APP_GA_MEASUREMENT_ID || process.env.GA4_MEASUREMENT_ID || 'G-CSZZEJ6KG5',
+    name: `${BRAND_CONFIG.siteName} Portal Web`,
+    domain: process.env.PORTAL_DOMAIN || BRAND_CONFIG.domain || 'simonpastasartesanales.com.ar',
+    measurementId: process.env.VITE_GA_MEASUREMENT_ID || process.env.REACT_APP_GA_MEASUREMENT_ID || process.env.GA4_MEASUREMENT_ID || 'G-CSZZEJ6KG5',
     propertyId: process.env.GA4_PORTAL_PROPERTY_ID || process.env.GA4_PROPERTY_ID || 'properties/398271401',
   },
   backend: {
-    name: 'Simón Pastas Artesanales Backend API',
+    name: `${BRAND_CONFIG.siteName} Backend API Services`,
     endpoint: process.env.BACKEND_URL || 'http://localhost:5000/api',
   },
   searchConsole: {
-    siteUrl: process.env.GSC_SITE_URL || 'sc-domain:simonpastasartesanales.com.ar',
+    siteUrl: process.env.GSC_SITE_URL || `sc-domain:${BRAND_CONFIG.domain || 'simonpastasartesanales.com.ar'}`,
   },
   benchmarks: {
     minPortalConversionPercent: 4.5,

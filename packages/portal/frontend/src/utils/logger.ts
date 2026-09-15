@@ -8,7 +8,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 // Log level desde variable de entorno (opcional, por defecto 'info' en dev, 'error' en prod)
 const LOG_LEVEL =
-  process.env.REACT_APP_LOG_LEVEL ||
+  process.env.VITE_LOG_LEVEL ||
   (isProduction ? "error" : "info");
 
 const LOG_LEVELS = {

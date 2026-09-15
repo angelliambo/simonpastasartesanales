@@ -46,7 +46,7 @@ if (!fs.existsSync(PROFILE_DIR)) {
 if (!fs.existsSync(BUILD_DIR) || !fs.existsSync(path.join(BUILD_DIR, 'index.html'))) {
   console.log('🏗️  No se detectó el build de producción del portal. Compilando...');
   try {
-    execSync('yarn workspace @factory/portal-frontend build', { stdio: 'inherit' });
+    execSync('pnpm --filter @factory/frontend build', { stdio: 'inherit' });
   } catch (err) {
     console.error('❌ Error al compilar el portal:', err.message);
     process.exit(1);

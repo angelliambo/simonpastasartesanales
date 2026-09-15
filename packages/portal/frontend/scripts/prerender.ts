@@ -6,13 +6,15 @@ import { join } from 'path';
  * Fábrica de Pastas Simón — Bernal & Zona Sur
  */
 
+const DIST_DIR = join(__dirname, '../dist');
 const BUILD_DIR = join(__dirname, '../build');
-const INDEX_HTML_PATH = join(BUILD_DIR, 'index.html');
+const TARGET_DIR = existsSync(DIST_DIR) ? DIST_DIR : (existsSync(BUILD_DIR) ? BUILD_DIR : join(__dirname, '../public'));
+const INDEX_HTML_PATH = join(TARGET_DIR, 'index.html');
 
 console.log('🚀 [PRERENDER] Iniciando generación de páginas estáticas prerenderizadas...');
 
 if (!existsSync(INDEX_HTML_PATH)) {
-  console.log('⚠️ [PRERENDER] No se encontró build/index.html. El prerenderizado se ejecutará después de la compilación.');
+  console.log(`⚠️ [PRERENDER] No se encontró index.html en ${INDEX_HTML_PATH}. El prerenderizado se ejecutará después de la compilación.`);
   process.exit(0);
 }
 
@@ -73,7 +75,7 @@ const routesToPrerender = [
 ];
 
 routesToPrerender.forEach((route) => {
-  const routeDir = join(BUILD_DIR, route.path);
+  const routeDir = join(TARGET_DIR, route.path);
   if (!existsSync(routeDir)) {
     mkdirSync(routeDir, { recursive: true });
   }

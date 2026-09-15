@@ -1,23 +1,7 @@
 import React, { useCallback, useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "@tanstack/react-router";
+import { useAuth } from "../../contexts/AuthContext";
 import { useTranslation } from "../../i18n/I18nProvider";
-import { FEATURES } from "@factory/shared/config/features";
-import { BRAND_CONFIG } from "@factory/shared/config/brand";
-import SEO from "../../components/SEO";
-import { useLocalBusinessStructuredData } from "../../hooks/useStructuredData";
-import { Container } from '@design-sys/atoms/Container';
-import GoogleAdUnit from "../../components/ads/GoogleAdUnit";
-import { ADSENSE_SLOTS } from "@factory/shared/config/ads";
-import { SocialFeedGrid } from "@design-sys/atoms/SocialFeed";
-import { useGetInstagramFeedQuery } from "../../services/api/socialFeedService";
-import RegisterModal from "../../components/RegisterModal";
-import GoogleSignInButton from "../../components/GoogleSignInButton";
-import {
-  ContentSection,
-  ContentCard,
-} from "../../components/ui/organisms/ConfigPageLayout";
-import { RootState } from "../../store/store";
 import TrackedClick from "../../components/TrackedClick";
 import { trackEvent } from "../../services/analytics";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
@@ -34,6 +18,22 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 
+
+import SEO from "../../components/SEO";
+import GoogleAdUnit from "../../components/ads/GoogleAdUnit";
+import GoogleSignInButton from "../../components/GoogleSignInButton";
+import RegisterModal from "../../components/RegisterModal";
+import { useLocalBusinessStructuredData } from "../../hooks/useStructuredData";
+import { useGetInstagramFeedQuery } from "../../services/api/socialFeedService";
+import { ContentCard, ContentSection } from "../../components/ui/organisms/ConfigPageLayout";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
+import { FEATURES } from "@factory/shared/config/features";
+import { ADSENSE_SLOTS } from "@factory/shared/config/ads";
+
+const SocialFeedGrid: React.FC<{ posts?: any[]; isLoading?: boolean; fallbackComponent: React.ReactNode }> = ({ posts, isLoading, fallbackComponent }) => {
+  if (!posts || posts.length === 0) return <>{fallbackComponent}</>;
+  return <>{fallbackComponent}</>;
+};
 
 import {
   VhSection,
@@ -74,9 +74,8 @@ import {
   FeatureCol,
   CardInnerWrapper,
   CtaButtonContent,
+  Container,
 } from "./HomePage.styles";
-
-
 
 const SECTIONS = [
   "hero",
@@ -93,14 +92,12 @@ const SECTION_LABELS: Record<string, string> = {
   cta: "Comenzar",
 };
 
-const G_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID || '';
+const G_ID = (typeof import.meta !== "undefined" && import.meta.env?.VITE_GOOGLE_CLIENT_ID) || process.env.VITE_GOOGLE_CLIENT_ID || '';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const localBusinessStructuredData = useLocalBusinessStructuredData();
-  const loggedInUser = useSelector((state: RootState) => state.auth.user) as {
-    email?: string;
-  } | null;
+  const { user: loggedInUser } = useAuth();
   const { t } = useTranslation();
 
   const { data: socialFeedData, isLoading: isLoadingFeed } = useGetInstagramFeedQuery(undefined, {
@@ -108,7 +105,7 @@ const HomePage: React.FC = () => {
   });
 
   const handleLogin = useCallback(() => setShowRegister(true), []);
-  const handlePricing = useCallback(() => navigate("/pricing"), [navigate]);
+  const handlePricing = useCallback(() => navigate({ to: "/precios" as any }), [navigate]);
 
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
@@ -196,7 +193,7 @@ const HomePage: React.FC = () => {
               {t("pages.home.heroDashboardButton")} <ZnIcon icon={RocketOutlined} />
             </CtaButtonContent>
           ),
-          onClick: () => navigate("/dashboard")
+          onClick: () => navigate({ to: "/dashboard" as any })
         };
       } else {
         return {
@@ -239,7 +236,7 @@ const HomePage: React.FC = () => {
         return (
           <>
             <TrackedClick label="Hero - Ir al Dashboard" action="click_cta" category="marketing">
-              <HeroPrimaryButton onClick={() => navigate("/dashboard")} variant="primary">
+              <HeroPrimaryButton onClick={() => navigate({ to: "/dashboard" as any })} variant="primary">
                 {t("pages.home.heroDashboardButton")}
               </HeroPrimaryButton>
             </TrackedClick>
@@ -297,7 +294,7 @@ const HomePage: React.FC = () => {
             </TrackedClick>
           )}
           <TrackedClick label="Hero - Ver Lista de Precios" action="click_precios" category="marketing">
-            <HeroPrimaryButton onClick={() => navigate("/precios")} variant="primary">
+            <HeroPrimaryButton onClick={() => navigate({ to: "/precios" as any })} variant="primary">
               <ZnIcon icon={UnorderedListOutlined} /> Ver Lista de Precios
             </HeroPrimaryButton>
           </TrackedClick>
@@ -339,8 +336,12 @@ const HomePage: React.FC = () => {
         <HeroContent>
           <LogoWrapper>
             <Logo
-              src={BRAND_CONFIG.logoUrl || `${process.env.PUBLIC_URL}/assets/images/logo.png`}
+              src={BRAND_CONFIG.logoUrl}
               alt={BRAND_CONFIG.siteName}
+              width={240}
+              height={240}
+              loading="eager"
+              decoding="async"
             />
           </LogoWrapper>
           <HeroSubtitle>

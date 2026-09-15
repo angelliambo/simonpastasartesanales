@@ -32,31 +32,31 @@ const pulseGlow = keyframes`
 
 export const FloatingCTAContainer = styled.div<{ $isVisible: boolean }>`
   position: fixed;
-  bottom: ${props => props.theme.spacing.lg};
-  left: ${props => props.theme.spacing.lg};
+  bottom: ${({ theme }) => theme.spacing.lg};
+  left: ${({ theme }) => theme.spacing.lg};
   z-index: 1050;
-  display: ${props => (props.$isVisible ? "flex" : "none")};
+  display: ${({ $isVisible }) => ($isVisible ? "flex" : "none")};
   align-items: center;
   animation: ${bounceIn} 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    bottom: ${props => props.theme.spacing.md};
-    left: ${props => props.theme.spacing.md};
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    bottom: ${({ theme }) => theme.spacing.md};
+    left: ${({ theme }) => theme.spacing.md};
   }
 `;
 
 export const WhatsAppButton = styled.a`
   display: flex;
   align-items: center;
-  gap: ${props => props.theme.spacing.sm};
+  gap: ${({ theme }) => theme.spacing.sm};
   background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
   color: #ffffff;
-  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.md};
+  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
   border-radius: 50px;
   text-decoration: none;
-  font-family: ${props => props.theme.typography.fontFamily.primary};
-  font-size: ${props => props.theme.typography.fontSize.sm};
-  font-weight: ${props => props.theme.typography.fontWeight.semibold};
+  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   animation: ${pulseGlow} 2.5s infinite;
   transition: transform 0.25s ease, background 0.25s ease;
   user-select: none;
@@ -76,7 +76,7 @@ export const IconWrapper = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: ${props => props.theme.typography.fontSize.lg};
+  font-size: ${({ theme }) => theme.typography.fontSize.lg};
   line-height: 1;
 `;
 

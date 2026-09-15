@@ -84,6 +84,14 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
     }
   }, []);
 
+  const finishTour = useCallback(() => {
+    setIsPlaying(false);
+    isPlayingRef.current = false;
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, []);
+
   const playStepAudio = useCallback(
     (index: number) => {
       stopAudio();
@@ -137,7 +145,6 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
 
         window.speechSynthesis.speak(utterance);
       } else {
-        // Modo silenciado o sin voz nativa: temporizador fijo por paso para auto-avance
         if (index < TOUR_STEPS.length - 1) {
           fallbackTimerRef.current = setTimeout(() => {
             if (isPlayingRef.current) {
@@ -221,7 +228,6 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
     setIsOpen(false);
   }, [stopAudio]);
 
-  // Cancelar audio cuando el usuario cambia de pestaña
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
@@ -265,7 +271,15 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
             aria-label={t("pages.home.guidedTourBadge")}
           >
             <TourIconWrapper>
-              <ZnIcon icon={isPlaying ? PauseCircleOutlined : CompassOutlined} />
+              {isPlaying && !isMuted ? (
+                <AudioWavesContainer>
+                  <AudioWaveBar $delay={0} />
+                  <AudioWaveBar $delay={0.2} />
+                  <AudioWaveBar $delay={0.4} />
+                </AudioWavesContainer>
+              ) : (
+                <ZnIcon icon={CompassOutlined} />
+              )}
             </TourIconWrapper>
             <TourBadgeLabel>{t("pages.home.guidedTourBadge")}</TourBadgeLabel>
           </FloatingTourButton>
@@ -362,7 +376,7 @@ const GuidedTourCTA: React.FC<GuidedTourCTAProps> = memo(() => {
         </TourWhatsAppWrapper>
       </FloatingSpeechCard>
     </>
-  );
+  );;
 });
 
 GuidedTourCTA.displayName = "GuidedTourCTA";

@@ -238,7 +238,7 @@ export const StyledBreadcrumb = styled.nav.withConfig({
       color: ${variantColors.default.color};
       
       ${$responsive && css`
-        @media (max-width: 768px) {
+        @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
           flex-wrap: nowrap;
           overflow-x: auto;
           scrollbar-width: none;
@@ -561,7 +561,7 @@ export const LargeBreadcrumb = styled(StyledBreadcrumb)`
 
 // Responsive breadcrumb
 export const ResponsiveBreadcrumb = styled(StyledBreadcrumb)`
-  @media (max-width: 768px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-wrap: nowrap;
     overflow-x: auto;
     scrollbar-width: none;
@@ -609,7 +609,7 @@ export const HomeBreadcrumb = styled(StyledBreadcrumb)`
 
 // Mobile breadcrumb
 export const MobileBreadcrumb = styled(StyledBreadcrumb)`
-  @media (max-width: 480px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     font-size: 0.8rem;
     gap: 6px;
     

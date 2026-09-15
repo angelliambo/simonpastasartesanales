@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import "./services/firebase";
 import { initMetricsSuite } from "./utils/metrics";
 
@@ -34,6 +33,4 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
-reportWebVitals();
 

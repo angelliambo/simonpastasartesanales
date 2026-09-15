@@ -39,5 +39,7 @@ Disallow: /dashboard/
 Disallow: /login
 Disallow: /api/
 
-# Enlace al Sitemap del portal
+# Sitemap & LLM Knowledge locations
 Sitemap: https://simonpastasartesanales.com.ar/sitemap.xml
+LLM-Index: https://simonpastasartesanales.com.ar/llms.txt
+LLM-Full-Directory: https://simonpastasartesanales.com.ar/llms-full.txt

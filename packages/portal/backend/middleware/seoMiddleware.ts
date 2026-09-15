@@ -8,6 +8,24 @@ import { BRAND_CONFIG } from "@factory/shared/config/brand";
  * Middleware para servir el index.html de React inyectando dinámicamente el SEO y estado de Tenant.
  */
 export async function serveReactWithSEO(req: Request, res: Response, next: NextFunction) {
+  // Servir archivos de texto plano esenciales (ads.txt, robots.txt, llms.txt) directamente desde Express
+  if (req.path === "/ads.txt" || req.path === "/robots.txt" || req.path === "/llms.txt") {
+    const fileName = req.path.substring(1);
+    let filePath = "/usr/share/nginx/html/" + fileName;
+    if (!fs.existsSync(filePath)) {
+      filePath = path.resolve(__dirname, "../../../frontend/build", fileName);
+    }
+    if (!fs.existsSync(filePath)) {
+      filePath = path.resolve(__dirname, "../../frontend/public", fileName);
+    }
+
+    if (fs.existsSync(filePath)) {
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      return res.sendFile(filePath);
+    }
+  }
+
   // Excluir la API y recursos estáticos con extensiones
   if (req.path.startsWith("/api") || req.path.includes(".")) {
     return next();
@@ -30,12 +48,17 @@ export async function serveReactWithSEO(req: Request, res: Response, next: NextF
     if (process.env.NODE_ENV === "production") {
       indexPath = "/usr/share/nginx/html/index.html";
       if (!fs.existsSync(indexPath)) {
-        // Fallback relativo al directorio de ejecución en producción
+        indexPath = path.resolve(__dirname, "../../../frontend/dist/index.html");
+      }
+      if (!fs.existsSync(indexPath)) {
         indexPath = path.resolve(__dirname, "../../../frontend/build/index.html");
       }
     } else {
       // Desarrollo
-      indexPath = path.resolve(__dirname, "../../frontend/build/index.html");
+      indexPath = path.resolve(__dirname, "../../frontend/dist/index.html");
+      if (!fs.existsSync(indexPath)) {
+        indexPath = path.resolve(__dirname, "../../frontend/build/index.html");
+      }
       if (!fs.existsSync(indexPath)) {
         indexPath = path.resolve(__dirname, "../../frontend/public/index.html");
       }
@@ -49,7 +72,7 @@ export async function serveReactWithSEO(req: Request, res: Response, next: NextF
 
     // Construir la URL absoluta para la imagen por defecto
     const protocol = req.secure || req.headers["x-forwarded-proto"] === "https" ? "https" : "http";
-    const defaultOgImage = `${protocol}://${host}/og-image.png?v=${BRAND_CONFIG.assetVersion}`;
+    const defaultOgImage = `${protocol}://${host}/og-image.webp?v=${BRAND_CONFIG.assetVersion}`;
 
     // Resolver valores SEO
     const seoTitle = tenant?.seo?.title || BRAND_CONFIG.seoTitle;

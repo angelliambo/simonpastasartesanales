@@ -39,7 +39,7 @@ const USERS: SeedUser[] = [
     expiresAt: null,
   },
   {
-    email: "free@zn.com",
+    email: "free@factory.com",
     password: "test1234",
     name: "Usuario Free",
     role: "user",
@@ -47,7 +47,7 @@ const USERS: SeedUser[] = [
     expiresAt: null,
   },
   {
-    email: "semestral@zn.com",
+    email: "semestral@factory.com",
     password: "test1234",
     name: "Usuario Semestral",
     role: "user",
@@ -55,7 +55,7 @@ const USERS: SeedUser[] = [
     expiresAt: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000),
   },
   {
-    email: "anual@zn.com",
+    email: "anual@factory.com",
     password: "test1234",
     name: "Usuario Anual",
     role: "user",
@@ -124,10 +124,10 @@ async function seed() {
     }
 
     console.log("\n🎉 Seed completado. Todos los usuarios usan la contraseña: test1234");
-    console.log("   admin@zn.com    → god_mode (admin)");
-    console.log("   free@zn.com     → free");
-    console.log("   semestral@zn.com → 6_meses");
-    console.log("   anual@zn.com    → 1_ano");
+    console.log("   admin@factory.com    → god_mode (admin)");
+    console.log("   free@factory.com     → free");
+    console.log("   semestral@factory.com → 6_meses");
+    console.log("   anual@factory.com    → 1_ano");
   } catch (err) {
     console.error("❌ Error en seed:", err);
     process.exit(1);

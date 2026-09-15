@@ -1,4 +1,4 @@
-const CACHE_PWA = "zn-portal-cache-v1";
+const CACHE_PWA = "portal-cache-v1";
 
 const urlsToCache = [
   "/",

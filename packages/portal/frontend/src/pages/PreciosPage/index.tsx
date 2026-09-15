@@ -1,875 +1,114 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { createPortal } from "react-dom";
-import styled, { keyframes } from "styled-components";
-import SEO from "../../components/SEO";
-import type { Product } from "@factory/shared/types/products";
-
-import { BRAND_CONFIG } from "@factory/shared/config/brand";
+import { Helmet } from "react-helmet-async";
+import type { Product, ProductPresentation } from "@factory/shared/types/products";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
+import SEO from "../../components/SEO";
+import { BRAND_CONFIG } from "@factory/shared/config/brand";
+import { useTranslation } from "../../i18n/I18nProvider";
 import {
   LockOutlined,
-  WhatsAppOutlined,
-  ZoomInOutlined,
-  CloseOutlined,
-  InfoCircleOutlined,
+  SearchOutlined,
   AppstoreOutlined,
   UnorderedListOutlined,
-  TagOutlined,
+  WhatsAppOutlined,
   ShareAltOutlined,
-  CopyOutlined,
-  SendOutlined,
-  FacebookOutlined,
-  TwitterOutlined,
-  CheckCircleOutlined,
-  DownloadOutlined,
   LeftOutlined,
   RightOutlined,
+  InfoCircleOutlined,
+  CloseOutlined,
+  FacebookOutlined,
+  TwitterOutlined,
+  SendOutlined,
+  DownloadOutlined,
+  CopyOutlined,
+  CheckCircleOutlined,
+  ZoomInOutlined,
+  TagOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
+import {
+  PageContainer,
+  HeroSection,
+  Title,
+  Subtitle,
+  AdminBadgeLink,
+  ControlsBar,
+  TopSearchRow,
+  SearchInput,
+  ControlsRight,
+  SelectSort,
+  ViewToggleGroup,
+  ViewToggleButton,
+  CategoryPillsBar,
+  CategoryPill,
+  CategoryGroupSection,
+  CategoryGroupHeader,
+  ProductsGrid,
+  ProductCard,
+  SkeletonCard,
+  SkeletonBox,
+  ImageContainer,
+  ProductImage,
+  GalleryThumbBar,
+  GalleryThumbBtn,
+  ZoomIconButton,
+  ShareIconButton,
+  ListShareBtn,
+  CardContent,
+  CategoryTagsContainer,
+  CategoryTag,
+  ProductTitle,
+  ProductDescription,
+  VarietiesContainer,
+  VarietiesTitle,
+  VarietyBadge,
+  PresentationsList,
+  PresentationRowItem,
+  PresentationName,
+  PresentationPrice,
+  ActionRowGrid,
+  WhatsAppBtn,
+  ListViewContainer,
+  ListTable,
+  ListTh,
+  ListTr,
+  ListTd,
+  PaginationContainer,
+  PaginationControls,
+  PageButton,
+  PageSizeSelect,
+  EmptyStateContainer,
+  ModalOverlay,
+  ModalContent,
+  ModalImage,
+  ModalCloseButton,
+  ModalTitleText,
+  ShareDialog,
+  ShareHeader,
+  ShareTitle,
+  ShareCardPreview,
+  ShareCardThumb,
+  ShareCardInfo,
+  ShareGrid,
+  ShareOptionBtn,
+  CopyBox,
+  LegalDisclaimerCard,
+  LegalDisclaimerTitle,
+  LegalDisclaimerText,
+  LegalLink,
+  SnackbarContainer,
+} from "./PreciosPage.styles";
 
 const NO_IMAGE_PLACEHOLDER =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23f3f4f6'/><g fill='%239ca3af' transform='translate(100, 70)'><rect x='10' y='10' width='80' height='80' rx='8' fill='none' stroke='%239ca3af' stroke-width='4'/><circle cx='35' cy='35' r='8'/><path d='M20 75 L45 45 L60 60 L75 45 L80 75 Z'/></g><text x='150' y='200' font-size='16' font-weight='600' font-family='sans-serif' fill='%236b7280' text-anchor='middle'>Sin Imagen</text></svg>";
-
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-`;
-
-const shimmer = keyframes`
-  0% { background-position: -200px 0; }
-  100% { background-position: calc(200px + 100%) 0; }
-`;
-
-const PageContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: ${props => props.theme.spacing.lg};
-  min-height: 80vh;
-`;
-
-const HeroSection = styled.div`
-  text-align: center;
-  margin-bottom: ${props => props.theme.spacing.lg};
-  padding: ${props => props.theme.spacing.xl} ${props => props.theme.spacing.md};
-  background: ${props => props.theme.gradients.glass};
-  background-color: ${props => props.theme.colors.background.card};
-  border-radius: ${props => props.theme.borderRadius.xl};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  box-shadow: ${props => props.theme.shadows.medium};
-`;
-
-const Title = styled.h1`
-  font-size: 2.5rem;
-  color: ${props => props.theme.colors.text.primary};
-  margin-bottom: ${props => props.theme.spacing.xs};
-  font-weight: ${props => props.theme.typography.fontWeight.bold};
-
-  @media (max-width: 768px) {
-    font-size: 1.8rem;
-  }
-`;
-
-const Subtitle = styled.p`
-  font-size: 1.1rem;
-  color: ${props => props.theme.colors.text.secondary};
-  max-width: 600px;
-  margin: 0 auto;
-`;
-
-const AdminBadgeLink = styled.a`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background-color: ${props => props.theme.colors.primary[50]};
-  color: ${props => props.theme.colors.primary[700]};
-  border-radius: ${props => props.theme.borderRadius.xl};
-  font-size: ${props => props.theme.typography.fontSize.sm};
-  font-weight: ${props => props.theme.typography.fontWeight.semibold};
-  text-decoration: none;
-  border: 1px solid ${props => props.theme.colors.primary[300]};
-  transition: all ${props => props.theme.transitions.normal};
-
-  &:hover {
-    background-color: ${props => props.theme.colors.primary[100]};
-  }
-`;
-
-const ControlsBar = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${props => props.theme.spacing.md};
-  margin-bottom: ${props => props.theme.spacing.xl};
-`;
-
-const TopSearchRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: ${props => props.theme.spacing.md};
-`;
-
-const SearchInput = styled.input`
-  flex: 1;
-  max-width: 450px;
-  min-width: 240px;
-  padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.lg};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  background-color: ${props => props.theme.colors.background.card};
-  color: ${props => props.theme.colors.text.primary};
-  border-radius: 30px;
-  font-size: 0.95rem;
-  outline: none;
-  box-shadow: ${props => props.theme.shadows.light};
-  transition: all ${props => props.theme.transitions.normal};
-
-  &:focus {
-    border-color: ${props => props.theme.colors.primary[500]};
-    box-shadow: ${props => props.theme.effects.glow.primary};
-  }
-`;
-
-const ControlsRight = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-`;
-
-const SelectSort = styled.select`
-  padding: 8px 14px;
-  border-radius: 20px;
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  background-color: ${props => props.theme.colors.background.card};
-  color: ${props => props.theme.colors.text.primary};
-  font-size: 0.875rem;
-  font-weight: 600;
-  outline: none;
-  cursor: pointer;
-
-  &:focus {
-    border-color: ${props => props.theme.colors.primary[500]};
-  }
-`;
-
-const ViewToggleGroup = styled.div`
-  display: flex;
-  background-color: ${props => props.theme.colors.background.secondary};
-  padding: 4px;
-  border-radius: 24px;
-  border: 1px solid ${props => props.theme.colors.border.normal};
-`;
-
-const ViewToggleButton = styled.button<{ $active?: boolean }>`
-  background-color: ${props => (props.$active ? props.theme.colors.primary[500] : "transparent")};
-  color: ${props => (props.$active ? "#ffffff" : props.theme.colors.text.secondary)};
-  border: none;
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-
-  &:hover {
-    color: ${props => (props.$active ? "#ffffff" : props.theme.colors.text.primary)};
-  }
-`;
-
-/* Barra de Filtro de Categorías en Pills (Sin emojis) */
-const CategoryPillsBar = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 6px;
-  scrollbar-width: thin;
-`;
-
-const CategoryPill = styled.button<{ $active?: boolean }>`
-  background-color: ${props =>
-    props.$active ? props.theme.colors.primary[500] : props.theme.colors.background.card};
-  color: ${props => (props.$active ? "#ffffff" : props.theme.colors.text.primary)};
-  border: 1px solid
-    ${props => (props.$active ? props.theme.colors.primary[500] : props.theme.colors.border.normal)};
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-  box-shadow: ${props => (props.$active ? props.theme.shadows.light : "none")};
-
-  &:hover {
-    border-color: ${props => props.theme.colors.primary[500]};
-    color: ${props => (props.$active ? "#ffffff" : props.theme.colors.primary[600])};
-  }
-`;
-
-/* Section Category Header para catálogo agrupado (Texto puro sin emojis) */
-const CategoryGroupSection = styled.div`
-  margin-bottom: ${props => props.theme.spacing.xl};
-`;
-
-const CategoryGroupHeader = styled.h2`
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: ${props => props.theme.colors.text.primary};
-  margin: 0 0 ${props => props.theme.spacing.md} 0;
-  padding-bottom: 8px;
-  border-bottom: 2px solid ${props => props.theme.colors.primary[500]};
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-/* Grid View Styles */
-const ProductsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: ${props => props.theme.spacing.lg};
-  animation: ${fadeIn} 0.3s ease-out;
-`;
-
-const ProductCard = styled.div`
-  background: ${props => props.theme.colors.background.card};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  border-radius: ${props => props.theme.borderRadius.lg};
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: ${props => props.theme.shadows.light};
-  transition: transform ${props => props.theme.transitions.normal}, box-shadow ${props => props.theme.transitions.normal};
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: ${props => props.theme.shadows.medium};
-  }
-`;
-
-/* Skeleton Card Loader */
-const SkeletonCard = styled.div`
-  background: ${props => props.theme.colors.background.card};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  border-radius: ${props => props.theme.borderRadius.lg};
-  height: 380px;
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  gap: 12px;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      90deg,
-      rgba(240, 240, 240, 0) 0%,
-      rgba(230, 230, 230, 0.6) 50%,
-      rgba(240, 240, 240, 0) 100%
-    );
-    background-size: 200px 100%;
-    animation: ${shimmer} 1.5s infinite;
-  }
-`;
-
-const SkeletonBox = styled.div<{ $h: string; $w?: string; $radius?: string }>`
-  height: ${props => props.$h};
-  width: ${props => props.$w || "100%"};
-  border-radius: ${props => props.$radius || "8px"};
-  background-color: ${props => props.theme.colors.background.secondary};
-`;
-
-const ImageContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 220px;
-  background-color: ${props => props.theme.colors.background.secondary};
-  overflow: hidden;
-  border-top-left-radius: ${props => props.theme.borderRadius.lg};
-  border-top-right-radius: ${props => props.theme.borderRadius.lg};
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-`;
-
-const ProductImage = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-
-  ${ImageContainer}:hover & {
-    transform: scale(1.05);
-  }
-`;
-
-const GalleryThumbBar = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background-color: ${props => props.theme.colors.background.secondary};
-  border-bottom: 1px solid ${props => props.theme.colors.border.normal};
-`;
-
-const GalleryThumbBtn = styled.button<{ $active?: boolean }>`
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  overflow: hidden;
-  border: 2px solid ${props => (props.$active ? props.theme.colors.primary[500] : "transparent")};
-  cursor: pointer;
-  padding: 0;
-  background: transparent;
-  opacity: ${props => (props.$active ? 1 : 0.65)};
-  transition: all 0.2s ease;
-
-  &:hover {
-    opacity: 1;
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const ZoomIconButton = styled.button`
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  background-color: rgba(0, 0, 0, 0.65);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-  transition: all 0.2s ease;
-  z-index: 2;
-
-  &:hover {
-    background-color: ${props => props.theme.colors.primary[500]};
-    transform: scale(1.1);
-  }
-`;
-
-const ShareIconButton = styled.button`
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background-color: rgba(0, 0, 0, 0.65);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-  transition: all 0.2s ease;
-  z-index: 2;
-
-  &:hover {
-    background-color: #1890ff;
-    transform: scale(1.1);
-  }
-`;
-
-const ListShareBtn = styled.button`
-  background-color: ${props => props.theme.colors.background.secondary};
-  color: ${props => props.theme.colors.text.primary};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  padding: 8px 12px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: #1890ff;
-    color: #ffffff;
-    border-color: #1890ff;
-  }
-`;
-
-const CardContent = styled.div`
-  padding: ${props => props.theme.spacing.md};
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-`;
-
-const CategoryTagsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 6px;
-`;
-
-const CategoryTag = styled.span`
-  display: inline-block;
-  background-color: ${props => props.theme.colors.primary[50]};
-  color: ${props => props.theme.colors.primary[800]};
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 12px;
-`;
-
-const ProductTitle = styled.h3`
-  font-size: 1.2rem;
-  font-weight: ${props => props.theme.typography.fontWeight.semibold};
-  color: ${props => props.theme.colors.text.primary};
-  margin: 0 0 6px 0;
-`;
-
-const ProductDescription = styled.p`
-  font-size: 0.875rem;
-  color: ${props => props.theme.colors.text.secondary};
-  margin-bottom: ${props => props.theme.spacing.md};
-  line-height: 1.4;
-`;
-
-const VarietiesContainer = styled.div`
-  margin-bottom: ${props => props.theme.spacing.md};
-`;
-
-const VarietiesTitle = styled.span`
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: ${props => props.theme.colors.text.secondary};
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  display: block;
-  margin-bottom: 4px;
-`;
-
-const VarietyBadge = styled.span`
-  display: inline-block;
-  background-color: ${props => props.theme.colors.background.secondary};
-  color: ${props => props.theme.colors.text.primary};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  font-size: 0.75rem;
-  padding: 3px 8px;
-  border-radius: 12px;
-  margin: 2px;
-`;
-
-const PresentationsList = styled.div`
-  margin-top: auto;
-  border-top: 1px solid ${props => props.theme.colors.border.normal};
-  padding-top: ${props => props.theme.spacing.sm};
-`;
-
-const PresentationRowItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 0;
-  border-bottom: 1px dashed ${props => props.theme.colors.border.normal};
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
-const PresentationName = styled.span`
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: ${props => props.theme.colors.text.primary};
-`;
-
-const PresentationPrice = styled.span`
-  font-size: 1.05rem;
-  font-weight: ${props => props.theme.typography.fontWeight.bold};
-  color: ${props => props.theme.colors.primary[500]};
-`;
-
-const ActionRowGrid = styled.div`
-  display: flex;
-  gap: 8px;
-  margin-top: 14px;
-`;
-
-const WhatsAppBtn = styled.a`
-  background-color: #25d366;
-  color: #ffffff;
-  padding: 8px 16px;
-  border-radius: 20px;
-  text-decoration: none;
-  font-size: 0.875rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  flex: 1;
-  transition: background-color 0.2s, transform 0.15s ease;
-
-  &:hover {
-    background-color: #128c7e;
-    transform: translateY(-1px);
-  }
-`;
-
-/* List View / Table Styles con Columna Separada de Categorías */
-const ListViewContainer = styled.div`
-  width: 100%;
-  overflow-x: auto;
-  background: ${props => props.theme.colors.background.card};
-  border-radius: 12px;
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  box-shadow: ${props => props.theme.shadows.medium};
-  margin-bottom: ${props => props.theme.spacing.xl};
-  animation: ${fadeIn} 0.3s ease-out;
-`;
-
-const ListTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 750px;
-`;
-
-const ListTh = styled.th`
-  text-align: left;
-  padding: ${props => props.theme.spacing.md};
-  background-color: ${props => props.theme.colors.background.secondary};
-  border-bottom: 2px solid ${props => props.theme.colors.border.normal};
-  color: ${props => props.theme.colors.text.primary};
-  font-size: ${props => props.theme.typography.fontSize.sm};
-  font-weight: ${props => props.theme.typography.fontWeight.bold};
-`;
-
-const ListTr = styled.tr`
-  transition: background-color ${props => props.theme.transitions.fast};
-
-  &:hover {
-    background-color: ${props => props.theme.colors.background.secondary};
-  }
-`;
-
-const ListTd = styled.td`
-  padding: ${props => props.theme.spacing.md};
-  border-bottom: 1px solid ${props => props.theme.colors.border.normal};
-  color: ${props => props.theme.colors.text.primary};
-  vertical-align: middle;
-  font-size: ${props => props.theme.typography.fontSize.sm};
-`;
-
-/* Componentes de Paginación */
-const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin: 24px 0;
-  padding: 16px;
-  background-color: ${props => props.theme.colors.background.card};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  border-radius: 16px;
-`;
-
-const PaginationControls = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-`;
-
-const PageButton = styled.button<{ $active?: boolean }>`
-  min-width: 36px;
-  height: 36px;
-  padding: 0 10px;
-  border-radius: 18px;
-  border: 1px solid
-    ${props => (props.$active ? props.theme.colors.primary[500] : props.theme.colors.border.normal)};
-  background-color: ${props =>
-    props.$active ? props.theme.colors.primary[500] : props.theme.colors.background.card};
-  color: ${props => (props.$active ? "#ffffff" : props.theme.colors.text.primary)};
-  font-weight: 600;
-  font-size: 0.875rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-
-  &:hover:not(:disabled) {
-    border-color: ${props => props.theme.colors.primary[500]};
-    color: ${props => (props.$active ? "#ffffff" : props.theme.colors.primary[600])};
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-`;
-
-const PageSizeSelect = styled.select`
-  padding: 6px 12px;
-  border-radius: 16px;
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  background-color: ${props => props.theme.colors.background.card};
-  color: ${props => props.theme.colors.text.primary};
-  font-size: 0.85rem;
-  font-weight: 600;
-  outline: none;
-  cursor: pointer;
-`;
-
-const EmptyStateContainer = styled.div`
-  text-align: center;
-  padding: 48px 24px;
-  background-color: ${props => props.theme.colors.background.card};
-  border-radius: 16px;
-  border: 1px dashed ${props => props.theme.colors.border.normal};
-  color: ${props => props.theme.colors.text.secondary};
-`;
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999999;
-  padding: ${props => props.theme.spacing.md};
-  backdrop-filter: blur(6px);
-`;
-
-const ModalContent = styled.div`
-  position: relative;
-  max-width: 90vw;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const ModalImage = styled.img`
-  max-width: 100%;
-  max-height: 80vh;
-  object-fit: contain;
-  border-radius: ${props => props.theme.borderRadius.md};
-  box-shadow: ${props => props.theme.shadows.large};
-`;
-
-const ModalCloseButton = styled.button`
-  position: absolute;
-  top: -40px;
-  right: 0;
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  font-size: 1.8rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ModalTitleText = styled.h3`
-  color: #ffffff;
-  margin-top: ${props => props.theme.spacing.md};
-  font-size: 1.2rem;
-  text-align: center;
-`;
-
-/* Styled Components del Modal de Compartir */
-const ShareDialog = styled.div`
-  background: ${props => props.theme.colors.background.card};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  border-radius: ${props => props.theme.borderRadius.lg};
-  max-width: 520px;
-  width: 100%;
-  padding: 24px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
-  position: relative;
-`;
-
-const ShareHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-`;
-
-const ShareTitle = styled.h3`
-  margin: 0;
-  font-size: 1.2rem;
-  color: ${props => props.theme.colors.text.primary};
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-const ShareCardPreview = styled.div`
-  display: flex;
-  gap: 12px;
-  background-color: ${props => props.theme.colors.background.secondary};
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  margin-bottom: 20px;
-`;
-
-const ShareCardThumb = styled.img`
-  width: 64px;
-  height: 64px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid ${props => props.theme.colors.border.normal};
-`;
-
-const ShareCardInfo = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const ShareGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 10px;
-  margin-bottom: 16px;
-`;
-
-const ShareOptionBtn = styled.a<{ $bg: string; $color?: string }>`
-  background-color: ${props => props.$bg};
-  color: ${props => props.$color || "#ffffff"};
-  padding: 10px 14px;
-  border-radius: 24px;
-  text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: pointer;
-  border: none;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
-    color: ${props => props.$color || "#ffffff"};
-  }
-`;
-
-const CopyBox = styled.div`
-  background-color: ${props => props.theme.colors.background.secondary};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 0.8rem;
-  color: ${props => props.theme.colors.text.secondary};
-  white-space: pre-wrap;
-  max-height: 90px;
-  overflow-y: auto;
-  margin-bottom: 12px;
-`;
-
-const LegalDisclaimerCard = styled.div`
-  margin-top: ${props => props.theme.spacing.xl};
-  padding: ${props => props.theme.spacing.lg};
-  background-color: ${props => props.theme.colors.background.card};
-  border: 1px solid ${props => props.theme.colors.border.normal};
-  border-radius: ${props => props.theme.borderRadius.lg};
-  box-shadow: ${props => props.theme.shadows.small};
-`;
-
-const LegalDisclaimerTitle = styled.h4`
-  font-size: 0.95rem;
-  font-weight: ${props => props.theme.typography.fontWeight.semibold};
-  color: ${props => props.theme.colors.text.primary};
-  margin-bottom: ${props => props.theme.spacing.xs};
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-const LegalDisclaimerText = styled.p`
-  font-size: 0.825rem;
-  color: ${props => props.theme.colors.text.secondary};
-  line-height: 1.6;
-  margin: 0;
-`;
-
-const LegalLink = styled.a`
-  color: ${props => props.theme.colors.primary[500]};
-  text-decoration: underline;
-  margin-left: 4px;
-  font-weight: 500;
-  &:hover {
-    color: ${props => props.theme.colors.primary[700]};
-  }
-`;
-
-const SnackbarContainer = styled.div`
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 999999;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border-radius: 24px;
-  background-color: ${props => props.theme.colors.success[600]};
-  color: #ffffff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-  font-weight: 600;
-  font-size: 0.875rem;
-  animation: ${fadeIn} 0.25s ease-out;
-
-  @media (max-width: 480px) {
-    bottom: 16px;
-    right: 16px;
-    left: 16px;
-    justify-content: space-between;
-  }
-`;
 
 const ProductCardItem: React.FC<{
   product: Product;
   onOpenLightbox: (url: string, title: string) => void;
   onShare: (product: Product) => void;
 }> = ({ product, onOpenLightbox, onShare }) => {
+  const { t } = useTranslation();
   const imagenes = product.imagenes && product.imagenes.length > 0 ? product.imagenes : (product.imagen ? [product.imagen] : []);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
 
@@ -877,7 +116,7 @@ const ProductCardItem: React.FC<{
   const presentaciones =
     product.presentaciones && product.presentaciones.length > 0
       ? product.presentaciones
-      : [{ presentacion: product.presentacion || "Unidad", precio: product.precio ?? 0 }];
+      : [{ presentacion: product.presentacion || t("pages.precios.unitPresentation"), precio: product.precio ?? 0 }];
 
   const prodCategories = product.categorias && product.categorias.length > 0 ? product.categorias : (product.categoria ? [product.categoria] : []);
 
@@ -898,20 +137,9 @@ const ProductCardItem: React.FC<{
             e.currentTarget.src = NO_IMAGE_PLACEHOLDER;
           }}
         />
-        <ShareIconButton
-          type="button"
-          aria-label="Compartir este producto"
-          title="Compartir en redes sociales"
-          onClick={(e) => {
-            e.stopPropagation();
-            onShare(product);
-          }}
-        >
-          <ZnIcon icon={ShareAltOutlined} />
-        </ShareIconButton>
         <ZoomIconButton
           type="button"
-          aria-label="Ver imagen ampliada"
+          title="Ampliar imagen"
           onClick={(e) => {
             e.stopPropagation();
             onOpenLightbox(currentImg, product.titulo);
@@ -919,17 +147,27 @@ const ProductCardItem: React.FC<{
         >
           <ZnIcon icon={ZoomInOutlined} />
         </ZoomIconButton>
+        <ShareIconButton
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onShare(product);
+          }}
+          title="Compartir producto"
+        >
+          <ZnIcon icon={ShareAltOutlined} />
+        </ShareIconButton>
       </ImageContainer>
 
       {imagenes.length > 1 && (
         <GalleryThumbBar>
-          {imagenes.map((img, idx) => (
+          {imagenes.map((imgUrl, idx) => (
             <GalleryThumbBtn
               key={idx}
               $active={idx === activeImgIndex}
               onClick={() => setActiveImgIndex(idx)}
             >
-              <img src={img} alt={`Miniatura ${idx + 1}`} loading="lazy" decoding="async" />
+              <img src={imgUrl} alt={`Miniatura ${idx + 1}`} />
             </GalleryThumbBtn>
           ))}
         </GalleryThumbBar>
@@ -938,18 +176,19 @@ const ProductCardItem: React.FC<{
       <CardContent>
         {prodCategories.length > 0 && (
           <CategoryTagsContainer>
-            {prodCategories.map((c, cIdx) => (
-              <CategoryTag key={cIdx}>{c}</CategoryTag>
+            {prodCategories.map((cat, cIdx) => (
+              <CategoryTag key={cIdx}>{cat}</CategoryTag>
             ))}
           </CategoryTagsContainer>
         )}
+
         <ProductTitle>{product.titulo}</ProductTitle>
         <ProductDescription>{product.descripcion}</ProductDescription>
 
         {product.variedades && product.variedades.length > 0 && (
           <VarietiesContainer>
             <VarietiesTitle>
-              <ZnIcon icon={TagOutlined} /> Variedades disponibles:
+              <ZnIcon icon={TagOutlined} /> {t("pages.precios.availableVarieties")}
             </VarietiesTitle>
             {product.variedades.map((v, vIdx) => (
               <VarietyBadge key={vIdx}>{v}</VarietyBadge>
@@ -968,7 +207,7 @@ const ProductCardItem: React.FC<{
 
         <ActionRowGrid>
           <WhatsAppBtn href={waLink} target="_blank" rel="noopener noreferrer">
-            <ZnIcon icon={WhatsAppOutlined} /> Pedir por WhatsApp
+            <ZnIcon icon={WhatsAppOutlined} /> {t("pages.precios.orderWhatsApp")}
           </WhatsAppBtn>
           <ListShareBtn type="button" onClick={() => onShare(product)} title="Compartir">
             <ZnIcon icon={ShareAltOutlined} />
@@ -980,6 +219,7 @@ const ProductCardItem: React.FC<{
 };
 
 export const PreciosPage: React.FC = () => {
+  const { t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -1205,13 +445,13 @@ export const PreciosPage: React.FC = () => {
       />
 
       <HeroSection>
-        <Title>Lista de Precios Oficial</Title>
+        <Title>{t("pages.precios.badge")}</Title>
         <Subtitle>
-          Pastas frescas artesanales elaboradas día a día con ingredientes seleccionados.
+          {t("pages.precios.heroSubtitle")}
         </Subtitle>
         <div style={{ marginTop: 20 }}>
           <AdminBadgeLink href="/admin/precios">
-            <ZnIcon icon={LockOutlined} /> Administrador
+            <ZnIcon icon={LockOutlined} /> {t("pages.precios.adminBadge")}
           </AdminBadgeLink>
         </div>
       </HeroSection>
@@ -1220,26 +460,26 @@ export const PreciosPage: React.FC = () => {
         <TopSearchRow>
           <SearchInput
             type="text"
-            placeholder="Buscar por nombre, sabor o ingrediente..."
+            placeholder={t("pages.precios.searchPlaceholder")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
 
           <ControlsRight>
             <SelectSort value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-              <option value="orden">Orden Recomendado</option>
-              <option value="precio-asc">Precio: Menor a Mayor</option>
-              <option value="precio-desc">Precio: Mayor a Menor</option>
-              <option value="nombre">Nombre (A-Z)</option>
-              <option value="categoria">Por Categoría</option>
+              <option value="orden">{t("pages.precios.sortDefault")}</option>
+              <option value="precio-asc">{t("pages.precios.sortPriceAsc")}</option>
+              <option value="precio-desc">{t("pages.precios.sortPriceDesc")}</option>
+              <option value="nombre">{t("pages.precios.sortTitleAsc")}</option>
+              <option value="categoria">{t("pages.precios.categoryColumn")}</option>
             </SelectSort>
 
             <ViewToggleGroup>
               <ViewToggleButton $active={viewMode === "cards"} onClick={() => setViewMode("cards")}>
-                <ZnIcon icon={AppstoreOutlined} /> Tarjetas
+                <ZnIcon icon={AppstoreOutlined} /> {t("pages.precios.viewCards")}
               </ViewToggleButton>
               <ViewToggleButton $active={viewMode === "list"} onClick={() => setViewMode("list")}>
-                <ZnIcon icon={UnorderedListOutlined} /> Lista Rápida
+                <ZnIcon icon={UnorderedListOutlined} /> {t("pages.precios.viewList")}
               </ViewToggleButton>
             </ViewToggleGroup>
           </ControlsRight>
@@ -1254,7 +494,7 @@ export const PreciosPage: React.FC = () => {
                 $active={selectedCategory === cat}
                 onClick={() => setSelectedCategory(cat)}
               >
-                {cat === "Todas" ? "Todas las Categorías" : cat}
+                {cat === "Todas" ? t("pages.precios.filterAll") : cat}
               </CategoryPill>
             ))}
           </CategoryPillsBar>
@@ -1319,11 +559,11 @@ export const PreciosPage: React.FC = () => {
           <ListTable>
             <thead>
               <tr>
-                <ListTh style={{ width: "160px" }}>Categoría(s)</ListTh>
-                <ListTh>Producto y Descripción</ListTh>
-                <ListTh>Variedades / Sabores</ListTh>
-                <ListTh>Presentaciones y Precios</ListTh>
-                <ListTh style={{ width: "180px", textAlign: "center" }}>Acción</ListTh>
+                <ListTh style={{ width: "160px" }}>{t("pages.precios.categoryColumn")}</ListTh>
+                <ListTh>{t("pages.precios.productAndDescColumn")}</ListTh>
+                <ListTh>{t("pages.precios.varietiesColumn")}</ListTh>
+                <ListTh>{t("pages.precios.presentationsAndPricesColumn")}</ListTh>
+                <ListTh style={{ width: "180px", textAlign: "center" }}>{t("pages.precios.actionColumn")}</ListTh>
               </tr>
             </thead>
             <tbody>
@@ -1331,7 +571,7 @@ export const PreciosPage: React.FC = () => {
                 const presentaciones =
                   product.presentaciones && product.presentaciones.length > 0
                     ? product.presentaciones
-                    : [{ presentacion: product.presentacion || "Unidad", precio: product.precio ?? 0 }];
+                    : [{ presentacion: product.presentacion || t("pages.precios.unitPresentation"), precio: product.precio ?? 0 }];
 
                 const prodCategories = product.categorias && product.categorias.length > 0 ? product.categorias : (product.categoria ? [product.categoria] : []);
 
@@ -1345,12 +585,12 @@ export const PreciosPage: React.FC = () => {
                     <ListTd>
                       {prodCategories.length > 0 ? (
                         <CategoryTagsContainer>
-                          {prodCategories.map((c, cIdx) => (
+                          {prodCategories.map((c: string, cIdx: number) => (
                             <CategoryTag key={cIdx}>{c}</CategoryTag>
                           ))}
                         </CategoryTagsContainer>
                       ) : (
-                        <small style={{ color: "#999" }}>General</small>
+                        <small style={{ color: "#999" }}>{t("pages.precios.generalCategory")}</small>
                       )}
                     </ListTd>
                     <ListTd>
@@ -1361,13 +601,13 @@ export const PreciosPage: React.FC = () => {
                     </ListTd>
                     <ListTd>
                       {product.variedades && product.variedades.length > 0 ? (
-                        product.variedades.map((v, vIdx) => <VarietyBadge key={vIdx}>{v}</VarietyBadge>)
+                        product.variedades.map((v: string, vIdx: number) => <VarietyBadge key={vIdx}>{v}</VarietyBadge>)
                       ) : (
-                        <small style={{ color: "#888" }}>Tradicional</small>
+                        <small style={{ color: "#888" }}>{t("pages.precios.traditionalVariety")}</small>
                       )}
                     </ListTd>
                     <ListTd>
-                      {presentaciones.map((p, pIdx) => (
+                      {presentaciones.map((p: ProductPresentation, pIdx: number) => (
                         <div key={pIdx} style={{ marginBottom: 4 }}>
                           <strong>{p.presentacion}</strong>: ${p.precio.toLocaleString("es-AR")}*
                         </div>
@@ -1376,7 +616,7 @@ export const PreciosPage: React.FC = () => {
                     <ListTd style={{ textAlign: "center" }}>
                       <div style={{ display: "flex", gap: 6, justifyContent: "center" }}>
                         <WhatsAppBtn href={waLink} target="_blank" rel="noopener noreferrer">
-                          <ZnIcon icon={WhatsAppOutlined} /> Pedir
+                          <ZnIcon icon={WhatsAppOutlined} /> {t("pages.precios.orderBtn")}
                         </WhatsAppBtn>
                         <ListShareBtn
                           type="button"
@@ -1453,10 +693,10 @@ export const PreciosPage: React.FC = () => {
       {/* Tarjeta de Aviso Legal */}
       <LegalDisclaimerCard>
         <LegalDisclaimerTitle>
-          <ZnIcon icon={InfoCircleOutlined} /> * Aviso Legal y Variación de Precios
+          <ZnIcon icon={InfoCircleOutlined} /> {t("pages.precios.legalDisclaimerTitle")}
         </LegalDisclaimerTitle>
         <LegalDisclaimerText>
-          Los precios, presentaciones, promociones y disponibilidad de productos exhibidos en esta lista oficial están sujetos a modificaciones y ajustes sin previo aviso debido a variaciones de costos de insumos y mercado. Fábrica de Pastas Simón y la administración de la plataforma quedan exentas de toda responsabilidad civil, comercial o legal por eventuales errores tipográficos, desactualizaciones temporales o imponderables de stock. Para confirmar valores vigentes, cotizaciones especiales o pedidos mayoristas, consulte vía WhatsApp antes de concretar su compra. Consulte nuestros <LegalLink href="/legal/terms">Términos y Condiciones</LegalLink>.
+          {t("pages.precios.legalDisclaimerText")} Consulte nuestros <LegalLink href="/legal/terms">Términos y Condiciones</LegalLink>.
         </LegalDisclaimerText>
       </LegalDisclaimerCard>
 
@@ -1482,7 +722,7 @@ export const PreciosPage: React.FC = () => {
             <ShareDialog onClick={(e) => e.stopPropagation()}>
               <ShareHeader>
                 <ShareTitle>
-                  <ZnIcon icon={ShareAltOutlined} /> Compartir Producto
+                  <ZnIcon icon={ShareAltOutlined} /> {t("pages.precios.shareTitle")}
                 </ShareTitle>
                 <ModalCloseButton
                   type="button"
@@ -1508,7 +748,7 @@ export const PreciosPage: React.FC = () => {
                 <ShareCardInfo>
                   <strong style={{ fontSize: "1rem" }}>{shareProduct.titulo}</strong>
                   <small style={{ color: "#666" }}>
-                    {shareProduct.presentaciones?.[0]?.presentacion || shareProduct.presentacion || "Unidad"} — $
+                    {shareProduct.presentaciones?.[0]?.presentacion || shareProduct.presentacion || t("pages.precios.unitPresentation")} — $
                     {(shareProduct.presentaciones?.[0]?.precio ?? shareProduct.precio ?? 0).toLocaleString("es-AR")}
                   </small>
                 </ShareCardInfo>
@@ -1522,7 +762,7 @@ export const PreciosPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ZnIcon icon={WhatsAppOutlined} /> WhatsApp
+                  <ZnIcon icon={WhatsAppOutlined} /> {t("pages.precios.shareWhatsApp")}
                 </ShareOptionBtn>
 
                 {/* 2. Facebook */}
@@ -1534,7 +774,7 @@ export const PreciosPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ZnIcon icon={FacebookOutlined} /> Facebook
+                  <ZnIcon icon={FacebookOutlined} /> {t("pages.precios.shareFacebook")}
                 </ShareOptionBtn>
 
                 {/* 3. Threads */}
@@ -1544,7 +784,7 @@ export const PreciosPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ZnIcon icon={SendOutlined} /> Threads
+                  <ZnIcon icon={SendOutlined} /> {t("pages.precios.shareThreads")}
                 </ShareOptionBtn>
 
                 {/* 4. X (Twitter) */}
@@ -1554,7 +794,7 @@ export const PreciosPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ZnIcon icon={TwitterOutlined} /> X (Twitter)
+                  <ZnIcon icon={TwitterOutlined} /> {t("pages.precios.shareTwitter")}
                 </ShareOptionBtn>
 
                 {/* 5. Telegram */}
@@ -1566,19 +806,19 @@ export const PreciosPage: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ZnIcon icon={SendOutlined} /> Telegram
+                  <ZnIcon icon={SendOutlined} /> {t("pages.precios.shareTelegram")}
                 </ShareOptionBtn>
               </ShareGrid>
 
               {/* Botón de Compartir Nativo Mobile (Foto + Texto adjunto) si está disponible */}
-              {typeof navigator !== "undefined" && navigator.share && (
+              {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
                 <div style={{ marginBottom: 12 }}>
                   <ShareOptionBtn
                     $bg="#722ed1"
                     onClick={() => handleNativeShare(shareProduct)}
                     style={{ width: "100%" }}
                   >
-                    <ZnIcon icon={ShareAltOutlined} /> Compartir Foto + Texto en Celular
+                    <ZnIcon icon={ShareAltOutlined} /> {t("pages.precios.shareMobileNative")}
                   </ShareOptionBtn>
                 </div>
               )}
@@ -1597,7 +837,7 @@ export const PreciosPage: React.FC = () => {
                   }
                   style={{ width: "100%" }}
                 >
-                  <ZnIcon icon={DownloadOutlined} /> Descargar Foto del Producto (Para Postear)
+                  <ZnIcon icon={DownloadOutlined} /> {t("pages.precios.shareDownloadImg")}
                 </ShareOptionBtn>
               </div>
 
@@ -1612,7 +852,7 @@ export const PreciosPage: React.FC = () => {
                 onClick={() => handleCopyText(getShareText(shareProduct))}
                 style={{ width: "100%" }}
               >
-                <ZnIcon icon={CopyOutlined} /> Copiar Texto de Ficha
+                <ZnIcon icon={CopyOutlined} /> {t("pages.precios.shareCopyText")}
               </ShareOptionBtn>
             </ShareDialog>
           </ModalOverlay>,

@@ -22,7 +22,7 @@ export const Title = styled.h1`
   font-size: 1.8rem;
   font-weight: 800;
   margin: 0 0 4px;
-  background: ${({ theme }) => theme.gradients?.brand || "linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6)"};
+  background: ${({ theme }) => theme.gradients.brand};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

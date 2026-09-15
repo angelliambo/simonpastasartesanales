@@ -51,9 +51,9 @@ export const StyledForm = styled.form<{
   ${({ accessibility, theme }) =>
     accessibility?.highContrast &&
     css`
-      border: 2px solid ${theme.colors?.border?.normal || "#000"};
-      padding: ${({ theme }) => theme.spacing?.md || "16px"};
-      border-radius: ${({ theme }) => theme.borderRadius?.md || "8px"};
+      border: 2px solid ${theme.colors.border.normal};
+      padding: ${theme.spacing.md};
+      border-radius: ${theme.borderRadius.md};
     `}
 `;
 
@@ -70,11 +70,11 @@ export const FormItemWrapper = styled.div<{
   margin-bottom: ${({ $size }) =>
     SIZE_MAPPING[$size]?.gap || SIZE_MAPPING.md.gap};
 
-  ${({ $layout }) =>
+  ${({ $layout, theme }) =>
     $layout === "horizontal" &&
     css`
       align-items: center;
-      gap: ${({ theme }) => theme.spacing?.md || "16px"};
+      gap: ${theme.spacing.md};
 
       &:last-child {
         margin-bottom: 0;
@@ -92,10 +92,10 @@ export const FormItemWrapper = styled.div<{
   ${({ accessibility, theme }) =>
     accessibility?.highContrast &&
     css`
-      border: 1px solid ${theme.colors?.border?.light || "#e9ecef"};
-      padding: ${({ theme }) => theme.spacing?.sm || "8px"};
-      border-radius: ${({ theme }) => theme.borderRadius?.sm || "4px"};
-      margin-bottom: ${({ theme }) => theme.spacing?.md || "16px"};
+      border: 1px solid ${theme.colors.border.light};
+      padding: ${theme.spacing.sm};
+      border-radius: ${theme.borderRadius.sm};
+      margin-bottom: ${theme.spacing.md};
     `}
 `;
 
@@ -107,14 +107,14 @@ export const FormItemLabel = styled.label<{
 }>`
   display: flex;
   align-items: center;
-  font-size: ${({ $size, accessibility, theme }) => {
+  font-size: ${({ $size, accessibility }) => {
     const baseSize = SIZE_MAPPING[$size]?.fontSize || SIZE_MAPPING.md.fontSize;
     return accessibility?.largeText
       ? `${(Number(baseSize.replace("px", "")) || 16) * 1.25}px`
       : baseSize;
   }};
-  font-weight: ${({ theme }) => theme.typography?.fontWeight?.medium || 500};
-  color: ${({ theme }) => theme.colors?.text?.primary || "#1a1a1a"};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.text.primary};
   margin-bottom: ${({ $layout }) => ($layout === "vertical" ? "8px" : "0")};
   margin-right: ${({ $layout }) => ($layout === "horizontal" ? "8px" : "0")};
   min-width: ${({ $layout }) => ($layout === "horizontal" ? "120px" : "auto")};
@@ -124,7 +124,7 @@ export const FormItemLabel = styled.label<{
     css`
       &::after {
         content: " *";
-        color: ${theme.colors?.error?.[500] || "#dc3545"};
+        color: ${theme.colors.error[500]};
         margin-left: 4px;
       }
     `}
@@ -132,8 +132,8 @@ export const FormItemLabel = styled.label<{
   ${({ accessibility, theme }) =>
     accessibility?.highContrast &&
     css`
-      font-weight: ${theme.typography?.fontWeight?.semibold || 600};
-      color: ${theme.colors?.text?.primary || "#000"};
+      font-weight: ${theme.typography.fontWeight.semibold};
+      color: ${theme.colors.text.primary};
     `}
 `;
 
@@ -145,54 +145,49 @@ export const FormItemContent = styled.div`
 export const FormItemHelp = styled.div<{
   accessibility?: FormProps["accessibility"];
 }>`
-  margin-top: ${({ theme }) => theme.spacing?.xs || "4px"};
+  margin-top: ${({ theme }) => theme.spacing.xs};
   font-size: ${({ theme, accessibility }) =>
     accessibility?.largeText
-      ? `${(Number(theme.typography?.fontSize?.xs) || 12) * 1.25}px`
-      : `${theme.typography?.fontSize?.xs || 12}px`};
-  color: ${({ theme }) => theme.colors?.text?.secondary || "#8c8c8c"};
+      ? `${(Number(theme.typography.fontSize.xs.replace("px", "")) || 12) * 1.25}px`
+      : theme.typography.fontSize.xs};
+  color: ${({ theme }) => theme.colors.text.secondary};
 
   ${({ accessibility, theme }) =>
     accessibility?.highContrast &&
     css`
-      color: ${theme.colors?.text?.primary || "#1a1a1a"};
-      font-weight: ${theme.typography?.fontWeight?.medium || 500};
+      color: ${theme.colors.text.primary};
+      font-weight: ${theme.typography.fontWeight.medium};
     `}
 `;
 
 export const FormItemError = styled.div<{
   accessibility?: FormProps["accessibility"];
 }>`
-  margin-top: ${({ theme }) => theme.spacing?.xs || "4px"};
+  margin-top: ${({ theme }) => theme.spacing.xs};
   font-size: ${({ theme, accessibility }) =>
     accessibility?.largeText
-      ? `${(Number(theme.typography?.fontSize?.xs) || 12) * 1.25}px`
-      : `${theme.typography?.fontSize?.xs || 12}px`};
-  color: ${({ theme }) => theme.colors?.error?.[500] || "#dc3545"};
+      ? `${(Number(theme.typography.fontSize.xs.replace("px", "")) || 12) * 1.25}px`
+      : theme.typography.fontSize.xs};
+  color: ${({ theme }) => theme.colors.error[500]};
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing?.xs || "4px"};
-
-  &::before {
-    content: "⚠";
-    font-size: ${({ theme }) => theme.typography?.fontSize?.sm || "14px"};
-  }
+  gap: ${({ theme }) => theme.spacing.xs};
 
   ${({ accessibility, theme }) =>
     accessibility?.highContrast &&
     css`
-      font-weight: ${theme.typography?.fontWeight?.semibold || 600};
-      color: ${theme.colors?.error?.[600] || "#b02a37"};
+      font-weight: ${theme.typography.fontWeight.semibold};
+      color: ${theme.colors.error[600]};
     `}
 `;
 
 export const FormItemExtra = styled.div<{
   accessibility?: FormProps["accessibility"];
 }>`
-  margin-top: ${({ theme }) => theme.spacing?.xs || "4px"};
+  margin-top: ${({ theme }) => theme.spacing.xs};
   font-size: ${({ theme, accessibility }) =>
     accessibility?.largeText
-      ? `${(Number(theme.typography?.fontSize?.xs) || 12) * 1.25}px`
-      : `${theme.typography?.fontSize?.xs || 12}px`};
-  color: ${({ theme }) => theme.colors?.text?.secondary || "#8c8c8c"};
+      ? `${(Number(theme.typography.fontSize.xs.replace("px", "")) || 12) * 1.25}px`
+      : theme.typography.fontSize.xs};
+  color: ${({ theme }) => theme.colors.text.secondary};
 `;

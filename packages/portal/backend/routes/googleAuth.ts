@@ -117,7 +117,7 @@ router.post("/google", async (req: Request, res: Response) => {
   } catch (error) {
     const msg = error instanceof Error ? error.message : "Error desconocido";
     console.error("[AUTH] google-login ERROR:", msg, error);
-    res.status(500).json({ success: false, error: "[ZN-ERR-API-501]: Fallo de verificación en la cuenta de Google." });
+    res.status(500).json({ success: false, error: "[ERR-API-501]: Fallo de verificación en la cuenta de Google." });
   }
 });
 

@@ -56,7 +56,7 @@ export const StyledRow = styled.div.withConfig({
     // Solo aplicar margin negativo si hay gutter
     if (horizontal > 0 || vertical > 0) {
       return css`
-        @media (max-width: 767px) {
+        @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
           /* En mobile, reducir margin negativo o eliminarlo para evitar overflow */
           margin-left: 0;
           margin-right: 0;
@@ -64,7 +64,7 @@ export const StyledRow = styled.div.withConfig({
           column-gap: ${horizontal}px; /* Usar gap en lugar de margin negativo en mobile */
         }
         
-        @media (min-width: 768px) {
+        @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
           margin-left: -${horizontal / 2}px;
           margin-right: -${horizontal / 2}px;
           row-gap: ${vertical}px;

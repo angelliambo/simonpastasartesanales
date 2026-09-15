@@ -1,7 +1,13 @@
 import React, { useMemo, useState } from "react";
-import styled from "styled-components";
 import Spin from '@design-sys/atoms/Spin';
 import Text from '@design-sys/atoms/Text';
+import {
+  TableWrapper,
+  StyledTable,
+  FooterBar,
+  Pager,
+  PagerButton,
+} from "./Table.styles";
 
 export type ColumnType<RecordType> = {
   title: React.ReactNode;
@@ -40,67 +46,6 @@ export interface TableProps<RecordType = any> {
   /** ID único del componente (opcional) - se concatena con "table-" */
   id?: string;
 }
-
-const TableWrapper = styled.div`
-  width: 100%;
-  overflow: auto;
-  background: ${({ theme }) => theme?.colors?.background?.card || "#fff"};
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-`;
-
-const StyledTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-
-  thead th {
-    text-align: left;
-    padding: 12px 16px;
-    border-bottom: 1px solid
-      ${({ theme }) => theme?.colors?.border?.normal || "#eee"};
-    background: ${({ theme }) =>
-      theme?.colors?.background?.secondary || "#fafafa"};
-    font-weight: 600;
-  }
-
-  tbody td {
-    padding: 12px 16px;
-    border-bottom: 1px solid
-      ${({ theme }) => theme?.colors?.border?.light || "#f2f2f2"};
-    vertical-align: top;
-  }
-
-  tbody tr:hover {
-    background: ${({ theme }) =>
-      theme?.colors?.background?.secondary || "#fafafa"};
-  }
-`;
-
-const FooterBar = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-`;
-
-const Pager = styled.div`
-  display: flex;
-  gap: 8px;
-  align-items: center;
-`;
-
-const PagerButton = styled.button`
-  padding: 6px 10px;
-  border: 1px solid ${({ theme }) => theme?.colors?.border?.normal || "#ddd"};
-  background: ${({ theme }) => theme?.colors?.background?.card || "#fff"};
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-`;
 
 export function Table<RecordType = any>({
   columns,
@@ -157,7 +102,7 @@ export function Table<RecordType = any>({
   return (
     <TableWrapper id={finalId} className={className} style={style}>
       {loading && (
-        <div style={{ padding: 16 }}>
+        <div style={{ padding: "16px" }}>
           <Spin />
         </div>
       )}

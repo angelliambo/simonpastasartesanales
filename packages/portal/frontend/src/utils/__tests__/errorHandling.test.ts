@@ -293,26 +293,26 @@ describe('errorHandling', () => {
   describe('logError', () => {
     it('debe loggear error en desarrollo', () => {
       const originalEnv = process.env.NODE_ENV;
-      process.env.NODE_ENV = 'development';
+      (process.env as any).NODE_ENV = 'development';
       
       const error = { type: ApiErrorType.NETWORK, message: 'Test error' };
       logError(error, 'test-context');
       
       expect(console.error).toHaveBeenCalled();
       
-      process.env.NODE_ENV = originalEnv;
+      (process.env as any).NODE_ENV = originalEnv;
     });
 
     it('debe loggear error en producción con formato reducido', () => {
       const originalEnv = process.env.NODE_ENV;
-      process.env.NODE_ENV = 'production';
+      (process.env as any).NODE_ENV = 'production';
       
       const error = { type: ApiErrorType.NETWORK, message: 'Test error' };
       logError(error, 'test-context');
       
       expect(console.error).toHaveBeenCalled();
       
-      process.env.NODE_ENV = originalEnv;
+      (process.env as any).NODE_ENV = originalEnv;
     });
   });
 

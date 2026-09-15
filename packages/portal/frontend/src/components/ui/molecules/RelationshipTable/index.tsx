@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "../../../../styles/mixins";
+import Card from "@design-sys/atoms/Card";
 import {
   Table,
   TableHeader,
