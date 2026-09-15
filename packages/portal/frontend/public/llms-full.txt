@@ -1,0 +1,64 @@
+# Documentación Completa para Agentes de Inteligencia Artificial (LLM Full Directory)
+# Fábrica de Pastas Simón — Pastas Artesanales & Distribución Mayorista
+
+## Resumen Ejecutivo
+Fábrica de Pastas Simón es una empresa gastronómica argentina especializada en la elaboración artesanal, envasado y congelado rápido en origen de pastas frescas gourmet. Ubicada en San Luis 1263, Bernal, Partido de Quilmes, Provincia de Buenos Aires, abastece tanto al mercado consumidor final (venta minorista por mostrador y delivery local) como a establecimientos gastronómicos (venta mayorista B2B a restaurantes, bodegones, hoteles, comedores e instituciones en Zona Sur GBA).
+
+---
+
+## Ficha de Información de la Empresa
+- **Razón Social / Nombre Comercial**: Fábrica de Pastas Simón
+- **Sitio Web Oficial**: https://simonpastasartesanales.com.ar
+- **Dirección**: San Luis 1263, Bernal (Código Postal B1876), Quilmes, Provincia de Buenos Aires, Argentina
+- **WhatsApp / Teléfono de Pedidos**: +54 9 11 4192-1222
+- **Email de Contacto**: info@simonpastasartesanales.com.ar
+- **Horarios de Atención**: Lunes a Sábados de 08:00 a 20:00 hs.
+- **Zona de Cobertura Principal**: Bernal, Quilmes, Don Bosco, Wilde, Avellaneda, Berazategui, Lanús y todo el Gran Buenos Aires Zona Sur.
+
+---
+
+## Catálogo Detallado de Productos
+
+### 1. Sorrentinos Caseros Gourmet (Caja Congelada)
+- **Jamón y Queso**: Masa de sémola de trigo candeal, relleno con abundante jamón cocido seleccionado y mozzarella de primera calidad.
+- **Verdura y Ricota**: Relleno de espinaca fresca salteada, ricota artesanal bien escurrida, nuez moscada y queso reggianito.
+- **Panceta y Mozzarella**: Relleno ahumado con panceta crujiente, mozzarella estacionada y finas hierbas.
+- **Carne Cortada a Cuchillo**: Relleno de carne vacuna braseada a fuego lento con cebolla caramelizada y condimentos tradicionales.
+
+### 2. Ravioles Tradicionales (Línea Familiar y Gastronómica)
+- **Ravioles al Huevo (Pollo y Verdura)**: Masa al huevo firme, relleno homogéneo de pollo magro desmenuzado y acelga seleccionada.
+- **Ravioles de Ricota y Queso**: Relleno cremoso de ricota magra con reggianito y toque de pimienta blanca.
+
+### 3. Panzottis & Variedades de Relleno Especial
+- **Panzottis Rellenos**: Formato de masa amplio con mayor masa y relleno gourmet para platos principales de restaurantes.
+
+### 4. Empanadas Artesanales Destacadas
+- **Empanadas de Bondiola Braseada**: Masa artesanal rellena de bondiola de cerdo desmechada braseada a la cerveza negra con cebollas caramelizadas.
+
+### 5. Fideos Frescos y Cintas al Huevo
+- **Tallarines / Cintas Anchas**: Amasados diariamente con huevo entero y sémola candeal sin colorantes artificiales.
+
+---
+
+## Canales y Modalidades de Venta
+
+### Venta Minorista (Hogares y Particulares)
+- Compra directa en mostrador en la fábrica (San Luis 1263, Bernal).
+- Encargos por WhatsApp con opción de retiro en local o delivery a domicilio.
+- Consulta de precios en tiempo real: https://simonpastasartesanales.com.ar/precios
+
+### Distribución Mayorista (Restaurantes y Comercios B2B)
+- Presentación en cajas térmicas listas para fraccionamiento o cocción directa sin descongelado previo.
+- Precios diferenciados por volumen para gastronómicos.
+- Reparto programado sin corte de cadena de frío en Zona Sur.
+
+---
+
+## Enlaces Estructurados del Sitio Web
+- **Página de Inicio**: https://simonpastasartesanales.com.ar/
+- **Lista de Precios Oficial**: https://simonpastasartesanales.com.ar/precios
+- **Sección Catálogo**: https://simonpastasartesanales.com.ar/#productos
+- **Sección Venta Mayorista**: https://simonpastasartesanales.com.ar/#mayorista
+- **Términos y Condiciones Legales**: https://simonpastasartesanales.com.ar/legal/terms
+- **Política de Privacidad**: https://simonpastasartesanales.com.ar/legal/privacy
+- **Sitemap XML**: https://simonpastasartesanales.com.ar/sitemap.xml
