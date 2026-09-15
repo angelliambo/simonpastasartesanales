@@ -11,7 +11,7 @@
     "test:coverage": "jest --coverage",
     "build": "tsc",
     "dev": "nodemon --watch './**/*.ts' --exec tsx -r dotenv/config ./server.ts",
-    "start": "node dist/server.js",
+    "start": "cross-env NODE_ENV=production npx tsx dist/server.js",
     "seed": "tsx -r dotenv/config ./seeder/seeder.ts",
     "seed:products": "npx tsx ./seeder/seedProducts.ts",
     "gp": "node ../../../scripts/gp.js"
@@ -41,6 +41,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/multer": "^2.2.0",
     "@types/node": "^24.5.2",
+    "cross-env": "^10.1.0",
     "jest": "^29.7.0",
     "nodemon": "^3.0.1",
     "supertest": "^7.1.4",
