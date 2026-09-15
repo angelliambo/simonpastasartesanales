@@ -20,7 +20,7 @@ if (!existsSync(TEMPLATES_DIR)) {
 // 1. Procesar index.html
 const processIndexHtml = () => {
   const templatePath = join(TEMPLATES_DIR, "index.html");
-  const outputPath = join(PUBLIC_DIR, "index.html");
+  const outputPath = join(__dirname, "../index.html");
 
   if (!existsSync(templatePath)) {
     console.error(`⚠️ [SEO-UPDATE] No se encontró la plantilla para index.html`);
