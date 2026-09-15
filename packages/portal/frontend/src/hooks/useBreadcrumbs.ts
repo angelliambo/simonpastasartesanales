@@ -132,7 +132,7 @@ export const usePageSEO = () => {
       description,
       keywords,
       canonicalUrl: `${window.location.origin}${location.pathname}`,
-      ogImage: `/og-image.png`,
+      ogImage: `/og-image.webp`,
     };
   }, [location.pathname, currentPage, t]);
 

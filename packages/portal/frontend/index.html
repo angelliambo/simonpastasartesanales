@@ -23,9 +23,9 @@
   <meta property="og:url" content="https://simonpastasartesanales.com.ar/" />
   <meta property="og:title" content="Fábrica de Pastas Simón | Pastas Artesanales, Sorrentinos & Venta Mayorista" />
   <meta property="og:description" content="Fábrica de pastas frescas congeladas en Bernal y Quilmes. Sorrentinos artesanales, ravioles caseros, ñoquis del 29, fideos al huevo y empanadas. Venta minorista, delivery y distribución al por mayor para restaurantes en Zona Sur." />
-  <meta property="og:image" content="https://simonpastasartesanales.com.ar/og-image.jpg" />
-  <meta property="og:image:secure_url" content="https://simonpastasartesanales.com.ar/og-image.jpg" />
-  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image" content="https://simonpastasartesanales.com.ar/og-image.webp" />
+  <meta property="og:image:secure_url" content="https://simonpastasartesanales.com.ar/og-image.webp" />
+  <meta property="og:image:type" content="image/webp" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Fábrica de Pastas Simón — Pastas Artesanales" />
@@ -36,23 +36,23 @@
   <meta property="twitter:url" content="https://simonpastasartesanales.com.ar/" />
   <meta property="twitter:title" content="Fábrica de Pastas Simón | Pastas Artesanales, Sorrentinos & Venta Mayorista" />
   <meta property="twitter:description" content="Fábrica de pastas frescas congeladas en Bernal y Quilmes. Sorrentinos artesanales, ravioles caseros, ñoquis del 29, fideos al huevo y empanadas. Venta minorista, delivery y distribución al por mayor para restaurantes en Zona Sur." />
-  <meta property="twitter:image" content="https://simonpastasartesanales.com.ar/og-image.jpg" />
+  <meta property="twitter:image" content="https://simonpastasartesanales.com.ar/og-image.webp" />
   <meta property="twitter:image:alt" content="Fábrica de Pastas Simón — Pastas Artesanales" />
   <meta property="twitter:site" content="@simonpastas" />
   <meta property="twitter:creator" content="@simonpastas" />
 
   <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.webp">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="apple-touch-icon" href="/logo192.png" />
+  <link rel="apple-touch-icon" href="/logo192.webp" />
   <link rel="manifest" href="/manifest.json" />
 
-  <!-- Preconnect para mejorar performance (conectar temprano a recursos externos) -->
+  <!-- Preconnect para mejorar performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Fuentes optimizadas: carga diferida con font-display swap para evitar render blocking -->
+  <!-- Fuentes optimizadas: carga diferida con font-display swap -->
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap"
     rel="stylesheet" media="print" onload="this.media='all'">
@@ -62,8 +62,9 @@
       rel="stylesheet">
   </noscript>
 
-  <!-- og-image - LCP candidate en mobile, preload condicional con media query -->
-  <link rel="preload" href="/og-image.jpg" as="image" fetchpriority="high" media="(max-width: 768px)">
+  <!-- High-priority WebP LCP preloads -->
+  <link rel="preload" href="/logo.webp" as="image" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="/og-image.webp" as="image" type="image/webp" fetchpriority="high" media="(max-width: 768px)">
 
   <!-- DNS prefetch para recursos externos (mejora conexión temprana) -->
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">

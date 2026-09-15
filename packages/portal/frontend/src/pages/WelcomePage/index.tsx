@@ -124,7 +124,7 @@ export const WelcomePage: React.FC = () => {
       <WelcomeContainer>
         <WelcomeCard variant="elevated">
           <WelcomeHeader>
-            <Logo src={`${process.env.PUBLIC_URL}/assets/images/logo.png?v=${BRAND_CONFIG.assetVersion}`} alt={BRAND_CONFIG.siteName} />
+            <Logo src={BRAND_CONFIG.logoUrl} alt={BRAND_CONFIG.siteName} width={180} height={180} loading="eager" decoding="async" />
             <Title>{BRAND_CONFIG.siteName}</Title>
             <Subtitle>{t("pages.brandSlogan.slogan") || "Comunicación en su punto máximo."}</Subtitle>
           </WelcomeHeader>

@@ -336,8 +336,12 @@ const HomePage: React.FC = () => {
         <HeroContent>
           <LogoWrapper>
             <Logo
-              src={BRAND_CONFIG.logoUrl || `${process.env.PUBLIC_URL}/assets/images/logo.png`}
+              src={BRAND_CONFIG.logoUrl}
               alt={BRAND_CONFIG.siteName}
+              width={240}
+              height={240}
+              loading="eager"
+              decoding="async"
             />
           </LogoWrapper>
           <HeroSubtitle>

@@ -51,6 +51,8 @@
     "start": "vite --port 3000",
     "dev": "vite --port 3000",
     "build": "vite build && npx tsx scripts/prerender.ts",
+    "audit:pagespeed": "node ../../../scripts/audit-pagespeed.js",
+    "audit:sitemap": "npx tsx ../../../scripts/audit-sitemap-urls.ts",
     "preview": "vite preview",
     "analyze": "ANALYZE=true vite build",
     "test": "jest --watch=false --runInBand",

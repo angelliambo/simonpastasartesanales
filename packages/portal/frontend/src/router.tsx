@@ -17,16 +17,24 @@ import { FEATURES } from "@factory/shared/config/features";
 import { userProfileQueryOptions } from "./services/api/userService";
 import { useAuth } from "./contexts/AuthContext";
 
-// Lazy loading de páginas
-const HomePage = lazy(() => import("./pages/HomePage"));
-const DashboardPage = lazy(() => import("./pages/DashboardPage"));
-const SupportPage = lazy(() => import("./pages/SupportPage"));
+import HomePage from "./pages/HomePage";
+
+// Secondary page chunk functions for idle preloading
+const loadPreciosPage = () => import("./pages/PreciosPage");
+const loadSupportPage = () => import("./pages/SupportPage");
+const loadDashboardPage = () => import("./pages/DashboardPage");
+const loadTermsPage = () => import("./pages/legal/TermsAndConditionsPage");
+const loadPrivacyPage = () => import("./pages/legal/PrivacyPolicyPage");
+
+// Lazy loading de páginas secundarias
+const DashboardPage = lazy(loadDashboardPage);
+const SupportPage = lazy(loadSupportPage);
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
-const TermsAndConditionsPage = lazy(() => import("./pages/legal/TermsAndConditionsPage"));
-const PrivacyPolicyPage = lazy(() => import("./pages/legal/PrivacyPolicyPage"));
+const TermsAndConditionsPage = lazy(loadTermsPage);
+const PrivacyPolicyPage = lazy(loadPrivacyPage);
 const WelcomePage = lazy(() => import("./pages/WelcomePage"));
-const PreciosPage = lazy(() => import("./pages/PreciosPage"));
+const PreciosPage = lazy(loadPreciosPage);
 const AdminPreciosPage = lazy(() => import("./pages/AdminPreciosPage"));
 
 export interface RouterContext {
@@ -241,6 +249,27 @@ declare module "@tanstack/react-router" {
 
 export const AppRouter: React.FC = () => {
   const auth = useAuth();
+
+  React.useEffect(() => {
+    const preloadSecondaryRoutes = () => {
+      loadPreciosPage();
+      loadSupportPage();
+      loadDashboardPage();
+      loadTermsPage();
+      loadPrivacyPage();
+    };
+
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(() => preloadSecondaryRoutes(), {
+        timeout: 4000,
+      });
+      return () => window.cancelIdleCallback(idleId);
+    } else {
+      const timer = setTimeout(preloadSecondaryRoutes, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   return <RouterProvider router={router} context={{ queryClient, auth }} />;
 };
 

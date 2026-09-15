@@ -72,7 +72,7 @@ export async function serveReactWithSEO(req: Request, res: Response, next: NextF
 
     // Construir la URL absoluta para la imagen por defecto
     const protocol = req.secure || req.headers["x-forwarded-proto"] === "https" ? "https" : "http";
-    const defaultOgImage = `${protocol}://${host}/og-image.png?v=${BRAND_CONFIG.assetVersion}`;
+    const defaultOgImage = `${protocol}://${host}/og-image.webp?v=${BRAND_CONFIG.assetVersion}`;
 
     // Resolver valores SEO
     const seoTitle = tenant?.seo?.title || BRAND_CONFIG.seoTitle;

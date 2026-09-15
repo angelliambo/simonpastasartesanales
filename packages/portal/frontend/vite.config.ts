@@ -61,6 +61,12 @@ export default defineConfig(({ mode }) => {
             if (id.includes('node_modules/@reduxjs/') || id.includes('node_modules/react-redux/')) {
               return 'vendor-redux';
             }
+            if (id.includes('shared/src/i18n/locales/es-ES/') || id.includes('shared/src/i18n/locales/es/')) {
+              return 'i18n-es';
+            }
+            if (id.includes('shared/src/i18n/locales/en-US/') || id.includes('shared/src/i18n/locales/en/')) {
+              return 'i18n-en';
+            }
           },
         },
       },

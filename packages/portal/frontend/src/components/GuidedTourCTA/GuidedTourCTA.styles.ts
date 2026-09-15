@@ -39,21 +39,21 @@ export const FloatingTourButton = styled.button<{ $isActive?: boolean }>`
   gap: ${({ theme }) => theme.spacing?.sm || "10px"};
   padding: ${({ theme }) => theme.spacing?.xs || "8px"} ${({ theme }) => theme.spacing?.md || "16px"};
   background: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors?.primary?.[500] || "#2D323B" : theme.colors?.background?.surface || "#1E232A"};
-  color: #FFFFFF;
-  border: 1px solid ${({ theme }) => theme.colors?.border?.light || "rgba(255, 255, 255, 0.22)"};
+    $isActive ? theme.colors?.primary?.[500] || "#ea580c" : theme.colors?.background?.surface || "#FFFFFF"};
+  color: ${({ $isActive, theme }) => ($isActive ? "#FFFFFF" : theme.colors?.text?.primary || "#111827")};
+  border: 1px solid ${({ theme }) => theme.colors?.border?.light || "rgba(0, 0, 0, 0.12)"};
   border-radius: ${({ theme }) => theme.borderRadius?.xl || "30px"};
   font-weight: 600;
   font-size: ${({ theme }) => theme.typography?.fontSize?.sm || "0.88rem"};
   cursor: pointer;
-  box-shadow: ${({ theme }) => theme.shadows?.medium || "0 6px 20px rgba(0, 0, 0, 0.35)"};
+  box-shadow: ${({ theme }) => theme.shadows?.medium || "0 6px 20px rgba(0, 0, 0, 0.15)"};
   backdrop-filter: blur(12px);
   transition: all ${({ theme }) => theme.transitions?.normal || "0.3s ease"};
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${({ theme }) => theme.shadows?.heavy || "0 8px 24px rgba(0, 0, 0, 0.45)"};
-    border-color: rgba(229, 9, 20, 0.6);
+    box-shadow: ${({ theme }) => theme.shadows?.heavy || "0 8px 24px rgba(0, 0, 0, 0.2)"};
+    border-color: #ea580c;
   }
 
   &:active {
@@ -66,7 +66,7 @@ export const TourIconWrapper = styled.div`
   align-items: center;
   justify-content: center;
   font-size: ${({ theme }) => theme.typography?.fontSize?.md || "1.15rem"};
-  color: #E50914;
+  color: #ea580c;
   flex-shrink: 0;
   min-width: 20px;
 `;
@@ -74,7 +74,7 @@ export const TourIconWrapper = styled.div`
 export const TourBadgeLabel = styled.span`
   letter-spacing: 0.2px;
   white-space: nowrap;
-  color: #FFFFFF;
+  color: inherit;
 `;
 
 export const AudioWavesContainer = styled.div`
