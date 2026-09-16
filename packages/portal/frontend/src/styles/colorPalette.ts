@@ -74,8 +74,8 @@ export const colorPalette = {
   // Colores de texto
   text: {
     primary: "#1f2937", // Gris muy oscuro
-    secondary: "#6b7280", // Gris medio
-    tertiary: "#9ca3af", // Gris claro
+    secondary: "#4b5563", // Gris medio oscuro (cumple contraste WCAG AA)
+    tertiary: "#4b5563", // Gris suficiente contraste (cumple contraste WCAG AA)
     inverse: "#ffffff", // Blanco
     accent: "#14b8a6", // Cyan principal
   },
