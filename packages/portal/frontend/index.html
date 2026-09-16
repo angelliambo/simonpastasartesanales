@@ -51,8 +51,10 @@
   <!-- Preconnect & Font Preloading para eliminar CLS (Font Swap Layout Shift) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" as="font" type="font/woff2" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=optional" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=optional" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=optional" rel="stylesheet">
+  </noscript>
 
   <!-- LLM Agent Knowledge Directory & RSS Feed -->
   <link rel="alternate" type="text/plain" title="LLM Directory" href="/llms.txt" />
@@ -70,15 +72,17 @@
 
   <title>Fábrica de Pastas Simón | Pastas Artesanales, Sorrentinos & Venta Mayorista</title>
 
-  <!-- DESHABILITAR SERVICE WORKER TEMPORALMENTE -->
+  <!-- DESHABILITAR SERVICE WORKER TEMPORALMENTE (Diferido para no bloquear hilo principal) -->
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function (registrations) {
-        for (let registration of registrations) {
-          registration.unregister();
-        }
-      });
-    }
+    window.addEventListener('load', function () {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function (registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+    });
   </script>
 
   <!-- APLICAR TEMA ANTES DE QUE REACT SE MONTE - EVITA PARPADEO -->

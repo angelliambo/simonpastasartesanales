@@ -45,6 +45,10 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: 'dist',
       emptyOutDir: true,
+      target: 'es2020',
+      cssTarget: 'es2020',
+      minify: 'esbuild',
+      cssMinify: true,
       sourcemap: mode === 'development',
       rollupOptions: {
         output: {

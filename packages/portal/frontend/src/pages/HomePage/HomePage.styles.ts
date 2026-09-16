@@ -177,9 +177,10 @@ const gradientBtnMixin = css`
     content: "";
     position: absolute;
     top: 0;
-    left: -100%;
+    left: 0;
     width: 100%;
     height: 100%;
+    transform: translateX(-100%);
     background: linear-gradient(
       90deg,
       transparent,
@@ -202,10 +203,10 @@ const gradientBtnMixin = css`
 
   @keyframes shimmer {
     from {
-      left: -100%;
+      transform: translateX(-100%);
     }
     to {
-      left: 100%;
+      transform: translateX(100%);
     }
   }
 `;
