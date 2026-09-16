@@ -167,7 +167,7 @@ const ProductCardItem: React.FC<{
               $active={idx === activeImgIndex}
               onClick={() => setActiveImgIndex(idx)}
             >
-              <img src={imgUrl} alt={`Miniatura ${idx + 1}`} />
+              <img src={imgUrl} alt="" role="presentation" />
             </GalleryThumbBtn>
           ))}
         </GalleryThumbBar>

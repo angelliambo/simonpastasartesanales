@@ -337,7 +337,7 @@ const HomePage: React.FC = () => {
           <LogoWrapper>
             <Logo
               src={BRAND_CONFIG.logoUrl}
-              alt={BRAND_CONFIG.siteName}
+              alt={`Logo ${BRAND_CONFIG.siteName}`}
               width={240}
               height={240}
               loading="eager"

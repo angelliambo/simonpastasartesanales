@@ -146,7 +146,7 @@ export const Row = memo<RowProps>(({
         ...getAccessibilityStyles(),
         ...style,
       }}
-      role={role || "row"}
+      role={role}
       aria-label={ariaLabel}
       
       // 🎯 STYLED PROPS USANDO SHARED SYSTEMS

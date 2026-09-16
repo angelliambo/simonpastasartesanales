@@ -101,7 +101,7 @@ const lightTheme = {
     text: {
       primary: '#171717',
       secondary: '#525252',
-      tertiary: '#737373',
+      tertiary: '#525252',
       inverse: '#fafafa',
     },
     border: {

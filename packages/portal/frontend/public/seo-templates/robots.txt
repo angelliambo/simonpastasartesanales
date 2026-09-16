@@ -24,15 +24,15 @@ Disallow: /login
 Disallow: /api/
 
 # 2. Rastreadores de Modelos de Lenguaje (LLM / IA)
-User-agent: GPTBot              # OpenAI
-User-agent: ChatGPT-User        # ChatGPT Navegación
-User-agent: ClaudeBot           # Anthropic Claude
-User-agent: Claude-Web          # Claude interactivo
-User-agent: PerplexityBot       # Perplexity AI
-User-agent: Applebot-Extended   # Apple Intelligence
-User-agent: Google-Extended     # Google Gemini
-User-agent: Meta-ExternalAgent  # Meta AI
-User-agent: cohere-ai           # Cohere
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: PerplexityBot
+User-agent: Applebot-Extended
+User-agent: Google-Extended
+User-agent: Meta-ExternalAgent
+User-agent: cohere-ai
 Allow: /
 Allow: /assets/
 Disallow: /admin/
