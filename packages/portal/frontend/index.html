@@ -167,56 +167,18 @@
 <body>
   <noscript>Necesitas habilitar JavaScript para ejecutar esta aplicación.</noscript>
   <div id="root">
-    <div style="display: none;">
-      <h1>Fábrica de Pastas Simón - Pastas Artesanales & Venta Mayorista</h1>
-      <h2>Fábrica de pastas frescas congeladas en Bernal y Quilmes. Sorrentinos artesanales, ravioles caseros, ñoquis del 29 y fideos al huevo.</h2>
-      <p>
-        Fábrica de Pastas Simón elabora las mejores pastas frescas y congeladas en Bernal y Quilmes. Especialistas en sorrentinos de jamón y queso,
-        carne cortada a cuchillo, verdura y pollo, ravioles, ñoquis y fideos caseros al huevo. Venta minorista y atención mayorista a restaurantes.
+    <header style="padding: 32px 16px; text-align: center; max-width: 800px; margin: 0 auto; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+      <img src="/assets/images/logo.webp" alt="Logo Fábrica de Pastas Simón" width="180" height="180" style="margin: 0 auto 16px; display: block; height: auto;" fetchpriority="high" />
+      <h1 style="font-size: 2rem; font-weight: 800; color: #ea580c; margin-bottom: 12px; line-height: 1.2;">Fábrica de Pastas Simón — Pastas Artesanales & Venta Mayorista</h1>
+      <h2 style="font-size: 1.15rem; font-weight: 600; color: #374151; margin-bottom: 16px; line-height: 1.4;">Fábrica de pastas frescas congeladas en Bernal y Quilmes. Sorrentinos artesanales, ravioles caseros, ñoquis del 29 y fideos al huevo.</h2>
+      <p style="font-size: 0.95rem; color: #4b5563; max-width: 680px; margin: 0 auto 24px; line-height: 1.5;">
+        Elaboración de las mejores pastas frescas y congeladas en Bernal y Quilmes. Especialistas en sorrentinos de jamón y queso, carne cortada a cuchillo, verdura y pollo, ravioles, ñoquis y fideos caseros. Venta minorista y atención mayorista a restaurantes.
       </p>
-
-      <h3>¿Por qué elegir Fábrica de Pastas Simón?</h3>
-      <ul>
-        <li><strong>Calidad Artesanal:</strong> Elaborado con ingredientes seleccionados y recetas familiares.</li>
-        <li><strong>Amplia Variedad:</strong> Sorrentinos, ravioles, ñoquis, fideos y tapas de empanadas.</li>
-        <li><strong>Venta Mayorista y Minorista:</strong> Distribución directa a restaurantes y hogares en Zona Sur.</li>
-      </ul>
-    </div>
-
-    <div
-      style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: fixed; inset: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; transition: background-color 0.2s;">
-      <div
-        style="width: 48px; height: 48px; border: 4px solid rgba(249, 115, 22, 0.15); border-top: 4px solid #f97316; border-radius: 50%; animation: portal-spin 1s linear infinite; margin-bottom: 24px;">
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <span style="display: inline-block; padding: 12px 24px; background-color: #ea580c; color: #ffffff; font-weight: 700; border-radius: 8px; font-size: 0.95rem;">Contactar por WhatsApp</span>
+        <span style="display: inline-block; padding: 12px 24px; background-color: #f3f4f6; color: #1f2937; font-weight: 700; border-radius: 8px; font-size: 0.95rem; border: 1px solid #e5e7eb;">Ver Lista de Precios</span>
       </div>
-      <div style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: #f97316;" id="portal-loader-logo">Fábrica de Pastas Simón</div>
-      <div style="font-size: 13px; color: #9ca3af; margin-top: 8px;" id="portal-loader-text">Cargando aplicación...
-      </div>
-    </div>
-    <script>
-      (function () {
-        const theme = document.documentElement.getAttribute('data-theme') || 'light';
-        const logoEl = document.getElementById('portal-loader-logo');
-        const textEl = document.getElementById('portal-loader-text');
-        if (theme === 'dark') {
-          if (logoEl) logoEl.style.color = '#fb923c';
-          if (textEl) textEl.style.color = '#9ca3af';
-        } else {
-          if (logoEl) logoEl.style.color = '#ea580c';
-          if (textEl) textEl.style.color = '#4b5563';
-        }
-      })();
-    </script>
-    <style>
-      @keyframes portal-spin {
-        0% {
-          transform: rotate(0deg);
-        }
-
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    </style>
+    </header>
   </div>
   <script type="module" src="/src/index.tsx"></script>
 </body>
