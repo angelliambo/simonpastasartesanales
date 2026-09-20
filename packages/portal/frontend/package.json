@@ -1,6 +1,6 @@
 {
   "name": "@factory/frontend",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "proxy": "http://localhost:5000",
   "private": true,
   "dependencies": {

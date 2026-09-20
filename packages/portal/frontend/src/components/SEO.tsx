@@ -55,181 +55,158 @@ const SEO: React.FC<SEOProps> = ({
     : `${finalTitle} | ${BRAND_CONFIG.siteName}`;
 
   const rawPath = typeof window !== "undefined" ? window.location.pathname : "";
-  const normalizedPath = rawPath && !rawPath.endsWith('/') && !rawPath.includes('.') ? `${rawPath}/` : rawPath;
+  const cleanPath = rawPath && rawPath !== "/" ? rawPath.replace(/\/+$/, "") : rawPath;
   const currentUrl =
-    canonicalUrl || (typeof window !== "undefined" ? `${window.location.origin}${normalizedPath}` : "");
+    canonicalUrl || (typeof window !== "undefined" ? `${window.location.origin}${cleanPath}` : "");
 
   const absoluteOgImage = ogImage.startsWith('http')
     ? ogImage
     : (typeof window !== 'undefined' ? `${window.location.origin}${ogImage}` : ogImage);
 
+  const isLegalPage = cleanPath.includes('/legal') || cleanPath.includes('/terms') || cleanPath.includes('/privacy');
+
+  const graphItems: any[] = [
+    {
+      "@type": ["FoodEstablishment", "LocalBusiness", "WholesaleStore"],
+      "@id": "https://simonpastasartesanales.com.ar/#business",
+      "name": BRAND_CONFIG.siteName,
+      "description": finalDescription,
+      "url": "https://simonpastasartesanales.com.ar",
+      "telephone": "+541141921222",
+      "email": BRAND_CONFIG.supportEmail,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "San Luis 1263",
+        "addressLocality": "Bernal",
+        "addressRegion": "Buenos Aires",
+        "postalCode": "B1876",
+        "addressCountry": "AR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -34.7083,
+        "longitude": -58.2833
+      },
+      "areaServed": [
+        { "@type": "AdministrativeArea", "name": "Bernal" },
+        { "@type": "AdministrativeArea", "name": "Quilmes" },
+        { "@type": "AdministrativeArea", "name": "Avellaneda" },
+        { "@type": "AdministrativeArea", "name": "Wilde" },
+        { "@type": "AdministrativeArea", "name": "Don Bosco" },
+        { "@type": "AdministrativeArea", "name": "Ezpeleta" },
+        { "@type": "AdministrativeArea", "name": "Berazategui" },
+        { "@type": "AdministrativeArea", "name": "Zona Sur" }
+      ],
+      "servesCuisine": ["Pastas Artesanales", "Sorrentinos", "Ravioles", "Panzottis", "Ñoquis del 29", "Fideos Frescos", "Empanadas Gourmet"],
+      "priceRange": "$$",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "128",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "08:00",
+          "closes": "19:00"
+        }
+      ],
+      "image": absoluteOgImage
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://simonpastasartesanales.com.ar/#website",
+      "url": "https://simonpastasartesanales.com.ar",
+      "name": BRAND_CONFIG.siteName,
+      "description": "Fábrica de Pastas Artesanales Congeladas en Caja | Venta Minorista y Mayorista en Bernal y Zona Sur",
+      "inLanguage": ["es"]
+    }
+  ];
+
+  if (!isLegalPage) {
+    graphItems.push({
+      "@type": "ItemList",
+      "@id": "https://simonpastasartesanales.com.ar/#product-list",
+      "name": "Catálogo Oficial de Pastas Artesanales & Sorrentinos",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Product",
+            "name": "Sorrentinos de Jamón y Queso",
+            "description": "Masa artesanal al huevo rellena con jamón cocido seleccionado y queso mozzarella cremoso. Presentación en caja de 12 unidades.",
+            "image": "https://simonpastasartesanales.com.ar/logo.webp",
+            "offers": {
+              "@type": "Offer",
+              "priceCurrency": "ARS",
+              "price": "4800",
+              "availability": "https://schema.org/InStock",
+              "url": "https://simonpastasartesanales.com.ar/productos"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Product",
+            "name": "Ravioles de Espinaca y Ricota",
+            "description": "Ravioles caseros con espinaca fresca salteada y ricota magra de primera calidad. Presentación en caja de 48 unidades.",
+            "image": "https://simonpastasartesanales.com.ar/logo.webp",
+            "offers": {
+              "@type": "Offer",
+              "priceCurrency": "ARS",
+              "price": "4500",
+              "availability": "https://schema.org/InStock",
+              "url": "https://simonpastasartesanales.com.ar/productos"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Product",
+            "name": "Tallarines al Huevo",
+            "description": "Pastas frescas al huevo cortadas en cinta mediana, elaboradas con sémola de trigo candeal. Bolsa de 500g.",
+            "image": "https://simonpastasartesanales.com.ar/logo.webp",
+            "offers": {
+              "@type": "Offer",
+              "priceCurrency": "ARS",
+              "price": "3200",
+              "availability": "https://schema.org/InStock",
+              "url": "https://simonpastasartesanales.com.ar/productos"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "Product",
+            "name": "Ñoquis de Papa Artesanales del 29",
+            "description": "Ñoquis suaves elaborados con papa natural seleccionada y harina de trigo. Bolsa de 1 kg.",
+            "image": "https://simonpastasartesanales.com.ar/logo.webp",
+            "offers": {
+              "@type": "Offer",
+              "priceCurrency": "ARS",
+              "price": "4200",
+              "availability": "https://schema.org/InStock",
+              "url": "https://simonpastasartesanales.com.ar/productos"
+            }
+          }
+        }
+      ]
+    });
+  }
+
   const defaultStructuredData = {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": ["FoodEstablishment", "LocalBusiness", "WholesaleStore"],
-        "@id": "https://simonpastasartesanales.com.ar/#business",
-        "name": BRAND_CONFIG.siteName,
-        "description": finalDescription,
-        "url": "https://simonpastasartesanales.com.ar/",
-        "telephone": "+541141921222",
-        "email": BRAND_CONFIG.supportEmail,
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "San Luis 1263",
-          "addressLocality": "Bernal",
-          "addressRegion": "Buenos Aires",
-          "postalCode": "B1876",
-          "addressCountry": "AR"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": -34.7083,
-          "longitude": -58.2833
-        },
-        "areaServed": [
-          { "@type": "AdministrativeArea", "name": "Bernal" },
-          { "@type": "AdministrativeArea", "name": "Quilmes" },
-          { "@type": "AdministrativeArea", "name": "Avellaneda" },
-          { "@type": "AdministrativeArea", "name": "Wilde" },
-          { "@type": "AdministrativeArea", "name": "Don Bosco" },
-          { "@type": "AdministrativeArea", "name": "Ezpeleta" },
-          { "@type": "AdministrativeArea", "name": "Berazategui" },
-          { "@type": "AdministrativeArea", "name": "Zona Sur" }
-        ],
-        "servesCuisine": ["Pastas Artesanales", "Sorrentinos", "Ravioles", "Panzottis", "Ñoquis del 29", "Fideos Frescos", "Empanadas Gourmet"],
-        "priceRange": "$$",
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "reviewCount": "128",
-          "bestRating": "5",
-          "worstRating": "1"
-        },
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            "opens": "08:00",
-            "closes": "19:00"
-          }
-        ],
-        "image": absoluteOgImage
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://simonpastasartesanales.com.ar/#website",
-        "url": "https://simonpastasartesanales.com.ar/",
-        "name": BRAND_CONFIG.siteName,
-        "description": "Fábrica de Pastas Artesanales Congeladas en Caja | Venta Minorista y Mayorista en Bernal y Zona Sur",
-        "inLanguage": ["es"]
-      },
-      {
-        "@type": "ItemList",
-        "@id": "https://simonpastasartesanales.com.ar/#product-list",
-        "name": "Catálogo Oficial de Pastas Artesanales & Sorrentinos",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-              "@type": "Product",
-              "name": "Sorrentinos de Jamón y Queso",
-              "description": "Masa artesanal al huevo rellena con jamón cocido seleccionado y queso mozzarella cremoso. Presentación en caja de 12 unidades.",
-              "image": "https://simonpastasartesanales.com.ar/logo.webp",
-              "offers": {
-                "@type": "Offer",
-                "priceCurrency": "ARS",
-                "price": "4800",
-                "availability": "https://schema.org/InStock",
-                "url": "https://simonpastasartesanales.com.ar/productos/"
-              }
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "item": {
-              "@type": "Product",
-              "name": "Ravioles de Espinaca y Ricota",
-              "description": "Ravioles caseros con espinaca fresca salteada y ricota magra de primera calidad. Presentación en caja de 48 unidades.",
-              "image": "https://simonpastasartesanales.com.ar/logo.webp",
-              "offers": {
-                "@type": "Offer",
-                "priceCurrency": "ARS",
-                "price": "4500",
-                "availability": "https://schema.org/InStock",
-                "url": "https://simonpastasartesanales.com.ar/productos/"
-              }
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "item": {
-              "@type": "Product",
-              "name": "Tallarines al Huevo",
-              "description": "Pastas frescas al huevo cortadas en cinta mediana, elaboradas con sémola de trigo candeal. Bolsa de 500g.",
-              "image": "https://simonpastasartesanales.com.ar/logo.webp",
-              "offers": {
-                "@type": "Offer",
-                "priceCurrency": "ARS",
-                "price": "3200",
-                "availability": "https://schema.org/InStock",
-                "url": "https://simonpastasartesanales.com.ar/productos/"
-              }
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 4,
-            "item": {
-              "@type": "Product",
-              "name": "Ñoquis de Papa Artesanales del 29",
-              "description": "Ñoquis suaves elaborados con papa natural seleccionada y harina de trigo. Bolsa de 1 kg.",
-              "image": "https://simonpastasartesanales.com.ar/logo.webp",
-              "offers": {
-                "@type": "Offer",
-                "priceCurrency": "ARS",
-                "price": "4200",
-                "availability": "https://schema.org/InStock",
-                "url": "https://simonpastasartesanales.com.ar/productos/"
-              }
-            }
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://simonpastasartesanales.com.ar/#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "¿Dónde comprar sorrentinos y pastas artesanales en Bernal y Quilmes?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Fábrica de Pastas Simón elabora y distribuye pastas frescas congeladas en caja (sorrentinos de jamón y queso, bondiola, ravioles, ñoquis) en Bernal, Quilmes, Avellaneda y toda la Zona Sur."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "¿Tienen venta mayorista de pastas para restaurantes y rotiserías?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Sí, brindamos servicio mayorista directo a gastronómicos, restaurantes, cantinas y servicios de catering con porciones estandarizadas congeladas en caja y entregas programadas."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "¿Cómo se cocinan los sorrentinos congelados en caja?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Se colocan directamente sin descongelar previa en abundante agua hirviendo con sal durante 7 a 9 minutos hasta que flotan en la superficie."
-            }
-          }
-        ]
-      }
-    ]
+    "@graph": graphItems
   };
 
   const finalStructuredData = structuredData || defaultStructuredData;

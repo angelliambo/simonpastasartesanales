@@ -7,6 +7,7 @@ import GuidedTourCTA from "../GuidedTourCTA";
 import { LanguageSelector } from "../../i18n/LanguageSelector";
 import { ThemeToggle } from "../ThemeToggle";
 import RegisterModal from "../RegisterModal";
+import { CookieModal } from "../CookieModal/CookieModal";
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
 import {
   SafetyOutlined,
@@ -52,6 +53,44 @@ const Layout: React.FC = React.memo(() => {
   const { user, token, logout } = useAuth();
   const [showRegister, setShowRegister] = useState<false | "email" | "code">(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showCookieConsent, setShowCookieConsent] = useState(false);
+
+  useEffect(() => {
+    const consent = localStorage.getItem("cookie_consent_choice");
+    if (!consent) {
+      setShowCookieConsent(true);
+    } else if (consent === "accepted") {
+      if (typeof window !== "undefined" && window.gtag) {
+        window.gtag("consent", "update", {
+          ad_storage: "granted",
+          analytics_storage: "granted",
+        });
+      }
+    }
+  }, []);
+
+  const handleAcceptCookies = () => {
+    localStorage.setItem("cookie_consent_choice", "accepted");
+    setShowCookieConsent(false);
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("consent", "update", {
+        ad_storage: "granted",
+        analytics_storage: "granted",
+      });
+    }
+  };
+
+  const handleRejectCookies = () => {
+    localStorage.setItem("cookie_consent_choice", "rejected");
+    setShowCookieConsent(false);
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("consent", "update", {
+        ad_storage: "denied",
+        analytics_storage: "denied",
+      });
+    }
+  };
+
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -218,6 +257,12 @@ const Layout: React.FC = React.memo(() => {
       </MobileSidebar>
 
       {showRegister && <RegisterModal onClose={() => setShowRegister(false)} initialStep={showRegister} />}
+      <CookieModal
+        isOpen={showCookieConsent}
+        onAccept={handleAcceptCookies}
+        onReject={handleRejectCookies}
+        onClose={() => setShowCookieConsent(false)}
+      />
 
       <MainContent>
         <InnerContentContainer maxWidth="full" padding="none">
