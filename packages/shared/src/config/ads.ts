@@ -9,8 +9,17 @@ declare const process: { env: Record<string, string | undefined> };
  * Controlled globally via environment variable REACT_APP_ADS_ENABLED.
  */
 const getEnv = (key: string): string | undefined => {
-  if (typeof process !== "undefined" && process.env) {
-    if (process.env[key] !== undefined) return process.env[key];
+  try {
+    const metaEnv = (new Function('try { return import.meta.env; } catch (e) { return undefined; }') as () => Record<string, string | undefined>)();
+    if (metaEnv && metaEnv[key] !== undefined) {
+      return metaEnv[key];
+    }
+  } catch (_e) {
+    // Ignore if import.meta is not available
+  }
+
+  if (typeof process !== "undefined" && process.env && process.env[key] !== undefined) {
+    return process.env[key];
   }
   return undefined;
 };
