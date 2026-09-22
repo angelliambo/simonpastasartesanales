@@ -82,7 +82,7 @@ RUN echo '#!/bin/sh' > /start.sh && \
     echo '  exit 1' >> /start.sh && \
     echo 'fi' >> /start.sh && \
     echo 'echo "✅ Archivos verificados, iniciando servidor..."' >> /start.sh && \
-    echo 'NODE_ENV=production node dist/server.js &' >> /start.sh && \
+    echo 'NODE_ENV=production npx tsx dist/server.js &' >> /start.sh && \
     echo 'BACKEND_PID=$!' >> /start.sh && \
     echo 'echo "⏳ Esperando a que el backend esté listo..."' >> /start.sh && \
     echo 'MAX_WAIT=60' >> /start.sh && \
