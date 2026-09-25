@@ -113,18 +113,16 @@ const atomXml = `<?xml version="1.0" encoding="utf-8"?>
   </entry>
 </feed>`;
 
-// Escribir en public/ y dist/
-const filesToWrite = [
-  { path: join(PUBLIC_DIR, 'feed.xml'), content: rssXml },
-  { path: join(PUBLIC_DIR, 'rss.xml'), content: rssXml },
-  { path: join(PUBLIC_DIR, 'atom.xml'), content: atomXml },
-];
 
-if (existsSync(DIST_DIR)) {
-  filesToWrite.push({ path: join(DIST_DIR, 'feed.xml'), content: rssXml });
-  filesToWrite.push({ path: join(DIST_DIR, 'rss.xml'), content: rssXml });
-  filesToWrite.push({ path: join(DIST_DIR, 'atom.xml'), content: atomXml });
-}
+
+const BUILD_DIR = join(__dirname, '../build');
+const TARGET_DIR = existsSync(DIST_DIR) ? DIST_DIR : (existsSync(BUILD_DIR) ? BUILD_DIR : PUBLIC_DIR);
+
+const filesToWrite = [
+  { path: join(TARGET_DIR, 'feed.xml'), content: rssXml },
+  { path: join(TARGET_DIR, 'rss.xml'), content: rssXml },
+  { path: join(TARGET_DIR, 'atom.xml'), content: atomXml },
+];
 
 filesToWrite.forEach(f => {
   writeFileSync(f.path, f.content, 'utf8');
