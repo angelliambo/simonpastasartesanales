@@ -29,6 +29,17 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  const url = new URL(event.request.url);
+
+  // Excluir archivos de metadatos del sistema, ads.txt, robots.txt, sitemaps y API
+  if (
+    url.pathname === "/ads.txt" ||
+    url.pathname === "/robots.txt" ||
+    url.pathname === "/sitemap.xml" ||
+    url.pathname.startsWith("/api")
+  ) {
+    return;
+  }
   if (event.request.mode === "navigate") {
     event.respondWith(
       fetch(event.request).catch(() => {

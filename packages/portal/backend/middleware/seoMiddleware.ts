@@ -13,6 +13,9 @@ export async function serveReactWithSEO(req: Request, res: Response, next: NextF
     const fileName = req.path.substring(1);
     let filePath = "/usr/share/nginx/html/" + fileName;
     if (!fs.existsSync(filePath)) {
+      filePath = path.resolve(__dirname, "../../../frontend/dist", fileName);
+    }
+    if (!fs.existsSync(filePath)) {
       filePath = path.resolve(__dirname, "../../../frontend/build", fileName);
     }
     if (!fs.existsSync(filePath)) {
@@ -21,6 +24,7 @@ export async function serveReactWithSEO(req: Request, res: Response, next: NextF
 
     if (fs.existsSync(filePath)) {
       res.setHeader("Content-Type", "text/plain; charset=utf-8");
+      res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
       res.setHeader("Access-Control-Allow-Origin", "*");
       return res.sendFile(filePath);
     }

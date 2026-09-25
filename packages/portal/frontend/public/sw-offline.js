@@ -61,7 +61,15 @@ self.addEventListener("activate", (event) => {
 // Interceptar requests
 self.addEventListener("fetch", (event) => {
   const { request } = event;
-  const url = new URL(request.url);
+  // Excluir archivos de metadatos del sistema, ads.txt, robots.txt, sitemaps y API
+  if (
+    url.pathname === "/ads.txt" ||
+    url.pathname === "/robots.txt" ||
+    url.pathname === "/sitemap.xml" ||
+    url.pathname.startsWith("/api")
+  ) {
+    return;
+  }
 
   // Solo manejar requests del mismo origen
   if (url.origin !== location.origin) {

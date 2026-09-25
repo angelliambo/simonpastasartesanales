@@ -32,6 +32,7 @@
     "analytics:extract": "tsx scripts/analytics-optimizer/index.ts",
     "analytics:digest": "tsx scripts/analytics-optimizer/index.ts --export-format=md",
     "audit:seo": "npx tsx scripts/audit-seo-landings.ts",
+    "audit:adsense": "tsx scripts/audit-adsense-verification.ts",
     "inspect:gsc": "tsx scripts/inspect-gsc.ts",
     "setup:ga4": "tsx scripts/setup-ga4-conversions.ts",
     "submit:sitemap": "tsx scripts/submit-sitemap-gsc.ts",

@@ -71,8 +71,29 @@
   <link rel="dns-prefetch" href="https://accounts.google.com">
   <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
 
-  <!-- Google AdSense Auto-Ads SDK -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6167435415786243" crossorigin="anonymous"></script>
+  <!-- Google AdSense Verification & Auto-Ads (Carga diferida no bloqueante) -->
+  <meta name="google-adsense-account" content="ca-pub-6167435415786243" />
+  <script>
+    (function() {
+      function loadAdSense() {
+        if (window._adsenseScriptLoaded) return;
+        window._adsenseScriptLoaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6167435415786243';
+        s.crossOrigin = 'anonymous';
+        document.head.appendChild(s);
+      }
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(function() { setTimeout(loadAdSense, 2500); }, { timeout: 4000 });
+      } else {
+        setTimeout(loadAdSense, 2500);
+      }
+      ['touchstart', 'scroll', 'mousemove', 'keydown'].forEach(function(evt) {
+        window.addEventListener(evt, loadAdSense, { once: true, passive: true });
+      });
+    })();
+  </script>
 
   <title>Fábrica de Pastas Simón | Pastas Artesanales, Sorrentinos & Venta Mayorista</title>
 
