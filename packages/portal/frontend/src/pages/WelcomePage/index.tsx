@@ -4,6 +4,7 @@ import { useTranslation } from "../../i18n/I18nProvider";
 import { useAuth } from "../../contexts/AuthContext";
 import { BRAND_CONFIG } from "@factory/shared/config/brand";
 import GoogleSignInButton from "../../components/GoogleSignInButton";
+import SEO from "../../components/SEO";
 import { useSendTokenMutation, useVerifyTokenMutation } from "../../services/api/authService";
 import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import {
@@ -121,6 +122,7 @@ export const WelcomePage: React.FC = () => {
 
   return (
     <>
+      <SEO noIndex={true} title={t("pages.wellcome.tituloIdioma") || "Bienvenido | Iniciar Sesión"} />
       <WelcomeContainer>
         <WelcomeCard variant="elevated">
           <WelcomeHeader>

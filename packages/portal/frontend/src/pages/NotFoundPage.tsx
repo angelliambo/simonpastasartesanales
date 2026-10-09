@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "../i18n/I18nProvider";
+import SEO from "../components/SEO";
 import {
   Container,
   ErrorCode,
@@ -15,6 +16,7 @@ const NotFoundPage: React.FC = () => {
 
   return (
     <Container>
+      <SEO noIndex={true} title={t('pages.notFound.title', 'Error 404')} />
       <ErrorCode>{t('pages.notFound.title')}</ErrorCode>
       <Title>{t('pages.notFound.message')}</Title>
       <Description>

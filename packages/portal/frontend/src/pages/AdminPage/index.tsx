@@ -8,6 +8,7 @@ import { Switch } from '@design-sys/atoms/Switch';
 import Button from '@design-sys/atoms/Button';
 import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
+import SEO from "../../components/SEO";
 import {
   CopyOutlined,
   SaveOutlined,
@@ -458,6 +459,7 @@ const AdminPage: React.FC = () => {
 
   return (
     <PageContainer>
+      <SEO noIndex={true} title={t('pages.admin.title', 'Administración')} />
       <Content>
         <Title>{t('pages.admin.title')}</Title>
         <StyledSubtitle>{t('pages.admin.subtitle')}</StyledSubtitle>
