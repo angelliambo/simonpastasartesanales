@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useTranslation } from "../../i18n/I18nProvider";
 import { useSnackbar } from '@design-sys/atoms/Snackbar';
 import { ZnIcon } from "@design-sys/atoms/ZnIcon";
+import SEO from "../../components/SEO";
 import {
   ThunderboltOutlined,
   HourglassOutlined,
@@ -146,6 +147,7 @@ const DashboardPage: React.FC = () => {
 
   return (
     <PageContainer>
+      <SEO noIndex={true} title={t('pages.dashboard.title', 'Dashboard')} />
       <Content>
         <Title>{t('pages.dashboard.title', 'Dashboard')}</Title>
         <StyledSubtitle>{t('pages.dashboard.subtitle', 'Resumen de tu cuenta')}</StyledSubtitle>
