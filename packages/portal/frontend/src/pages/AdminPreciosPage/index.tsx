@@ -424,6 +424,7 @@ export const AdminPreciosPage: React.FC = () => {
       <AdminContainer>
         <Helmet>
           <title>{t("pages.precios.adminPanelTitle")}</title>
+          <meta name="robots" content="noindex" />
         </Helmet>
         <PinModal>
           <h2 style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
@@ -468,6 +469,7 @@ export const AdminPreciosPage: React.FC = () => {
     <AdminContainer>
       <Helmet>
         <title>{t("pages.precios.adminPanelTitle")}</title>
+        <meta name="robots" content="noindex" />
       </Helmet>
 
       <HeaderSection>
